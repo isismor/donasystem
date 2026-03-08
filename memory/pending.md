@@ -2,11 +2,24 @@
 
 ## Aguardando Isis
 
-- [ ] Salvar credenciais no 1Password (OPENAI_API_KEY, GEMINI_API_KEY, NOTION_API_KEY, META_ACCESS_TOKEN, GOOGLE_CLIENT_ID/SECRET, CANVA_API_KEY, YOUTUBE_CLIENT_ID/SECRET, TWITTER_API_KEY e tokens)
-- [ ] Instalar 1Password CLI no servidor (requer acesso root/sudo)
+- [ ] Pagar fatura ElevenLabs — depois avisar para testar geracao de audio com voz dela
+- [ ] Criar conta Creatomate (creatomate.com) para VSL — me mandar API key
+- [ ] Configurar OpenAI/Gemini no OpenClaw (chaves ja estao no vault, preciso aplicar na config)
+- [ ] Supabase: me mandar URL + anon key quando quiser integrar
 - [ ] Confirmar se usa Twitter/X ativamente (para priorizar ou nao essa integracao)
 - [ ] Confirmar se usa Notion ativamente
 
 ## Aguardando Terceiros
 
-- [ ] 1Password CLI: instalacao depende de acesso root ao servidor srv1464443
+- nenhum bloqueio externo no momento
+
+## Concluido (mover para decisions/lessons se necessario)
+
+- [x] 1Password CLI instalado como binario de usuario
+- [x] Service account "Dona Agent" criada com acesso ao vault "Dona"
+- [x] RapidAPI configurada (5 endpoints)
+- [x] Canva OAuth completo
+- [x] GitHub deploy key configurada
+- [x] Coolify deploy API testada
+- [x] ElevenLabs salvo (aguardando pagamento)
+- [x] FFmpeg instalado

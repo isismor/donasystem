@@ -4,8 +4,13 @@
 
 ### Configuracao de Skills (OpenClaw)
 - **Status:** em andamento
-- **Proximo passo:** Isis salvar credenciais no 1Password e instalar 1Password CLI no servidor
-- **Bloqueios:** sem sudo no usuario openclaw; Isis precisa instalar 1password-cli com root
+- **Proximo passo:** instalar moviepy, configurar Creatomate, ativar OpenAI/Gemini no OpenClaw
+- **Bloqueios:** ElevenLabs bloqueado por pagamento pendente; Manim requer sudo para deps
+
+### Infraestrutura de Integrações
+- **Status:** em andamento
+- **Concluido:** RapidAPI (5 APIs), Canva OAuth, GitHub SSH, Coolify deploy, FFmpeg, ElevenLabs (salvo)
+- **Pendente:** moviepy, Creatomate (VSL), Supabase, OpenAI/Gemini no OpenClaw
 
 ### Crescimento de Audiencia Instagram
 - **Status:** planejamento
