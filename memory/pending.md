@@ -4,12 +4,14 @@
 
 - [ ] Coconote: decidir forma de integracao (exportar manual para Telegram, email, ou Notion sync)
 
-- [ ] Pagar fatura ElevenLabs — depois avisar para testar geracao de audio com voz dela
-- [ ] Criar conta Creatomate (creatomate.com) para VSL — me mandar API key
 - [ ] Configurar OpenAI/Gemini no OpenClaw (chaves ja estao no vault, preciso aplicar na config)
 - [ ] Supabase: me mandar URL + anon key quando quiser integrar
 - [ ] Confirmar se usa Twitter/X ativamente (para priorizar ou nao essa integracao)
 - [ ] Confirmar se usa Notion ativamente
+
+## A Estudar / Melhorias Tecnicas
+
+- [ ] Transcricao de audio lenta — avaliar alternativas ao Whisper local (Whisper API, Deepgram, outros) para reducao de latencia
 
 ## Aguardando Terceiros
 
@@ -23,6 +25,7 @@
 - [ ] Canva OAuth expirado — precisa refazer autenticacao (invalid_grant detectado em 09/03/2026)
 - [x] GitHub deploy key configurada
 - [x] Coolify deploy API testada
-- [x] ElevenLabs salvo (aguardando pagamento)
+- [x] ElevenLabs salvo (cancelado — sem uso previsto por ora)
+- [x] Creatomate cancelado — sem uso previsto por ora
 - [x] FFmpeg instalado
 - [x] Design System ISIS v7 recebido, salvo e indexado (09/03/2026)
