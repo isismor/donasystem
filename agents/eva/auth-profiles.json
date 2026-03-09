@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "profiles": {
+    "anthropic:donabot": {
+      "type": "token",
+      "provider": "anthropic",
+      "token": "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"
+    }
+  },
+  "lastGood": {
+    "anthropic": "anthropic:donabot"
+  },
+  "usageStats": {
+    "anthropic:donabot": {
+      "errorCount": 0,
+      "lastUsed": 1773033340688
+    }
+  }
+}
