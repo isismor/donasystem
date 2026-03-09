@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISISMOREIRA · Design System v7</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════
+   ISIS v7 · Isis Moreira Design System
+   Tokens · Identidade · Componentes
+═══════════════════════════════════════════ */
+
+:root {
+  --marfim:   #f9f8f4;
+  --creme:    #efede6;
+  --cacao:    #2a2420;
+  --mirror:   #9ba1a8;
+  --ouro:     #b4a68c;
+  --ouro-pale:#d4cec4;
+  --ouro-deep:#7a6e5c;
+
+  --cacao-04:  rgba(42,36,32,.04);
+  --cacao-06:  rgba(42,36,32,.06);
+  --cacao-08:  rgba(42,36,32,.08);
+  --cacao-12:  rgba(42,36,32,.12);
+  --cacao-20:  rgba(42,36,32,.20);
+  --marfim-06: rgba(249,248,244,.06);
+  --marfim-12: rgba(249,248,244,.12);
+  --marfim-35: rgba(249,248,244,.35);
+  --ouro-10:   rgba(180,166,140,.09);
+  --ouro-20:   rgba(180,166,140,.20);
+  --ouro-30:   rgba(180,166,140,.30);
+
+  --bg:         var(--marfim);
+  --bg-raised:  var(--creme);
+  --bg-sunken:  var(--marfim);
+  --bg-card:    var(--creme);
+
+  /* ── SEM GLASS · tom sobre tom ── */
+  --glass-bg:      var(--creme);
+  --glass-border:  rgba(42,36,32,.10);
+  --glass-blur:    none;
+  --glass-shadow:  none;
+  --bg-input:   var(--marfim);
+  --text-1:     var(--cacao);
+  --text-2:     rgba(42,36,32,.65);
+  --text-3:     var(--mirror);
+  --accent:     var(--ouro);
+  --accent-text:var(--ouro-deep);
+  --border-1:   var(--cacao-06);
+  --border-2:   var(--cacao-12);
+  --border-acc: var(--ouro-20);
+  --divider:    var(--creme);
+  --sb-bg:      rgba(249,248,244,.92);
+  --sb-border:  var(--cacao-08);
+
+  --dark-0: #1a1210;
+  --dark-1: #251c18;
+  --dark-2: #2f2219;
+  --dark-3: #382820;
+
+  --ok:   #34A853; --ok-bg: rgba(52,168,83,.08);   --ok-bd: rgba(52,168,83,.20);
+  --warn: #F5A623; --warn-bg: rgba(245,166,35,.08); --warn-bd: rgba(245,166,35,.20);
+  --err:  #E03131; --err-bg: rgba(224,49,49,.08);   --err-bd: rgba(224,49,49,.20);
+
+  --sans:  'DM Sans', sans-serif;
+  --serif: 'DM Serif Text', serif;
+  --mono:  'IBM Plex Mono', monospace;
+
+  --t-2xs: 9px; --t-xs: 11px; --t-sm: 13px; --t-md: 15px;
+  --t-lg: 18px; --t-xl: 24px; --t-2xl: 32px; --t-3xl: 48px;
+  --t-4xl: 64px; --t-5xl: 80px;
+
+  --d-xs: 8px; --d-sm: 12px; --d-md: 16px;
+  --d-lg: 24px; --d-xl: 40px; --d-2xl: 64px;
+
+  /* ── GUARDRAILS · Cards & Grids ─────────────────
+     Regras inegociáveis de espaçamento e diagramação.
+     Todo card, grid e superfície DEVE usar esses tokens.
+
+     --card-gap     : espaço entre cards em qualquer grid
+     --card-pad     : padding interno padrão de um card
+     --card-pad-sm  : padding card compacto
+     --card-pad-lg  : padding card amplo
+     --card-radius  : borda arredondada padrão
+     --grid-mb      : margem inferior de qualquer grid de cards
+  ────────────────────────────────────────────────── */
+  --card-gap:    24px;
+  --card-pad:    28px;
+  --card-pad-sm: 16px;
+  --card-pad-lg: 40px;
+  --card-radius: var(--r-lg);
+  --grid-mb:     24px;
+  --card-border: rgba(180,166,140,.40);   /* ouro diluído · ancora na paleta */   /* mirror 35% · cinza neutro · simétrico */
+
+  --r-xs: 3px; --r-sm: 6px; --r-md: 8px; --r-lg: 10px;
+  --r-xl: 14px; --r-2xl: 20px; --r-full: 9999px;
+
+  --sh-1: 0 1px 2px var(--cacao-06);
+  --sh-2: 0 1px 4px var(--cacao-08), 0 0 0 1px var(--cacao-04);
+  --sh-3: 0 2px 8px var(--cacao-08), 0 1px 3px var(--cacao-06);
+  --sh-4: 0 4px 20px var(--cacao-12), 0 2px 6px var(--cacao-06);
+  --sh-focus: 0 0 0 3px rgba(180,166,140,.25);
+  --sh-ouro:  0 0 24px var(--ouro-10), 0 0 48px rgba(180,166,140,.05);
+
+  --fast:   120ms; --normal: 200ms; --slow: 400ms; --spring: 380ms;
+  --ease-std:    cubic-bezier(.4,0,.2,1);
+  --ease-out:    cubic-bezier(0,0,.2,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+
+  --track-ui:  0.5px;
+  --track-eye: 2.5px;
+  --track-logo: 4px;
+}
+
+[data-theme="dark"] {
+  --bg:        var(--dark-1);
+  --bg-raised: var(--dark-0);
+  --bg-sunken: var(--dark-0);
+  --bg-card:   var(--dark-0);
+
+  /* ── tom sobre tom · cards mais escuros que fundo ── */
+  --glass-bg:     var(--dark-0);
+  --glass-border: rgba(249,248,244,.07);
+  --glass-blur:   none;
+  --glass-shadow: none;
+  --bg-input:  var(--dark-0);
+  --text-1:    var(--marfim);
+  --text-2:    rgba(249,248,244,.60);
+  --text-3:    rgba(249,248,244,.35);
+  --border-1:  rgba(249,248,244,.06);
+  --border-2:  rgba(249,248,244,.10);
+  --divider:   rgba(249,248,244,.08);
+  --sb-bg:     var(--dark-0);
+  --sb-border: rgba(249,248,244,.06);
+  --sh-1: none; --sh-2: none; --sh-3: none; --sh-4: none;
+  --card-border: rgba(249,248,244,.08);
+}
+
+/* ─── BASE ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text-1);
+  font-size: var(--t-md);
+  line-height: 1.6;
+  transition: background var(--normal) var(--ease-std), color var(--normal) var(--ease-std);
+  overflow-x: hidden;
+}
+::selection { background: var(--ouro); color: var(--cacao); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; }
+
+/* ─── LAYOUT ─── */
+.layout { display: flex; flex-direction: column; min-height: 100vh; }
+.main   { flex: 1; }
+
+/* ═══════════════════════════════════════════
+   NAV — linha única, limpa
+═══════════════════════════════════════════ */
+.topnav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--sb-bg);
+  border-bottom: 1px solid var(--sb-border);
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Linha 1: identidade */
+.nav-row1 {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 24px;
+  gap: 14px;
+  border-bottom: 1px solid var(--border-1);
+}
+
+.nav-logo {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: var(--track-logo);
+  text-transform: uppercase;
+  color: var(--text-1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-logo b { font-weight: 700; }
+
+.nav-tagline {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.nav-end {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.nav-ver {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+
+/* Linha 2: links */
+.nav-row2 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 8px;
+  min-height: 34px;
+}
+
+.nav-links {
+  display: contents;
+}
+
+.nav-link {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--text-3);
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color var(--fast) var(--ease-std),
+              border-color var(--fast) var(--ease-std);
+  font-weight: 400;
+  line-height: 1;
+}
+.nav-link:hover { color: var(--text-1); background: var(--bg-sunken); }
+.nav-link.on    { color: var(--text-1); font-weight: 500; border-bottom-color: var(--accent); }
+
+/* toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.theme-toggle-track {
+  width: 28px; height: 16px;
+  background: var(--border-2);
+  border-radius: var(--r-full);
+  position: relative;
+  transition: background var(--fast) var(--ease-std);
+}
+.theme-toggle-track.active { background: var(--ouro); }
+.theme-toggle-thumb {
+  width: 11px; height: 11px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2.5px; left: 2.5px;
+  transition: transform var(--fast) var(--ease-spring);
+  box-shadow: var(--sh-1);
+}
+.theme-toggle-track.active .theme-toggle-thumb { transform: translateX(12px); }
+.theme-toggle-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════════
+   SEÇÕES
+═══════════════════════════════════════════ */
+.sec {
+  padding: 56px 64px;
+  border-bottom: 1px solid var(--border-1);
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+/* sem gradiente de iluminação nas seções */
+.sec::before { display: none; }
+
+.sec-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent-text);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.sec-title {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-style: italic;
+  color: var(--text-1);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.sec-sub {
+  font-size: var(--t-md);
+  color: var(--text-2);
+  max-width: 560px;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.sec-rule {
+  height: 1px;
+  background: var(--border-1);
+  margin: 24px 0;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero {
+  padding: 120px 64px 100px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-1);
+  max-width: 100%;
+}
+
+.hero-symbol {
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(48px, 7vw, 84px);
+  font-style: italic;
+  color: var(--text-1);
+  letter-spacing: -2px;
+  line-height: 1.0;
+  margin-bottom: 20px;
+  max-width: 720px;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--accent-text);
+}
+
+.hero-desc {
+  font-size: var(--t-md);
+  color: var(--text-2);
+  max-width: 440px;
+  line-height: 1.6;
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  align-items: flex-end;
+}
+
+.hero-stat-val {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-style: italic;
+  color: var(--text-1);
+  line-height: 1;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.hero-stat-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+}
+
+.hero-bg {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--serif);
+  font-size: clamp(160px, 22vw, 280px);
+  font-style: italic;
+  color: var(--cacao-04);
+  letter-spacing: -8px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+[data-theme="dark"] .hero-bg { color: var(--marfim-06); }
+
+.hero-logo {
+  position: absolute;
+  bottom: 40px;
+  right: 64px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.hero-logo b { font-weight: 700; color: var(--text-2); }
+
+/* ═══════════════════════════════════════════
+   IDENTIDADE
+═══════════════════════════════════════════ */
+.identity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--card-gap);
+  margin-bottom: var(--grid-mb);
+}
+
+.identity-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--card-border);
+  padding: var(--card-pad);
+  border-radius: var(--card-radius);
+  
+  transition: box-shadow var(--normal) var(--ease-std);
+}
+.identity-card:hover { box-shadow: var(--sh-4);  }
+
+.id-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent-text);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.id-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  color: var(--text-1);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.id-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+.manifesto {
+  background: var(--cacao);
+  border-radius: var(--r-md);
+  padding: 36px 40px;
+  margin-top: 16px;
+}
+[data-theme="dark"] .manifesto { background: var(--dark-0); }
+
+/* ─── CAPA · ebook & apostilas ─── */
+.capa-cover {
+  background: var(--cacao);
+}
+[data-theme="dark"] .capa-cover {
+  background:
+    radial-gradient(ellipse 80% 60% at 18% 12%, rgba(180,166,140,.07) 0%, transparent 65%),
+    linear-gradient(135deg, rgba(255,255,255,.04) 0%, transparent 45%),
+    var(--dark-0);
+}
+
+.manifesto-q {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-style: italic;
+  color: var(--marfim);
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+  margin-bottom: 20px;
+}
+
+.manifesto-a {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ouro);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.values-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+/* ═══════════════════════════════════════════
+   CORES
+═══════════════════════════════════════════ */
+.color-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--card-gap);
+  margin-bottom: var(--grid-mb);
+}
+
+.color-tile {
+  border-radius: var(--card-radius);
+  border: 1px solid var(--card-border);
+  overflow: hidden;
+}
+
+.color-chip {
+  height: 88px;
+  width: 100%;
+}
+
+.color-meta {
+  padding: var(--card-pad-sm);
+  background: var(--glass-bg);
+}
+
+.color-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin-bottom: 16px;
+}
+
+.color-hex {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+}
+
+.token-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-1);
+  font-size: 13px;
+}
+.token-row:last-child { border-bottom: none; }
+
+.token-dot {
+  width: 18px; height: 18px;
+  border-radius: var(--r-xs);
+  flex-shrink: 0;
+  border: 1px solid var(--border-1);
+}
+
+.token-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-1);
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.token-desc {
+  font-size: 12px;
+  color: var(--text-3);
+  flex: 1;
+}
+
+.token-val {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+}
+
+.status-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--card-gap);
+  margin-top: var(--grid-mb);
+}
+
+.status-tile {
+  padding: var(--card-pad-sm) var(--card-pad);
+  border-radius: var(--card-radius);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-info-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 1px;
+}
+
+.status-info-hex {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════
+   TIPOGRAFIA
+═══════════════════════════════════════════ */
+.type-families {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--card-gap);
+  margin-bottom: var(--grid-mb);
+}
+
+.type-family-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--card-border);
+  padding: var(--card-pad);
+  border-radius: var(--card-radius);
+  
+}
+
+.type-family-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.type-sample-serif { font-family: var(--serif); font-size: 38px; font-style: italic; color: var(--text-1); line-height: 1; letter-spacing: -1px; }
+.type-sample-sans  { font-family: var(--sans);  font-size: 36px; font-weight: 300;   color: var(--text-1); line-height: 1; letter-spacing: -0.5px; }
+.type-sample-mono  { font-family: var(--mono);  font-size: 22px; font-weight: 400;   color: var(--text-1); line-height: 1; letter-spacing: 1px; }
+
+.type-family-use {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 12px;
+  font-weight: 300;
+}
+
+.type-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.type-scale-row {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-1);
+}
+.type-scale-row:last-child { border-bottom: none; }
+
+.type-scale-token {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  width: 56px;
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+
+.type-scale-sample {
+  color: var(--text-1);
+  line-height: 1.2;
+  flex: 1;
+}
+
+.type-scale-px {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   COMPONENTES — ÁREA DE PREVIEW
+═══════════════════════════════════════════ */
+.comp-block {
+  margin-bottom: var(--card-gap);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--glass-bg);
+}
+
+.comp-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  padding: 12px var(--card-pad);
+  border-bottom: 1px solid var(--card-border);
+  background: var(--bg);
+}
+
+/* preview e code dentro do comp-block */
+.comp-block .preview {
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--card-border);
+  margin-bottom: 0;
+  box-shadow: none;
+  background: var(--glass-bg);
+}
+
+.comp-block .code {
+  border-radius: 0;
+  border: none;
+}
+
+.preview {
+  background: var(--glass-bg);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--card-border);
+  padding: var(--card-pad);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  
+}
+
+.preview.col {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.preview.tight { gap: 8px; }
+.preview.dark  { background: var(--cacao); border-color: rgba(249,248,244,.08); }
+[data-theme="dark"] .preview.dark { background: var(--dark-0); }
+
+.code {
+  background: var(--dark-1);
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(249,248,244,.06);
+  padding: 20px 20px 20px 52px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.8;
+  color: rgba(249,248,244,.55);
+  position: relative;
+  overflow-x: auto;
+  counter-reset: line;
+}
+[data-theme="dark"] .code {
+  background: var(--dark-0);
+  border-color: rgba(249,248,244,.04);
+}
+
+/* Faixa lateral de números de linha */
+.code::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 40px;
+  background: rgba(0,0,0,.2);
+  border-right: 1px solid rgba(249,248,244,.06);
+  border-radius: var(--card-radius) 0 0 var(--card-radius);
+  pointer-events: none;
+}
+
+/* Cada linha de código com número */
+.code-line {
+  display: block;
+  position: relative;
+  counter-increment: line;
+}
+.code-line::before {
+  content: counter(line);
+  position: absolute;
+  left: -40px;
+  width: 32px;
+  text-align: right;
+  font-size: 9px;
+  color: rgba(249,248,244,.18);
+  user-select: none;
+  pointer-events: none;
+  line-height: inherit;
+}
+
+.code .kw  { color: #f9f8f4; }
+.code .at  { color: var(--ouro); }
+.code .val { color: var(--ouro-pale); }
+.code .cm  { color: rgba(249,248,244,.3); font-style: italic; }
+
+.copy-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(249,248,244,.3);
+  background: rgba(249,248,244,.04);
+  border: 1px solid rgba(249,248,244,.08);
+  border-radius: var(--r-xs);
+  padding: 3px 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--fast) var(--ease-std);
+  z-index: 1;
+}
+.copy-btn:hover { color: var(--ouro); border-color: var(--border-2); }
+
+/* ═══════════════════════════════════════════
+   BOTÕES
+═══════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-family: var(--sans);
+  font-weight: 500;
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+  transition: all var(--fast) var(--ease-std);
+  letter-spacing: 0.2px;
+}
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--cacao);
+  color: var(--marfim);
+  border-color: var(--cacao);
+}
+.btn-primary:hover:not(:disabled) { background: rgba(42,36,32,.85); }
+
+.btn-ouro {
+  background: var(--ouro);
+  color: var(--cacao);
+  border-color: var(--ouro);
+  font-weight: 600;
+}
+.btn-ouro:hover:not(:disabled) { background: var(--ouro-deep); border-color: var(--ouro-deep); color: var(--marfim); box-shadow: var(--sh-ouro); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-1);
+  border-color: var(--border-2);
+}
+.btn-secondary:hover:not(:disabled) { border-color: var(--accent); background: var(--ouro-10); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border-color: transparent;
+}
+.btn-ghost:hover:not(:disabled) { background: var(--bg-sunken); color: var(--text-1); }
+
+.btn-danger {
+  background: transparent;
+  color: var(--err);
+  border-color: var(--err-bd);
+}
+.btn-danger:hover:not(:disabled) { background: var(--err-bg); }
+
+.btn-sm { padding: 5px 11px; font-size: 11px; border-radius: var(--r-sm); }
+.btn-lg { padding: 11px 22px; font-size: 15px; border-radius: var(--r-lg); }
+.btn-pill { border-radius: var(--r-full); }
+.btn-icon { width: 32px; height: 32px; padding: 0; justify-content: center; }
+
+/* ═══════════════════════════════════════════
+   BADGES & CHIPS
+═══════════════════════════════════════════ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-radius: var(--r-xs);
+  border: 1px solid;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.badge-default { background: var(--bg-sunken); color: var(--text-2); border-color: var(--border-2); }
+.badge-ouro    { background: var(--ouro-10);   color: var(--ouro-deep); border-color: var(--ouro-20); }
+.badge-ok      { background: var(--ok-bg);     color: var(--ok);       border-color: var(--ok-bd); }
+.badge-warn    { background: var(--warn-bg);   color: var(--warn);     border-color: var(--warn-bd); }
+.badge-err     { background: var(--err-bg);    color: var(--err);      border-color: var(--err-bd); }
+
+.badge-dot::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--text-2);
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-full);
+  white-space: nowrap;
+  cursor: default;
+  transition: all var(--fast) var(--ease-std);
+}
+.chip:hover { border-color: var(--accent); color: var(--text-1); }
+.chip-x {
+  font-size: 14px;
+  line-height: 1;
+  opacity: .4;
+  cursor: pointer;
+  font-weight: 300;
+  margin-left: 2px;
+}
+.chip-x:hover { opacity: 1; color: var(--err); }
+
+/* ═══════════════════════════════════════════
+   CARDS
+═══════════════════════════════════════════ */
+.card {
+  background: var(--glass-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: var(--card-pad);
+  
+  transition: box-shadow var(--normal) var(--ease-std),
+              border-color var(--normal) var(--ease-std),
+              background var(--normal) var(--ease-std);
+}
+.card:hover {
+  box-shadow: var(--sh-3);
+  border-color: rgba(255,255,255,.75);
+  background: var(--glass-bg);
+}
+
+.card-ouro {
+  background: var(--glass-bg);
+  border-color: var(--card-border);
+}
+.card-ouro:hover { box-shadow: var(--sh-ouro); border-color: var(--ouro-30); }
+
+.card-sm { padding: var(--card-pad-sm); border-radius: var(--card-radius); }
+.card-lg { padding: var(--card-pad-lg); border-radius: var(--card-radius); }
+
+.card-hd {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-1);
+}
+
+.card-title    { font-size: 15px; font-weight: 600; color: var(--text-1); line-height: 1.3; letter-spacing: -.1px; }
+.card-subtitle { font-size: 11px; color: var(--text-3); margin-top: 4px; letter-spacing: .3px; text-transform: uppercase; font-family: var(--mono); }
+.card-body     { font-size: 13px; color: var(--text-2); line-height: 1.7; font-weight: 300; }
+
+.card-ft {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-1);
+}
+
+/* ═══════════════════════════════════════════
+   FORMS
+═══════════════════════════════════════════ */
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+.field-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-1);
+  letter-spacing: 0.2px;
+}
+
+.field-input {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--text-1);
+  background: var(--bg-input);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-md);
+  padding: 9px 12px;
+  line-height: 1.5;
+  outline: none;
+  width: 100%;
+  transition: border-color var(--fast) var(--ease-std), box-shadow var(--fast) var(--ease-std);
+}
+.field-input::placeholder { color: var(--text-3); }
+.field-input:focus { border-color: var(--accent); box-shadow: var(--sh-focus); }
+.field-input.err  { border-color: var(--err); }
+
+.field-hint { font-size: 11px; color: var(--text-3); }
+.field-err  { font-size: 11px; color: var(--err); }
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.checkbox-input {
+  width: 15px; height: 15px;
+  accent-color: var(--cacao);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+textarea.field-input { resize: vertical; min-height: 80px; }
+
+/* ═══════════════════════════════════════════
+   NAVEGAÇÃO (componentes)
+═══════════════════════════════════════════ */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-1);
+  gap: 0;
+}
+
+.tab {
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--text-3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all var(--fast) var(--ease-std);
+  white-space: nowrap;
+}
+.tab:hover { color: var(--text-1); }
+.tab.on    { color: var(--text-1); font-weight: 500; border-bottom-color: var(--accent); }
+
+.breadcrumb { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.breadcrumb a { font-size: 13px; color: var(--text-3); transition: color var(--fast); }
+.breadcrumb a:hover { color: var(--text-1); }
+.breadcrumb-sep { font-size: 11px; color: var(--border-2); }
+.breadcrumb-cur { font-size: 13px; color: var(--text-1); font-weight: 500; }
+
+.dd {
+  background: var(--bg-raised);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--sh-3);
+}
+.dd-item {
+  padding: 9px 14px;
+  font-size: 13px;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--fast) var(--ease-std);
+  border-bottom: 1px solid var(--border-1);
+}
+.dd-item:last-child { border-bottom: none; }
+.dd-item:hover  { background: var(--bg-sunken); color: var(--text-1); }
+.dd-item.active { color: var(--accent-text); font-weight: 500; }
+
+.tooltip-wrap { position: relative; display: inline-block; }
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--cacao);
+  color: var(--marfim);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--fast) var(--ease-std);
+  font-family: var(--mono);
+  letter-spacing: 0.5px;
+}
+.tooltip-wrap:hover .tooltip { opacity: 1; }
+
+.avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--bg-sunken);
+  border: 2px solid var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.avatar-ouro { background: var(--ouro-10); color: var(--ouro-deep); border-color: var(--ouro-20); }
+.avatar-group { display: flex; }
+.avatar-group .avatar { margin-left: -8px; }
+.avatar-group .avatar:first-child { margin-left: 0; }
+
+/* ═══════════════════════════════════════════
+   ALERTAS & PROGRESS
+═══════════════════════════════════════════ */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--card-radius);
+  border: 1px solid;
+  font-size: 13px;
+  width: 100%;
+}
+.alert-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; font-weight: 700; }
+.alert-title { font-weight: 600; margin-bottom: 2px; }
+.alert-desc  { color: inherit; opacity: .75; font-size: 12px; font-weight: 300; }
+
+.alert-ok   { background: var(--ok-bg);   border-color: var(--ok-bd);   color: var(--ok); }
+.alert-warn { background: var(--warn-bg); border-color: var(--warn-bd); color: var(--warn); }
+.alert-err  { background: var(--err-bg);  border-color: var(--err-bd);  color: var(--err); }
+.alert-info { background: var(--ouro-10); border-color: var(--ouro-20); color: var(--ouro-deep); }
+
+.progress {
+  height: 4px;
+  background: var(--border-1);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--r-full);
+  transition: width var(--slow) var(--ease-out);
+}
+.progress-fill.ok { background: var(--ok); }
+
+/* ═══════════════════════════════════════════
+   DIRETRIZES
+═══════════════════════════════════════════ */
+.guideline-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--card-border);
+}
+
+.guideline-col {
+  padding: var(--card-pad);
+  font-size: 13px;
+  background: var(--glass-bg);
+}
+.guideline-col.do   { background: var(--ok-bg); }
+.guideline-col.dont { background: var(--err-bg); }
+
+.guideline-col-hd {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.do   .guideline-col-hd { color: var(--ok); }
+.dont .guideline-col-hd { color: var(--err); }
+
+.guideline-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 300;
+}
+.guideline-item:last-child { margin-bottom: 0; }
+
+.guideline-mark { flex-shrink: 0; font-weight: 700; font-size: 11px; }
+.do   .guideline-mark { color: var(--ok); }
+.dont .guideline-mark { color: var(--err); }
+
+/* ═══════════════════════════════════════════
+   ESPAÇAMENTO
+═══════════════════════════════════════════ */
+.space-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.space-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-1);
+}
+.space-row:last-child { border-bottom: none; }
+
+.space-bar-wrap {
+  width: 200px;
+  flex-shrink: 0;
+}
+.space-bar {
+  height: 8px;
+  background: var(--ouro-30);
+  border-radius: var(--r-xs);
+}
+
+.space-token {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.space-val {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-2);
+}
+
+/* ═══════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════ */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--card-gap); align-items: stretch; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--card-gap); align-items: stretch; }
+
+.divider { height: 1px; background: var(--border-1); margin: 24px 0; }
+.divider-ouro { height: 1px; background: var(--ouro); opacity: .4; margin: 24px 0; }
+
+.mt-8  { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+.mt-40 { margin-top: 32px; }
+.mt-48 { margin-top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ═══ NAV ═══ -->
+  <nav class="topnav" id="topnav">
+    <div class="nav-row1">
+      <span class="nav-logo"><b>ISIS</b>MOREIRA</span>
+      <span class="nav-tagline">Design System</span>
+      <div class="nav-end">
+        <span class="nav-ver">v7.0</span>
+        <div class="theme-toggle" onclick="toggleTheme()">
+          <div class="theme-toggle-track" id="themeTrack">
+            <div class="theme-toggle-thumb"></div>
+          </div>
+          <span class="theme-toggle-label" id="themeLabel">Light</span>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row2">
+      <div class="nav-links">
+        <button class="nav-link on"  onclick="navTo('hero',this)">Marca</button>
+        <button class="nav-link"     onclick="navTo('identidade',this)">Identidade</button>
+        <button class="nav-link"     onclick="navTo('cores',this)">Cores</button>
+        <button class="nav-link"     onclick="navTo('tipo',this)">Tipografia</button>
+        <button class="nav-link"     onclick="navTo('espaco',this)">Espaço</button>
+        <button class="nav-link"     onclick="navTo('componentes',this)">Componentes</button>
+        <button class="nav-link"     onclick="navTo('formularios',this)">Formulários</button>
+        <button class="nav-link"     onclick="navTo('navegacao',this)">Navegação</button>
+        <button class="nav-link"     onclick="navTo('feedback',this)">Feedback</button>
+        <button class="nav-link"     onclick="navTo('diretrizes',this)">Diretrizes</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main" style="padding-top:48px">
+
+    <!-- ═══ 00 HERO ═══ -->
+    <section id="hero" class="sec" style="max-width:100%;padding:72px 64px 64px;min-height:70vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border-1)">
+      <div class="hero-bg">Isis</div>
+      <span class="hero-symbol">✦</span>
+      <h1 class="hero-title">
+        Identidade<br>
+        <em>alinhada,</em><br>
+        livre e leve.
+      </h1>
+      <p class="hero-desc">
+        Sistema de identidade visual de Isis Moreira. Estratégia, feminilidade e posicionamento de alto nível em cada decisão.
+      </p>
+      <div class="hero-stats">
+        <div>
+          <span class="hero-stat-val">12</span>
+          <span class="hero-stat-lbl">Seções</span>
+        </div>
+        <div>
+          <span class="hero-stat-val">80+</span>
+          <span class="hero-stat-lbl">Componentes</span>
+        </div>
+        <div>
+          <span class="hero-stat-val">5</span>
+          <span class="hero-stat-lbl">Primitivos</span>
+        </div>
+        <div>
+          <span class="hero-stat-val">2025</span>
+          <span class="hero-stat-lbl">Edição</span>
+        </div>
+      </div>
+      <div class="hero-logo"><b>ISIS</b>MOREIRA</div>
+    </section>
+
+    <!-- ═══ 01 IDENTIDADE ═══ -->
+    <section class="sec" id="identidade">
+      <span class="sec-num">01 · Identidade</span>
+      <h2 class="sec-title">Posicionamento de marca</h2>
+      <p class="sec-sub">Estratégica, intensa e refinada. Cada decisão visual carrega profundidade, verdade e posicionamento.</p>
+
+      <div class="identity-grid">
+        <div class="identity-card">
+          <span class="id-num">01 · Arquétipo</span>
+          <div class="id-title">A Soberana</div>
+          <div class="id-desc">Ocupa espaço com intenção. Age com discernimento e carrega profundidade em cada escolha.</div>
+        </div>
+        <div class="identity-card">
+          <span class="id-num">02 · Tom de Voz</span>
+          <div class="id-title">Verdadeiro e Preciso</div>
+          <div class="id-desc">Clareza direta. Profundidade acessível. Sofisticação que convida. Cada palavra tem peso e propósito.</div>
+        </div>
+        <div class="identity-card">
+          <span class="id-num">03 · Estética</span>
+          <div class="id-title">Minimalismo de Alto Nível</div>
+          <div class="id-desc">Paleta quente, formas limpas, presença feminina. Beleza com estrutura. Sofisticação discreta.</div>
+        </div>
+        <div class="identity-card">
+          <span class="id-num">04 · Missão</span>
+          <div class="id-title">Identidade como Estrutura</div>
+          <div class="id-desc">Mentalidade, negócios e tecnologia integrados. O sistema visual é reflexo direto do posicionamento.</div>
+        </div>
+      </div>
+
+      <div class="manifesto mt-8">
+        <p class="manifesto-q">"Crescimento sem perder verdade. Construir com intenção, posicionar com clareza."</p>
+        <p class="manifesto-a">✦ Isis Moreira</p>
+      </div>
+
+      <div class="values-row">
+        <span class="badge badge-ouro">✦ Profundidade</span>
+        <span class="badge badge-default">Verdade</span>
+        <span class="badge badge-default">Posicionamento</span>
+        <span class="badge badge-ouro">Feminilidade</span>
+        <span class="badge badge-default">Discernimento</span>
+        <span class="badge badge-ok">Execução</span>
+        <span class="badge badge-default">Beleza</span>
+      </div>
+    </section>
+
+    <!-- ═══ 02 CORES ═══ -->
+    <section class="sec" id="cores">
+      <span class="sec-num">02 · Fundamentos</span>
+      <h2 class="sec-title">Cores & Tokens</h2>
+      <p class="sec-sub">Cinco primitivos. Nenhuma cor aqui é acidental.</p>
+
+      <div class="color-strip">
+        <div class="color-tile">
+          <div class="color-chip" style="background:#f9f8f4"></div>
+          <div class="color-meta"><div class="color-name">Marfim</div><div class="color-hex">#f9f8f4 · --marfim</div></div>
+        </div>
+        <div class="color-tile">
+          <div class="color-chip" style="background:#efede6"></div>
+          <div class="color-meta"><div class="color-name">Creme</div><div class="color-hex">#efede6 · --creme</div></div>
+        </div>
+        <div class="color-tile">
+          <div class="color-chip" style="background:#251c18"></div>
+          <div class="color-meta"><div class="color-name">Cacau</div><div class="color-hex">#251c18 · --cacao</div></div>
+        </div>
+        <div class="color-tile">
+          <div class="color-chip" style="background:#9ba1a8"></div>
+          <div class="color-meta"><div class="color-name">Mirror</div><div class="color-hex">#9ba1a8 · --mirror</div></div>
+        </div>
+        <div class="color-tile">
+          <div class="color-chip" style="background:#b4a68c"></div>
+          <div class="color-meta"><div class="color-name">Ouro</div><div class="color-hex">#b4a68c · --ouro</div></div>
+        </div>
+      </div>
+
+      <div class="status-strip">
+        <div class="status-tile" style="background:var(--ok-bg);border:1px solid var(--ok-bd)">
+          <div class="status-dot" style="background:var(--ok)"></div>
+          <div><div class="status-info-name">Sucesso</div><div class="status-info-hex">#34A853 · --ok</div></div>
+        </div>
+        <div class="status-tile" style="background:var(--warn-bg);border:1px solid var(--warn-bd)">
+          <div class="status-dot" style="background:var(--warn)"></div>
+          <div><div class="status-info-name">Atenção</div><div class="status-info-hex">#F5A623 · --warn</div></div>
+        </div>
+        <div class="status-tile" style="background:var(--err-bg);border:1px solid var(--err-bd)">
+          <div class="status-dot" style="background:var(--err)"></div>
+          <div><div class="status-info-name">Erro</div><div class="status-info-hex">#E03131 · --err</div></div>
+        </div>
+      </div>
+
+      <div class="sec-rule"></div>
+
+      <div class="token-row"><div class="token-dot" style="background:var(--bg);border:1px solid var(--border-2)"></div><span class="token-name">--bg</span><span class="token-desc">Fundo base da interface</span><span class="token-val">marfim / dark-1</span></div>
+      <div class="token-row"><div class="token-dot" style="background:var(--bg-card)"></div><span class="token-name">--bg-card</span><span class="token-desc">Cards e superfícies elevadas</span><span class="token-val">creme / dark-2</span></div>
+      <div class="token-row"><div class="token-dot" style="background:var(--text-1)"></div><span class="token-name">--text-1</span><span class="token-desc">Texto primário</span><span class="token-val">cacao / marfim</span></div>
+      <div class="token-row"><div class="token-dot" style="background:var(--text-2)"></div><span class="token-name">--text-2</span><span class="token-desc">Texto secundário</span><span class="token-val">cacao 65%</span></div>
+      <div class="token-row"><div class="token-dot" style="background:var(--text-3)"></div><span class="token-name">--text-3</span><span class="token-desc">Labels e meta</span><span class="token-val">mirror</span></div>
+      <div class="token-row"><div class="token-dot" style="background:var(--accent)"></div><span class="token-name">--accent</span><span class="token-desc">Cor de destaque e interação</span><span class="token-val">ouro</span></div>
+      <div class="token-row"><div class="token-dot" style="background:var(--border-2)"></div><span class="token-name">--border-2</span><span class="token-desc">Bordas visíveis</span><span class="token-val">cacao 12%</span></div>
+      <div class="token-row"><div class="token-dot" style="background:var(--sh-focus,var(--ouro));border-radius:50%"></div><span class="token-name">--sh-focus</span><span class="token-desc">Anel de foco acessível</span><span class="token-val">ouro 25%</span></div>
+      <div class="token-row"><div class="token-dot" style="background:rgba(245,240,230,.55);border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(16px)"></div><span class="token-name">--glass-bg</span><span class="token-desc">Superfície glassmorphism</span><span class="token-val">marfim 55% / dark 45%</span></div>
+      <div class="token-row"><div class="token-dot" style="background:rgba(255,255,255,.55);border-radius:var(--r-xs)"></div><span class="token-name">--glass-border</span><span class="token-desc">Borda glass · luz refratada</span><span class="token-val">white 55% / marfim 10%</span></div>
+      <div class="token-row"><div class="token-dot" style="background:var(--cacao);border-radius:var(--r-sm)"></div><span class="token-name">.capa-cover</span><span class="token-desc">Fundo de capas · ebook & apostilas</span><span class="token-val">cacao / dark-0 + luz sutil</span></div>
+    </section>
+
+    <!-- ═══ 03 TIPOGRAFIA ═══ -->
+    <section class="sec" id="tipo">
+      <span class="sec-num">03 · Fundamentos</span>
+      <h2 class="sec-title">Tipografia</h2>
+      <p class="sec-sub">Três famílias. O serif carrega emoção. O sans carrega estrutura. O mono carrega precisão.</p>
+
+      <div class="type-families">
+        <div class="type-family-card">
+          <div class="type-family-label">Display · DM Serif Display</div>
+          <div class="type-sample-serif">Isis</div>
+          <div class="type-family-use">Títulos, manifestos, hero</div>
+        </div>
+        <div class="type-family-card">
+          <div class="type-family-label">Texto · DM Sans</div>
+          <div class="type-sample-sans">Moreira</div>
+          <div class="type-family-use">Corpo, UI, navegação</div>
+        </div>
+        <div class="type-family-card">
+          <div class="type-family-label">Técnico · IBM Plex Mono</div>
+          <div class="type-sample-mono">v7.0</div>
+          <div class="type-family-use">Labels, código, tokens</div>
+        </div>
+      </div>
+
+      <div class="type-scale">
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-5xl</span>
+          <span class="type-scale-sample" style="font-size:40px;font-family:var(--serif);font-style:italic;letter-spacing:-1px;line-height:1">Destaque</span>
+          <span class="type-scale-px">80px</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-3xl</span>
+          <span class="type-scale-sample" style="font-size:36px;font-family:var(--serif);font-style:italic;letter-spacing:-0.5px;line-height:1">Título principal</span>
+          <span class="type-scale-px">48px</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-2xl</span>
+          <span class="type-scale-sample" style="font-size:28px;font-weight:600;letter-spacing:-0.3px;line-height:1">Subtítulo de seção</span>
+          <span class="type-scale-px">32px</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-xl</span>
+          <span class="type-scale-sample" style="font-size:22px;font-weight:400;line-height:1.2">Introdução de conteúdo</span>
+          <span class="type-scale-px">24px</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-lg</span>
+          <span class="type-scale-sample" style="font-size:18px;font-weight:300;line-height:1.3">Corpo lead, citação</span>
+          <span class="type-scale-px">18px</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-md</span>
+          <span class="type-scale-sample" style="font-size:15px;font-weight:400;line-height:1.5">Corpo de texto padrão da interface</span>
+          <span class="type-scale-px">15px</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-sm</span>
+          <span class="type-scale-sample" style="font-size:13px;font-weight:400">Texto secundário, labels de campo</span>
+          <span class="type-scale-px">13px</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-xs</span>
+          <span class="type-scale-sample" style="font-size:11px;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase">RÓTULO · MARCADOR</span>
+          <span class="type-scale-px">11px</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-token">--t-2xs</span>
+          <span class="type-scale-sample" style="font-size:9px;font-family:var(--mono);letter-spacing:2px;text-transform:uppercase">MICRO · TÉCNICO</span>
+          <span class="type-scale-px">9px</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 04 ESPAÇAMENTO ═══ -->
+    <section class="sec" id="espaco">
+      <span class="sec-num">04 · Fundamentos</span>
+      <h2 class="sec-title">Espaçamento</h2>
+      <p class="sec-sub">Espaço não é vazio. É respiração.</p>
+
+      <div class="space-grid">
+        <div class="space-row">
+          <span class="space-token">--d-xs</span>
+          <div class="space-bar-wrap"><div class="space-bar" style="width:8px"></div></div>
+          <span class="space-val">8px · micro espaço, gaps internos</span>
+        </div>
+        <div class="space-row">
+          <span class="space-token">--d-sm</span>
+          <div class="space-bar-wrap"><div class="space-bar" style="width:12px"></div></div>
+          <span class="space-val">12px · padding compact</span>
+        </div>
+        <div class="space-row">
+          <span class="space-token">--d-md</span>
+          <div class="space-bar-wrap"><div class="space-bar" style="width:16px"></div></div>
+          <span class="space-val">16px · padding padrão</span>
+        </div>
+        <div class="space-row">
+          <span class="space-token">--d-lg</span>
+          <div class="space-bar-wrap"><div class="space-bar" style="width:24px"></div></div>
+          <span class="space-val">24px · cards, blocos</span>
+        </div>
+        <div class="space-row">
+          <span class="space-token">--d-xl</span>
+          <div class="space-bar-wrap"><div class="space-bar" style="width:40px"></div></div>
+          <span class="space-val">40px · seções, hero</span>
+        </div>
+        <div class="space-row">
+          <span class="space-token">--d-2xl</span>
+          <div class="space-bar-wrap"><div class="space-bar" style="width:64px"></div></div>
+          <span class="space-val">64px · separações estruturais</span>
+        </div>
+      </div>
+
+      <div class="sec-rule" style="margin-top:32px"></div>
+      <span class="comp-label" style="margin-top:24px;display:block">Guardrails · Cards & Grids</span>
+      <p class="sec-sub" style="margin-bottom:20px">Regras inegociáveis. Todo card, grid e superfície usa estes tokens. Sem exceção.</p>
+      <div class="space-grid">
+        <div class="space-row"><span class="space-token">--card-gap</span><div class="space-bar-wrap"><div class="space-bar" style="width:24px"></div></div><span class="space-val">24px · espaço entre cards em qualquer grid</span></div>
+        <div class="space-row"><span class="space-token">--card-pad</span><div class="space-bar-wrap"><div class="space-bar" style="width:28px"></div></div><span class="space-val">28px · padding interno padrão</span></div>
+        <div class="space-row"><span class="space-token">--card-pad-sm</span><div class="space-bar-wrap"><div class="space-bar" style="width:16px"></div></div><span class="space-val">16px · padding card compacto</span></div>
+        <div class="space-row"><span class="space-token">--card-pad-lg</span><div class="space-bar-wrap"><div class="space-bar" style="width:40px"></div></div><span class="space-val">40px · padding card amplo</span></div>
+        <div class="space-row"><span class="space-token">--card-radius</span><div class="space-bar-wrap"><div class="space-bar" style="width:10px;border-radius:10px"></div></div><span class="space-val">10px · borda arredondada padrão · var(--r-lg)</span></div>
+        <div class="space-row"><span class="space-token">--grid-mb</span><div class="space-bar-wrap"><div class="space-bar" style="width:24px"></div></div><span class="space-val">24px · margem inferior de todo grid de cards</span></div>
+      </div>
+    </section>
+
+    <!-- ═══ 05 COMPONENTES ═══ -->
+    <section class="sec" id="componentes">
+      <span class="sec-num">05 · Componentes</span>
+      <h2 class="sec-title">Botões & Marcadores</h2>
+
+      <!-- BOTÕES -->
+      <div class="comp-block">
+        <span class="comp-label">Botões · variantes</span>
+        <div class="preview">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-ouro">✦ Ouro</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-ghost">Ghost</button>
+          <button class="btn btn-danger">Danger</button>
+          <button class="btn btn-primary" disabled>Disabled</button>
+        </div>
+        <div class="code">
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+<span class="kw">&lt;button</span> <span class="at">class</span>=<span class="val">"btn btn-primary"</span><span class="kw">&gt;</span>Primary<span class="kw">&lt;/button&gt;</span>
+<span class="kw">&lt;button</span> <span class="at">class</span>=<span class="val">"btn btn-ouro"</span><span class="kw">&gt;</span>✦ Ouro<span class="kw">&lt;/button&gt;</span>
+<span class="kw">&lt;button</span> <span class="at">class</span>=<span class="val">"btn btn-secondary"</span><span class="kw">&gt;</span>Secondary<span class="kw">&lt;/button&gt;</span>
+<span class="kw">&lt;button</span> <span class="at">class</span>=<span class="val">"btn btn-ghost"</span><span class="kw">&gt;</span>Ghost<span class="kw">&lt;/button&gt;</span>
+<span class="kw">&lt;button</span> <span class="at">class</span>=<span class="val">"btn btn-danger"</span><span class="kw">&gt;</span>Danger<span class="kw">&lt;/button&gt;</span></div>
+      </div>
+
+      <div class="comp-block">
+        <span class="comp-label">Botões · tamanhos</span>
+        <div class="preview">
+          <button class="btn btn-primary btn-sm">Pequeno</button>
+          <button class="btn btn-primary">Padrão</button>
+          <button class="btn btn-primary btn-lg">Grande</button>
+          <button class="btn btn-ouro btn-pill">Pill ✦</button>
+          <button class="btn btn-secondary btn-icon">✦</button>
+        </div>
+        <div class="code">
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+<span class="at">class</span>=<span class="val">"btn btn-primary btn-sm"</span>   <span class="cm">/* 5 · 11px */</span>
+<span class="at">class</span>=<span class="val">"btn btn-primary"</span>          <span class="cm">/* 8 · 16px */</span>
+<span class="at">class</span>=<span class="val">"btn btn-primary btn-lg"</span>   <span class="cm">/* 11 · 22px */</span>
+<span class="at">class</span>=<span class="val">"btn btn-ouro btn-pill"</span>    <span class="cm">/* r-full */</span>
+<span class="at">class</span>=<span class="val">"btn btn-secondary btn-icon"</span> <span class="cm">/* 32×32px */</span></div>
+      </div>
+
+      <!-- BADGES -->
+      <div class="comp-block">
+        <span class="comp-label">Badges</span>
+        <div class="preview">
+          <span class="badge badge-default">Default</span>
+          <span class="badge badge-ouro">✦ Ouro</span>
+          <span class="badge badge-ok">Sucesso</span>
+          <span class="badge badge-warn">Atenção</span>
+          <span class="badge badge-err">Erro</span>
+          <span class="badge badge-ok badge-dot">Online</span>
+          <span class="badge badge-err badge-dot">Offline</span>
+        </div>
+        <div class="code">
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+<span class="kw">&lt;span</span> <span class="at">class</span>=<span class="val">"badge badge-ouro"</span><span class="kw">&gt;</span>✦ Ouro<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;span</span> <span class="at">class</span>=<span class="val">"badge badge-ok badge-dot"</span><span class="kw">&gt;</span>Online<span class="kw">&lt;/span&gt;</span></div>
+      </div>
+
+      <!-- CHIPS -->
+      <div class="comp-block">
+        <span class="comp-label">Chips</span>
+        <div class="preview">
+          <span class="chip">Design System</span>
+          <span class="chip">Tecnologia<span class="chip-x">×</span></span>
+          <span class="chip">Isis Moreira<span class="chip-x">×</span></span>
+          <span class="chip">Isis Moreira</span>
+        </div>
+        <div class="code">
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+<span class="kw">&lt;span</span> <span class="at">class</span>=<span class="val">"chip"</span><span class="kw">&gt;</span>Label<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;span</span> <span class="at">class</span>=<span class="val">"chip"</span><span class="kw">&gt;</span>Label<span class="kw">&lt;span</span> <span class="at">class</span>=<span class="val">"chip-x"</span><span class="kw">&gt;</span>×<span class="kw">&lt;/span&gt;&lt;/span&gt;</span></div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="comp-block">
+        <span class="comp-label">Cards</span>
+        <div class="grid-3" style="padding:var(--card-pad);background:var(--glass-bg);align-items:stretch">
+          <div class="card card-sm" style="display:flex;flex-direction:column;justify-content:center">
+            <div class="card-title">Card Compact</div>
+            <div class="card-body" style="margin-top:6px">Ideal para listas e grids densos.</div>
+          </div>
+          <div class="card" style="display:flex;flex-direction:column">
+            <div class="card-hd">
+              <div><div class="card-title">Card Padrão</div><div class="card-subtitle">Subtítulo opcional</div></div>
+              <span class="badge badge-ouro">✦ v7</span>
+            </div>
+            <div class="card-body" style="flex:1">Conteúdo com espaçamento padrão. Hover revela borda dourada.</div>
+            <div class="card-ft">
+              <span style="font-size:11px;color:var(--text-3);font-family:var(--mono)">Meta</span>
+              <button class="btn btn-ghost btn-sm">Ver mais</button>
+            </div>
+          </div>
+          <div class="card card-ouro" style="display:flex;flex-direction:column">
+            <span class="badge badge-ouro" style="margin-bottom:12px;align-self:flex-start">✦ Destaque</span>
+            <div class="card-title">Card Ouro</div>
+            <div class="card-body" style="margin-top:8px;flex:1">Variante especial para itens em destaque no ecossistema.</div>
+          </div>
+        </div>
+        <div class="code">
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+<span class="at">class</span>=<span class="val">"card"</span>            <span class="cm">/* padrão */</span>
+<span class="at">class</span>=<span class="val">"card card-sm"</span>    <span class="cm">/* compact */</span>
+<span class="at">class</span>=<span class="val">"card card-lg"</span>    <span class="cm">/* spacious */</span>
+<span class="at">class</span>=<span class="val">"card card-ouro"</span>  <span class="cm">/* ✦ destaque */</span></div>
+      </div>
+    </section>
+
+    <!-- ═══ 06 FORMULÁRIOS ═══ -->
+    <section class="sec" id="formularios">
+      <span class="sec-num">06 · Componentes</span>
+      <h2 class="sec-title">Formulários</h2>
+
+      <div class="comp-block">
+        <div class="preview col" style="gap:var(--card-gap)">
+          <div class="field" style="max-width:300px;width:100%">
+            <label class="field-label">Nome completo</label>
+            <input class="field-input" placeholder="Isis Moreira…" type="text">
+            <span class="field-hint">Usado no perfil público</span>
+          </div>
+          <div class="field" style="max-width:300px;width:100%">
+            <label class="field-label">Email</label>
+            <input class="field-input err" placeholder="email@isis-moreira.com" type="email">
+            <span class="field-err">Email inválido</span>
+          </div>
+          <div class="field" style="max-width:300px;width:100%">
+            <label class="field-label">Mensagem</label>
+            <textarea class="field-input" rows="3" placeholder="Escreva aqui…"></textarea>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--card-gap)">
+            <label class="checkbox-row"><input class="checkbox-input" type="checkbox" checked> Aceito os termos</label>
+            <label class="checkbox-row"><input class="checkbox-input" type="checkbox"> Receber novidades</label>
+          </div>
+        </div>
+        <div class="code">
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+<span class="kw">&lt;div</span> <span class="at">class</span>=<span class="val">"field"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span> <span class="at">class</span>=<span class="val">"field-label"</span><span class="kw">&gt;</span>Label<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span> <span class="at">class</span>=<span class="val">"field-input"</span> <span class="at">type</span>=<span class="val">"text"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;span</span> <span class="at">class</span>=<span class="val">"field-hint"</span><span class="kw">&gt;</span>Dica<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+<span class="cm">/* Estado de erro: .err no .field-input */</span></div>
+      </div>
+    </section>
+
+    <!-- ═══ 07 NAVEGAÇÃO ═══ -->
+    <section class="sec" id="navegacao">
+      <span class="sec-num">07 · Componentes</span>
+      <h2 class="sec-title">Navegação</h2>
+
+      <div class="comp-block">
+        <span class="comp-label">Tabs</span>
+        <div class="preview col" style="gap:var(--card-gap)">
+          <div class="tabs">
+            <div class="tab on">Visão Geral</div>
+            <div class="tab">Analytics</div>
+            <div class="tab">Configurações</div>
+            <div class="tab">Integrações</div>
+          </div>
+          <div style="font-size:13px;color:var(--text-2)">Conteúdo da aba ativa aparece aqui.</div>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <span class="comp-label">Breadcrumb</span>
+        <div class="preview">
+          <nav class="breadcrumb">
+            <a href="#">Isis Moreira</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href="#">Componentes</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-cur">Navegação</span>
+          </nav>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <span class="comp-label">Dropdown & Tooltip & Avatares</span>
+        <div class="preview" style="align-items:flex-start;gap:var(--card-gap)">
+          <div class="dd" style="width:200px">
+            <div class="dd-item active">✦ Isis Moreira Pro</div>
+            <div class="dd-item">Meu Ecossistema</div>
+            <div class="dd-item">Configurações</div>
+            <div class="dd-item">Sair</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--card-gap)">
+            <div class="tooltip-wrap">
+              <button class="btn btn-secondary btn-sm">Passe o cursor</button>
+              <div class="tooltip">ISISMOREIRA · v7.0</div>
+            </div>
+            <div class="avatar-group">
+              <div class="avatar avatar-ouro">D</div>
+              <div class="avatar">A</div>
+              <div class="avatar">B</div>
+              <div class="avatar" style="font-size:10px;color:var(--text-3)">+4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 08 FEEDBACK ═══ -->
+    <section class="sec" id="feedback">
+      <span class="sec-num">08 · Componentes</span>
+      <h2 class="sec-title">Feedback & Estado</h2>
+
+      <div class="comp-block">
+        <span class="comp-label">Alertas</span>
+        <div class="preview col tight">
+          <div class="alert alert-ok">
+            <span class="alert-icon">✓</span>
+            <div><div class="alert-title">Salvo com sucesso</div><div class="alert-desc">Suas alterações foram aplicadas.</div></div>
+          </div>
+          <div class="alert alert-info">
+            <span class="alert-icon">✦</span>
+            <div><div class="alert-title">Novidade disponível</div><div class="alert-desc">ISIS v7 foi atualizado.</div></div>
+          </div>
+          <div class="alert alert-warn">
+            <span class="alert-icon">!</span>
+            <div><div class="alert-title">Atenção necessária</div><div class="alert-desc">Verifique as configurações antes de publicar.</div></div>
+          </div>
+          <div class="alert alert-err">
+            <span class="alert-icon">✕</span>
+            <div><div class="alert-title">Erro ao salvar</div><div class="alert-desc">Não foi possível conectar. Tente novamente.</div></div>
+          </div>
+        </div>
+        <div class="code">
+          <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+<span class="kw">&lt;div</span> <span class="at">class</span>=<span class="val">"alert alert-ok"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;span</span> <span class="at">class</span>=<span class="val">"alert-icon"</span><span class="kw">&gt;</span>✓<span class="kw">&lt;/span&gt;</span>
+  <span class="kw">&lt;div&gt;&lt;div</span> <span class="at">class</span>=<span class="val">"alert-title"</span><span class="kw">&gt;</span>Título<span class="kw">&lt;/div&gt;&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+<span class="cm">/* alert-ok · alert-info · alert-warn · alert-err */</span></div>
+      </div>
+
+      <div class="comp-block">
+        <span class="comp-label">Progresso</span>
+        <div class="preview col" style="gap:var(--card-gap)">
+          <div style="width:100%">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-family:var(--mono);font-size:9px;color:var(--text-3);letter-spacing:1px">PROGRESSO GERAL</span>
+              <span style="font-family:var(--mono);font-size:9px;color:var(--accent-text)">72%</span>
+            </div>
+            <div class="progress"><div class="progress-fill" style="width:72%"></div></div>
+          </div>
+          <div style="width:100%">
+            <div class="progress"><div class="progress-fill ok" style="width:90%"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 09 DIRETRIZES ═══ -->
+    <section class="sec" id="diretrizes">
+      <span class="sec-num">09 · Diretrizes</span>
+      <h2 class="sec-title">Uso consciente</h2>
+      <p class="sec-sub">Este sistema é a voz visual de Isis Moreira. Cada desvio precisa ser uma escolha consciente, não um acidente.</p>
+
+      <div class="comp-block">
+        <span class="comp-label">Ouro</span>
+        <div class="guideline-grid">
+          <div class="guideline-col do">
+            <div class="guideline-col-hd">✓ Faça</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> Máximo 3 elementos com ouro por tela</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> Use sempre via var(--ouro), nunca #b4a68c direto</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> Reserve para o que realmente importa na hierarquia</div>
+          </div>
+          <div class="guideline-col dont">
+            <div class="guideline-col-hd">✕ Evite</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Ouro em mais de 3 elementos simultâneos</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Usar o valor fixo #b4a68c; sempre use var(--ouro)</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Combinar texto ouro com fundo ouro no mesmo bloco</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <span class="comp-label">Tipografia</span>
+        <div class="guideline-grid">
+          <div class="guideline-col do">
+            <div class="guideline-col-hd">✓ Faça</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> DM Serif italic para títulos emocionais e manifestos</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> IBM Plex Mono exclusivamente para labels, código e meta</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> Mono eyebrow + serif title: é a assinatura ISIS</div>
+          </div>
+          <div class="guideline-col dont">
+            <div class="guideline-col-hd">✕ Evite</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Serif em corpo de texto longo; reservar para display</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Mono em mais de 3 linhas seguidas fora de código</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Letter-spacing positivo em texto body</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-block">
+        <span class="comp-label">Escrita & Tom</span>
+        <div class="guideline-grid">
+          <div class="guideline-col do">
+            <div class="guideline-col-hd">✓ Faça</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> Ponto, vírgula, dois-pontos, ponto e vírgula</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> ✦ como único ornamento visual da marca</div>
+            <div class="guideline-item"><span class="guideline-mark">✓</span> Frases diretas, sem rodeios, com profundidade</div>
+          </div>
+          <div class="guideline-col dont">
+            <div class="guideline-col-hd">✕ Evite</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Travessões em qualquer contexto de UI</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Emojis em labels, badges, títulos ou UI</div>
+            <div class="guideline-item"><span class="guideline-mark">✕</span> Termos em inglês no conteúdo visível ao usuário</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="manifesto" style="margin-top:0">
+        <p class="manifesto-q">"Identidade não é estética. É estrutura."</p>
+        <p class="manifesto-a">✦ ISIS v7 · Isis Moreira · 2025</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// Injeta números de linha em todos os blocos .code
+document.querySelectorAll('.code').forEach(block => {
+  const btn = block.querySelector('.copy-btn');
+  // Pega apenas os nós que não são o botão copiar
+  const nodes = Array.from(block.childNodes).filter(n => n !== btn);
+  const raw = nodes.map(n => n.outerHTML || n.textContent).join('');
+  const lines = raw.split('\n');
+  const wrapped = lines.map(l => `<span class="code-line">${l}</span>`).join('\n');
+  // Limpa e recria
+  nodes.forEach(n => n.remove());
+  const tmp = document.createElement('div');
+  tmp.innerHTML = wrapped;
+  Array.from(tmp.childNodes).forEach(n => block.appendChild(n));
+});
+
+function adjustPadding() {
+  const nav = document.getElementById('topnav');
+  const main = document.querySelector('.main');
+  if (nav && main) main.style.paddingTop = nav.offsetHeight + 'px';
+}
+adjustPadding();
+window.addEventListener('resize', adjustPadding);
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  const track = document.getElementById('themeTrack');
+  const label = document.getElementById('themeLabel');
+  if (track) track.classList.toggle('active', !isDark);
+  if (label) label.textContent = isDark ? 'Light' : 'Dark';
+}
+
+function navTo(id, el) {
+  const target = document.getElementById(id);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-link').forEach(i => i.classList.remove('on'));
+  if (el) el.classList.add('on');
+}
+
+const sections = ['hero','identidade','cores','tipo','espaco','componentes','formularios','navegacao','feedback','diretrizes'];
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = sections.indexOf(e.target.id);
+      if (idx >= 0) {
+        navLinks.forEach(i => i.classList.remove('on'));
+        navLinks[idx]?.classList.add('on');
+      }
+    }
+  });
+}, { rootMargin: '-40% 0px -40% 0px' });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+
+function copyCode(btn) {
+  const code = btn.parentElement.innerText.replace('Copiar', '').trim();
+  navigator.clipboard?.writeText(code);
+  btn.textContent = 'Copiado';
+  setTimeout(() => btn.textContent = 'Copiar', 1500);
+}
+</script>
+</body>
+</html>
