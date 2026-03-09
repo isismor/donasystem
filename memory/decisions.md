@@ -33,8 +33,9 @@ Telegram ID configurado no allowlist antes de qualquer outra coisa. Nunca deixar
 Antes de CADA compactacao: licoes → lessons.md, decisoes → decisions.md, pendencias → pending.md.
 Compactacao descarta 80% do contexto. Sem extracao = HD formatado sem backup.
 
-### Regra 5 — Todo agente novo começa L1 (Observer)
-Sem autonomia sem historico. L1 = output sempre revisado. Promocao via performance review semanal.
+### Regra 5 — Todo agente novo começa N1 (Junior)
+Sem autonomia sem historico. N1 = output sempre revisado. Promocao via performance review semanal.
+Sistema de niveis: N1 Junior · N2 Pleno · N3 Senior · N4 Principal
 
 ### Regra 6 — Split de modelos por custo
 Crons de execucao: Sonnet. Heartbeats: Haiku. Interacao direta e analise estrategica: Opus.

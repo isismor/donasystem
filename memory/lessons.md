@@ -25,7 +25,7 @@
 - yt-dlp não funciona em VPS por bot detection. Usar Apify ou RapidAPI para transcrições.
 
 ### Sub-agents
-- Todo agente novo começa L1 (Observer). Sem confiança automática.
+- Todo agente novo começa N1 (Junior). Sem confiança automática.
 - Sub-agent travou: retry 2x. Se falhar 2x: alertar Isis. Nunca limbo silencioso.
 - Sub-agents em sandbox isolado não acessam localhost. Fallback manual necessário.
 
