@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório Operacional · Domingo, 8 de Março de 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════
+   ISIS v7 · Tokens
+══════════════════════════════════ */
+:root {
+  --marfim:    #f9f8f4;
+  --creme:     #efede6;
+  --cacao:     #2a2420;
+  --mirror:    #9ba1a8;
+  --ouro:      #b4a68c;
+  --ouro-pale: #d4cec4;
+  --ouro-deep: #7a6e5c;
+
+  --cacao-04:  rgba(42,36,32,.04);
+  --cacao-06:  rgba(42,36,32,.06);
+  --cacao-08:  rgba(42,36,32,.08);
+  --cacao-12:  rgba(42,36,32,.12);
+  --ouro-10:   rgba(180,166,140,.10);
+  --ouro-20:   rgba(180,166,140,.20);
+  --ouro-40:   rgba(180,166,140,.40);
+
+  --text-1:    var(--cacao);
+  --text-2:    rgba(42,36,32,.62);
+  --text-3:    var(--mirror);
+  --accent:    var(--ouro);
+  --accent-t:  var(--ouro-deep);
+  --border-1:  var(--cacao-06);
+  --border-2:  var(--cacao-12);
+  --card-bd:   rgba(180,166,140,.38);
+
+  --ok:    #34A853; --ok-bg: rgba(52,168,83,.08);   --ok-bd:   rgba(52,168,83,.22);
+  --warn:  #F5A623; --warn-bg: rgba(245,166,35,.08); --warn-bd: rgba(245,166,35,.22);
+
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --serif: 'DM Serif Text', Georgia, serif;
+  --mono:  'IBM Plex Mono', 'Courier New', monospace;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── PRINT ── */
+@page { size: A4; margin: 0; }
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+body {
+  font-family: var(--sans);
+  background: #ddd;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════════════════════════
+   PÁGINA BASE
+══════════════════════════════════ */
+.page {
+  width: 210mm;
+  height: 297mm;
+  background: var(--marfim);
+  overflow: hidden;
+  position: relative;
+  page-break-after: always;
+  break-after: page;
+  margin: 0 auto;
+  display: block;
+}
+
+/* ══════════════════════════════════
+   CAPA
+══════════════════════════════════ */
+.cover {
+  background: var(--cacao);
+  display: flex;
+  flex-direction: column;
+}
+
+.cover-bar    { position:absolute; top:0; left:0; width:3px; height:100%; background:var(--ouro); }
+.cover-vline  { position:absolute; top:0; right:72mm; width:1px; height:100%; background:rgba(180,166,140,.07); }
+.cover-bg-txt {
+  position:absolute; bottom:-10px; right:-8px;
+  font-family:var(--serif); font-size:190px; font-style:italic;
+  color:rgba(249,248,244,.03); letter-spacing:-7px; line-height:1;
+  pointer-events:none; user-select:none; white-space:nowrap;
+}
+
+.cover-top    { padding: 44px 52px 0; }
+.cover-logo   { font-family:var(--sans); font-size:9.5px; font-weight:300; letter-spacing:4px; text-transform:uppercase; color:rgba(249,248,244,.38); }
+.cover-logo b { font-weight:700; color:rgba(249,248,244,.65); }
+
+.cover-body   { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 52px; }
+.cover-eye    { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--ouro); margin-bottom:18px; display:block; }
+
+.cover-h1 { font-family:var(--serif); font-size:54px; font-style:italic; color:var(--marfim); line-height:1.0; letter-spacing:-1.5px; margin-bottom:14px; }
+.cover-h1 em { color:var(--ouro); }
+
+.cover-p  { font-size:14px; color:rgba(249,248,244,.48); font-weight:300; margin-bottom:44px; max-width:300px; line-height:1.6; }
+.cover-div{ width:36px; height:1px; background:var(--ouro); margin-bottom:32px; opacity:.6; }
+
+.cover-stats { display:flex; gap:36px; }
+.cs-val      { display:block; font-family:var(--serif); font-size:28px; font-style:italic; color:var(--marfim); line-height:1; margin-bottom:4px; }
+.cs-lbl      { display:block; font-family:var(--mono); font-size:8.5px; color:rgba(249,248,244,.38); letter-spacing:2px; text-transform:uppercase; }
+
+.cover-foot  { padding:0 52px 40px; display:flex; align-items:center; justify-content:space-between; }
+.cover-date  { font-family:var(--mono); font-size:9px; color:rgba(249,248,244,.28); letter-spacing:2px; text-transform:uppercase; }
+.cover-tag   { font-family:var(--mono); font-size:8.5px; color:var(--ouro); letter-spacing:2px; text-transform:uppercase; border:1px solid rgba(180,166,140,.22); padding:3px 9px; border-radius:5px; }
+
+/* ══════════════════════════════════
+   PÁGINA INTERNA
+══════════════════════════════════ */
+.pg {
+  width:210mm; height:297mm;
+  background:var(--marfim);
+  padding: 36px 50px 44px;
+  overflow:hidden;
+  position:relative;
+  page-break-after:always;
+  break-after:page;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── cabeçalho ── */
+.pg-head {
+  display:flex; align-items:center; justify-content:space-between;
+  padding-bottom:13px; border-bottom:1px solid var(--border-1); margin-bottom:30px;
+  flex-shrink:0;
+}
+.ph-logo { font-family:var(--sans); font-size:8.5px; font-weight:300; letter-spacing:4px; text-transform:uppercase; color:var(--text-3); }
+.ph-logo b { font-weight:700; color:var(--text-2); }
+.ph-tag  { font-family:var(--mono); font-size:8.5px; color:var(--text-3); letter-spacing:1.5px; text-transform:uppercase; }
+
+/* ── footer ── */
+.pg-foot {
+  position:absolute; bottom:28px; left:50px; right:50px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-top:1px solid var(--border-1); padding-top:10px;
+}
+.pf-txt  { font-family:var(--mono); font-size:8px; color:var(--text-3); letter-spacing:1px; text-transform:uppercase; }
+.pf-num  { font-family:var(--mono); font-size:8px; color:var(--text-3); }
+
+/* ── seção ── */
+.sec      { margin-bottom:22px; flex-shrink:0; }
+.sec-eye  { font-family:var(--mono); font-size:8.5px; font-weight:700; color:var(--accent-t); letter-spacing:3px; text-transform:uppercase; margin-bottom:5px; display:block; }
+.sec-h    { font-family:var(--serif); font-size:26px; font-style:italic; color:var(--text-1); letter-spacing:-0.5px; line-height:1.1; margin-bottom:5px; }
+.sec-sub  { font-size:12.5px; color:var(--text-2); line-height:1.55; font-weight:300; max-width:520px; }
+.rule     { height:1px; background:var(--border-1); margin:18px 0; flex-shrink:0; }
+
+/* ══════════════════════════════════
+   COMPONENTES
+══════════════════════════════════ */
+
+/* cards */
+.card {
+  background:var(--creme);
+  border:1px solid var(--card-bd);
+  border-radius:10px;
+  padding:20px 22px;
+}
+
+.c-eye   { font-family:var(--mono); font-size:8.5px; color:var(--accent-t); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; display:block; }
+.c-title { font-family:var(--serif); font-size:17px; font-style:italic; color:var(--text-1); line-height:1.2; margin-bottom:6px; }
+.c-body  { font-size:12.5px; color:var(--text-2); line-height:1.6; font-weight:300; }
+
+.grid-2  { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.grid-3  { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+
+/* badge */
+.badge { display:inline-flex; align-items:center; gap:5px; font-family:var(--mono); font-size:8px; font-weight:500; letter-spacing:1px; text-transform:uppercase; padding:3px 8px; border-radius:5px; }
+.b-ok  { background:var(--ok-bg); border:1px solid var(--ok-bd); color:var(--ok); }
+.b-warn{ background:var(--warn-bg); border:1px solid var(--warn-bd); color:var(--warn); }
+.b-dot { width:5px; height:5px; border-radius:50%; background:currentColor; }
+
+/* highlight strip */
+.hs {
+  background:var(--creme);
+  border-left:2.5px solid var(--ouro);
+  border-radius:0 8px 8px 0;
+  padding:12px 16px;
+  margin-bottom:10px;
+}
+.hs-lbl  { font-family:var(--mono); font-size:8.5px; font-weight:700; color:var(--accent-t); letter-spacing:2px; text-transform:uppercase; margin-bottom:3px; display:block; }
+.hs-txt  { font-size:12.5px; color:var(--text-1); line-height:1.5; }
+
+/* delivery rows */
+.drow    { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border-1); }
+.drow:last-child { border-bottom:none; }
+.dl      { font-size:12.5px; color:var(--text-1); }
+.dm      { font-family:var(--mono); font-size:8px; color:var(--text-3); letter-spacing:.5px; margin-top:1px; }
+.tag     { display:inline-block; font-family:var(--mono); font-size:8px; color:var(--accent-t); background:rgba(180,166,140,.08); border:1px solid rgba(180,166,140,.25); padding:2px 6px; border-radius:4px; }
+
+/* vault rows */
+.vrow    { display:flex; align-items:center; gap:10px; padding:8.5px 0; border-bottom:1px solid var(--border-1); }
+.vrow:last-child { border-bottom:none; }
+.vdot    { width:7px; height:7px; border-radius:50%; background:var(--ok); flex-shrink:0; }
+.vdot-w  { background:var(--warn); }
+.vname   { font-size:12.5px; color:var(--text-1); flex:1; }
+.vid     { font-family:var(--mono); font-size:8px; color:var(--text-3); letter-spacing:.3px; }
+
+/* rule blocks (regras) */
+.rule-block {
+  background:var(--cacao);
+  border-radius:8px;
+  padding:14px 16px;
+}
+.rb-num  { font-family:var(--mono); font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ouro); margin-bottom:4px; display:block; }
+.rb-h    { font-family:var(--sans); font-size:12px; font-weight:600; color:var(--marfim); margin-bottom:3px; }
+.rb-p    { font-size:11px; color:rgba(249,248,244,.50); line-height:1.5; font-weight:300; }
+
+/* pending */
+.pend    { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid var(--border-1); }
+.pend:last-child { border-bottom:none; }
+.pend-ico{ width:16px; height:16px; border-radius:50%; border:1.5px solid var(--ouro-pale); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.pend-dot{ width:5px; height:5px; border-radius:50%; background:var(--ouro); }
+.pend-dot-ok { background:var(--ok); }
+.pend-l  { font-size:12.5px; color:var(--text-1); line-height:1.4; }
+.pend-m  { font-family:var(--mono); font-size:8px; color:var(--text-3); margin-top:2px; }
+
+/* big stat */
+.bval    { font-family:var(--serif); font-size:38px; font-style:italic; color:var(--text-1); line-height:1; margin-bottom:4px; display:block; }
+.blbl    { font-family:var(--mono); font-size:8.5px; color:var(--text-3); letter-spacing:2px; text-transform:uppercase; }
+
+/* op list */
+.opl     { list-style:none; display:flex; flex-direction:column; gap:7px; }
+.opi     { display:flex; align-items:flex-start; gap:9px; font-size:12.5px; color:var(--text-2); line-height:1.5; }
+.opdot   { width:5px; height:5px; border-radius:50%; background:var(--ok); margin-top:4px; flex-shrink:0; }
+
+/* color swatch */
+.swatch  { width:24px; height:24px; border-radius:5px; flex-shrink:0; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ CAPA ═══════════════ -->
+<div class="page cover">
+  <div class="cover-bar"></div>
+  <div class="cover-vline"></div>
+  <div class="cover-bg-txt">Dona</div>
+
+  <div class="cover-top">
+    <div class="cover-logo"><b>ISIS</b> MOREIRA &nbsp;·&nbsp; Dona</div>
+  </div>
+
+  <div class="cover-body">
+    <span class="cover-eye">Relatório Operacional</span>
+    <h1 class="cover-h1">O que<br>fizemos<br><em>hoje.</em></h1>
+    <p class="cover-p">Infraestrutura, integrações e design system. Tudo que foi construído no domingo, 8 de março de 2026.</p>
+    <div class="cover-div"></div>
+    <div class="cover-stats">
+      <div><span class="cs-val">12</span><span class="cs-lbl">Entregas</span></div>
+      <div><span class="cs-val">8</span><span class="cs-lbl">Itens no vault</span></div>
+      <div><span class="cs-val">5</span><span class="cs-lbl">APIs ativas</span></div>
+    </div>
+  </div>
+
+  <div class="cover-foot">
+    <span class="cover-date">08 · 03 · 2026 &nbsp;·&nbsp; São Paulo</span>
+    <span class="cover-tag">Confidencial</span>
+  </div>
+</div>
+
+<!-- ═══════════════ P2 — VISÃO GERAL ═══════════════ -->
+<div class="pg">
+  <div class="pg-head">
+    <span class="ph-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="ph-tag">Relatório · 08·03·2026</span>
+  </div>
+
+  <div class="sec">
+    <span class="sec-eye">01 · Contexto</span>
+    <h2 class="sec-h">Primeiro dia de operação.</h2>
+    <p class="sec-sub">Esta foi a sessão inaugural de Dona. Nenhuma integração ativa no início do dia. Ao final da noite, a infraestrutura base estava de pé.</p>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:20px;">
+    <div class="card" style="text-align:center; padding:18px 12px;">
+      <span class="bval">12</span>
+      <span class="blbl">entregas</span>
+    </div>
+    <div class="card" style="text-align:center; padding:18px 12px;">
+      <span class="bval">5</span>
+      <span class="blbl">APIs ativas</span>
+    </div>
+    <div class="card" style="text-align:center; padding:18px 12px;">
+      <span class="bval">8</span>
+      <span class="blbl">itens no vault</span>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="sec">
+    <span class="sec-eye">02 · Linha do tempo</span>
+    <h2 class="sec-h">Como o dia evoluiu.</h2>
+  </div>
+
+  <div class="hs">
+    <span class="hs-lbl">Manhã · Setup inicial</span>
+    <span class="hs-txt">Primeira sessão. Mapeamento de skills disponíveis. Arquitetura de memória definida. Tom, regras e limites estabelecidos.</span>
+  </div>
+
+  <div class="hs">
+    <span class="hs-lbl">Tarde · Integrações</span>
+    <span class="hs-txt">RapidAPI com 5 endpoints. Canva Connect com OAuth completo. GitHub com deploy key SSH. Coolify com token de deploy testado. ElevenLabs salvo (bloqueado por pagamento). FFmpeg instalado sem sudo.</span>
+  </div>
+
+  <div class="hs">
+    <span class="hs-lbl">Noite · Doutrina e sistema</span>
+    <span class="hs-txt">10 Regras Invioláveis documentadas. Fluxo de publicação do site definido. Vault "Dona" com 8 itens estruturados.</span>
+  </div>
+
+  <div class="hs" style="margin-bottom:0;">
+    <span class="hs-lbl">Madrugada · Design system</span>
+    <span class="hs-txt">Design System ISIS v7 recebido, extraído e indexado. Tokens, tipografia, paleta e filosofia visual salvos para uso em todos os materiais futuros.</span>
+  </div>
+
+  <div class="pg-foot">
+    <span class="pf-txt">Dona · Relatório Operacional</span>
+    <span class="pf-num">02</span>
+  </div>
+</div>
+
+<!-- ═══════════════ P3 — APIS ═══════════════ -->
+<div class="pg">
+  <div class="pg-head">
+    <span class="ph-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="ph-tag">APIs e Plataformas · 08·03·2026</span>
+  </div>
+
+  <div class="sec">
+    <span class="sec-eye">03 · Integrações</span>
+    <h2 class="sec-h">O que está conectado.</h2>
+    <p class="sec-sub">Todas configuradas, testadas e salvas no 1Password vault "Dona".</p>
+  </div>
+
+  <!-- RapidAPI -->
+  <div class="card" style="margin-bottom:14px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+      <div>
+        <span class="c-eye">RapidAPI · 5 endpoints</span>
+        <h3 class="c-title">APIs via proxy</h3>
+      </div>
+      <span class="badge b-ok"><span class="b-dot"></span>Ativo</span>
+    </div>
+    <div class="drow">
+      <div><div class="dl">Instagram Analyzer</div><div class="dm">instagram120.p.rapidapi.com · Posts e Reels por usuário</div></div>
+      <span class="tag">Ativo</span>
+    </div>
+    <div class="drow">
+      <div><div class="dl">YouTube Insights</div><div class="dm">youtube138.p.rapidapi.com · Vídeos de canal</div></div>
+      <span class="tag">Ativo</span>
+    </div>
+    <div class="drow">
+      <div><div class="dl">Whisper URL</div><div class="dm">whisper-from-url.p.rapidapi.com · Transcrição por URL</div></div>
+      <span class="tag">Ativo</span>
+    </div>
+    <div class="drow">
+      <div><div class="dl">Background Removal</div><div class="dm">background-removal4.p.rapidapi.com · Remove fundo</div></div>
+      <span class="tag">Ativo</span>
+    </div>
+    <div class="drow">
+      <div><div class="dl">YakPDF</div><div class="dm">yakpdf.p.rapidapi.com · HTML para PDF</div></div>
+      <span class="tag">Ativo</span>
+    </div>
+  </div>
+
+  <!-- Canva -->
+  <div class="card" style="margin-bottom:14px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+      <div>
+        <span class="c-eye">Canva Connect · OAuth</span>
+        <h3 class="c-title">Exportação e assets programáticos</h3>
+      </div>
+      <span class="badge b-ok"><span class="b-dot"></span>Ativo</span>
+    </div>
+    <ul class="opl">
+      <li class="opi"><span class="opdot"></span>OAuth flow completo (authorization_code) · access token + refresh token salvos</li>
+      <li class="opi"><span class="opdot"></span>Skill canva-connect instalada no workspace</li>
+      <li class="opi"><span class="opdot"></span>Operações: listar designs, exportar PNG/PDF, upload de assets, autofill de templates</li>
+    </ul>
+  </div>
+
+  <!-- GitHub + Coolify -->
+  <div class="grid-2">
+    <div class="card">
+      <span class="badge b-ok" style="margin-bottom:8px;"><span class="b-dot"></span>Ativo</span>
+      <span class="c-eye">GitHub · isismor/donasystem</span>
+      <h3 class="c-title">Deploy key SSH</h3>
+      <p class="c-body">Chave gerada com permissão de escrita. Push direto do servidor.</p>
+    </div>
+    <div class="card">
+      <span class="badge b-ok" style="margin-bottom:8px;"><span class="b-dot"></span>Testado</span>
+      <span class="c-eye">Coolify · p4wc0448</span>
+      <h3 class="c-title">Deploy automático</h3>
+      <p class="c-body">Token salvo. Redeploy via GET na API. Confirmado com sucesso.</p>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span class="pf-txt">Dona · Relatório Operacional</span>
+    <span class="pf-num">03</span>
+  </div>
+</div>
+
+<!-- ═══════════════ P4 — INFRAESTRUTURA + VAULT ═══════════════ -->
+<div class="pg">
+  <div class="pg-head">
+    <span class="ph-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="ph-tag">Infraestrutura · 08·03·2026</span>
+  </div>
+
+  <div class="sec">
+    <span class="sec-eye">04 · Ferramentas locais</span>
+    <h2 class="sec-h">O que roda no servidor.</h2>
+    <p class="sec-sub">Instalado e configurado em srv1464443 sem acesso root.</p>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:14px;">
+    <div class="card">
+      <span class="badge b-ok" style="margin-bottom:8px;"><span class="b-dot"></span>Instalado</span>
+      <span class="c-eye">FFmpeg · v7.0.2</span>
+      <h3 class="c-title">Processamento de vídeo</h3>
+      <p class="c-body" style="margin-bottom:8px;">Via npm ffmpeg-static, sem sudo. PATH configurado. Extrai frames e clipes de Reels.</p>
+      <span style="font-family:var(--mono);font-size:8px;color:var(--text-3);">/home/openclaw/.local/bin/ffmpeg</span>
+    </div>
+    <div class="card">
+      <span class="badge b-warn" style="margin-bottom:8px;"><span class="b-dot"></span>Pendente</span>
+      <span class="c-eye">ElevenLabs · Voz Isis</span>
+      <h3 class="c-title">Geração de áudio</h3>
+      <p class="c-body" style="margin-bottom:8px;">API key e Voice ID salvos. Bloqueado por fatura pendente. Pronto para ativar após pagamento.</p>
+      <span style="font-family:var(--mono);font-size:8px;color:var(--text-3);">Voice ID: p9u1yM1aiWGJtLMyBjGq</span>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:18px;">
+    <div class="card">
+      <span class="badge b-warn" style="margin-bottom:8px;"><span class="b-dot"></span>Bloqueado</span>
+      <span class="c-eye">Manim</span>
+      <h3 class="c-title">Requer dependências de sistema</h3>
+      <p class="c-body">Precisa de cairo/pango sem sudo. Alternativa: moviepy + Pillow (instalação pendente).</p>
+    </div>
+    <div class="card">
+      <span class="badge b-ok" style="margin-bottom:8px;"><span class="b-dot"></span>Definido</span>
+      <span class="c-eye">Fluxo de publicação</span>
+      <h3 class="c-title">Site donasystem</h3>
+      <p class="c-body">Isis aprova. Dona faz push no GitHub. Dona dispara redeploy no Coolify. Site no ar.</p>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="sec">
+    <span class="sec-eye">05 · 1Password Vault "Dona"</span>
+    <h2 class="sec-h">Credenciais estruturadas.</h2>
+  </div>
+
+  <div class="card">
+    <div class="vrow"><div class="vdot"></div><span class="vname">RapidAPI Key</span><span class="vid">4eplfys2ib5fib7rh4boutpiee</span></div>
+    <div class="vrow"><div class="vdot"></div><span class="vname">Canva API Key</span><span class="vid">qhauu2x23oxqttuu5c6dmjc6dy</span></div>
+    <div class="vrow"><div class="vdot"></div><span class="vname">GitHub · donasystem</span><span class="vid">klw4e4ibjg5ik3cnek4z6jm6ae</span></div>
+    <div class="vrow"><div class="vdot"></div><span class="vname">Coolify · donasystem</span><span class="vid">ewxldb7prouvqwy64nwzopsaye</span></div>
+    <div class="vrow"><div class="vdot vdot-w"></div><span class="vname">ElevenLabs <span style="font-family:var(--mono);font-size:8px;color:var(--warn);border:1px solid var(--warn-bd);padding:1px 5px;border-radius:3px;background:var(--warn-bg);margin-left:6px;">fatura pendente</span></span><span class="vid">w6v6ugee4zommyc7ln2puwvttq</span></div>
+    <div class="vrow"><div class="vdot"></div><span class="vname">Open AI</span><span class="vid">vault "Dona"</span></div>
+    <div class="vrow"><div class="vdot"></div><span class="vname">Google Gemini</span><span class="vid">vault "Dona"</span></div>
+    <div class="vrow"><div class="vdot"></div><span class="vname">Cademi</span><span class="vid">vault "Dona"</span></div>
+  </div>
+
+  <div class="pg-foot">
+    <span class="pf-txt">Dona · Relatório Operacional</span>
+    <span class="pf-num">04</span>
+  </div>
+</div>
+
+<!-- ═══════════════ P5 — 10 REGRAS ═══════════════ -->
+<div class="pg">
+  <div class="pg-head">
+    <span class="ph-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="ph-tag">Doutrina · 08·03·2026</span>
+  </div>
+
+  <div class="sec">
+    <span class="sec-eye">06 · Decisões permanentes</span>
+    <h2 class="sec-h">10 Regras Invioláveis.</h2>
+    <p class="sec-sub">Lições de 13 dias em produção. Nunca ignorar.</p>
+  </div>
+
+  <div class="grid-2" style="gap:10px;">
+    <div class="rule-block">
+      <span class="rb-num">01</span>
+      <div class="rb-h">Crons: isolated + agentTurn</div>
+      <div class="rb-p">Nunca systemEvent + main. durationMs ~0ms = não executa nada.</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">02</span>
+      <div class="rb-h">Nunca hardcodar credenciais</div>
+      <div class="rb-p">Chaves no 1Password ou .env (chmod 600). Zero exceções.</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">03</span>
+      <div class="rb-h">dmPolicy: allowlist desde o Dia 1</div>
+      <div class="rb-p">Telegram ID no allowlist antes de qualquer coisa. Nunca "open".</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">04</span>
+      <div class="rb-h">Extrair lições ANTES de compactar</div>
+      <div class="rb-p">Compactação descarta 80% do contexto. Sem extração = HD formatado.</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">05</span>
+      <div class="rb-h">Todo agente começa L1</div>
+      <div class="rb-p">Sem autonomia sem histórico. Output revisado. Promoção via performance.</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">06</span>
+      <div class="rb-h">Split de modelos por custo</div>
+      <div class="rb-p">Crons: Sonnet. Heartbeats: Haiku. Análise: Opus. Com split = ~$18-36/mês.</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">07</span>
+      <div class="rb-h">Backup antes de mudanças estruturais</div>
+      <div class="rb-p">config.patch reinicia gateway e mata crons. Salvar ROLLBACK.md antes.</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">08</span>
+      <div class="rb-h">Sub-agent travou: retry 2x, depois alerta</div>
+      <div class="rb-p">Nunca fire and forget. Falhou 2x = alerta imediato para Isis.</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">09</span>
+      <div class="rb-h">SOUL.md personalizado não é opcional</div>
+      <div class="rb-p">Anti-patterns com exemplos. SOUL.md genérico = ChatGPT caro.</div>
+    </div>
+    <div class="rule-block">
+      <span class="rb-num">10</span>
+      <div class="rb-h">Creators são skills, não agentes</div>
+      <div class="rb-p">1 agente + 8 skills maior que 8 agentes. Cada extra = mais custo, mais falha.</div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span class="pf-txt">Dona · Relatório Operacional</span>
+    <span class="pf-num">05</span>
+  </div>
+</div>
+
+<!-- ═══════════════ P6 — DESIGN SYSTEM + PENDÊNCIAS ═══════════════ -->
+<div class="pg" style="page-break-after: auto; break-after: auto;">
+  <div class="pg-head">
+    <span class="ph-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="ph-tag">Design + Próximos passos · 08·03·2026</span>
+  </div>
+
+  <div class="sec">
+    <span class="sec-eye">07 · Design System ISIS v7</span>
+    <h2 class="sec-h">Identidade visual indexada.</h2>
+    <p class="sec-sub">Arquivo HTML de 74kb recebido e salvo. Tokens prontos para uso em qualquer material.</p>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:18px;">
+    <div class="card">
+      <span class="c-eye">Paleta de cores</span>
+      <div style="display:flex; gap:7px; margin-bottom:10px; align-items:center; flex-wrap:wrap;">
+        <div class="swatch" style="background:#f9f8f4;border:1px solid rgba(42,36,32,.15);"></div>
+        <div class="swatch" style="background:#efede6;border:1px solid rgba(42,36,32,.12);"></div>
+        <div class="swatch" style="background:#2a2420;"></div>
+        <div class="swatch" style="background:#b4a68c;"></div>
+        <div class="swatch" style="background:#7a6e5c;"></div>
+        <div class="swatch" style="background:#9ba1a8;"></div>
+      </div>
+      <p class="c-body" style="font-size:11.5px;">Marfim #f9f8f4 · Creme #efede6 · Cacau #2a2420<br>Ouro #b4a68c · Ouro Deep #7a6e5c · Mirror #9ba1a8</p>
+    </div>
+    <div class="card">
+      <span class="c-eye">Tipografia</span>
+      <div style="font-family:'DM Serif Text',serif;font-size:17px;font-style:italic;color:#2a2420;margin-bottom:5px;">DM Serif Text</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(42,36,32,.65);margin-bottom:4px;">DM Sans · corpo e UI</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:#9ba1a8;">IBM PLEX MONO · labels</div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="sec">
+    <span class="sec-eye">08 · Próximos passos</span>
+    <h2 class="sec-h">O que ainda está aberto.</h2>
+  </div>
+
+  <div class="card">
+    <div class="pend">
+      <div class="pend-ico"><div class="pend-dot" style="background:var(--warn);"></div></div>
+      <div>
+        <div class="pend-l">Pagar fatura ElevenLabs</div>
+        <div class="pend-m">Depois: testar geração de áudio com a voz de Isis</div>
+      </div>
+    </div>
+    <div class="pend">
+      <div class="pend-ico"><div class="pend-dot"></div></div>
+      <div>
+        <div class="pend-l">Criar conta Creatomate e mandar API key</div>
+        <div class="pend-m">creatomate.com · configurar para produção de VSLs</div>
+      </div>
+    </div>
+    <div class="pend">
+      <div class="pend-ico"><div class="pend-dot"></div></div>
+      <div>
+        <div class="pend-l">Instalar moviepy + Pillow</div>
+        <div class="pend-m">Alternativa ao Manim para animações · instalação interrompida por SIGTERM</div>
+      </div>
+    </div>
+    <div class="pend">
+      <div class="pend-ico"><div class="pend-dot"></div></div>
+      <div>
+        <div class="pend-l">Confirmar uso de Twitter/X e Notion</div>
+        <div class="pend-m">Para priorizar ou descartar essas integrações</div>
+      </div>
+    </div>
+    <div class="pend">
+      <div class="pend-ico"><div class="pend-dot"></div></div>
+      <div>
+        <div class="pend-l">Supabase · URL + anon key quando quiser integrar</div>
+        <div class="pend-m">Banco de dados estruturado · pendente decisão de uso</div>
+      </div>
+    </div>
+    <div class="pend">
+      <div class="pend-ico"><div class="pend-dot pend-dot-ok"></div></div>
+      <div>
+        <div class="pend-l" style="color:var(--text-2);">Design system de referência para materiais</div>
+        <div class="pend-m">Concluído nesta sessão · indexado em memory/design-system.md</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-foot">
+    <span class="pf-txt">Dona · Relatório Operacional</span>
+    <span class="pf-num">06</span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -35,6 +35,18 @@
 
 ---
 
+### PDF com design system
+- `height: 297mm; overflow: hidden` em cada página é inviolável. Nunca `min-height` em PDF.
+- `break-inside: avoid` + `min-height` = espaços em branco gigantes entre blocos. Bug clássico de impressão CSS.
+- Distribuir conteúdo explicitamente por página. Não depender do algoritmo automático de quebra do browser.
+- YakPDF: `wait.for: "timeout", milliseconds: 4000`. Nunca usar `"navigation"` (erro 400).
+- Google Fonts carregam normalmente no Chromium headless do YakPDF.
+- Template base salvo em `relatorio-domingo-v2.html` — reusar para próximos relatórios.
+
+### Arquivos via Telegram
+- HTML grande (75kb+) colado no chat trava a sessão. Sempre enviar como arquivo anexo.
+- Arquivos de até 1,5MB chegam sem problema via Telegram.
+
 ## Táticas
 
 ### Notion API

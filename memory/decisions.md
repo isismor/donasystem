@@ -55,6 +55,11 @@ SOUL.md generico = agente generico = ChatGPT caro.
 LinkedIn Creator, Newsletter Writer, Instagram Caption = prompts/skills dentro de 1 agente.
 1 agente com 8 skills > 8 agentes separados. Cada agente extra = mais custo, mais falha, cold start.
 
+### Design system como fonte da verdade (09/03/2026)
+Qualquer material visual gerado por Dona usa obrigatoriamente os tokens do Design System ISIS v7.
+Arquivo em `memory/design-system-isis-v7.html` e resumo em `memory/design-system.md`.
+Nunca improvisar cores, fontes ou espaçamentos fora do sistema.
+
 ### Bonus — 3 regras operacionais
 - Espacar crons por 15-30 min (colisao = rate limit)
 - config.patch em horario sem crons (reinicia gateway e mata crons rodando)

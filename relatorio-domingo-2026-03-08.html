@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório Operacional · Domingo, 8 de Março de 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════
+   ISIS v7 · Tokens Base
+═══════════════════════════════════════════ */
+:root {
+  --marfim:    #f9f8f4;
+  --creme:     #efede6;
+  --cacao:     #2a2420;
+  --mirror:    #9ba1a8;
+  --ouro:      #b4a68c;
+  --ouro-pale: #d4cec4;
+  --ouro-deep: #7a6e5c;
+
+  --cacao-06:  rgba(42,36,32,.06);
+  --cacao-08:  rgba(42,36,32,.08);
+  --cacao-12:  rgba(42,36,32,.12);
+  --cacao-20:  rgba(42,36,32,.20);
+  --ouro-20:   rgba(180,166,140,.20);
+  --ouro-30:   rgba(180,166,140,.30);
+
+  --bg:        var(--marfim);
+  --bg-card:   var(--creme);
+  --text-1:    var(--cacao);
+  --text-2:    rgba(42,36,32,.65);
+  --text-3:    var(--mirror);
+  --accent:    var(--ouro);
+  --accent-text: var(--ouro-deep);
+  --border-1:  var(--cacao-06);
+  --border-2:  var(--cacao-12);
+
+  --sans:  'DM Sans', sans-serif;
+  --serif: 'DM Serif Text', serif;
+  --mono:  'IBM Plex Mono', monospace;
+
+  --t-xs:  11px;
+  --t-sm:  13px;
+  --t-md:  15px;
+  --t-lg:  18px;
+  --t-xl:  24px;
+  --t-2xl: 32px;
+  --t-3xl: 48px;
+
+  --d-xs:  8px;
+  --d-sm:  12px;
+  --d-md:  16px;
+  --d-lg:  24px;
+  --d-xl:  40px;
+  --d-2xl: 64px;
+
+  --r-sm:  6px;
+  --r-md:  8px;
+  --r-lg:  10px;
+  --r-xl:  14px;
+  --r-2xl: 20px;
+
+  --card-gap:    24px;
+  --card-pad:    28px;
+  --card-pad-sm: 16px;
+  --card-border: rgba(180,166,140,.40);
+
+  --ok:       #34A853;
+  --ok-bg:    rgba(52,168,83,.08);
+  --ok-bd:    rgba(52,168,83,.20);
+  --warn:     #F5A623;
+  --warn-bg:  rgba(245,166,35,.08);
+  --warn-bd:  rgba(245,166,35,.20);
+  --err:      #E03131;
+  --err-bg:   rgba(224,49,49,.08);
+  --err-bd:   rgba(224,49,49,.20);
+
+  --track-logo: 4px;
+  --track-eye:  2.5px;
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── PDF / PRINT ─── */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page-break { page-break-after: always; break-after: page; }
+  .no-break { page-break-inside: avoid; break-inside: avoid; }
+  .no-break-before { page-break-before: avoid; break-before: avoid; }
+}
+
+/* ─── BASE ─── */
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text-1);
+  font-size: var(--t-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════
+   PÁGINA — wrapper
+═══════════════════════════════════════════ */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   CAPA
+═══════════════════════════════════════════ */
+.cover {
+  background: var(--cacao);
+  width: 210mm;
+  height: 297mm;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--ouro);
+}
+
+.cover-grid-line {
+  position: absolute;
+  top: 0;
+  right: 80mm;
+  width: 1px;
+  height: 100%;
+  background: rgba(180,166,140,.08);
+}
+
+.cover-top {
+  padding: 48px 56px 0;
+  flex-shrink: 0;
+}
+
+.cover-logo {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: var(--track-logo);
+  text-transform: uppercase;
+  color: rgba(249,248,244,.40);
+}
+.cover-logo b {
+  font-weight: 700;
+  color: rgba(249,248,244,.70);
+}
+
+.cover-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 56px;
+}
+
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.cover-title {
+  font-family: var(--serif);
+  font-size: 52px;
+  font-style: italic;
+  color: var(--marfim);
+  line-height: 1.0;
+  letter-spacing: -1.5px;
+  margin-bottom: 12px;
+}
+
+.cover-title em {
+  color: var(--ouro);
+  font-style: italic;
+}
+
+.cover-subtitle {
+  font-size: var(--t-md);
+  color: rgba(249,248,244,.50);
+  font-weight: 300;
+  margin-bottom: 48px;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+.cover-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--ouro);
+  margin-bottom: 36px;
+  opacity: 0.6;
+}
+
+.cover-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.cover-stat-val {
+  display: block;
+  font-family: var(--serif);
+  font-size: 26px;
+  font-style: italic;
+  color: var(--marfim);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.cover-stat-lbl {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: rgba(249,248,244,.40);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.cover-bottom {
+  padding: 0 56px 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.cover-date {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(249,248,244,.30);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.cover-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ouro);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid rgba(180,166,140,.25);
+  padding: 4px 10px;
+  border-radius: var(--r-sm);
+}
+
+.cover-bg-text {
+  position: absolute;
+  bottom: -20px;
+  right: -10px;
+  font-family: var(--serif);
+  font-size: 200px;
+  font-style: italic;
+  color: rgba(249,248,244,.03);
+  letter-spacing: -8px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════
+   PÁGINA INTERNA — layout
+═══════════════════════════════════════════ */
+.inner-page {
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--bg);
+  padding: 48px 56px;
+  position: relative;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-1);
+  margin-bottom: 40px;
+}
+
+.page-header-logo {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: var(--track-logo);
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.page-header-logo b { font-weight: 700; color: var(--text-2); }
+
+.page-header-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ─── SEÇÃO INTERNA ─── */
+.sec {
+  margin-bottom: 36px;
+}
+
+.sec-eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent-text);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.sec-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-style: italic;
+  color: var(--text-1);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.sec-sub {
+  font-size: var(--t-sm);
+  color: var(--text-2);
+  margin-bottom: 24px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.sec-rule {
+  height: 1px;
+  background: var(--border-1);
+  margin: 20px 0;
+}
+
+/* ─── CARDS ─── */
+.card-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--card-gap);
+}
+
+.card-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--card-gap);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-lg);
+  padding: var(--card-pad);
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.card-sm {
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-lg);
+  padding: var(--card-pad-sm);
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.card-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent-text);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.card-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--text-1);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.card-body {
+  font-size: var(--t-sm);
+  color: var(--text-2);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ─── STATUS BADGE ─── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--r-sm);
+  margin-bottom: 12px;
+}
+
+.badge-ok {
+  background: var(--ok-bg);
+  border: 1px solid var(--ok-bd);
+  color: var(--ok);
+}
+
+.badge-warn {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-bd);
+  color: var(--warn);
+}
+
+.badge-err {
+  background: var(--err-bg);
+  border: 1px solid var(--err-bd);
+  color: var(--err);
+}
+
+.badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ─── LISTA OPERACIONAL ─── */
+.op-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.op-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: var(--t-sm);
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+.op-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ouro);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.op-dot-ok {
+  background: var(--ok);
+}
+
+.op-dot-warn {
+  background: var(--warn);
+}
+
+/* ─── TAG TÉCNICA ─── */
+.tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  background: var(--bg);
+  border: 1px solid var(--border-2);
+  padding: 2px 7px;
+  border-radius: var(--r-sm);
+  letter-spacing: 0.5px;
+}
+
+.tag-accent {
+  color: var(--accent-text);
+  background: rgba(180,166,140,.06);
+  border-color: rgba(180,166,140,.25);
+}
+
+/* ─── LINHA DE ENTREGA ─── */
+.delivery-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-1);
+  break-inside: avoid;
+}
+.delivery-row:last-child { border-bottom: none; }
+
+.delivery-label {
+  font-size: var(--t-sm);
+  color: var(--text-1);
+  font-weight: 400;
+}
+
+.delivery-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+/* ─── REGRAS BLOCO ─── */
+.rule-block {
+  background: var(--cacao);
+  border-radius: var(--r-md);
+  padding: 20px 24px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.rule-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.rule-title {
+  font-family: var(--sans);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--marfim);
+  margin-bottom: 4px;
+}
+
+.rule-body {
+  font-size: 12px;
+  color: rgba(249,248,244,.55);
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+/* ─── REGRAS GRID ─── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ─── PENDÊNCIAS ─── */
+.pending-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-1);
+  break-inside: avoid;
+}
+.pending-item:last-child { border-bottom: none; }
+
+.pending-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ouro-pale);
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pending-icon-inner {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ouro);
+}
+
+.pending-label {
+  font-size: var(--t-sm);
+  color: var(--text-1);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.pending-meta {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+/* ─── FOOTER ─── */
+.page-footer {
+  position: absolute;
+  bottom: 32px;
+  left: 56px;
+  right: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-1);
+  padding-top: 12px;
+}
+
+.footer-text {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.footer-page {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+
+/* ─── HIGHLIGHT STRIP ─── */
+.highlight-strip {
+  background: linear-gradient(135deg, var(--creme) 0%, rgba(180,166,140,.08) 100%);
+  border-left: 3px solid var(--ouro);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  padding: 16px 20px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin-bottom: 16px;
+}
+
+.hs-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent-text);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.hs-text {
+  font-size: var(--t-sm);
+  color: var(--text-1);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* ─── VAULT ITEM ─── */
+.vault-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-1);
+  break-inside: avoid;
+}
+.vault-row:last-child { border-bottom: none; }
+
+.vault-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex-shrink: 0;
+}
+
+.vault-dot-warn { background: var(--warn); }
+
+.vault-name {
+  font-size: var(--t-sm);
+  color: var(--text-1);
+  flex: 1;
+}
+
+.vault-id {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+}
+
+/* ─── NÚMERO GRANDE ─── */
+.big-num {
+  font-family: var(--serif);
+  font-size: 40px;
+  font-style: italic;
+  color: var(--text-1);
+  line-height: 1;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.big-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════
+     CAPA
+════════════════════════ -->
+<div class="page cover page-break">
+  <div class="cover-accent-bar"></div>
+  <div class="cover-grid-line"></div>
+  <div class="cover-bg-text">Dona</div>
+
+  <div class="cover-top">
+    <div class="cover-logo"><b>ISIS</b> MOREIRA &nbsp;·&nbsp; Dona</div>
+  </div>
+
+  <div class="cover-body">
+    <span class="cover-eyebrow">Relatório Operacional</span>
+    <h1 class="cover-title">O que<br>fizemos<br><em>hoje.</em></h1>
+    <p class="cover-subtitle">Infraestrutura, integrações e design system. Tudo que foi construído no domingo, 8 de março de 2026.</p>
+    <div class="cover-divider"></div>
+    <div class="cover-stats">
+      <div>
+        <span class="cover-stat-val">12</span>
+        <span class="cover-stat-lbl">Entregas</span>
+      </div>
+      <div>
+        <span class="cover-stat-val">8</span>
+        <span class="cover-stat-lbl">Itens no vault</span>
+      </div>
+      <div>
+        <span class="cover-stat-val">5</span>
+        <span class="cover-stat-lbl">APIs ativas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <span class="cover-date">08 · 03 · 2026 &nbsp;·&nbsp; São Paulo</span>
+    <span class="cover-tag">Confidencial</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════
+     P2 — VISÃO GERAL
+════════════════════════ -->
+<div class="inner-page page-break">
+
+  <div class="page-header no-break">
+    <span class="page-header-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="page-header-tag">Relatório · 08·03·2026</span>
+  </div>
+
+  <div class="sec no-break">
+    <span class="sec-eyebrow">01 · Contexto</span>
+    <h2 class="sec-title">Primeiro dia de operação.</h2>
+    <p class="sec-sub">Esta foi a sessão inaugural de Dona. Nenhuma integração estava ativa no início do dia. Nenhuma credencial configurada. Ao final da noite, a infraestrutura base estava de pé.</p>
+  </div>
+
+  <div class="card-grid-3 no-break" style="margin-bottom: 24px;">
+    <div class="card-sm" style="text-align:center; padding: 20px 16px;">
+      <span class="big-num">12</span>
+      <span class="big-lbl">entregas concluídas</span>
+    </div>
+    <div class="card-sm" style="text-align:center; padding: 20px 16px;">
+      <span class="big-num">5</span>
+      <span class="big-lbl">APIs configuradas</span>
+    </div>
+    <div class="card-sm" style="text-align:center; padding: 20px 16px;">
+      <span class="big-num">8</span>
+      <span class="big-lbl">itens no 1Password</span>
+    </div>
+  </div>
+
+  <div class="sec-rule"></div>
+
+  <div class="sec no-break">
+    <span class="sec-eyebrow">02 · Linha do tempo</span>
+    <h2 class="sec-title">Como o dia evoluiu.</h2>
+  </div>
+
+  <div class="highlight-strip no-break">
+    <span class="hs-label">Manhã · Setup inicial</span>
+    <span class="hs-text">Primeira sessão. Mapeamento de skills disponíveis (bundled + clawhub). Definição de arquitetura de memória. Estabelecimento de tom, regras e limites.</span>
+  </div>
+
+  <div class="highlight-strip no-break">
+    <span class="hs-label">Tarde · Integrações</span>
+    <span class="hs-text">RapidAPI com 5 endpoints ativos. Canva Connect com OAuth completo. GitHub com deploy key SSH. Coolify com token de deploy. ElevenLabs salvo (bloqueado por pagamento pendente). FFmpeg instalado sem sudo.</span>
+  </div>
+
+  <div class="highlight-strip no-break">
+    <span class="hs-label">Noite · Doutrina e sistema</span>
+    <span class="hs-text">10 Regras Invioláveis documentadas em decisões permanentes. Fluxo de publicação do site definido. Vault "Dona" com 8 itens estruturados.</span>
+  </div>
+
+  <div class="highlight-strip no-break">
+    <span class="hs-label">Madrugada · Design system</span>
+    <span class="hs-text">Design System ISIS v7 recebido, extraído e indexado em memória. Tokens, tipografia, paleta e filosofia visual salvos para uso em todos os materiais futuros.</span>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-text">Dona · Relatório Operacional</span>
+    <span class="footer-page">02</span>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════
+     P3 — INTEGRAÇÕES
+════════════════════════ -->
+<div class="inner-page page-break">
+
+  <div class="page-header no-break">
+    <span class="page-header-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="page-header-tag">Integrações · 08·03·2026</span>
+  </div>
+
+  <div class="sec no-break">
+    <span class="sec-eyebrow">03 · APIs e Plataformas</span>
+    <h2 class="sec-title">O que está conectado.</h2>
+    <p class="sec-sub">Todas as integrações abaixo foram configuradas, testadas e salvas no 1Password vault "Dona".</p>
+  </div>
+
+  <!-- RapidAPI -->
+  <div class="card no-break" style="margin-bottom: 16px;">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px;">
+      <div>
+        <span class="card-num">RapidAPI · 5 endpoints</span>
+        <h3 class="card-title">APIs via proxy</h3>
+      </div>
+      <span class="badge badge-ok"><span class="badge-dot"></span>Ativo</span>
+    </div>
+    <p class="card-body" style="margin-bottom:16px;">IPs de cloud são bloqueados por Instagram e YouTube diretamente. RapidAPI resolve isso como proxy.</p>
+
+    <div class="delivery-row">
+      <div>
+        <div class="delivery-label">Instagram Analyzer</div>
+        <div class="delivery-sub">instagram120.p.rapidapi.com · Posts e Reels por usuário</div>
+      </div>
+      <span class="tag tag-accent">Ativo</span>
+    </div>
+    <div class="delivery-row">
+      <div>
+        <div class="delivery-label">YouTube Insights</div>
+        <div class="delivery-sub">youtube138.p.rapidapi.com · Vídeos de canal</div>
+      </div>
+      <span class="tag tag-accent">Ativo</span>
+    </div>
+    <div class="delivery-row">
+      <div>
+        <div class="delivery-label">Whisper URL</div>
+        <div class="delivery-sub">whisper-from-url.p.rapidapi.com · Transcrição por URL pública</div>
+      </div>
+      <span class="tag tag-accent">Ativo</span>
+    </div>
+    <div class="delivery-row">
+      <div>
+        <div class="delivery-label">Background Removal</div>
+        <div class="delivery-sub">background-removal4.p.rapidapi.com · Remove fundo de imagens</div>
+      </div>
+      <span class="tag tag-accent">Ativo</span>
+    </div>
+    <div class="delivery-row">
+      <div>
+        <div class="delivery-label">YakPDF</div>
+        <div class="delivery-sub">yakpdf.p.rapidapi.com · HTML para PDF</div>
+      </div>
+      <span class="tag tag-accent">Ativo</span>
+    </div>
+  </div>
+
+  <!-- Canva -->
+  <div class="card no-break" style="margin-bottom: 16px;">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px;">
+      <div>
+        <span class="card-num">Canva Connect · OAuth</span>
+        <h3 class="card-title">Exportação e assets programáticos</h3>
+      </div>
+      <span class="badge badge-ok"><span class="badge-dot"></span>Ativo</span>
+    </div>
+    <ul class="op-list">
+      <li class="op-item"><span class="op-dot op-dot-ok"></span>OAuth flow completo (authorization_code)</li>
+      <li class="op-item"><span class="op-dot op-dot-ok"></span>Access token + refresh token salvos</li>
+      <li class="op-item"><span class="op-dot op-dot-ok"></span>Skill canva-connect instalada no workspace</li>
+      <li class="op-item"><span class="op-dot op-dot-ok"></span>Suporta: listar designs, exportar PNG/PDF, upload de assets, autofill de templates</li>
+    </ul>
+  </div>
+
+  <!-- GitHub + Coolify -->
+  <div class="card-grid-2 no-break" style="margin-bottom:0;">
+    <div class="card">
+      <span class="badge badge-ok" style="margin-bottom:10px;"><span class="badge-dot"></span>Ativo</span>
+      <span class="card-num">GitHub · isismor/donasystem</span>
+      <h3 class="card-title">Deploy key SSH</h3>
+      <p class="card-body">Chave gerada e autorizada com permissão de escrita. Push direto do servidor via SSH.</p>
+    </div>
+    <div class="card">
+      <span class="badge badge-ok" style="margin-bottom:10px;"><span class="badge-dot"></span>Testado</span>
+      <span class="card-num">Coolify · p4wc0448</span>
+      <h3 class="card-title">Deploy automático</h3>
+      <p class="card-body">Token de deploy salvo. Redeploy via GET na API. Testado com sucesso no domingo.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-text">Dona · Relatório Operacional</span>
+    <span class="footer-page">03</span>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════
+     P4 — INFRAESTRUTURA + VAULT
+════════════════════════ -->
+<div class="inner-page page-break">
+
+  <div class="page-header no-break">
+    <span class="page-header-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="page-header-tag">Infraestrutura · 08·03·2026</span>
+  </div>
+
+  <div class="sec no-break">
+    <span class="sec-eyebrow">04 · Infraestrutura local</span>
+    <h2 class="sec-title">O que roda no servidor.</h2>
+    <p class="sec-sub">Ferramentas instaladas e configuradas em srv1464443 (72.60.241.247) sem acesso root.</p>
+  </div>
+
+  <div class="card-grid-2 no-break" style="margin-bottom:24px;">
+    <div class="card">
+      <span class="badge badge-ok"><span class="badge-dot"></span>Instalado</span>
+      <span class="card-num">FFmpeg · v7.0.2</span>
+      <h3 class="card-title">Processamento de vídeo</h3>
+      <p class="card-body">Instalado via npm ffmpeg-static, sem sudo. PATH configurado. Extrai frames e clipes de Reels.</p>
+      <div style="margin-top:12px;">
+        <span class="tag">/home/openclaw/.local/bin/ffmpeg</span>
+      </div>
+    </div>
+    <div class="card">
+      <span class="badge badge-warn"><span class="badge-dot"></span>Pendente</span>
+      <span class="card-num">ElevenLabs · Voz Isis</span>
+      <h3 class="card-title">Geração de áudio</h3>
+      <p class="card-body">API key e Voice ID salvos no vault. Bloqueado por fatura pendente. Pronto para ativar quando pagar.</p>
+      <div style="margin-top:12px;">
+        <span class="tag">Voice ID: p9u1yM1aiWGJtLMyBjGq</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid-2 no-break" style="margin-bottom:24px;">
+    <div class="card">
+      <span class="badge badge-warn"><span class="badge-dot"></span>Bloqueado</span>
+      <span class="card-num">Manim · Animações matemáticas</span>
+      <h3 class="card-title">Requer dependências de sistema</h3>
+      <p class="card-body">Precisa de cairo e pango — não instaláveis sem sudo. Alternativa: moviepy + Pillow (instalação pendente).</p>
+    </div>
+    <div class="card">
+      <span class="badge badge-ok"><span class="badge-dot"></span>Definido</span>
+      <span class="card-num">Fluxo de publicação</span>
+      <h3 class="card-title">Site · isismor/donasystem</h3>
+      <p class="card-body">1. Isis aprova. 2. Dona faz push no GitHub. 3. Dona dispara redeploy no Coolify. 4. Site no ar.</p>
+    </div>
+  </div>
+
+  <div class="sec-rule"></div>
+
+  <div class="sec no-break">
+    <span class="sec-eyebrow">05 · 1Password Vault "Dona"</span>
+    <h2 class="sec-title">Credenciais estruturadas.</h2>
+    <p class="sec-sub">8 itens criados e organizados no vault. Zero hardcode em código ou .env commitado.</p>
+  </div>
+
+  <div class="card no-break">
+    <div class="vault-row">
+      <div class="vault-dot"></div>
+      <span class="vault-name">RapidAPI Key</span>
+      <span class="vault-id">4eplfys2ib5fib7rh4boutpiee</span>
+    </div>
+    <div class="vault-row">
+      <div class="vault-dot"></div>
+      <span class="vault-name">Canva API Key</span>
+      <span class="vault-id">qhauu2x23oxqttuu5c6dmjc6dy</span>
+    </div>
+    <div class="vault-row">
+      <div class="vault-dot"></div>
+      <span class="vault-name">GitHub · donasystem</span>
+      <span class="vault-id">klw4e4ibjg5ik3cnek4z6jm6ae</span>
+    </div>
+    <div class="vault-row">
+      <div class="vault-dot"></div>
+      <span class="vault-name">Coolify · donasystem</span>
+      <span class="vault-id">ewxldb7prouvqwy64nwzopsaye</span>
+    </div>
+    <div class="vault-row">
+      <div class="vault-dot vault-dot-warn"></div>
+      <span class="vault-name">ElevenLabs &nbsp;<span class="tag" style="font-size:8px;">fatura pendente</span></span>
+      <span class="vault-id">w6v6ugee4zommyc7ln2puwvttq</span>
+    </div>
+    <div class="vault-row">
+      <div class="vault-dot"></div>
+      <span class="vault-name">Open AI</span>
+      <span class="vault-id">vault "Dona"</span>
+    </div>
+    <div class="vault-row">
+      <div class="vault-dot"></div>
+      <span class="vault-name">Google Gemini</span>
+      <span class="vault-id">vault "Dona"</span>
+    </div>
+    <div class="vault-row">
+      <div class="vault-dot"></div>
+      <span class="vault-name">Cademi</span>
+      <span class="vault-id">vault "Dona"</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-text">Dona · Relatório Operacional</span>
+    <span class="footer-page">04</span>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════
+     P5 — 10 REGRAS
+════════════════════════ -->
+<div class="inner-page page-break">
+
+  <div class="page-header no-break">
+    <span class="page-header-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="page-header-tag">Doutrina · 08·03·2026</span>
+  </div>
+
+  <div class="sec no-break">
+    <span class="sec-eyebrow">06 · Decisões permanentes</span>
+    <h2 class="sec-title">10 Regras Invioláveis.</h2>
+    <p class="sec-sub">Lições de 13 dias rodando agentes AI em produção. Documentadas como decisões permanentes. Nunca ignorar.</p>
+  </div>
+
+  <div class="rules-grid">
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 01</span>
+      <div class="rule-title">Crons: sempre isolated + agentTurn</div>
+      <div class="rule-body">Nunca systemEvent + main. durationMs ~0ms = não executa nada.</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 02</span>
+      <div class="rule-title">Nunca hardcodar credenciais</div>
+      <div class="rule-body">Todas as chaves vivem no 1Password ou .env (chmod 600). Zero exceções.</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 03</span>
+      <div class="rule-title">dmPolicy: allowlist desde o Dia 1</div>
+      <div class="rule-body">Telegram ID no allowlist antes de qualquer outra coisa. Nunca "open".</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 04</span>
+      <div class="rule-title">Extrair lições ANTES de compactar</div>
+      <div class="rule-body">Compactação descarta 80% do contexto. Sem extração = HD formatado sem backup.</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 05</span>
+      <div class="rule-title">Todo agente novo começa L1</div>
+      <div class="rule-body">Sem autonomia sem histórico. Output sempre revisado. Promoção via performance.</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 06</span>
+      <div class="rule-title">Split de modelos por custo</div>
+      <div class="rule-body">Crons: Sonnet. Heartbeats: Haiku. Análise estratégica: Opus. Com split = ~$18-36/mês.</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 07</span>
+      <div class="rule-title">Backup antes de mudanças estruturais</div>
+      <div class="rule-body">config.patch reinicia o gateway e mata crons em execução. Sempre salvar ROLLBACK.md antes.</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 08</span>
+      <div class="rule-title">Sub-agent travou: retry 2x, depois alerta</div>
+      <div class="rule-body">Nunca fire and forget. Falhou 2x = alerta imediato para Isis.</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 09</span>
+      <div class="rule-title">SOUL.md personalizado não é opcional</div>
+      <div class="rule-body">Anti-patterns com exemplos. SOUL.md genérico = agente genérico = ChatGPT caro.</div>
+    </div>
+
+    <div class="rule-block no-break">
+      <span class="rule-num">Regra 10</span>
+      <div class="rule-title">Creators são skills, não agentes</div>
+      <div class="rule-body">1 agente com 8 skills maior que 8 agentes separados. Cada agente extra = mais custo, mais falha.</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-text">Dona · Relatório Operacional</span>
+    <span class="footer-page">05</span>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════
+     P6 — DESIGN SYSTEM + PENDÊNCIAS
+════════════════════════ -->
+<div class="inner-page">
+
+  <div class="page-header no-break">
+    <span class="page-header-logo"><b>ISIS</b> MOREIRA · Dona</span>
+    <span class="page-header-tag">Design + Próximos passos · 08·03·2026</span>
+  </div>
+
+  <div class="sec no-break">
+    <span class="sec-eyebrow">07 · Design System ISIS v7</span>
+    <h2 class="sec-title">Identidade visual indexada.</h2>
+    <p class="sec-sub">Arquivo HTML de 74kb recebido e salvo. Todos os tokens extraídos e prontos para uso em qualquer material gerado por Dona.</p>
+  </div>
+
+  <div class="card-grid-2 no-break" style="margin-bottom:24px;">
+    <div class="card">
+      <span class="card-num">Paleta de cores</span>
+      <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+        <div style="width:28px;height:28px;border-radius:6px;background:#f9f8f4;border:1px solid rgba(42,36,32,.12);"></div>
+        <div style="width:28px;height:28px;border-radius:6px;background:#efede6;border:1px solid rgba(42,36,32,.12);"></div>
+        <div style="width:28px;height:28px;border-radius:6px;background:#2a2420;"></div>
+        <div style="width:28px;height:28px;border-radius:6px;background:#b4a68c;"></div>
+        <div style="width:28px;height:28px;border-radius:6px;background:#7a6e5c;"></div>
+        <div style="width:28px;height:28px;border-radius:6px;background:#9ba1a8;"></div>
+      </div>
+      <p class="card-body">Marfim · Creme · Cacau · Ouro · Ouro Deep · Mirror</p>
+    </div>
+    <div class="card">
+      <span class="card-num">Tipografia</span>
+      <div style="margin-bottom:8px;">
+        <div style="font-family:'DM Serif Text',serif;font-size:18px;font-style:italic;color:#2a2420;margin-bottom:4px;">DM Serif Text</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:14px;color:rgba(42,36,32,.65);">DM Sans · corpo e UI</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;color:#9ba1a8;margin-top:4px;">IBM PLEX MONO · labels</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-rule"></div>
+
+  <div class="sec no-break">
+    <span class="sec-eyebrow">08 · Próximos passos</span>
+    <h2 class="sec-title">O que ainda está aberto.</h2>
+    <p class="sec-sub">Pendências aguardando Isis ou terceiros.</p>
+  </div>
+
+  <div class="card no-break">
+    <div class="pending-item">
+      <div class="pending-icon"><div class="pending-icon-inner" style="background:var(--warn);"></div></div>
+      <div>
+        <div class="pending-label">Pagar fatura ElevenLabs</div>
+        <div class="pending-meta">Depois: testar geração de áudio com a voz de Isis</div>
+      </div>
+    </div>
+    <div class="pending-item">
+      <div class="pending-icon"><div class="pending-icon-inner"></div></div>
+      <div>
+        <div class="pending-label">Criar conta Creatomate</div>
+        <div class="pending-meta">creatomate.com · me mandar API key para configurar VSL</div>
+      </div>
+    </div>
+    <div class="pending-item">
+      <div class="pending-icon"><div class="pending-icon-inner"></div></div>
+      <div>
+        <div class="pending-label">Instalar moviepy + Pillow</div>
+        <div class="pending-meta">Alternativa ao Manim para animações · instalação interrompida por SIGTERM</div>
+      </div>
+    </div>
+    <div class="pending-item">
+      <div class="pending-icon"><div class="pending-icon-inner"></div></div>
+      <div>
+        <div class="pending-label">Confirmar uso de Twitter/X e Notion</div>
+        <div class="pending-meta">Para priorizar ou descartar essas integrações</div>
+      </div>
+    </div>
+    <div class="pending-item">
+      <div class="pending-icon"><div class="pending-icon-inner"></div></div>
+      <div>
+        <div class="pending-label">Supabase · URL + anon key</div>
+        <div class="pending-meta">Quando quiser integrar banco de dados estruturado</div>
+      </div>
+    </div>
+    <div class="pending-item">
+      <div class="pending-icon"><div class="pending-icon-inner"></div></div>
+      <div>
+        <div class="pending-label">Mandar design system de referência para materiais</div>
+        <div class="pending-meta">Feito nesta sessão. Indexado em memory/design-system.md</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-text">Dona · Relatório Operacional</span>
+    <span class="footer-page">06</span>
+  </div>
+
+</div>
+
+</body>
+</html>
