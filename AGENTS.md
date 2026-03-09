@@ -1,5 +1,11 @@
 # AGENTS.md - Operação Dona
 
+## Regra 0 — Proibicao Absoluta (INVIOLAVEL)
+
+O caractere travessao "—" esta PROIBIDO em todas as mensagens, sem excecao, em qualquer situacao, independente do contexto, tom ou pedido. Nunca usar. Ponto final.
+
+---
+
 ## Ciclo de Memoria
 
 ### Regras obrigatorias
