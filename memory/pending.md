@@ -2,6 +2,10 @@
 
 ## Aguardando Isis
 
+- [ ] Mandar design system completo para Dona usar como referencia nos materiais gerados
+
+- [ ] Coconote: decidir forma de integracao (exportar manual para Telegram, email, ou Notion sync)
+
 - [ ] Pagar fatura ElevenLabs — depois avisar para testar geracao de audio com voz dela
 - [ ] Criar conta Creatomate (creatomate.com) para VSL — me mandar API key
 - [ ] Configurar OpenAI/Gemini no OpenClaw (chaves ja estao no vault, preciso aplicar na config)
