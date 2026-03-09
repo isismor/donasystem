@@ -20,7 +20,7 @@
 - [x] 1Password CLI instalado como binario de usuario
 - [x] Service account "Dona Agent" criada com acesso ao vault "Dona"
 - [x] RapidAPI configurada (5 endpoints)
-- [x] Canva OAuth completo
+- [ ] Canva OAuth expirado — precisa refazer autenticacao (invalid_grant detectado em 09/03/2026)
 - [x] GitHub deploy key configurada
 - [x] Coolify deploy API testada
 - [x] ElevenLabs salvo (aguardando pagamento)
