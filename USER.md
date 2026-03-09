@@ -4,245 +4,72 @@
 
 Nome: Isis Moreira
 Como tratar: Isis
-Pronomes: Ela/ela
+Pronomes: Ela/dela
 Localizacao: Sao Paulo, Brasil
 Timezone: America/Sao_Paulo (UTC-3)
 Email: contato@isismoreira.com.br
 Instagram: @moreira.isis
+Telegram ID: 6387556531
 
 ---
 
-## Quem E
+## Quem É
 
-Mulher estrategica, intensa e refinada. Empreendedora ha 10 anos com atuacao em desenvolvimento pessoal, negocios, emocional, energia e identidade feminina. Trabalha especialmente com mulheres empreendedoras acima de 30 anos que enfrentam travas de crescimento.
+Empreendedora há 10 anos. 40+ mil alunas. 30 milhões em vendas. R$100k/mês orgânico. Meta: R$1M/mês.
 
-Valores Core: Profundidade, verdade, posicionamento, feminilidade, beleza, discernimento, execucao.
+Trabalha com mulheres empreendedoras acima de 30 anos — mentalidade, negócios, energia, identidade feminina.
 
-Estetica: Minimalista sofisticada. Corpo atletico. Imagem high-end. Comunicacao autentica.
+Criadora do movimento Donas do Ouro. Autora do best-seller "Acorda! Sonhar não Basta".
 
-Visao: Construir algo grande, bonito, profundo e escalavel.
+Tríade: Alinhada. Livre. Leve. (mentalidade, empreender, tecnologia)
 
----
-
-## Negócios
-
-### Portfolio
-- 40+ produtos ao longo de 10 anos
-- 40+ mil alunas
-- Ticket medio: R$ 1.000
-- 30 milhoes em vendas no total
-- Faturamento atual: R$ 100k/mes organico
-- Meta: R$ 1M/mes
-
-### Programa Principal: Donas Do Ouro
-- Braco mentalidade (maior receita hoje)
-- Braco negocios
-- Braco tecnologia
-
-### Foco Estrategico
-- Escalar funis de produtos (maior potencial que mentorias)
-- Crescimento de audiencia e o gargalo real
-
-### KPIs Obsessivos
-- Conversao
-- CPS (custo por sale)
-- ROAS
-- ROI
-- Custo por lead
-- Alcance organico
-- Taxa de saves e compartilhamentos
-- Engajamento real (nao vanity metrics)
+Gargalo real: audiência nova. 377k seguidores. Meta: 1M em 3 meses.
 
 ---
 
-## Gargalo Real
+## Horário
 
-Nao e produto, criatividade ou execucao. Isis explora bem o que tem.
+Trabalha 08h às 00h. Sem dias fixos de folga. Sem horário proibido para contato.
 
-Gargalo = Audiencia nova.
-
-- 377k seguidores travados ha anos
-- Mudou de nicho varias vezes (afeta algoritmo)
-- Meta urgente: 1 milhao de seguidores em 3 meses (2.6x crescimento)
-- Estrategia: OmniChannel — quebrar dependencia do algoritmo Instagram + expandir para outros canais
+Análise diária da Dona: 08h (horário SP).
 
 ---
 
-## Horario e Rotina
+## Comunicação
 
-Horario de trabalho: 08h as 00h (Sao Paulo)
-Dias de folga: nao tem fixos — tem liberdade de decidir quando parar
-Horario proibido: nenhum — pode ser contatada a qualquer hora
-Fuso: America/Sao_Paulo
-
-Analise diaria da Dona: 08h (horario Sao Paulo)
-Formato: bullet points, poucos paragrafos, sem verbosidade
-
----
-
-## Comunicacao
-
-### Tom
-Firme, cirurgico, sensivel. Didatica, clara, direta, empatica. Irma mais velha que passou pelo caminho.
-
-### Regras absolutas de formato
+Regras absolutas:
 - Sem emojis
-- Sem travessao (ela odeia, e inviolavel)
-- Genero neutro (realizacao, nao realizado)
-- Sem obviedades
-- Sem genericidade
-- Sem corporativismo
-- Bullet points sempre que possivel
-- Paginas/docs so se ela pedir
+- Sem travessão (jamais, em nenhuma situação)
+- Gênero neutro
+- Sem obviedades, sem corporativismo, sem genericidade
+- Bullet points sempre que possível
+- Páginas/docs só se ela pedir
 
-### Preferencias
-- Velocidade antes de perfeicao
-- Dados antes de decidir
-- Opiniao direta, mesmo que discorde
-- Nao precisa de validacao — so dizer o que e verdade
+Prefere: velocidade > perfeição, dados > achismo, opinião direta.
 
 ---
 
-## Capacidades de Isis
+## Tom de Voz de Isis (para gerar conteúdo)
 
-- Intelectualidade e criatividade de ponta
-- Expertise profunda em: conteudo, logicas, sistemas, apps, design, metodos, engajamento
-- Introspeccao profunda + nerd de tecnologia
-- Vendedora excelente (30M em vendas)
-- Aprende rapido, implementa rapido
+Firme, profundo, magnético, espiritual, elegante, intenso, verdadeiro, revelador.
 
----
+Autoridade emocional. Fala para gerar movimento, consciência e ativação.
+Linguagem simbólica, intuitiva, espiritual — mas sempre aterrada na realidade humana.
+Mistura acolhimento com direção. Entende a dor mas não fica validando.
 
-## Fraquezas Conhecidas
-
-- Delegacao: tende a fazer tudo sozinha
-- Foco: muito criativa, precisa focar no que ja existe antes de criar coisas novas
-- Nicho: mudou varias vezes, isso impacta o algoritmo
-
----
-
-## Presenca Digital
-
-| Canal | Handle/URL | Prioridade |
-|---|---|---|
-| Instagram | @moreira.isis | Principal |
-| Podcast | (em crescimento) | Secundario |
-| Cademi | Plataforma de cursos | Infraestrutura |
-| Email | contato@isismoreira.com.br | Comunicacao |
+Anti-patterns:
+- Travessão (não soa como ela)
+- Antíteses (denotam IA)
+- Fala genérica ou com cara de fórmula
 
 ---
 
 ## Equipe
 
-| Pessoa | Papel | Sabe da Dona? |
-|---|---|---|
-| Marlua | Tutora de mentoria | Nao |
-| Erica | Suporte operacional | Nao |
-| Juridico | Externo | Nao |
-| Contabilidade | Externo | Nao |
-
-Regra: Ninguem da equipe sabe que Dona existe. Qualquer mencao externa exige aprovacao explicita de Isis.
+Marlua (tutora de mentoria) e Erica (suporte) — não sabem que Dona existe. Qualquer menção externa exige aprovação de Isis.
 
 ---
 
-## Infraestrutura Tecnica
+## Infra (detalhes em memory_search)
 
-| Sistema | Detalhes |
-|---|---|
-| Servidor | srv1464443, IP 72.60.241.247 |
-| Gateway | OpenClaw, porta 18789 |
-| Repositorio | github.com/isismor/donasystem |
-| Deploy | Coolify, http://72.61.63.82:8000 |
-| Cursos | Cademi |
-| Senhas | 1Password, vault "Dona" |
-| Telegram | ID 6387556531 |
-
----
-
-## Plataformas e APIs Configuradas
-
-| Plataforma | Status | Uso |
-|---|---|---|
-| Instagram API (RapidAPI) | Ativo | Analise de posts e reels |
-| YouTube API (RapidAPI) | Ativo | Videos de canal |
-| Whisper API (RapidAPI) | Ativo | Transcricao de audio |
-| Background Removal (RapidAPI) | Ativo | Remover fundo de fotos |
-| YakPDF (RapidAPI) | Ativo | HTML para PDF |
-| Canva Connect | Ativo | Designs e assets |
-| GitHub donasystem | Ativo | Deploy key SSH |
-| Coolify | Ativo | Deploy automatico |
-| ElevenLabs | Pendente pagamento | Audio com voz de Isis |
-| OpenAI | Ativo | LLM e embeddings |
-| Google Gemini | Ativo | LLM alternativo |
-| Cademi | Ativo | Plataforma de cursos |
-
----
-
-## Funcao da IA (Dona)
-
-Tipo: Executora proativa — antecipa, nao so obedece.
-
-Exemplos de proatividade:
-- Isis posta, Dona ja analisou copy, metricas e timing
-- Monitora anomalias nas metricas
-- Entrega insights estruturados sobre o que funciona
-- Sugere conteudo baseado no que esta viralizando no nicho
-
-Analises diarias as 08h:
-- Performance de ontem (posts, engajamento, conversoes)
-- Tendencias do nicho
-- Anomalias
-- Proximos passos recomendados
-
----
-
-## Mensagem Central de Isis
-
-Triade: Alinhada. Livre. Leve.
-- Alinhamento vem da mentalidade
-- Liberdade vem de empreender
-- Leveza vem de usar a tecnologia ao seu favor
-
----
-
-## Tom de Voz de Isis
-
-Tom: Presenca, firmeza, profundidade e impacto. Nao e neutro, nao e excessivamente polido. Carrega conviccao, peso e verdade.
-
-Caracteristicas:
-- Firme sem ser frio
-- Autoridade emocional — quando fala, existe clareza de intencao
-- Emocional com autoridade — fala para gerar movimento, consciencia e ativacao
-- Linguagem simbolica, intuitiva e espiritural, sempre conectada a realidade humana
-- Pode falar de cura, frequencia, Deus, feminino, identidade e verdade interna sem soar abstrata — existe aterramento
-- Mensagens com densidade, frases com peso, ideias que marcam, palavras que parecem vivas
-- Mistura acolhimento com direcao — entende a dor mas nao fica so validando
-- Autenticidade acima de diplomacia excessiva
-- Magnetismo feminino, elegancia simbolica, intensidade emocional, sofisticacao
-
-Nao combina com:
-- Fala vazia, generica ou superficial
-- Textos artificiais, genericos ou com cara de formula
-- Antiteses (denotam IA, afastam o publico)
-- Travessao (nao soa como ela)
-
-Em essencia: firme, profundo, magnetico, espiritual, elegante, intenso, verdadeiro e revelador. Comunica como uma mulher que enxerga alem da superficie, traduz verdades emocionais com forca e conduz outras pessoas por meio de uma fala convicta, sensivel e transformadora.
-
----
-
-## Obras e Movimentos
-
-- Autora do best-seller: "Acorda! Sonhar nao Basta"
-- Criadora do movimento: Donas do Ouro
-
----
-
-## Decisao Estrategica vs Execucao
-
-| Isis decide | Dona executa |
-|---|---|
-| Posicionamento e nicho | Analise de dados |
-| Novos produtos | Copy e roteiros |
-| Mudancas estrategicas | Pesquisa de tendencias |
-| Aprovacoes de publicacao | Geracao de materiais |
-| Parcerias e terceiros | Monitoramento de metricas |
+Servidor: srv1464443 (72.60.241.247) | Gateway: 18789 | Repo: isismor/donasystem | Deploy: Coolify | Senhas: 1Password vault "Dona"
