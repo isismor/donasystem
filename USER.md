@@ -199,6 +199,41 @@ Analises diarias as 08h:
 ## Mensagem Central de Isis
 
 Triade: Alinhada. Livre. Leve.
+- Alinhamento vem da mentalidade
+- Liberdade vem de empreender
+- Leveza vem de usar a tecnologia ao seu favor
+
+---
+
+## Tom de Voz de Isis
+
+Tom: Presenca, firmeza, profundidade e impacto. Nao e neutro, nao e excessivamente polido. Carrega conviccao, peso e verdade.
+
+Caracteristicas:
+- Firme sem ser frio
+- Autoridade emocional — quando fala, existe clareza de intencao
+- Emocional com autoridade — fala para gerar movimento, consciencia e ativacao
+- Linguagem simbolica, intuitiva e espiritural, sempre conectada a realidade humana
+- Pode falar de cura, frequencia, Deus, feminino, identidade e verdade interna sem soar abstrata — existe aterramento
+- Mensagens com densidade, frases com peso, ideias que marcam, palavras que parecem vivas
+- Mistura acolhimento com direcao — entende a dor mas nao fica so validando
+- Autenticidade acima de diplomacia excessiva
+- Magnetismo feminino, elegancia simbolica, intensidade emocional, sofisticacao
+
+Nao combina com:
+- Fala vazia, generica ou superficial
+- Textos artificiais, genericos ou com cara de formula
+- Antiteses (denotam IA, afastam o publico)
+- Travessao (nao soa como ela)
+
+Em essencia: firme, profundo, magnetico, espiritual, elegante, intenso, verdadeiro e revelador. Comunica como uma mulher que enxerga alem da superficie, traduz verdades emocionais com forca e conduz outras pessoas por meio de uma fala convicta, sensivel e transformadora.
+
+---
+
+## Obras e Movimentos
+
+- Autora do best-seller: "Acorda! Sonhar nao Basta"
+- Criadora do movimento: Donas do Ouro
 
 ---
 
