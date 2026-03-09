@@ -7,6 +7,18 @@
 - **Proximo passo:** instalar moviepy, configurar Creatomate, ativar OpenAI/Gemini no OpenClaw
 - **Bloqueios:** ElevenLabs bloqueado por pagamento pendente; Manim requer sudo para deps
 
+### Design System ISIS v7
+- **Status:** concluido
+- **Concluido em:** 09/03/2026
+- **Arquivos:** `memory/design-system-isis-v7.html` (fonte da verdade) + `memory/design-system.md` (tokens indexados)
+- **Uso:** obrigatorio em todos os materiais visuais gerados por Dona
+
+### Templates de Relatorio PDF
+- **Status:** em andamento
+- **Template base:** `relatorio-domingo-v2.html` — reusar para proximos relatorios semanais
+- **Ferramenta:** YakPDF (RapidAPI) com wait.for timeout 4000ms
+- **Proximo passo:** refinar template conforme feedback de Isis
+
 ### Infraestrutura de Integrações
 - **Status:** em andamento
 - **Concluido:** RapidAPI (5 APIs), Canva OAuth, GitHub SSH, Coolify deploy, FFmpeg, ElevenLabs (salvo)

@@ -2,8 +2,6 @@
 
 ## Aguardando Isis
 
-- [ ] Mandar design system completo para Dona usar como referencia nos materiais gerados
-
 - [ ] Coconote: decidir forma de integracao (exportar manual para Telegram, email, ou Notion sync)
 
 - [ ] Pagar fatura ElevenLabs — depois avisar para testar geracao de audio com voz dela
@@ -27,3 +25,4 @@
 - [x] Coolify deploy API testada
 - [x] ElevenLabs salvo (aguardando pagamento)
 - [x] FFmpeg instalado
+- [x] Design System ISIS v7 recebido, salvo e indexado (09/03/2026)
