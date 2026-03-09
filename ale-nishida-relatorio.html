@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Text&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f9f8f4;
+    color: #2a2420;
+  }
+
+  .page {
+    width: 794px;
+    height: 1123px;
+    overflow: hidden;
+    position: relative;
+    background: #f9f8f4;
+    page-break-after: always;
+  }
+
+  .cover {
+    background: #2a2420;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 72px 64px;
+  }
+
+  .cover-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #b4a68c;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .cover-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .cover-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #7a6e5c;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .cover-title {
+    font-family: 'DM Serif Text', serif;
+    font-size: 52px;
+    color: #f9f8f4;
+    line-height: 1.1;
+  }
+
+  .cover-subtitle {
+    font-size: 16px;
+    color: #9ba1a8;
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .cover-divider {
+    width: 48px;
+    height: 2px;
+    background: #b4a68c;
+    margin: 8px 0;
+  }
+
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .cover-footer-left {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #7a6e5c;
+    line-height: 1.8;
+  }
+
+  .cover-footer-right {
+    font-family: 'DM Serif Text', serif;
+    font-size: 18px;
+    color: #b4a68c;
+    text-align: right;
+  }
+
+  .content-page {
+    display: flex;
+    flex-direction: column;
+    padding: 56px 64px;
+  }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #efede6;
+    margin-bottom: 36px;
+  }
+
+  .page-header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #b4a68c;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .page-header-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #9ba1a8;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Text', serif;
+    font-size: 20px;
+    color: #2a2420;
+    margin-bottom: 14px;
+  }
+
+  .section-title-accent {
+    color: #b4a68c;
+  }
+
+  p {
+    font-size: 13px;
+    color: #2a2420;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  ul li {
+    font-size: 13px;
+    font-weight: 300;
+    color: #2a2420;
+    line-height: 1.65;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 1px;
+    background: #b4a68c;
+  }
+
+  .table-wrap {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+  }
+
+  .table-wrap th {
+    background: #2a2420;
+    color: #b4a68c;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  .table-wrap td {
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.5;
+    border-bottom: 1px solid #efede6;
+    vertical-align: top;
+  }
+
+  .table-wrap tr:nth-child(even) td {
+    background: #efede6;
+  }
+
+  .aspect-col {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #7a6e5c;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 20px;
+    position: relative;
+  }
+
+  .timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 36px;
+    top: 28px;
+    bottom: 0;
+    width: 1px;
+    background: #efede6;
+  }
+
+  .timeline-badge {
+    width: 72px;
+    min-width: 72px;
+    height: 28px;
+    background: #efede6;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #7a6e5c;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .timeline-content {
+    flex: 1;
+    padding-top: 4px;
+  }
+
+  .timeline-content strong {
+    font-size: 12px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .timeline-content span {
+    font-size: 12px;
+    font-weight: 300;
+    color: #7a6e5c;
+    line-height: 1.5;
+  }
+
+  .highlight {
+    background: #efede6;
+    border-left: 3px solid #b4a68c;
+    padding: 16px 20px;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .highlight p {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .col-block {
+    background: #efede6;
+    padding: 20px;
+    border-radius: 2px;
+  }
+
+  .col-block h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #7a6e5c;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .col-block ul {
+    gap: 6px;
+  }
+
+  .col-block ul li {
+    font-size: 12px;
+  }
+
+  .page-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #efede6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .page-footer span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: #9ba1a8;
+    letter-spacing: 0.08em;
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page cover">
+  <div class="cover-tag">Relatório de Sessão</div>
+
+  <div class="cover-main">
+    <div class="cover-label">Cliente</div>
+    <div class="cover-title">Ale<br>Nishida</div>
+    <div class="cover-divider"></div>
+    <div class="cover-subtitle">Dermatologista. Sessão de mentoria estratégica sobre transição de carreira, produto digital e liberdade financeira.</div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="cover-footer-left">
+      Data: Março 2026<br>
+      Formato: Mentoria Individual<br>
+      Elaborado por: Isis Moreira
+    </div>
+    <div class="cover-footer-right">Donas<br>do Ouro</div>
+  </div>
+</div>
+
+<!-- PAG 2: SITUAÇÃO ATUAL + OBJETIVOS + OPÇÕES -->
+<div class="page content-page">
+  <div class="page-header">
+    <span class="page-header-label">Ale Nishida — Relatório de Sessão</span>
+    <span class="page-header-num">02</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Situação <span class="section-title-accent">Atual</span></div>
+    <ul>
+      <li>Atua em clínica de dermatologia de grande porte em São Paulo com cláusula contratual de 20 anos e multa rescisória.</li>
+      <li>Receita pessoal alta: aproximadamente R$ 1.223.768 líquido no ano, média mensal de R$ 158 mil.</li>
+      <li>Carga horária elevada: jornadas longas, trabalho levado para casa, exaustão emocional.</li>
+      <li>Impacto familiar significativo: dois filhos (10 e 7 anos) com pouco tempo de qualidade disponível.</li>
+      <li>Ambiente hostil: rivalidade interna, política institucional, decisões concentradas no dono da clínica.</li>
+      <li>É a principal geradora de receita da clínica; outros médicos dependem da alocação de pacientes feita pelo dono.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Objetivos e <span class="section-title-accent">Motivações</span></div>
+    <ul>
+      <li>Mais liberdade e tempo com a família sem redução significativa de renda.</li>
+      <li>Interesse em produto digital motivado por liberdade financeira e geográfica, não por vocação pedagógica.</li>
+      <li>Expansão de marca digital e física com potencial internacional (conceito: Atlas International Skincare).</li>
+      <li>Transição gradual sem grande risco imediato ou endividamento.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Principais <span class="section-title-accent">Opções</span></div>
+    <div class="two-col">
+      <div class="col-block">
+        <h4>Cenário A — Permanecer</h4>
+        <ul>
+          <li>Manter clínica atual</li>
+          <li>Reduzir volume clínico para abrir tempo para plano B</li>
+          <li>Menor risco imediato</li>
+          <li>Ambiente continua tóxico</li>
+        </ul>
+      </div>
+      <div class="col-block">
+        <h4>Cenário B — Transição</h4>
+        <ul>
+          <li>Redução gradual de horas</li>
+          <li>Construção de linha digital e física</li>
+          <li>Formação de assistentes</li>
+          <li>Desenvolvimento de ofertas educacionais</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidencial — uso exclusivo interno</span>
+    <span>Isis Moreira / Março 2026</span>
+  </div>
+</div>
+
+<!-- PAG 3: RECOMENDAÇÕES + PRÓXIMOS PASSOS -->
+<div class="page content-page">
+  <div class="page-header">
+    <span class="page-header-label">Ale Nishida — Relatório de Sessão</span>
+    <span class="page-header-num">03</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Recomendações <span class="section-title-accent">da Mentora</span></div>
+    <ul>
+      <li>Construir uma matriz de perdas e ganhos comparando permanecer versus sair, incluindo impactos financeiros, emocionais e familiares com valores concretos.</li>
+      <li>Plano de transição: reduzir horas clínicas em 10 a 20% para criar tempo para estratégia digital sem perda brusca de renda.</li>
+      <li>Se sair da clínica, estar preparada para assumir tarefas administrativas e empreendedoras ou contratar quem as gerencie.</li>
+      <li>Receita digital requer investimento: metas de lucro digital implicam receita bruta muito maior por conta de impostos, tráfego e custos operacionais.</li>
+      <li>Entrada de baixo risco: produtos de skincare ou suplementos white-label aproveitando marca e base de pacientes já existentes.</li>
+      <li>Programa de treinamento pago para assistentes como pipeline de equipe qualificada e braço educacional do negócio.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Próximos <span class="section-title-accent">Passos</span></div>
+    <ul>
+      <li>Construir a matriz de perdas e ganhos com valores monetários e emocionais específicos.</li>
+      <li>Selecionar três ideias monetizáveis: skincare white-label, suplemento capilar/cutâneo, programa de treinamento de assistentes.</li>
+      <li>Contatar fabricantes white-label e solicitar orçamentos e prazos regulatórios (conformidade Anvisa).</li>
+      <li>Planejar redução de 10 a 20% nas horas clínicas para liberar tempo para testes iniciais.</li>
+      <li>Contratar ou designar assistente virtual para gestão administrativa e redução de trabalho fora do horário.</li>
+      <li>Desenvolver ofertas mínimas viáveis e conteúdo de baixo esforço para validar demanda.</li>
+      <li>Reavaliar em 3 a 6 meses com métricas concretas: variação de renda, horas liberadas, nível de estresse.</li>
+    </ul>
+  </div>
+
+  <div class="highlight">
+    <p>Recomendação imediata: reduzir modestamente a carga clínica para criar tempo e testar ofertas digitais e físicas de baixo risco, mantendo estabilidade financeira. A decisão deve ser documentada com mapeamento de perdas e ganhos por cenário.</p>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidencial — uso exclusivo interno</span>
+    <span>Isis Moreira / Março 2026</span>
+  </div>
+</div>
+
+<!-- PAG 4: CRONOGRAMA + TABELA -->
+<div class="page content-page">
+  <div class="page-header">
+    <span class="page-header-label">Ale Nishida — Relatório de Sessão</span>
+    <span class="page-header-num">04</span>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Cronograma <span class="section-title-accent">Proposto</span></div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-badge">0–3 m</div>
+        <div class="timeline-content">
+          <strong>Preparação</strong>
+          <span>Reduzir horas na clínica modestamente. Pesquisar fabricantes white-label. Desenvolver conceito de produto.</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">3–6 m</div>
+        <div class="timeline-content">
+          <strong>Piloto</strong>
+          <span>Produção em pequeno lote do produto white-label. Início de posicionamento digital e estratégia de conteúdo.</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">6–12 m</div>
+        <div class="timeline-content">
+          <strong>Lançamento</strong>
+          <span>Lançamento do produto. Piloto do programa de treinamento de assistentes. Medição de impacto financeiro e de tempo.</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">12+ m</div>
+        <div class="timeline-content">
+          <strong>Decisão</strong>
+          <span>Reavaliação do papel na clínica com base em resultados e valores pessoais. Decisão sobre transição completa, se viável.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Comparativo <span class="section-title-accent">dos Cenários</span></div>
+    <table class="table-wrap">
+      <thead>
+        <tr>
+          <th>Aspecto</th>
+          <th>Cenário A — Permanecer</th>
+          <th>Cenário B — Transição</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="aspect-col">Renda</td>
+          <td>Alta e previsível (~R$150k/mês)</td>
+          <td>Variável; alto potencial com escala</td>
+        </tr>
+        <tr>
+          <td class="aspect-col">Ambiente</td>
+          <td>Tóxico (rivalidade, política)</td>
+          <td>Potencialmente mais saudável</td>
+        </tr>
+        <tr>
+          <td class="aspect-col">Família</td>
+          <td>Pouco tempo disponível</td>
+          <td>Mais tempo se sistemas digitais funcionarem</td>
+        </tr>
+        <tr>
+          <td class="aspect-col">Investimento</td>
+          <td>Baixo (sem responsabilidade admin)</td>
+          <td>Alto (marketing, produto, equipe)</td>
+        </tr>
+        <tr>
+          <td class="aspect-col">Risco</td>
+          <td>Baixo (multa contratual)</td>
+          <td>Médio-alto (fluxo de caixa)</td>
+        </tr>
+        <tr>
+          <td class="aspect-col">Velocidade</td>
+          <td>Renda imediata mantida</td>
+          <td>Meses a anos; white-label mais rápido</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-footer">
+    <span>Confidencial — uso exclusivo interno</span>
+    <span>Isis Moreira / Março 2026</span>
+  </div>
+</div>
+
+</body>
+</html>

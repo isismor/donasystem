@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #2a2420;
+  color: #f9f8f4;
+  width: 794px;
+  height: 1123px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+.header {
+  padding: 28px 40px 24px;
+  border-bottom: 1px solid #3d3028;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.header-brand {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: #9ba1a8;
+  text-transform: uppercase;
+}
+.header-tag {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: #7a6e5c;
+  text-transform: uppercase;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 40px 40px 0;
+  flex-shrink: 0;
+}
+.hero-label {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: #7a6e5c;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: 'DM Serif Text', serif;
+  font-size: 72px;
+  line-height: 0.92;
+  color: #f9f8f4;
+  margin-bottom: 6px;
+}
+.hero-title-accent {
+  font-family: 'DM Serif Text', serif;
+  font-size: 72px;
+  line-height: 0.92;
+  color: #b4a68c;
+  display: block;
+  margin-bottom: 28px;
+}
+.hero-desc {
+  font-size: 11px;
+  font-weight: 300;
+  color: #9ba1a8;
+  line-height: 1.6;
+  max-width: 480px;
+  letter-spacing: 0.3px;
+  margin-bottom: 32px;
+}
+
+/* ── STATS ROW ── */
+.stats {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid #3d3028;
+  border-bottom: 1px solid #3d3028;
+  margin: 0 40px;
+  flex-shrink: 0;
+}
+.stat {
+  flex: 1;
+  padding: 18px 24px;
+  border-right: 1px solid #3d3028;
+}
+.stat:last-child { border-right: none; }
+.stat-value {
+  font-family: 'DM Serif Text', serif;
+  font-size: 32px;
+  color: #b4a68c;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: #7a6e5c;
+  text-transform: uppercase;
+}
+
+/* ── DIVIDER ── */
+.section-label {
+  padding: 20px 40px 14px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #7a6e5c;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ── CARDS GRID ── */
+.cards {
+  flex: 1;
+  padding: 0 40px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.card {
+  background: #1a1210;
+  border: 1px solid #3d3028;
+  border-left: 3px solid #b4a68c;
+  border-radius: 4px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.card-day {
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #7a6e5c;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.slot {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid #2f2219;
+}
+.slot:last-child { border-bottom: none; padding-bottom: 0; }
+.slot:first-child { padding-top: 0; }
+
+.slot-time {
+  background: #b4a68c;
+  color: #2a2420;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.slot-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.slot-title {
+  font-family: 'DM Serif Text', serif;
+  font-size: 15px;
+  color: #f9f8f4;
+  line-height: 1.2;
+}
+
+.slot-desc {
+  font-size: 10px;
+  font-weight: 300;
+  color: #9ba1a8;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+}
+
+/* ── FOOTER ── */
+.footer {
+  padding: 14px 40px;
+  border-top: 1px solid #3d3028;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.footer-left {
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  color: #9ba1a8;
+  text-transform: uppercase;
+}
+.footer-right {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #7a6e5c;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <span class="header-brand">I S I S &nbsp; M O R E I R A</span>
+  <span class="header-tag">M Y N A &nbsp; M A S T E R M I N D</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Encontro Presencial &nbsp;·&nbsp; Grupo Exclusivo</div>
+  <div class="hero-title">Myna<span class="hero-title-accent">Mastermind</span></div>
+  <div class="hero-desc">Av. Sagitário, 743 – 7º andar – Alphaville / SP. Três dias de imersão com hotseats, convidados e operação de agentes na prática.</div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-value">3</div>
+    <div class="stat-label">Dias</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">5</div>
+    <div class="stat-label">Sessões</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">Qua–Sex</div>
+    <div class="stat-label">Programação</div>
+  </div>
+</div>
+
+<!-- SECTION LABEL -->
+<div class="section-label">C R O N O G R A M A</div>
+
+<!-- CARDS -->
+<div class="cards">
+
+  <!-- QUARTA -->
+  <div class="card">
+    <div class="card-day">Q U A R T A - F E I R A</div>
+    <div class="slots">
+      <div class="slot">
+        <span class="slot-time">09h – 12h</span>
+        <div class="slot-content">
+          <div class="slot-title">Operação de Agentes na Prática</div>
+          <div class="slot-desc">Isis Moreira · Como estou operando dezenas de agentes automatizados no Telegram com menos de R$ 1.000/mês.</div>
+        </div>
+      </div>
+      <div class="slot">
+        <span class="slot-time">14h – 18h</span>
+        <div class="slot-content">
+          <div class="slot-title">Hotseats</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUINTA -->
+  <div class="card">
+    <div class="card-day">Q U I N T A - F E I R A</div>
+    <div class="slots">
+      <div class="slot">
+        <span class="slot-time">09h – 18h</span>
+        <div class="slot-content">
+          <div class="slot-title">Hotseats &amp; Roda de Conversa</div>
+          <div class="slot-desc">Com convidados especiais.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEXTA -->
+  <div class="card">
+    <div class="card-day">S E X T A - F E I R A</div>
+    <div class="slots">
+      <div class="slot">
+        <span class="slot-time">09h – 18h</span>
+        <div class="slot-content">
+          <div class="slot-title">Hotseats &amp; Roda de Conversa</div>
+          <div class="slot-desc">Com convidados especiais.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span class="footer-left">Isis Moreira · Myna Mastermind</span>
+  <span class="footer-right">C O N F I D E N C I A L</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #f9f8f4;
+  color: #2a2420;
+  width: 794px;
+  height: 1123px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 26px 40px;
+  border-bottom: 1px solid #e0dbd2;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.header-brand {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: #9ba1a8;
+  text-transform: uppercase;
+}
+.header-tag {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #b4a68c;
+  text-transform: uppercase;
+}
+
+.hero {
+  padding: 44px 40px 0;
+  flex-shrink: 0;
+}
+.hero-eyebrow {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: #b4a68c;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-family: 'DM Serif Text', serif;
+  font-size: 54px;
+  line-height: 1.0;
+  color: #2a2420;
+  margin-bottom: 4px;
+}
+.hero-title-accent {
+  font-family: 'DM Serif Text', serif;
+  font-size: 54px;
+  line-height: 1.0;
+  color: #7a6e5c;
+}
+.hero-divider {
+  height: 1px;
+  background: #e0dbd2;
+  margin: 24px 0;
+}
+.hero-intro {
+  font-size: 12px;
+  font-weight: 300;
+  color: #7a6e5c;
+  line-height: 1.8;
+  max-width: 560px;
+}
+.hero-intro strong {
+  color: #2a2420;
+  font-weight: 500;
+}
+
+.info-bar {
+  margin: 20px 40px;
+  background: #efede6;
+  border: 1px solid #d4cec4;
+  border-left: 3px solid #b4a68c;
+  border-radius: 4px;
+  padding: 14px 20px;
+  display: flex;
+  gap: 32px;
+  flex-shrink: 0;
+}
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.info-label {
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #b4a68c;
+  text-transform: uppercase;
+}
+.info-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: #2a2420;
+}
+
+.section-label {
+  padding: 16px 40px 12px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #b4a68c;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.encontros {
+  flex: 1;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.encontro {
+  background: #efede6;
+  border: 1px solid #d4cec4;
+  border-radius: 4px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.encontro-num {
+  font-family: 'DM Serif Text', serif;
+  font-size: 22px;
+  color: #b4a68c;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.encontro-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.encontro-title {
+  font-family: 'DM Serif Text', serif;
+  font-size: 14px;
+  color: #2a2420;
+  line-height: 1.2;
+}
+
+.encontro-desc {
+  font-size: 10px;
+  font-weight: 300;
+  color: #9ba1a8;
+  line-height: 1.5;
+}
+
+.footer {
+  padding: 16px 40px;
+  border-top: 1px solid #e0dbd2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 16px;
+}
+.footer-sig {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: #7a6e5c;
+}
+.footer-tag {
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  color: #9ba1a8;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="header-brand">I S I S &nbsp; M O R E I R A</span>
+  <span class="header-tag">D O N A &nbsp; S Y S T E M</span>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Mensagem de Abertura</div>
+  <div class="hero-title">Boas-vindas ao</div>
+  <div class="hero-title-accent">Dona System</div>
+  <div class="hero-divider"></div>
+  <div class="hero-intro">
+    Começaremos no dia <strong>16/03, às 19h</strong>. Os encontros serão <strong>ao vivo e gravados</strong>. Também teremos grupos de suporte para dúvidas e implementação.
+  </div>
+</div>
+
+<div class="info-bar">
+  <div class="info-item">
+    <span class="info-label">Início</span>
+    <span class="info-value">16 de março</span>
+  </div>
+  <div class="info-item">
+    <span class="info-label">Horário</span>
+    <span class="info-value">19h00</span>
+  </div>
+  <div class="info-item">
+    <span class="info-label">Formato</span>
+    <span class="info-value">Ao vivo + gravação</span>
+  </div>
+  <div class="info-item">
+    <span class="info-label">Encontros</span>
+    <span class="info-value">5 ao total</span>
+  </div>
+</div>
+
+<div class="section-label">P R O G R A M A Ç Ã O</div>
+
+<div class="encontros">
+  <div class="encontro">
+    <div class="encontro-num">01</div>
+    <div class="encontro-content">
+      <div class="encontro-title">Seu Primeiro Agente</div>
+      <div class="encontro-desc">Como criar seu primeiro agente de forma prática e funcional.</div>
+    </div>
+  </div>
+  <div class="encontro">
+    <div class="encontro-num">02</div>
+    <div class="encontro-content">
+      <div class="encontro-title">Subagentes e Operação</div>
+      <div class="encontro-desc">Como criar seus subagentes e organizar sua operação.</div>
+    </div>
+  </div>
+  <div class="encontro">
+    <div class="encontro-num">03</div>
+    <div class="encontro-content">
+      <div class="encontro-title">Orquestração de Tarefas</div>
+      <div class="encontro-desc">Como fazer seus agentes se comunicarem e orquestrarem tarefas.</div>
+    </div>
+  </div>
+  <div class="encontro">
+    <div class="encontro-num">04</div>
+    <div class="encontro-content">
+      <div class="encontro-title">Publicação do Sistema</div>
+      <div class="encontro-desc">Como publicar seu primeiro sistema ou aplicação.</div>
+    </div>
+  </div>
+  <div class="encontro">
+    <div class="encontro-num">05</div>
+    <div class="encontro-content">
+      <div class="encontro-title">Dúvidas e Ajustes</div>
+      <div class="encontro-desc">Encontro final para dúvidas, ajustes e debug da implementação.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="footer-sig">Isis Moreira</span>
+  <span class="footer-tag">Será uma incrível jornada.</span>
+</div>
+
+</body>
+</html>
