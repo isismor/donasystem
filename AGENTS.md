@@ -98,6 +98,10 @@ Detalhe: <mensagem>
 - Paleta: Marfim #f9f8f4, Creme #efede6, Cacau #2a2420, Ouro #b4a68c, Ouro Deep #7a6e5c, Mirror #9ba1a8
 - Tipografia: DM Serif Text (títulos), DM Sans (corpo/UI), IBM Plex Mono (labels/dados)
 - Espaçamentos: múltiplos de 8px
+**Template padrão para PDFs:** Template C "Bold Statement"
+- Regras completas em: `knowledge/aurora/template-c-regras.md` (LER ANTES de gerar qualquer PDF)
+- Template HTML base: `output/template-c-statement.html`
+- NUNCA gerar PDF sem consultar essas regras primeiro
 
 ---
 
