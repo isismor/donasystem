@@ -43,13 +43,6 @@ Add whatever helps you do your job. This is your cheat sheet.
 
 ## Skills Ativas
 
-### canva-connect (clawhub)
-- Localização: `workspace/skills/canva-connect/`
-- Uso: listar designs, exportar PNG/PDF, upload de assets, autofill de templates
-- Credencial: vault "Dona" > "Canva API Key" (OAuth, tokens em ~/.clawdbot/canva-tokens.json)
-- Quando usar: gerar ou exportar materiais visuais do Canva programaticamente
-- Quando NAO usar: criar conteudo dentro do design (a API nao edita elementos)
-
 ### openai-whisper-api (bundled)
 - Localização: `/usr/lib/node_modules/openclaw/skills/openai-whisper-api/`
 - Uso: transcrever audio via OpenAI Whisper-1
