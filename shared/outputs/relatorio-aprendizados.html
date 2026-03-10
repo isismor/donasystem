@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprendizados e Proximos Passos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    background: var(--marfim);
+    font-size: 13px;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    padding: 48px 56px;
+    position: relative;
+    page-break-after: always;
+  }
+
+  .page:last-child {
+    page-break-after: avoid;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ouro-pale);
+  }
+
+  .header-left h1 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    color: var(--cacao);
+    margin-bottom: 4px;
+  }
+
+  .header-left .subtitle {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--ouro-deep);
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-right .date {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--mirror);
+  }
+
+  .header-right .version {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ouro);
+    margin-top: 2px;
+  }
+
+  /* Section titles */
+  .section-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--cacao);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ouro-pale);
+  }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--creme);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(180,166,140,.20);
+  }
+
+  .card-title {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--cacao);
+    margin-bottom: 8px;
+  }
+
+  .card p, .card li {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--cacao);
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card ul li {
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--ouro);
+  }
+
+  /* Tag label */
+  .tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ouro-deep);
+    background: rgba(180,166,140,.15);
+    padding: 3px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  /* Highlight box */
+  .highlight {
+    background: var(--cacao);
+    color: var(--marfim);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .highlight .card-title {
+    color: var(--ouro);
+  }
+
+  .highlight p, .highlight li {
+    color: var(--marfim);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .highlight ul li::before {
+    background: var(--ouro);
+  }
+
+  /* Grid */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .grid-2 .card {
+    margin-bottom: 0;
+  }
+
+  /* Hierarchy */
+  .hierarchy {
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 2;
+    color: var(--cacao);
+    padding: 16px 0;
+  }
+
+  .hierarchy .level-0 { padding-left: 0; }
+  .hierarchy .level-1 { padding-left: 20px; }
+  .hierarchy .level-2 { padding-left: 40px; }
+
+  .hierarchy .name {
+    font-family: var(--sans);
+    font-weight: 600;
+  }
+
+  .hierarchy .role {
+    color: var(--mirror);
+    font-size: 10px;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    padding: 0;
+  }
+
+  .checklist li {
+    font-size: 12px;
+    line-height: 1.8;
+    padding-left: 24px;
+    position: relative;
+    margin-bottom: 2px;
+  }
+
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--ouro);
+    border-radius: 3px;
+  }
+
+  .checklist li.done::before {
+    background: var(--ouro);
+    border-color: var(--ouro);
+  }
+
+  .checklist li.done::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 9px;
+    width: 8px;
+    height: 5px;
+    border-left: 2px solid var(--marfim);
+    border-bottom: 2px solid var(--marfim);
+    transform: rotate(-45deg);
+  }
+
+  .checklist li.done {
+    color: var(--mirror);
+  }
+
+  /* Footer */
+  .footer {
+    position: absolute;
+    bottom: 32px;
+    left: 56px;
+    right: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--ouro-pale);
+  }
+
+  .footer span {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--mirror);
+  }
+
+  /* Priority tags */
+  .priority-high {
+    color: #E03131;
+    font-weight: 600;
+  }
+
+  .priority-med {
+    color: #F5A623;
+    font-weight: 600;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--ouro-pale);
+    margin: 24px 0;
+  }
+
+  .compact-list {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGINA 1: Capa + Resumo Executivo -->
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <h1>Aprendizados e Proximos Passos</h1>
+      <div class="subtitle">Sistema Isis Moreira / OpenClaw</div>
+    </div>
+    <div class="header-right">
+      <div class="date">10 de marco de 2026</div>
+      <div class="version">Sessoes 09 e 10/03/2026</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <div class="card-title">Resumo Executivo</div>
+    <p>Em dois dias, o sistema Isis Moreira saiu do conceito para a operacao. A arquitetura foi definida, testada, corrigida e consolidada. Nove agentes funcionando em um unico supergrupo com identidades autonomas, tres crons ativos, memoria estruturada e workspace organizado.</p>
+  </div>
+
+  <span class="section-number">01</span>
+  <div class="section-title">Arquitetura Final</div>
+
+  <div class="card">
+    <div class="tag">Decisao Permanente</div>
+    <div class="card-title">Supergrupo com topicos, nao grupos separados</div>
+    <ul>
+      <li>Um unico agente main (Dona) no OpenClaw</li>
+      <li>Dona assume identidade do agente conforme o topico via AGENTS.md</li>
+      <li>Workspace e memoria centralizados</li>
+      <li>Binding unico cobre o supergrupo inteiro</li>
+      <li>Orquestracao natural, sem fricao entre agentes</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Hierarquia Operacional</div>
+    <div class="hierarchy">
+      <div class="level-0"><span class="name">Isis Moreira</span> <span class="role">decisora final</span></div>
+      <div class="level-1"><span class="name">Dona</span> <span class="role">COO, hub central, topico 2</span></div>
+      <div class="level-2"><span class="name">Atlas</span> <span class="role">Estrategista, topico 15</span></div>
+      <div class="level-2"><span class="name">Eva</span> <span class="role">Arquiteta, topico 5</span></div>
+      <div class="level-2"><span class="name">Aurora</span> <span class="role">Designer, topico 6</span></div>
+      <div class="level-2"><span class="name">Harpia</span> <span class="role">Video, topico 7</span></div>
+      <div class="level-2"><span class="name">Masterson</span> <span class="role">Copy, topico 8</span></div>
+      <div class="level-2"><span class="name">Vega</span> <span class="role">Conteudo, topico 10</span></div>
+      <div class="level-2"><span class="name">Orion</span> <span class="role">Dev, topico 11</span></div>
+      <div class="level-2"><span class="name">Helios</span> <span class="role">Trafego, topico 12</span></div>
+      <div class="level-2"><span class="name">Nexa</span> <span class="role">Imagem, topico 14</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Sistema Isis Moreira</span>
+    <span>Confidencial</span>
+    <span>Pagina 1/4</span>
+  </div>
+</div>
+
+<!-- PAGINA 2: Aprendizados Tecnicos -->
+<div class="page">
+  <span class="section-number">02</span>
+  <div class="section-title">Aprendizados Tecnicos</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="tag">Critico</div>
+      <div class="card-title">Cache do Gateway</div>
+      <p>O gateway cacheia workspace files (SOUL.md, AGENTS.md). Editar sem restart = modelo usa versao antiga. Sempre reiniciar apos mudancas nos MDs.</p>
+    </div>
+    <div class="card">
+      <div class="tag">Critico</div>
+      <div class="card-title">SOUL.md e a Ancora de Identidade</div>
+      <p>Se SOUL.md diz "Nome: Dona" sem mencionar o sistema de identidades, o modelo resiste a assumir outras personas. A solucao: SOUL.md deve explicitar que trocar de identidade faz parte do design.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Hierarquia de Prioridade</div>
+      <ul>
+        <li>System prompt do OpenClaw (maxima)</li>
+        <li>SOUL.md (persona e tom)</li>
+        <li>AGENTS.md (identidade por topico)</li>
+        <li>IDENTITY.md (dados factuais)</li>
+        <li>USER.md, TOOLS.md (operacional)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Crons: Regra de Ouro</div>
+      <ul>
+        <li>Sempre: isolated + agentTurn + announce</li>
+        <li>Nunca: systemEvent + main (dura 0ms)</li>
+        <li>Espacar por 15 a 30 min</li>
+        <li>config.patch mata crons em execucao</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Sub-agents</div>
+      <ul>
+        <li>Herdam apenas AGENTS.md e TOOLS.md</li>
+        <li>Nao herdam SOUL.md nem IDENTITY.md</li>
+        <li>AGENTS.md precisa ser autocontido</li>
+        <li>Skills devem estar no TOOLS.md</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Heartbeat para Topics</div>
+      <ul>
+        <li>Formato do campo to:</li>
+        <li>&lt;chatId&gt;:topic:&lt;threadId&gt;</li>
+        <li>Exemplo: -1003514367085:topic:4</li>
+        <li>target: "telegram"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <span class="section-number">03</span>
+  <div class="section-title">Aprendizados de Processo</div>
+
+  <div class="highlight">
+    <div class="card-title">O que funcionou</div>
+    <ul>
+      <li>Questionar a arquitetura antes de executar salvou horas de retrabalho</li>
+      <li>Pesquisar no grupo do curso trouxe info que nao estava na documentacao</li>
+      <li>Documentar decisoes ao longo do processo cria memoria persistente</li>
+      <li>Pedir relatorios cria registro que sobrevive a compactacao de contexto</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">O que nao funcionou</div>
+    <ul>
+      <li>Tentar resolver problemas tecnicos sem capturar logs primeiro</li>
+      <li>Executar comandos sem verificar o estado atual</li>
+      <li>Nao parar processos em background (tail -f &amp;) causou crash loop</li>
+      <li>Topic binding por CLI: 3 tentativas, nenhuma funcionou (desnecessario com a arquitetura final)</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <span>Sistema Isis Moreira</span>
+    <span>Confidencial</span>
+    <span>Pagina 2/4</span>
+  </div>
+</div>
+
+<!-- PAGINA 3: 10 Regras Inviolaveis -->
+<div class="page">
+  <span class="section-number">04</span>
+  <div class="section-title">10 Regras Inviolaveis</div>
+  <p style="font-size: 11px; color: var(--mirror); margin-bottom: 20px;">Licoes de 13 dias rodando agentes AI em producao.</p>
+
+  <div class="grid-2">
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 1</div>
+      <div class="card-title" style="font-size: 12px;">Crons sempre isolated + agentTurn</div>
+      <p style="font-size: 11px;">Nunca systemEvent + main. Mostra status ok mas dura 0ms.</p>
+    </div>
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 2</div>
+      <div class="card-title" style="font-size: 12px;">Nunca hardcodar credenciais</div>
+      <p style="font-size: 11px;">Tudo no 1Password ou .env (chmod 600). Zero excecoes.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 3</div>
+      <div class="card-title" style="font-size: 12px;">dmPolicy: allowlist desde o Dia 1</div>
+      <p style="font-size: 11px;">Nunca "open". Qualquer pessoa comandaria o agente.</p>
+    </div>
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 4</div>
+      <div class="card-title" style="font-size: 12px;">Extrair licoes ANTES de compactacao</div>
+      <p style="font-size: 11px;">Compactacao descarta 80% do contexto. Sem extracao = HD formatado sem backup.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 5</div>
+      <div class="card-title" style="font-size: 12px;">Todo agente novo comeca N1</div>
+      <p style="font-size: 11px;">Sem confianca sem historico. Promocao via performance review.</p>
+    </div>
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 6</div>
+      <div class="card-title" style="font-size: 12px;">Split de modelos por custo</div>
+      <p style="font-size: 11px;">Crons: Sonnet. Heartbeats: Haiku. Interacao direta: Opus. Sem split = $100+/mes.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 7</div>
+      <div class="card-title" style="font-size: 12px;">Backup antes de mudancas estruturais</div>
+      <p style="font-size: 11px;">Salvar config + ROLLBACK.md. config.patch reinicia gateway.</p>
+    </div>
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 8</div>
+      <div class="card-title" style="font-size: 12px;">Sub-agent travou: retry 2x, alerta</div>
+      <p style="font-size: 11px;">Nunca fire and forget. Falhou 2x = alerta imediato para Isis.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 9</div>
+      <div class="card-title" style="font-size: 12px;">SOUL.md personalizado nao e opcional</div>
+      <p style="font-size: 11px;">SOUL generico = agente generico = ChatGPT caro.</p>
+    </div>
+    <div class="card" style="padding: 16px 20px;">
+      <div class="tag">Regra 10</div>
+      <div class="card-title" style="font-size: 12px;">Creators sao skills, nao agentes</div>
+      <p style="font-size: 11px;">1 agente com 8 skills > 8 agentes separados. Menos custo, menos falha.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Sistema Isis Moreira</span>
+    <span>Confidencial</span>
+    <span>Pagina 3/4</span>
+  </div>
+</div>
+
+<!-- PAGINA 4: Proximos Passos -->
+<div class="page">
+  <span class="section-number">05</span>
+  <div class="section-title">Proximos Passos</div>
+
+  <div class="card">
+    <div class="tag">Prioridade Alta</div>
+    <div class="card-title">Documentos de Negocio</div>
+    <ul class="checklist">
+      <li>Positioning statement (quem e Isis, pra quem, diferencial)</li>
+      <li>Product catalog (produtos, precos, funis)</li>
+      <li>Audience profile (avatar detalhado, dores, desejos)</li>
+      <li>Voice guide (tom de voz expandido com exemplos reais)</li>
+    </ul>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="tag">Credenciais</div>
+      <div class="card-title">Integracoes Pendentes</div>
+      <ul class="checklist">
+        <li>Google OAuth (Sheets, Calendar)</li>
+        <li>Meta Business (Instagram, Ads)</li>
+        <li>Notion API</li>
+        <li>Twitter/X (confirmar se usa)</li>
+        <li>Canva OAuth (refazer, expirou)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="tag">Skills</div>
+      <div class="card-title">A Instalar</div>
+      <ul class="checklist">
+        <li>gog (Google integration)</li>
+        <li>github (repo management)</li>
+        <li>sag (search and gather)</li>
+        <li>summarize (resumo de conteudo)</li>
+        <li>nano-pdf (edicao de PDFs)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tag">Infraestrutura</div>
+    <div class="card-title">Sistema e Monitoramento</div>
+    <ul class="checklist">
+      <li>Mission Control via Google Sheets (aguarda OAuth)</li>
+      <li>UptimeRobot: monitoramento externo do gateway</li>
+      <li>ElevenLabs: pagar e testar geracao de audio</li>
+      <li>Split de modelos por custo (Haiku/Sonnet/Opus)</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="highlight">
+    <div class="card-title">Estado Atual do Sistema</div>
+    <ul>
+      <li>Gateway rodando e estavel no srv1464443</li>
+      <li>9 agentes funcionando com identidades corretas</li>
+      <li>3 crons ativos (stats, health, tasks) entregando no topico Alertas</li>
+      <li>Heartbeat configurado para topico Alertas</li>
+      <li>Workspace limpo, memoria estruturada, binding unico</li>
+      <li>Binding: main ← telegram accountId=-1003514367085</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Decisoes Aguardando Isis</div>
+    <ul class="checklist">
+      <li>Coconote: forma de integracao</li>
+      <li>Supabase: URL + anon key</li>
+      <li>Twitter/X: priorizar ou nao</li>
+      <li>Notion: confirmar uso ativo</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <span>Sistema Isis Moreira</span>
+    <span>Confidencial</span>
+    <span>Pagina 4/4</span>
+  </div>
+</div>
+
+</body>
+</html>

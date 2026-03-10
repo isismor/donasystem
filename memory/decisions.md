@@ -56,10 +56,43 @@ SOUL.md generico = agente generico = ChatGPT caro.
 LinkedIn Creator, Newsletter Writer, Instagram Caption = prompts/skills dentro de 1 agente.
 1 agente com 8 skills > 8 agentes separados. Cada agente extra = mais custo, mais falha, cold start.
 
+### Arquitetura: supergrupo com topicos, nao grupos separados (09/03/2026)
+Um unico agente main. Dona assume identidades por topico via AGENTS.md. Workspace e memoria centralizados. Binding unico. Grupos separados so fazem sentido com isolamento real (segunda empresa, cliente diferente).
+
+### Cache do gateway: restart obrigatorio apos editar workspace files (10/03/2026)
+O gateway cacheia SOUL.md, AGENTS.md e outros workspace files. Editar sem restart = modelo usa versao antiga. Sempre reiniciar gateway apos mudancas nos MDs.
+
+### SOUL.md deve mencionar sistema de identidades (10/03/2026)
+Se SOUL.md diz apenas "Nome: Dona" sem explicar que assumir identidades por topico e parte do design, o modelo resiste a trocar de persona. O sistema de identidades precisa estar explicito no SOUL.md.
+
+### Heartbeat para Telegram topics: formato do campo to (10/03/2026)
+Formato correto: `to: "<chatId>:topic:<threadId>"`. Exemplo: `"-1003514367085:topic:4"`.
+
 ### Design system como fonte da verdade (09/03/2026)
 Qualquer material visual gerado por Dona usa obrigatoriamente os tokens do Design System ISIS v7.
 Arquivo em `memory/design-system-isis-v7.html` e resumo em `memory/design-system.md`.
 Nunca improvisar cores, fontes ou espaçamentos fora do sistema.
+
+### Pipeline de cadeias: Atlas orquestra, Dona supervisiona (10/03/2026)
+Cadeias com 2+ agentes são orquestradas por Atlas. Dona supervisiona e faz override se travar. Tarefas diretas (1 agente) ficam com Dona. Sem sobreposição. Gates vermelhos (output público) param e esperam ok de Isis. Gates verdes (conteúdo bruto entre agentes) seguem automático. Estado sempre gravado em projects.md. Modelo completo em `memory/pipeline-model.md`.
+
+### Acentuação obrigatória em output público (10/03/2026)
+Todo material que vira público deve ter acentuação correta em português. Guardrail global no AGENTS.md.
+
+### Briefings estruturados para Aurora (10/03/2026)
+Briefings para Aurora devem conter: tipo de peça, dimensões, público, referências visuais, hierarquia de conteúdo. Nunca texto solto.
+
+### Dona NUNCA atualiza openclaw de forma autônoma (10/03/2026)
+Atualizações do openclaw podem introduzir breaking changes silenciosos (token obrigatório, instabilidade de provedor). Todo update exige supervisão manual de Isis e validação do serviço. Sem exceções. Sem cron de auto-update. Incidente de 5 horas de downtime em 10/03/2026 comprovou o risco. Post-mortem completo em `media/inbound/incidente_openclaw_10-03-2026_postmortem*.md`.
+
+### Nunca executar `openclaw gateway install --force` durante diagnóstico (10/03/2026)
+Cria serviço duplicado que gera crash loop. Sempre verificar `systemctl list-unit-files | grep openclaw` antes e depois de qualquer intervenção no serviço.
+
+### Verificar .service após qualquer atualização do openclaw (10/03/2026)
+Variáveis de ambiente (token, etc) podem ser removidas silenciosamente por um novo install. Inspecionar o arquivo .service é o primeiro passo em qualquer crash loop.
+
+### Rollback é prioridade quando investigação não converge (10/03/2026)
+Se o comportamento da nova versão é opaco e a investigação não converge após 30-60 minutos, rollback imediato. Não insistir em fix-forward.
 
 ### Bonus — 3 regras operacionais
 - Espacar crons por 15-30 min (colisao = rate limit)

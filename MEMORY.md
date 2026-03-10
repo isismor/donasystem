@@ -12,6 +12,7 @@
 | [memory/projects.md](memory/projects.md) | Projetos ativos, em andamento, concluidos |
 | [memory/people.md](memory/people.md) | Equipe, parceiros, contatos |
 | [memory/pending.md](memory/pending.md) | Aguardando input de Isis ou terceiros |
+| [memory/pipeline-model.md](memory/pipeline-model.md) | Modelo de orquestração de cadeias entre agentes |
 
 ## Notas Diarias
 

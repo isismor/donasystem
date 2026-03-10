@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Ativas — Sistema Dona</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Text&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f9f8f4;
+    color: #2a2420;
+    padding: 64px 56px;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid #b4a68c;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Text', serif;
+    font-size: 32px;
+    color: #2a2420;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .header .subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #7a6e5c;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Text', serif;
+    font-size: 20px;
+    color: #2a2420;
+    margin: 40px 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #efede6;
+  }
+
+  .skill-card {
+    background: #ffffff;
+    border: 1px solid #efede6;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 16px;
+    page-break-inside: avoid;
+  }
+
+  .skill-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #2a2420;
+    margin-bottom: 4px;
+  }
+
+  .skill-card .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #f9f8f4;
+    background: #7a6e5c;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .skill-card .tag.bundled { background: #b4a68c; }
+  .skill-card .tag.clawhub { background: #9ba1a8; }
+  .skill-card .tag.api { background: #2a2420; }
+
+  .skill-card p {
+    font-size: 13px;
+    color: #2a2420;
+    margin-bottom: 8px;
+  }
+
+  .skill-card .detail {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #7a6e5c;
+  }
+
+  .table-section {
+    margin-top: 40px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 13px;
+  }
+
+  th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #7a6e5c;
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 2px solid #b4a68c;
+  }
+
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #efede6;
+    vertical-align: top;
+  }
+
+  .footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid #efede6;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #9ba1a8;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Skills Ativas</h1>
+  <div class="subtitle">Sistema Dona / Isis Moreira</div>
+</div>
+
+<!-- SKILLS INSTALADAS -->
+
+<div class="section-title">Skills Instaladas</div>
+
+<div class="skill-card">
+  <h3>Canva Connect</h3>
+  <span class="tag clawhub">clawhub</span>
+  <p>Integracao com a API do Canva. Lista designs, exporta em PNG/PDF/JPG, faz upload de assets e preenche templates via autofill.</p>
+  <div class="detail">Localizacao: workspace/skills/canva-connect/</div>
+  <div class="detail">Credencial: vault "Dona" > "Canva API Key"</div>
+</div>
+
+<div class="skill-card">
+  <h3>OpenAI Whisper API</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Transcricao de audio via OpenAI Whisper-1. Suporta upload direto de arquivos de audio locais.</p>
+  <div class="detail">Credencial: vault "Dona" > "Open AI"</div>
+  <div class="detail">Alternativa: whisper-from-url (RapidAPI) para audios via URL</div>
+</div>
+
+<div class="skill-card">
+  <h3>Video Frames</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Extrai frames ou clipes curtos de videos usando ffmpeg. Ideal para analisar reels, gerar thumbnails e capturar momentos especificos.</p>
+  <div class="detail">Binario: ffmpeg v7.0.2 (/home/openclaw/.local/bin/ffmpeg)</div>
+</div>
+
+<div class="skill-card">
+  <h3>Nano PDF</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Edicao de PDFs com instrucoes em linguagem natural. Permite alterar titulos, corrigir textos e ajustar paginas especificas.</p>
+  <div class="detail">CLI: nano-pdf edit arquivo.pdf [pagina] "[instrucao]"</div>
+</div>
+
+<div class="skill-card">
+  <h3>Nano Banana Pro</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Geracao e edicao de imagens via Gemini 3 Pro Image. Cria e modifica imagens com instrucoes em texto.</p>
+</div>
+
+<div class="skill-card">
+  <h3>Weather</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Consulta de clima e previsao do tempo via wttr.in ou Open-Meteo. Sem necessidade de API key.</p>
+</div>
+
+<div class="skill-card">
+  <h3>Coding Agent</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Delega tarefas de codigo para agentes como Codex ou Claude Code em processo background. Usado para features, refatoracao e revisao de PRs.</p>
+</div>
+
+<div class="skill-card">
+  <h3>1Password</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Integracao com 1Password CLI (op). Leitura e injecao de segredos, gerenciamento de credenciais do sistema.</p>
+  <div class="detail">Binario: /home/openclaw/.local/bin/op</div>
+</div>
+
+<div class="skill-card">
+  <h3>OpenAI Image Gen</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Geracao de imagens em lote via OpenAI Images API. Inclui galeria HTML para visualizacao.</p>
+</div>
+
+<div class="skill-card">
+  <h3>Skill Creator</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Criacao e empacotamento de novas skills. Estrutura scripts, referencias e assets para distribuicao.</p>
+</div>
+
+<div class="skill-card">
+  <h3>Healthcheck</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Auditoria de seguranca do servidor. Firewall, SSH, atualizacoes, hardening e verificacao periodica via cron.</p>
+</div>
+
+<div class="skill-card">
+  <h3>Tmux</h3>
+  <span class="tag bundled">bundled</span>
+  <p>Controle remoto de sessoes tmux. Envia keystrokes e captura output para CLIs interativas.</p>
+</div>
+
+<!-- APIs EXTERNAS -->
+
+<div class="section-title">APIs Externas (RapidAPI)</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>API</th>
+      <th>Host</th>
+      <th>Uso</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Instagram</strong></td>
+      <td>instagram120.p.rapidapi.com</td>
+      <td>Posts e reels por usuario</td>
+    </tr>
+    <tr>
+      <td><strong>YouTube</strong></td>
+      <td>youtube138.p.rapidapi.com</td>
+      <td>Videos de canal</td>
+    </tr>
+    <tr>
+      <td><strong>Whisper URL</strong></td>
+      <td>whisper-from-url.p.rapidapi.com</td>
+      <td>Transcricao de audio por URL publica</td>
+    </tr>
+    <tr>
+      <td><strong>Background Removal</strong></td>
+      <td>background-removal4.p.rapidapi.com</td>
+      <td>Remocao de fundo de imagens</td>
+    </tr>
+    <tr>
+      <td><strong>YakPDF</strong></td>
+      <td>yakpdf.p.rapidapi.com</td>
+      <td>Conversao de HTML para PDF</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- BINARIOS -->
+
+<div class="section-title">Binarios e Ambiente</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ferramenta</th>
+      <th>Path</th>
+      <th>Versao</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>ffmpeg</strong></td>
+      <td>/home/openclaw/.local/bin/ffmpeg</td>
+      <td>v7.0.2</td>
+    </tr>
+    <tr>
+      <td><strong>1Password CLI</strong></td>
+      <td>/home/openclaw/.local/bin/op</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><strong>Python</strong></td>
+      <td>/usr/bin/python3</td>
+      <td>3.12.3</td>
+    </tr>
+    <tr>
+      <td><strong>Node.js</strong></td>
+      <td>/usr/bin/node</td>
+      <td>v22.22.1</td>
+    </tr>
+    <tr>
+      <td><strong>pip</strong></td>
+      <td>/home/openclaw/.local/bin/pip</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="footer">
+  Sistema Dona — srv1464443 — Atualizado em marco 2026
+</div>
+
+</body>
+</html>

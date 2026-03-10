@@ -35,6 +35,16 @@
 - **Meta:** R$ 1M/mes (atual: R$ 100k/mes organico)
 - **Proximo passo:** funis de produtos (maior potencial que mentorias)
 
+### Material: Time de Agentes do Zero ao Avancado
+- **Status:** aprovado, em producao
+- **Formato:** PDF robusto (base para aula/video)
+- **Publico:** leigo a avancado, posicionamento de autoridade
+- **Estrutura:** 6 blocos (Problema > O que sao agentes > Framework > Construcao > Operacao > Resultado)
+- **Sanitizacao:** nomes e papeis ok, nada de IPs/tokens/configs/paths/vault
+- **Cadeia:** Atlas (plano) > Vega (redacao) > Masterson (tom/CTA) > Aurora (design PDF)
+- **Aprovado em:** 10/03/2026
+- **Proximo passo:** Vega inicia redacao dos 6 blocos
+
 ## Backlog
 
 - Configurar analise diaria automatica (08h SP) apos ter acesso a dados do Instagram

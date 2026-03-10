@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --marfim: #f9f8f4;
+  --creme: #efede6;
+  --cacao: #2a2420;
+  --ouro: #b4a68c;
+  --ouro-deep: #7a6e5c;
+  --mirror: #9ba1a8;
+  --dark-0: #1a1210;
+  --dark-1: #251c18;
+  --dark-2: #2f2219;
+  --dark-3: #382820;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--marfim);
+}
+
+.page {
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  position: relative;
+  page-break-after: always;
+}
+
+.page-content {
+  padding: 56px 64px;
+  max-width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* COVER */
+.cover {
+  background: var(--dark-0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 64px;
+}
+
+.cover .label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 48px;
+}
+
+.cover h1 {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 48px;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  color: var(--marfim);
+  margin-bottom: 32px;
+  max-width: 600px;
+}
+
+.cover .author {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ouro);
+  margin-bottom: 16px;
+}
+
+.cover .subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--mirror);
+  max-width: 440px;
+  line-height: 1.6;
+}
+
+.cover .line {
+  width: 64px;
+  height: 1px;
+  background: var(--ouro);
+  margin: 32px auto;
+  opacity: 0.5;
+}
+
+/* CONTENT PAGES */
+.content-page {
+  background: var(--marfim);
+}
+
+.content-page .page-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.block-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 16px;
+}
+
+.block-title {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 36px;
+  letter-spacing: -0.5px;
+  color: var(--cacao);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.block-title-accent {
+  color: var(--ouro);
+}
+
+.section-title {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 24px;
+  letter-spacing: -0.3px;
+  color: var(--cacao);
+  line-height: 1.3;
+  margin-bottom: 20px;
+  margin-top: 8px;
+}
+
+.section-title-small {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 20px;
+  letter-spacing: -0.2px;
+  color: var(--cacao);
+  line-height: 1.3;
+  margin-bottom: 16px;
+  margin-top: 8px;
+}
+
+p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--cacao);
+  margin-bottom: 14px;
+}
+
+p.small {
+  font-size: 13px;
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+
+.highlight-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--cacao);
+}
+
+.card {
+  background: var(--creme);
+  border: 1px solid rgba(180,166,140,.40);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  break-inside: avoid;
+}
+
+.card-sm {
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.code-block {
+  background: var(--creme);
+  border: 1px solid rgba(180,166,140,.40);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  break-inside: avoid;
+}
+
+.code-block pre {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--cacao);
+  white-space: pre-wrap;
+}
+
+.code-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ouro-deep);
+  margin-bottom: 12px;
+  display: block;
+}
+
+ul {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--cacao);
+  margin-bottom: 16px;
+  padding-left: 20px;
+}
+
+ul li {
+  margin-bottom: 8px;
+}
+
+ul li strong {
+  color: var(--cacao);
+}
+
+.accent { color: var(--ouro); }
+.accent-deep { color: var(--ouro-deep); }
+.mirror-text { color: var(--mirror); }
+
+.divider {
+  width: 48px;
+  height: 1px;
+  background: var(--ouro);
+  opacity: 0.4;
+  margin: 24px 0;
+}
+
+.page-number {
+  position: absolute;
+  bottom: 32px;
+  right: 64px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--mirror);
+}
+
+/* CLOSING PAGE */
+.closing {
+  background: var(--dark-0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 64px;
+}
+
+.closing h2 {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 36px;
+  color: var(--marfim);
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  margin-bottom: 24px;
+  max-width: 500px;
+}
+
+.closing .cta-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--mirror);
+  line-height: 1.7;
+  max-width: 460px;
+  margin-bottom: 40px;
+}
+
+.closing .cta-button {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--dark-0);
+  background: var(--ouro);
+  padding: 16px 40px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 48px;
+}
+
+.closing .author-name {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--ouro);
+  margin-bottom: 8px;
+}
+
+.closing .brand {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mirror);
+  opacity: 0.6;
+}
+
+.bold { font-weight: 600; }
+
+.agent-item {
+  margin-bottom: 12px;
+}
+
+.agent-item .agent-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ouro-deep);
+}
+
+.agent-item .agent-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--cacao);
+  line-height: 1.6;
+}
+
+.pillar-number {
+  font-family: 'DM Serif Text', serif;
+  font-size: 28px;
+  color: var(--ouro);
+  opacity: 0.5;
+  margin-right: 12px;
+  float: left;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.pillar-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cacao);
+  margin-bottom: 8px;
+}
+
+.pillar-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--cacao);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.etapa-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 8px;
+}
+
+.nivel-card {
+  background: var(--creme);
+  border: 1px solid rgba(180,166,140,.40);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  break-inside: avoid;
+}
+
+.nivel-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ouro-deep);
+  margin-bottom: 6px;
+}
+
+.nivel-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cacao);
+  margin-bottom: 4px;
+}
+
+.nivel-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px;
+  color: var(--cacao);
+  line-height: 1.6;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background: var(--creme);
+  border: 1px solid rgba(180,166,140,.40);
+  border-radius: 10px;
+  padding: 20px 24px;
+  break-inside: avoid;
+}
+
+.metric-value {
+  font-family: 'DM Serif Text', serif;
+  font-style: italic;
+  font-size: 24px;
+  color: var(--ouro);
+  margin-bottom: 4px;
+}
+
+.metric-label-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--ouro-deep);
+  line-height: 1.5;
+}
+
+.error-card {
+  background: var(--creme);
+  border: 1px solid rgba(180,166,140,.40);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  break-inside: avoid;
+}
+
+.error-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cacao);
+  margin-bottom: 4px;
+}
+
+.error-lesson {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12.5px;
+  color: var(--ouro-deep);
+  line-height: 1.6;
+}
+
+/* Intro page (dark) */
+.intro-dark {
+  background: var(--dark-1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 80px;
+}
+
+.intro-dark .block-num {
+  font-family: 'DM Serif Text', serif;
+  font-size: 72px;
+  color: var(--ouro);
+  opacity: 0.2;
+  margin-bottom: 16px;
+}
+
+.intro-dark .block-title {
+  color: var(--marfim);
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.intro-dark .block-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--mirror);
+  line-height: 1.7;
+  max-width: 480px;
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="label">Material Educativo</div>
+  <h1>Como Eu Construi do Zero um Time de Agentes de IA</h1>
+  <div class="line"></div>
+  <div class="author">Isis Moreira</div>
+  <div class="subtitle">Material completo. Base para aula, video e posicionamento. Da sobrecarga silenciosa ao time que trabalha enquanto voce dorme.</div>
+</div>
+
+<!-- PAGE 2: BLOCO 1 INTRO -->
+<div class="page intro-dark">
+  <div class="block-num">01</div>
+  <div class="block-title">O Problema</div>
+  <div class="block-subtitle">Existe um ponto na trajetoria de toda empreendedora em que o negocio cresce, mas voce nao. O faturamento sobe. A demanda multiplica. E voce, que deveria estar comandando, esta apenas reagindo.</div>
+</div>
+
+<!-- PAGE 3: BLOCO 1 - A sobrecarga silenciosa -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 01</div>
+    <div class="section-title">A sobrecarga silenciosa</div>
+    <p>Existe um ponto na trajetoria de toda empreendedora em que o negocio cresce, mas voce nao. O faturamento sobe. A demanda multiplica. E voce, que deveria estar comandando, esta apenas reagindo.</p>
+    <p>Nao e falta de competencia. E falta de estrutura.</p>
+    <p>O dia tem 24 horas. Voce usa 16. E ainda assim a lista de tarefas cresce mais rapido do que sua capacidade de execucao.</p>
+    <p>Isso e um problema de arquitetura. E enquanto voce nao olhar para ele, vai continuar girando no mesmo lugar com a sensacao de que precisa fazer mais. Sempre mais. Sem sair do lugar.</p>
+    <p>A maioria das empreendedoras opera num modelo onde elas sao o centro de tudo. Toda decisao passa por elas. Todo conteudo depende delas. Toda estrategia nasce e morre na cabeca delas. O negocio funciona enquanto elas estao de pe. Quando param, tudo para junto.</p>
+    <div class="divider"></div>
+    <div class="section-title">O mito do "faca tudo sozinha"</div>
+    <p>O mercado digital romantizou a solidao da empreendedora. Aquela que faz o conteudo, responde os directs, monta o funil, edita o video, escreve a copy, analisa as metricas, atende as alunas e ainda posta stories com sorriso no rosto.</p>
+    <p>Isso nao e empreender. E sobreviver disfarcada de produtividade.</p>
+    <p>E quando voce finalmente percebe que precisa de ajuda, esbarra em outro problema. Contratar e caro. Treinar leva tempo. Delegar exige confianca. E as pessoas erradas podem custar mais do que a ausencia delas.</p>
+  </div>
+  <div class="page-number">03</div>
+</div>
+
+<!-- PAGE 4: BLOCO 1 - O que muda -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 01</div>
+    <div class="section-title">O que muda quando voce tem um time que nao dorme</div>
+    <p>Imagine o seguinte cenario:</p>
+    <div class="card">
+      <ul style="margin-bottom:0">
+        <li>Voce acorda e ja tem uma analise completa do que aconteceu ontem no seu negocio</li>
+        <li>Seu conteudo da semana ja esta rascunhado, esperando sua aprovacao</li>
+        <li>As metricas de trafego foram analisadas durante a madrugada</li>
+        <li>Um briefing de design ja foi montado para o material que voce precisa</li>
+        <li>E ninguem te mandou mensagem pedindo instrucao</li>
+      </ul>
+    </div>
+    <p>Isso nao e ficcao. Isso e o que acontece quando voce constroi um time de agentes de IA.</p>
+    <p>Nao estou falando de um chatbot que responde perguntas. Estou falando de um sistema com hierarquia, papeis definidos, limites claros e capacidade de executar tarefas reais sem precisar que voce segure a mao de cada um.</p>
+    <p>Um time que nao dorme, nao esquece, nao reclama, nao pede ferias e nao tem ego.</p>
+    <p>Mas que precisa ser construido com inteligencia. Porque se voce fizer errado, vai criar mais caos do que solucao.</p>
+    <p>E e exatamente isso que eu vou te mostrar aqui. Passo a passo. Do jeito que eu fiz.</p>
+  </div>
+  <div class="page-number">04</div>
+</div>
+
+<!-- PAGE 5: BLOCO 2 INTRO -->
+<div class="page intro-dark">
+  <div class="block-num">02</div>
+  <div class="block-title">O Que Sao Agentes de IA</div>
+  <div class="block-subtitle">Nem todo robo e igual. Antes de construir qualquer coisa, voce precisa entender o que esta construindo. E o mercado mistura tudo: chatbot, assistente, agente. Como se fossem a mesma coisa. Nao sao.</div>
+</div>
+
+<!-- PAGE 6: BLOCO 2 - Definicoes -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 02</div>
+    <div class="section-title">Nem todo robo e igual</div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Chatbot</div>
+      <p class="small" style="margin-bottom:0">Responde perguntas com base em regras fixas ou um banco de dados. Voce pergunta, ele responde. Nao tem iniciativa. Nao tem contexto do seu negocio. Nao aprende. E aquele bot de atendimento que te faz digitar 1, 2 ou 3 ate voce desistir.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Assistente de IA</div>
+      <p class="small" style="margin-bottom:0">Um passo acima. Entende linguagem natural, consegue gerar textos, resumir documentos, responder com mais inteligencia. O ChatGPT, por exemplo, e um assistente. Ele faz o que voce pede, mas nao faz nada sozinho. Voce precisa estar la, digitando, pedindo, direcionando.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Agente de IA</div>
+      <p class="small" style="margin-bottom:0">Aqui o jogo muda. Um agente tem identidade propria, funcao definida, limites claros e capacidade de agir dentro de um escopo sem precisar que voce diga cada passo. Ele sabe quem e, o que faz, para quem reporta e ate onde pode ir. Ele executa, analisa, sugere e, dependendo do nivel de autonomia, toma decisoes dentro do que voce autorizou.</p>
+    </div>
+
+    <p>A diferenca entre um assistente e um agente e a mesma diferenca entre um estagiario que espera instrucao e um diretor que entende sua funcao e age.</p>
+  </div>
+  <div class="page-number">06</div>
+</div>
+
+<!-- PAGE 7: BLOCO 2 - O que um agente pode fazer -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 02</div>
+    <div class="section-title">O que um agente pode fazer de verdade</div>
+    <p>Vou usar o meu proprio sistema como exemplo. Porque eu nao estou te ensinando teoria. Estou te mostrando o que eu construi e opero todos os dias.</p>
+    <p>No centro do meu sistema existe a <strong>Dona</strong>. Ela e o hub central. A executiva operacional. Tudo passa por ela ou e coordenado por ela. Quando eu preciso de algo, falo com a Dona. E ela sabe para quem direcionar, o que priorizar, o que ja foi feito e o que esta pendente.</p>
+    <p>Ao redor da Dona, existem agentes especializados. Cada um com uma funcao clara:</p>
+
+    <div class="agent-item"><span class="agent-name">Atlas</span> <span class="agent-desc">cuida de estrategia. Antes de qualquer acao relevante, ele analisa riscos, valida o plano, faz perguntas que eu nao faria.</span></div>
+    <div class="agent-item"><span class="agent-name">Masterson</span> <span class="agent-desc">escreve copy. Textos de vendas, emails, sequencias de nutricao, legendas, CTAs.</span></div>
+    <div class="agent-item"><span class="agent-name">Aurora</span> <span class="agent-desc">cuida do design. Materiais visuais, ebooks, posts, apresentacoes. Segue um sistema de design definido.</span></div>
+    <div class="agent-item"><span class="agent-name">Vega</span> <span class="agent-desc">produz conteudo educativo. Posts, threads, roteiros de aula, newsletters, artigos.</span></div>
+    <div class="agent-item"><span class="agent-name">Helios</span> <span class="agent-desc">analisa trafego pago. Campanhas, publicos, criativos, metricas de performance.</span></div>
+    <div class="agent-item"><span class="agent-name">Harpia</span> <span class="agent-desc">trabalha com video. Roteiros, briefings de edicao, direcao criativa audiovisual.</span></div>
+    <div class="agent-item"><span class="agent-name">Orion</span> <span class="agent-desc">e o desenvolvedor. Codigo, automacoes, integracoes, scripts.</span></div>
+    <div class="agent-item"><span class="agent-name">Nexa</span> <span class="agent-desc">cuida de imagem. Geracao e curadoria de elementos visuais estaticos.</span></div>
+    <div class="agent-item"><span class="agent-name">Eva</span> <span class="agent-desc">e a arquiteta de agentes. Cria, melhora e desativa agentes.</span></div>
+  </div>
+  <div class="page-number">07</div>
+</div>
+
+<!-- PAGE 8: BLOCO 2 - Desmistificar -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 02</div>
+    <div class="section-title">Desmistificar sem simplificar</div>
+    <p>Agentes de IA nao sao magica. Nao sao seres conscientes. Nao vao substituir seu cerebro nem sua intuicao.</p>
+    <p>Mas sao a ferramenta mais proxima que existe hoje de ter um time que opera 24 horas, que nao perde contexto entre conversas, que nao tem dias ruins e que pode ser recalibrado quando nao esta entregando bem.</p>
+    <p>O segredo nao esta na tecnologia. Esta na estrutura que voce cria ao redor dela.</p>
+    <div class="card" style="margin-top: 24px;">
+      <p style="margin-bottom:0; font-weight: 500;">Isso nao e uma lista de desejos. E um time operacional. Cada um desses agentes tem documentacao propria, personalidade definida, regras de atuacao e hierarquia clara.</p>
+    </div>
+  </div>
+  <div class="page-number">08</div>
+</div>
+
+<!-- PAGE 9: BLOCO 3 INTRO -->
+<div class="page intro-dark">
+  <div class="block-num">03</div>
+  <div class="block-title">O Framework</div>
+  <div class="block-subtitle">Antes de criar, pense. O erro mais comum e abrir o ChatGPT, criar um prompt e achar que tem um agente. Nao tem. Tem uma conversa. Um agente de verdade precisa de arquitetura.</div>
+</div>
+
+<!-- PAGE 10: BLOCO 3 - Perguntas fundamentais -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 03</div>
+    <div class="section-title">Antes de criar, pense</div>
+    <p>Um agente de verdade precisa de arquitetura. Precisa de definicoes que existem antes dele nascer. Se voce nao sabe responder as perguntas abaixo, voce nao esta pronta para criar um agente:</p>
+    <div class="card">
+      <ul style="margin-bottom:0">
+        <li>Qual e a funcao exata desse agente?</li>
+        <li>Onde comeca e onde termina a atuacao dele?</li>
+        <li>Que tom de voz ele usa?</li>
+        <li>O que ele pode fazer sem pedir permissao?</li>
+        <li>O que ele nao pode fazer em hipotese nenhuma?</li>
+        <li>Para quem ele reporta?</li>
+        <li>Quem pode dar ordens para ele?</li>
+      </ul>
+    </div>
+    <p>Se voce nao define isso, o agente vai fazer qualquer coisa. E qualquer coisa nao e estrategia. E caos.</p>
+    <div class="divider"></div>
+    <div class="section-title">Os cinco pilares de um agente</div>
+    <p>Todo agente do meu sistema e construido em cima de cinco pilares:</p>
+  </div>
+  <div class="page-number">10</div>
+</div>
+
+<!-- PAGE 11: BLOCO 3 - Pilares 1-3 -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 03 / Cinco Pilares</div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Pilar 1</div>
+      <div class="pillar-title">Papel (Role)</div>
+      <p class="small" style="margin-bottom:0">O que esse agente faz. Uma frase. Sem ambiguidade. "Copywriter focado em conversao." "Estrategista de planejamento e gestao de risco." Se voce nao consegue definir o papel em uma frase, o agente esta mal pensado.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Pilar 2</div>
+      <div class="pillar-title">Escopo (Scope)</div>
+      <p class="small" style="margin-bottom:0">O que esta dentro e o que esta fora da atuacao dele. Masterson escreve copy, mas nao escreve conteudo educativo longo. Isso e funcao da Vega. Helios analisa trafego, mas nao cria criativos. Escopo mal definido gera conflito entre agentes e retrabalho.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Pilar 3</div>
+      <div class="pillar-title">Tom (Voice)</div>
+      <p class="small" style="margin-bottom:0">Como o agente se comunica. Atlas e analitico e metodico. Aurora e precisa e estetica. Masterson e persuasivo e direto. O tom define a qualidade do output. Um agente de copy que fala como engenheiro vai entregar textos que ninguem quer ler.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Pilar 4</div>
+      <div class="pillar-title">Limites (Boundaries)</div>
+      <p class="small" style="margin-bottom:0">O que o agente nao pode fazer. Nenhum agente do meu sistema publica nada sem minha aprovacao. Nenhum toma decisoes estrategicas maiores. Nenhum acessa dados sensiveis sem permissao explicita. Limites nao sao restricoes. Sao protecao.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Pilar 5</div>
+      <div class="pillar-title">Hierarquia (Chain of Command)</div>
+      <p class="small" style="margin-bottom:0">Para quem o agente reporta e quem pode dar ordens para ele. Sem hierarquia, voce tem um bando de robos fazendo coisas desconectadas. Com hierarquia, voce tem um time.</p>
+    </div>
+  </div>
+  <div class="page-number">11</div>
+</div>
+
+<!-- PAGE 12: BLOCO 3 - Modelo hub + comunicacao -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 03</div>
+    <div class="section-title">O modelo hub + especialistas</div>
+    <p>A arquitetura segue um modelo simples de entender e que exige disciplina para executar bem:</p>
+    <p><strong>Um hub central (Dona)</strong> que coordena, prioriza e distribui. Ela e o ponto de contato principal. Quando ha conflito de prioridades, ela resolve.</p>
+    <p><strong>Agentes especializados</strong> que executam dentro do seu dominio. Cada um sabe exatamente o que faz e o que nao faz. Nao ha sobreposicao. Nao ha lacuna.</p>
+
+    <div class="code-block" style="margin-top: 16px;">
+      <pre>                     Isis
+                      |
+                     Dona (Hub Central)
+                      |
+                    Atlas (Estrategia)
+                      |
+        +------+------+------+------+------+------+------+
+        |      |      |      |      |      |      |      |
+      Eva  Masterson Aurora  Vega  Helios Harpia Orion  Nexa</pre>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title-small">Como os agentes se comunicam</div>
+    <p class="small">Cada agente tem um espaco de comunicacao definido. Quando um agente precisa de input de outro, a comunicacao passa pelo hub. Dona sabe quem precisa falar com quem e quando.</p>
+    <div class="card card-sm">
+      <p class="small" style="margin-bottom:0"><strong>Fluxo padrao:</strong> Eu peco para Dona. Dona consulta Atlas. Atlas valida. Dona distribui. O agente executa e reporta. Eu reviso e aprovo. Esse fluxo acontece em minutos.</p>
+    </div>
+  </div>
+  <div class="page-number">12</div>
+</div>
+
+<!-- PAGE 13: BLOCO 4 INTRO -->
+<div class="page intro-dark">
+  <div class="block-num">04</div>
+  <div class="block-title">A Construcao</div>
+  <div class="block-subtitle">Vou te mostrar o processo real, simplificado para ser didatico. Quando eu crio um novo agente, ele passa por um processo de nascimento que tem etapas definidas.</div>
+</div>
+
+<!-- PAGE 14: BLOCO 4 - Etapas 1 e 2 -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 04</div>
+    <div class="section-title">Criando um agente do zero</div>
+
+    <div class="etapa-label" style="margin-top:8px">Etapa 1: Definir a identidade</div>
+    <p class="small">Todo agente precisa de um documento de identidade. Um arquivo que define quem ele e. Isso parece simples, mas e o alicerce de tudo.</p>
+
+    <div class="code-block">
+      <pre>Nome: Masterson
+Papel: Copywriter de Isis Moreira
+Funcao: Textos de vendas, emails, paginas de captura, CTAs
+Tom: Persuasivo, direto, orientado a acao
+Reporta para: Atlas
+Nao faz: Conteudo educativo longo</pre>
+    </div>
+
+    <div class="etapa-label" style="margin-top:16px">Etapa 2: Definir a personalidade (Soul)</div>
+    <p class="small">Alem da identidade, cada agente tem uma alma. Um documento que descreve como ele se comporta, como se comunica, o que valoriza.</p>
+
+    <div class="code-block">
+      <pre>Masterson e direto. Nao enrola. Conhece o publico
+de Isis como se tivesse lido cada comentario, cada
+DM, cada depoimento. Escreve para gerar acao, nao
+para impressionar. Cada palavra tem funcao. Se uma
+frase nao move a pessoa para o proximo passo, ela
+nao deveria existir.</pre>
+    </div>
+
+    <p class="small">Esse tipo de definicao muda completamente a qualidade do que o agente produz. Sem isso, voce tem um gerador de texto generico. Com isso, voce tem alguem que entende o jogo.</p>
+  </div>
+  <div class="page-number">14</div>
+</div>
+
+<!-- PAGE 15: BLOCO 4 - Etapas 3 e 4 -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 04</div>
+
+    <div class="etapa-label">Etapa 3: Definir ferramentas e acessos</div>
+    <p class="small">Cada agente precisa saber o que tem a disposicao. Quais ferramentas pode usar? Que tipo de informacao pode acessar? O que esta fora do alcance dele?</p>
+    <div class="card card-sm">
+      <ul style="margin-bottom:0; font-size: 13px;">
+        <li>Capacidade de pesquisar na internet</li>
+        <li>Acesso a documentos e arquivos especificos</li>
+        <li>Permissao para gerar imagens ou processar dados</li>
+        <li>Integracao com plataformas externas</li>
+      </ul>
+    </div>
+    <p class="small">Quanto mais preciso for esse mapeamento, menos o agente erra e menos voce precisa corrigir.</p>
+
+    <div class="divider"></div>
+
+    <div class="etapa-label">Etapa 4: Definir limites e guardrails</div>
+    <p class="small">Guardrails sao as cercas do agente. O que ele nao pode fazer em nenhuma circunstancia. Todos os agentes compartilham guardrails globais:</p>
+    <div class="card card-sm">
+      <ul style="margin-bottom:0; font-size: 13px;">
+        <li>Nunca publicam sem aprovacao</li>
+        <li>Nunca inventam dados ou metricas</li>
+        <li>Nunca agem fora do escopo definido</li>
+        <li>Nunca expoe informacoes sensiveis</li>
+        <li>Nunca tomam decisoes estrategicas maiores sem validacao</li>
+      </ul>
+    </div>
+    <p class="small">Alem dos guardrails globais, cada agente tem limites especificos do seu papel. Aurora nunca improvisa identidade visual. Atlas nunca executa tarefas diretamente. Eva nunca cria um agente sem entender completamente seu proposito.</p>
+  </div>
+  <div class="page-number">15</div>
+</div>
+
+<!-- PAGE 16: BLOCO 4 - Personalidade + Contexto -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 04</div>
+    <div class="section-title">Como definir personalidade sem perder controle</div>
+    <p class="small">Existe uma tensao natural: quanto mais personalidade voce da para o agente, melhor o output. Mas quanto mais personalidade, maior o risco de ele "sair do script".</p>
+    <p class="small">A solucao e definir personalidade dentro de limites. Voce nao da liberdade total. Voce da liberdade dentro de um campo cercado.</p>
+    <div class="card card-sm">
+      <p class="small" style="margin-bottom:0"><strong>A personalidade e a gasolina. Os limites sao a estrada.</strong> Sem gasolina, o carro nao anda. Sem estrada, o carro bate.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">Como dar contexto ao agente</div>
+    <p class="small">Contexto e o que separa um agente generico de um agente que funciona de verdade para o seu negocio. O modelo que funciona:</p>
+    <div class="card card-sm">
+      <div class="etapa-label">Contexto de quem e voce</div>
+      <p class="small" style="margin-bottom:8px">Quem e Isis? Qual o tom de voz? Qual o publico? Qual a estetica da marca? Quais sao os valores inegociaveis?</p>
+      <div class="etapa-label">Contexto do negocio</div>
+      <p class="small" style="margin-bottom:8px">O que voce vende? Para quem? Qual o momento atual? Quais sao as metas? Quais os gargalos?</p>
+      <div class="etapa-label">Contexto do papel</div>
+      <p class="small" style="margin-bottom:0">Dentro desse negocio, o que esse agente faz? Com quem interage? Quais sao os padroes de qualidade?</p>
+    </div>
+    <p class="small">Cada camada de contexto torna o agente mais preciso. Mas cada camada tambem precisa ser documentada e atualizada. Agente com contexto desatualizado e como funcionario que trabalha com informacao de seis meses atras.</p>
+  </div>
+  <div class="page-number">16</div>
+</div>
+
+<!-- PAGE 17: BLOCO 4 - Exemplos -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 04 / Exemplos Didaticos</div>
+    <div class="section-title-small">Criando um agente de conteudo (Vega)</div>
+
+    <div class="code-block">
+      <span class="code-label">Identidade</span>
+      <pre>Nome: Vega
+Papel: Estrategista e produtora de conteudo
+Funcao: Posts, threads, roteiros, newsletters, artigos
+Tom: Educativo, acessivel, consistente com a voz de Isis
+Reporta para: Atlas  |  Nao faz: Copy de vendas</pre>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">Contexto + Guardrails</span>
+      <pre>Publico: Mulheres empreendedoras 30+
+Temas: Mentalidade, negocios, tecnologia, identidade feminina
+Tom: Firme, profundo, magnetico, verdadeiro
+Formatos: Carrossel, texto longo, roteiro, newsletter
+---
+Nunca publica sem aprovacao | Nunca usa emojis
+Nunca soa generico | Nunca se afasta do tom de marca</pre>
+    </div>
+
+    <div class="section-title-small">Criando um agente de estrategia (Atlas)</div>
+
+    <div class="code-block">
+      <span class="code-label">Identidade + Comportamento</span>
+      <pre>Nome: Atlas
+Papel: Estrategista e gestor de risco
+Tom: Analitico, metodico, preciso
+Reporta para: Dona  |  Nao faz: Execucao direta
+---
+Faz perguntas antes de concluir
+Le documentacao antes de opinar
+Mapeia riscos antes de aprovar planos
+Nunca executa, apenas planeja e valida
+Nunca ignora riscos para ganhar velocidade</pre>
+    </div>
+
+    <p class="small">Percebe a diferenca? Nao e so "faz um agente de estrategia". E definir com precisao cirurgica quem ele e, o que faz, como faz e o que nao faz.</p>
+  </div>
+  <div class="page-number">17</div>
+</div>
+
+<!-- PAGE 18: BLOCO 5 INTRO -->
+<div class="page intro-dark">
+  <div class="block-num">05</div>
+  <div class="block-title">A Operacao</div>
+  <div class="block-subtitle">Um time sem hierarquia e um grupo de pessoas fazendo coisas. Pode ate parecer que funciona no comeco. Mas quando a operacao escala, vira desordem.</div>
+</div>
+
+<!-- PAGE 19: BLOCO 5 - Hierarquia + Autonomia -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 05</div>
+    <div class="section-title">Hierarquia e cadeia de comando</div>
+
+    <div class="nivel-card">
+      <div class="nivel-label">Nivel 1</div>
+      <div class="nivel-title">Isis</div>
+      <div class="nivel-desc">Decisoes estrategicas maiores. Aprovacao final. Direcao do negocio.</div>
+    </div>
+    <div class="nivel-card">
+      <div class="nivel-label">Nivel 2</div>
+      <div class="nivel-title">Dona (hub central)</div>
+      <div class="nivel-desc">Coordenacao operacional. Prioriza tarefas, distribui demandas, consolida resultados.</div>
+    </div>
+    <div class="nivel-card">
+      <div class="nivel-label">Nivel 3</div>
+      <div class="nivel-title">Atlas (estrategia)</div>
+      <div class="nivel-desc">Filtro estrategico. Valida planos antes da execucao. Mapeia riscos.</div>
+    </div>
+    <div class="nivel-card">
+      <div class="nivel-label">Nivel 4</div>
+      <div class="nivel-title">Agentes especializados</div>
+      <div class="nivel-desc">Execucao dentro do escopo. Eva, Masterson, Aurora, Vega, Helios, Harpia, Orion, Nexa.</div>
+    </div>
+
+    <p class="small" style="margin-top: 16px;">Essa hierarquia nao e rigida no sentido burocratico. E fluida. Quando eu preciso de algo urgente, posso falar direto com qualquer agente. Mas o fluxo padrao existe para manter a qualidade e a coerencia.</p>
+  </div>
+  <div class="page-number">19</div>
+</div>
+
+<!-- PAGE 20: BLOCO 5 - Niveis de autonomia -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 05</div>
+    <div class="section-title">Autonomia vs aprovacao: niveis de permissao</div>
+    <p class="small">Nem todo agente precisa de permissao para tudo. O modelo opera com niveis de autonomia:</p>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Nivel 0: Zero autonomia</div>
+      <p class="small" style="margin-bottom:0">O agente so executa quando recebe ordem explicita. Nao sugere, nao inicia. Util para agentes novos que ainda estao sendo calibrados.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Nivel 1: Autonomia junior</div>
+      <p class="small" style="margin-bottom:0">O agente pode executar tarefas dentro do escopo, mas todo output e revisado antes de ser usado. Nivel padrao para agentes recem criados.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Nivel 2: Autonomia operacional</div>
+      <p class="small" style="margin-bottom:0">O agente executa e entrega. Revisao por amostragem, nao em 100% dos outputs. Precisa de historico de entregas consistentes.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Nivel 3: Autonomia senior</div>
+      <p class="small" style="margin-bottom:0">O agente toma decisoes dentro do seu dominio sem permissao para cada uma. Reporta resultados. Reservado para agentes com alto grau de calibracao.</p>
+    </div>
+
+    <p class="small" style="margin-top: 8px;">No meu sistema, a maioria opera no nivel 1. Prefiro revisar mais no comeco e construir confianca ao longo do tempo. Acelerar autonomia sem historico e receita para erro.</p>
+  </div>
+  <div class="page-number">20</div>
+</div>
+
+<!-- PAGE 21: BLOCO 5 - Memoria -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 05</div>
+    <div class="section-title">Memoria e continuidade</div>
+    <p class="small">Um dos maiores diferenciais de agentes bem construidos e a memoria. Nao estou falando de lembrar a conversa de ontem. Estou falando de acumular contexto ao longo do tempo.</p>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Memoria de sessao</div>
+      <p class="small" style="margin-bottom:0">O que aconteceu nesta conversa. Desaparece quando a sessao termina. Util para tarefas pontuais.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Memoria persistente</div>
+      <p class="small" style="margin-bottom:0">Informacoes salvas e consultaveis. Decisoes tomadas, preferencias definidas, erros cometidos. O agente nao repete perguntas ja respondidas.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Memoria de contexto (Knowledge)</div>
+      <p class="small" style="margin-bottom:0">Documentos, dados e referencias que o agente consulta para embasar suas respostas. O conhecimento do negocio, do publico, da marca.</p>
+    </div>
+
+    <p class="small">A combinacao dessas tres camadas faz com que o agente evolua. Ele nao comeca do zero a cada interacao. Ele carrega o que aprendeu.</p>
+    <p class="small">Mas memoria tambem precisa de manutencao. Informacao desatualizada e pior do que nenhuma informacao.</p>
+
+    <div class="divider"></div>
+
+    <div class="section-title-small">Quando desativar, substituir ou reestruturar</div>
+    <p class="small">Agentes nao sao eternos. Situacoes que levam a reestruturacao:</p>
+    <ul style="font-size: 12.5px;">
+      <li>O papel mudou e a definicao original nao cobre mais</li>
+      <li>O output caiu de qualidade de forma consistente</li>
+      <li>Dois agentes tem escopo sobreposto, gerando conflito</li>
+      <li>O negocio mudou de direcao</li>
+      <li>A tecnologia evoluiu e permite reconstruir com mais capacidade</li>
+    </ul>
+  </div>
+  <div class="page-number">21</div>
+</div>
+
+<!-- PAGE 22: BLOCO 5 - Erros -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 05</div>
+    <div class="section-title">Erros que eu cometi e o que aprendi</div>
+
+    <div class="error-card">
+      <div class="error-title">Criar agentes sem identidade clara</div>
+      <div class="error-lesson">No comeco, instrucoes vagas. "Seja um assistente de marketing." Resultado generico e inutilizavel. A licao: quanto mais especifica a identidade, melhor o output.</div>
+    </div>
+
+    <div class="error-card">
+      <div class="error-title">Nao definir limites</div>
+      <div class="error-lesson">Agentes que inventavam dados. Que prometiam coisas erradas. Que saiam do tom da marca. Porque nao tinha definido o que nao podiam fazer. A licao: guardrails nao sao opcionais.</div>
+    </div>
+
+    <div class="error-card">
+      <div class="error-title">Querer automacao total desde o primeiro dia</div>
+      <div class="error-lesson">Autonomia maxima para agentes recem criados. Outputs inconsistentes, decisoes erradas, retrabalho constante. A licao: autonomia e conquistada, nao concedida.</div>
+    </div>
+
+    <div class="error-card">
+      <div class="error-title">Nao documentar</div>
+      <div class="error-lesson">Agentes sem documentacao. Depois nao lembrava o que cada um fazia, quais os limites, como recriar. A licao: se nao esta documentado, nao existe.</div>
+    </div>
+
+    <div class="error-card">
+      <div class="error-title">Ignorar a hierarquia</div>
+      <div class="error-lesson">Modelo horizontal onde todos eram iguais. Virou caos. Ninguem sabia priorizar. A licao: hierarquia nao e burocracia. E estrutura.</div>
+    </div>
+
+    <p class="small" style="margin-top:8px;">Cada um desses erros custou tempo. Mas cada um me ensinou algo que agora esta codificado no sistema. Os erros nao desapareceram. Viraram regras.</p>
+  </div>
+  <div class="page-number">22</div>
+</div>
+
+<!-- PAGE 23: BLOCO 6 INTRO -->
+<div class="page intro-dark">
+  <div class="block-num">06</div>
+  <div class="block-title">O Resultado</div>
+  <div class="block-subtitle">Vou falar em termos concretos. O que mudou na operacao real quando o sistema de agentes comecou a funcionar. Numeros, tempo e ganhos mensuráveis.</div>
+</div>
+
+<!-- PAGE 24: BLOCO 6 - O que mudou -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 06</div>
+    <div class="section-title">O que mudou na operacao real</div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Conteudo</div>
+      <p class="small" style="margin-bottom:0">Antes, 2 a 4 horas por peca completa. Hoje, Vega entrega rascunho estruturado em minutos. Meu trabalho e revisar e aprovar. Tempo: 30 a 45 minutos por peca.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Copy</div>
+      <p class="small" style="margin-bottom:0">Masterson gera opcoes para emails, paginas e sequencias. Antes, contratava freelancer e esperava dias. Agora, opcoes na hora. Qualidade melhora a cada ciclo de revisao.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Estrategia</div>
+      <p class="small" style="margin-bottom:0">Atlas analisa antes de eu agir. Me salvou de decisoes precipitadas mais de uma vez. Ter alguem que pensa antes de executar e questao de arquitetura.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Design</div>
+      <p class="small" style="margin-bottom:0">Aurora mantem consistencia visual. Cada material segue o mesmo sistema de cores, tipografia e espacamentos. Algo que freelancers frequentemente erram.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Analise</div>
+      <p class="small" style="margin-bottom:0">Dona entrega analises diarias. Performance de conteudo, metricas de vendas, tendencias de nicho. Informacao consolidada num relatorio que me espera de manha.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div class="etapa-label">Velocidade</div>
+      <p class="small" style="margin-bottom:0">Quando uma ideia surge, nao preciso esperar. Falo com Dona, ela distribui, e em minutos os agentes trabalham. De dias para horas.</p>
+    </div>
+  </div>
+  <div class="page-number">24</div>
+</div>
+
+<!-- PAGE 25: BLOCO 6 - Metricas + O que nao resolve -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 06</div>
+    <div class="section-title">Ganhos que eu consigo medir</div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-value">70%</div>
+        <div class="metric-label-text">Reducao no tempo de producao de conteudo</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">100%</div>
+        <div class="metric-label-text">Consistencia de marca em todos os materiais</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">24h</div>
+        <div class="metric-label-text">Analises diarias que antes nao existiam</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">0</div>
+        <div class="metric-label-text">Contratacoes adicionais necessarias</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title-small">O que isso nao resolve</div>
+    <p class="small">Agentes de IA nao substituem pensamento estrategico. A visao do negocio continua sendo minha. A intuicao sobre o publico, a sensibilidade para saber o momento certo, a capacidade de ler o mercado. Isso e humano.</p>
+    <p class="small">Agentes tambem nao eliminam trabalho. Mudam o tipo de trabalho. Em vez de executar, eu reviso. Em vez de criar do zero, eu direciono. Em vez de apagar incendios, eu planejo.</p>
+    <p class="small">E o ponto mais importante: agentes mal construidos criam mais problemas do que resolvem. Nao e sobre ter agentes. E sobre ter os agentes certos, com a estrutura certa, operando com os limites certos.</p>
+  </div>
+  <div class="page-number">25</div>
+</div>
+
+<!-- PAGE 26: BLOCO 6 - Futuro + Pergunta -->
+<div class="page content-page">
+  <div class="page-content">
+    <div class="block-label">Bloco 06</div>
+    <div class="section-title">Para onde isso vai</div>
+    <p class="small">O que eu construi hoje e o comeco. A tecnologia de agentes de IA esta evoluindo a cada mes. O que eu vejo no futuro proximo:</p>
+
+    <div class="card card-sm">
+      <ul style="margin-bottom:0; font-size: 12.5px;">
+        <li>Agentes com aprendizado mais profundo, que se calibram com base nos feedbacks sem reconfiguracao manual</li>
+        <li>Integracao mais fluida entre agentes e plataformas externas</li>
+        <li>Capacidade de agentes trabalharem em conjunto em tarefas complexas, sem perda de contexto</li>
+        <li>Modelos de autonomia mais sofisticados, onde o agente entende o momento certo de agir</li>
+      </ul>
+    </div>
+
+    <p class="small">Quem comecar agora vai ter vantagem. Nao porque a tecnologia vai ficar mais dificil. Vai ficar mais acessivel. Mas quem ja entende de arquitetura, hierarquia e operacao vai saber usar as novas ferramentas com uma profundidade que quem esta comecando do zero nao vai ter.</p>
+
+    <div class="divider"></div>
+
+    <div class="section-title">A pergunta que fica</div>
+    <p>Voce leu ate aqui. Entendeu a estrutura. Viu como funciona na pratica. Sabe que e possivel.</p>
+    <p>Agora precisa decidir o que faz com isso.</p>
+    <p>Voce pode continuar operando sozinha. Acordando cansada. Dormindo com a lista de tarefas maior do que quando o dia comecou.</p>
+    <p>Ou voce pode construir. Um time que trabalha enquanto voce dorme. Que executa enquanto voce pensa. Que organiza enquanto voce cria.</p>
+    <p>O modelo esta aqui. O caminho esta mapeado. Os erros que eu cometi, voce nao precisa cometer.</p>
+  </div>
+  <div class="page-number">26</div>
+</div>
+
+<!-- PAGE 27: CLOSING -->
+<div class="page closing">
+  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--ouro); opacity: 0.6; margin-bottom: 48px;">O proximo passo e seu</div>
+  <h2>Se voce quer dar esse passo com quem ja percorreu o caminho inteiro, eu estou aqui.</h2>
+  <div class="cta-text">O modelo esta aqui. O caminho esta mapeado. Os erros que eu cometi, voce nao precisa cometer.</div>
+  <div class="cta-button">Quero construir meu time</div>
+  <div style="width: 48px; height: 1px; background: var(--ouro); opacity: 0.3; margin: 32px auto;"></div>
+  <div class="author-name">Isis Moreira</div>
+  <div class="brand">Dona do Ouro</div>
+</div>
+
+</body>
+</html>
