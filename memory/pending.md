@@ -23,9 +23,21 @@
 
 - [ ] Transcricao de audio lenta — avaliar alternativas ao Whisper local (Whisper API, Deepgram, outros) para reducao de latencia
 
+## A Fazer
+
+- [ ] **Doninha:** criar bot de suporte para o grupo da mentoria. Passos: criar no @BotFather, definir tom/escopo (suporte, FAQ, acolhimento), configurar como segunda instância ou bot separado. Isis decide quando.
+
 ## Aguardando Terceiros
 
 - [ ] Livro "Acorda! Sonhar não Basta" (Isis Moreira) — arquivo digital pendente da editora Gente. Isis vai solicitar. Quando chegar, salvar em knowledge/ (contém toda a história dela)
+
+## Nexa — Quota Gemini API (10/03/2026)
+- [ ] Free tier esgotado (429 RESOURCE_EXHAUSTED). Script `gerar-fotos.py` funciona mas API bloqueia.
+- [ ] Ativar billing no Google AI Studio ou esperar reset diário da quota
+
+## Documento para cliente (10/03/2026)
+- [ ] Cadeia Masterson + Helios + Aurora para diagnóstico + plano de ação
+- [ ] Aguardando dados: nome da cliente, nicho, problema, métricas
 
 ## Concluido (mover para decisions/lessons se necessario)
 

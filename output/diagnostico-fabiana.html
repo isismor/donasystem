@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Diagnóstico — Imersão Prescrição de Elite</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --vermelho: #c4564a;
+    --verde: #6b8f71;
+    --amarelo: #c9a84c;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .cover-c {
+    background: var(--cacao);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 64px;
+  }
+  .cover-c .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ouro);
+    margin-bottom: 28px;
+  }
+  .cover-c .title {
+    font-family: var(--serif);
+    font-size: 52px;
+    line-height: 1.08;
+    color: var(--marfim);
+    margin-bottom: 20px;
+    max-width: 560px;
+  }
+  .cover-c .title em { font-style: italic; }
+  .cover-c .title .gold { color: var(--ouro); }
+  .cover-c .rule {
+    width: 120px;
+    height: 2px;
+    background: var(--ouro);
+    margin: 0 auto 20px auto;
+  }
+  .cover-c .subtitle {
+    font-size: 16px;
+    color: var(--ouro-pale);
+    line-height: 1.6;
+    max-width: 420px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .cover-c .meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--ouro-deep);
+    text-transform: uppercase;
+  }
+
+  .inner-c {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .inner-c.bg-marfim { background: var(--marfim); }
+  .inner-c.bg-creme { background: var(--creme); }
+
+  .header-c {
+    padding: 36px 72px 14px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .header-c .left {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+  .header-c .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ouro-pale);
+  }
+  .header-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+
+  .body-c {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 32px 72px 0 72px;
+  }
+
+  .footer-c {
+    padding: 14px 72px 28px 72px;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+  .footer-c span {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+
+  .sec-c {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 12px;
+  }
+  .title-c {
+    font-family: var(--serif);
+    font-size: 42px;
+    line-height: 1.08;
+    color: var(--cacao);
+    margin-bottom: 28px;
+    max-width: 520px;
+  }
+  .title-c em { font-style: italic; }
+  .title-c .gold { color: var(--ouro); }
+
+  .text-c {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--cacao);
+    margin-bottom: 14px;
+    max-width: 480px;
+  }
+  .lead-c {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ouro-deep);
+    margin-bottom: 24px;
+    max-width: 480px;
+    font-weight: 400;
+  }
+
+  .callout-c {
+    padding: 18px 24px;
+    margin: 10px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .callout-c p {
+    font-size: 13px;
+    line-height: 1.65;
+    margin: 0;
+  }
+  .callout-dark {
+    background: var(--cacao);
+    color: var(--marfim);
+  }
+  .callout-dark p { color: var(--marfim); }
+  .callout-dark strong { color: var(--ouro); }
+  .callout-gold {
+    background: rgba(180,166,140,.15);
+    border: 1px solid rgba(180,166,140,.35);
+    color: var(--cacao);
+  }
+  .callout-gold p { color: var(--cacao); }
+  .callout-gold strong { color: var(--ouro-deep); }
+  .callout-ouro {
+    background: var(--ouro);
+    color: var(--cacao);
+  }
+  .callout-ouro p { color: var(--cacao); }
+  .callout-ouro strong { color: var(--cacao); font-weight: 700; }
+
+  .info-box {
+    padding: 20px 24px;
+    margin: 10px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .info-box .info-title {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  .info-box .info-text {
+    font-size: 12.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .info-box.box-dark {
+    background: var(--cacao);
+  }
+  .info-box.box-dark .info-title { color: var(--ouro); }
+  .info-box.box-dark .info-text { color: var(--marfim); opacity: 0.85; }
+  .info-box.box-ouro {
+    background: var(--ouro);
+  }
+  .info-box.box-ouro .info-title { color: var(--cacao); }
+  .info-box.box-ouro .info-text { color: var(--cacao); opacity: 0.85; }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto 20px auto;
+    width: 100%;
+  }
+  .metric-card {
+    border-radius: 10px;
+    padding: 16px 18px;
+    text-align: center;
+  }
+  .metric-card.mc-dark { background: var(--cacao); }
+  .metric-card.mc-dark .mc-value { color: var(--ouro); }
+  .metric-card.mc-dark .mc-label { color: var(--ouro-pale); }
+  .metric-card.mc-dark .mc-status { color: var(--marfim); opacity: 0.6; }
+
+  .metric-card.mc-alert { background: var(--cacao); border: 2px solid var(--vermelho); }
+  .metric-card.mc-alert .mc-value { color: var(--vermelho); }
+  .metric-card.mc-alert .mc-label { color: var(--ouro-pale); }
+
+  .metric-card.mc-ok { background: var(--cacao); border: 2px solid var(--verde); }
+  .metric-card.mc-ok .mc-value { color: var(--verde); }
+  .metric-card.mc-ok .mc-label { color: var(--ouro-pale); }
+
+  .metric-card.mc-warn { background: var(--cacao); border: 2px solid var(--amarelo); }
+  .metric-card.mc-warn .mc-value { color: var(--amarelo); }
+  .metric-card.mc-warn .mc-label { color: var(--ouro-pale); }
+
+  .mc-value {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .mc-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .mc-status {
+    font-size: 9px;
+    margin-top: 4px;
+  }
+
+  .checklist {
+    list-style: none;
+    max-width: 480px;
+    margin: 12px auto;
+    width: 100%;
+  }
+  .checklist li {
+    padding: 10px 0;
+    font-size: 13.5px;
+    color: var(--cacao);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-bottom: 1px solid rgba(180,166,140,.12);
+    line-height: 1.5;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checkbox {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: 2px solid var(--ouro-pale);
+    border-radius: 4px;
+    margin-top: 2px;
+  }
+
+  .h3-c {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--cacao);
+    margin-bottom: 6px;
+    margin-top: 20px;
+  }
+
+  .funnel-bar {
+    max-width: 480px;
+    margin: 8px auto;
+    width: 100%;
+  }
+  .funnel-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .funnel-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ouro-deep);
+    width: 100px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .funnel-fill {
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--marfim);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page">
+  <div class="cover-c">
+    <div class="label">Diagnóstico de Campanha</div>
+    <div class="title">Imersão <em>Prescrição</em> de <span class="gold">Elite</span></div>
+    <div class="rule"></div>
+    <div class="subtitle">Análise de funil, copy e tráfego com plano de ação para corrigir o CPA antes do evento.</div>
+    <div class="meta">Fabiana · Março 2026 · 7 páginas</div>
+  </div>
+</div>
+
+<!-- PÁGINA 2: PANORAMA -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Diagnóstico</span>
+      <span class="num">01</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Panorama</div>
+      <div class="title-c">Os números <em>contam</em> a <span class="gold">história</span></div>
+
+      <div class="metric-grid">
+        <div class="metric-card mc-alert">
+          <div class="mc-value">R$339</div>
+          <div class="mc-label">CPA</div>
+        </div>
+        <div class="metric-card mc-alert">
+          <div class="mc-value">0,44%</div>
+          <div class="mc-label">CTR</div>
+        </div>
+        <div class="metric-card mc-warn">
+          <div class="mc-value">R$4,93</div>
+          <div class="mc-label">CPC</div>
+        </div>
+        <div class="metric-card mc-dark">
+          <div class="mc-value">R$21</div>
+          <div class="mc-label">CPM</div>
+        </div>
+        <div class="metric-card mc-ok">
+          <div class="mc-value">13,7%</div>
+          <div class="mc-label">Conv. LP</div>
+        </div>
+        <div class="metric-card mc-ok">
+          <div class="mc-value">12,8%</div>
+          <div class="mc-label">Conv. Checkout</div>
+        </div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Resumo da operação</div>
+        <div class="info-text">Investimento: ~R$1.700 · Compras: 5 · Impressões: ~76.000 · Cliques: ~600 · Produto: workshop online R$49 a R$99 · Evento: 21 de março · Instagram: 15,3k seguidores</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">ROAS estimado</div>
+        <div class="info-text">Cenário otimista (5 vendas × R$99): R$495 de receita contra R$1.700 investidos. ROAS: 0,29. Cada R$1 investido retorna R$0,29. A campanha está operando em prejuízo.</div>
+      </div>
+
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Prescrição de Elite</span>
+      <span>02</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 3: DIAGNÓSTICO DO FUNIL -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Diagnóstico</span>
+      <span class="num">02</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Funil</div>
+      <div class="title-c">Onde o funil <em class="gold">quebra</em></div>
+
+      <div class="funnel-bar">
+        <div class="funnel-row">
+          <div class="funnel-label">Impressões</div>
+          <div class="funnel-fill" style="width: 340px; background: var(--ouro-deep);">76.000</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">Cliques</div>
+          <div class="funnel-fill" style="width: 120px; background: var(--vermelho);">~600 (0,44%)</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">LP Visits</div>
+          <div class="funnel-fill" style="width: 100px; background: var(--ouro);">~600</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">Checkout</div>
+          <div class="funnel-fill" style="width: 60px; background: var(--verde);">~82 (13,7%)</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">Compras</div>
+          <div class="funnel-fill" style="width: 30px; background: var(--verde);">5 (12,8%)</div>
+        </div>
+      </div>
+
+      <div class="callout-c callout-dark" style="margin-top: 16px;">
+        <p><strong>O gargalo é o topo.</strong> De 76.000 impressões, apenas 600 pessoas clicaram. O CTR de 0,44% é menos da metade do mínimo aceitável (1%). Isso significa que os anúncios estão sendo ignorados. A página de vendas e o checkout estão com taxas razoáveis. O problema não é a página. O problema é o anúncio.</p>
+      </div>
+
+      <div class="callout-c callout-dark">
+        <p><strong>CPM de R$21,68 está aceitável</strong> para o segmento saúde/educação profissional. O Meta está entregando as impressões a um custo justo. O leilão não é o problema.</p>
+      </div>
+
+      <div class="callout-c callout-dark">
+        <p><strong>CPC de R$4,93 é consequência do CTR baixo.</strong> Quando pouca gente clica, o custo por clique sobe. Se o CTR dobrar para 1%, o CPC cai para ~R$2,16. Se triplicar para 1,5%, cai para ~R$1,44.</p>
+      </div>
+
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Prescrição de Elite</span>
+      <span>03</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 4: DIAGNÓSTICO DE COPY -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Diagnóstico</span>
+      <span class="num">03</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Copy e Criativo</div>
+      <div class="title-c">A mensagem está <em>errada</em> para o <span class="gold">público</span></div>
+
+      <p class="text-c">Os criativos atuais falam sobre o que a nutricionista vai aprender: suplementação materno-infantil, prescrição clínica, protocolo. Isso é conteúdo. Não é promessa.</p>
+
+      <p class="text-c">Nutricionista não compra workshop porque quer aprender mais um protocolo. Ela compra porque quer:</p>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">O que ela realmente quer</div>
+        <div class="info-text">Segurança clínica para prescrever sem medo de errar. Clientes que confiam nela e voltam. Diferenciação num mercado saturado. Faturamento maior com um nicho premium (materno-infantil paga bem). Autoridade que atrai indicação.</div>
+      </div>
+
+      <div class="h3-c">O erro de copy (antes vs. depois)</div>
+
+      <div class="callout-c callout-dark">
+        <p><strong>Atual:</strong> "Aprenda a prescrever suplementação materno-infantil com base em evidências científicas em uma imersão de 4 horas."</p>
+      </div>
+
+      <div class="callout-c callout-gold">
+        <p><strong>Corrigido:</strong> "Nutricionistas que dominam prescrição materno-infantil cobram mais, erram menos e recebem indicação. Em 4 horas, você sai com a segurança clínica que faltava."</p>
+      </div>
+
+      <p class="text-c" style="margin-top: 12px;">A diferença: o primeiro fala do conteúdo (o quê). O segundo fala do resultado (por quê). Nutricionista clica quando vê o futuro dela no anúncio, não quando vê uma ementa.</p>
+
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Prescrição de Elite</span>
+      <span>04</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 5: DIAGNÓSTICO DE SEGMENTAÇÃO -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Diagnóstico</span>
+      <span class="num">04</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Segmentação e Estrutura</div>
+      <div class="title-c">O público está <em class="gold">diluído</em></div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Problema 1: Nutricionista + Pediatra na mesma segmentação</div>
+        <div class="info-text">A segmentação mistura Nutritionist + Pediatra + Profissional da área da saúde. São públicos com intenções diferentes. Pediatra não compra workshop de prescrição nutricional. Isso dilui o público e joga impressões fora.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Problema 2: Advantage+ com público frio</div>
+        <div class="info-text">A expansão automática do Advantage está ampliando para pessoas que não são nutricionistas. Com um nicho tão específico, isso desperdiça orçamento. O algoritmo não tem dados suficientes (apenas 5 conversões) para otimizar sozinho.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Problema 3: Faixa etária ampla demais</div>
+        <div class="info-text">24 a 45 anos é um range grande. Nutricionista de 24 tem dor diferente da de 38. Uma está insegura pós-faculdade, a outra quer se reposicionar. Uma mesma mensagem não vai falar com as duas.</div>
+      </div>
+
+      <div class="h3-c">Estrutura de campanha</div>
+
+      <div class="callout-c callout-gold">
+        <p><strong>Apenas 1 campanha com múltiplos criativos e 5 vendas.</strong> Não há volume suficiente para o algoritmo aprender. Precisa de mais testes estruturados e segmentação limpa antes de escalar.</p>
+      </div>
+
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Prescrição de Elite</span>
+      <span>05</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 6: PLANO DE AÇÃO -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Plano de ação</span>
+      <span class="num">05</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Correções imediatas</div>
+      <div class="title-c">O que fazer <em>antes</em> do dia <span class="gold">21</span></div>
+
+      <ul class="checklist">
+        <li><span class="checkbox"></span><div><strong>Reescrever os criativos com copy de resultado.</strong> Trocar "aprenda X" por "conquiste Y". Focar em: segurança clínica, faturamento, diferenciação, indicação. Mínimo 3 variações de headline.</div></li>
+        <li><span class="checkbox"></span><div><strong>Separar segmentação.</strong> Criar conjunto de anúncios exclusivo para Nutricionistas (remover Pediatra e "profissional de saúde"). Testar faixas: 24-32 e 33-45 separadas.</div></li>
+        <li><span class="checkbox"></span><div><strong>Desligar Advantage+ de público.</strong> Com 5 conversões, o algoritmo não tem dados. Usar segmentação manual até ter pelo menos 50 conversões na conta.</div></li>
+        <li><span class="checkbox"></span><div><strong>Testar novos hooks nos primeiros 3 segundos.</strong> Vídeo: abrir com a dor ("Você tem medo de prescrever errado?"). Estático: headline direto na imagem, sem texto institucional.</div></li>
+        <li><span class="checkbox"></span><div><strong>Adicionar urgência real.</strong> Evento dia 21. Usar contagem regressiva e escassez de vagas no criativo e na LP. "Últimas vagas" funciona quando é verdade.</div></li>
+      </ul>
+
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Prescrição de Elite</span>
+      <span>06</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 7: METAS -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Plano de ação</span>
+      <span class="num">06</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Metas e projeção</div>
+      <div class="title-c">Se corrigir o <em>CTR</em>, tudo <span class="gold">muda</span></div>
+
+      <p class="lead-c">O funil de baixo está saudável. Se o topo funcionar, os números viram.</p>
+
+      <div class="metric-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="info-box box-dark" style="margin: 0;">
+          <div class="info-title">Cenário atual</div>
+          <div class="info-text">CTR: 0,44% · CPC: R$4,93 · CPA: R$339 · ROAS: 0,29</div>
+        </div>
+        <div class="info-box box-ouro" style="margin: 0;">
+          <div class="info-title">Meta realista</div>
+          <div class="info-text">CTR: 1,2% · CPC: ~R$1,80 · CPA: ~R$105 · ROAS: 0,94</div>
+        </div>
+      </div>
+
+      <div class="h3-c" style="margin-top: 16px;">Próximos passos por prioridade</div>
+
+      <div class="callout-c callout-ouro">
+        <p><strong>Prioridade 1 (hoje):</strong> Reescrever 3 variações de copy focando em resultado, não conteúdo. Gravar 1 vídeo de 15s com hook de dor.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Prioridade 2 (amanhã):</strong> Criar 2 conjuntos de anúncios com segmentação limpa (só nutricionistas, faixas etárias separadas). Desligar Advantage+ de público.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Prioridade 3 (dia 13-14):</strong> Avaliar resultados dos novos criativos. Pausar o que tiver CTR abaixo de 0,8%. Escalar o que passar de 1%.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Prioridade 4 (dia 17-20):</strong> Ativar remarketing para quem visitou a LP e não comprou. Copy: "Faltam X dias. Essa é sua última chance de garantir sua vaga."</p>
+      </div>
+
+      <div style="margin-top: 28px;">
+        <div style="width: 120px; height: 2px; background: var(--ouro); margin-bottom: 14px;"></div>
+        <div style="font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--cacao);">Isis Moreira</div>
+        <div style="font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--mirror); margin-top: 6px;">Consultoria · Março 2026</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Prescrição de Elite</span>
+      <span>07</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
