@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dona System — Template B</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ===== B: LUXURY MINIMAL — max whitespace, thin gold accents ===== */
+
+  /* COVER: full cacau, centered, ultra minimal */
+  .cover-b {
+    background: var(--cacao);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 80px;
+  }
+  .cover-b .ornament {
+    width: 1px;
+    height: 64px;
+    background: var(--ouro);
+    margin-bottom: 32px;
+  }
+  .cover-b .label {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ouro);
+    margin-bottom: 24px;
+  }
+  .cover-b .title {
+    font-family: var(--serif);
+    font-size: 50px;
+    line-height: 1.08;
+    color: var(--marfim);
+    margin-bottom: 20px;
+    max-width: 500px;
+  }
+  .cover-b .title em { font-style: italic; }
+  .cover-b .title .gold { color: var(--ouro); }
+  .cover-b .subtitle {
+    font-size: 15px;
+    color: var(--ouro-pale);
+    line-height: 1.6;
+    max-width: 400px;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .cover-b .meta-row {
+    display: flex;
+    gap: 40px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ouro-deep);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .cover-b .meta-row .sep {
+    color: var(--ouro);
+  }
+
+  /* INTERNAL */
+  .inner-b {
+    background: var(--marfim);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .header-b {
+    padding: 40px 80px 16px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .header-b .left {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+  .header-b .right {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ouro-pale);
+    letter-spacing: 1px;
+  }
+  .header-b-line {
+    margin: 0 80px;
+    height: 1px;
+    background: linear-gradient(to right, var(--ouro), transparent);
+    flex-shrink: 0;
+  }
+
+  .body-b {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 80px;
+  }
+
+  .footer-b {
+    padding: 16px 80px 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-b-line {
+    margin: 0 80px;
+    height: 1px;
+    background: linear-gradient(to right, var(--ouro-pale), transparent);
+    flex-shrink: 0;
+  }
+  .footer-b span {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+
+  .sec-b {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--ouro);
+    margin-bottom: 12px;
+  }
+  .title-b {
+    font-family: var(--serif);
+    font-size: 42px;
+    line-height: 1.1;
+    color: var(--cacao);
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+  .title-b em { font-style: italic; }
+  .title-b .gold { color: var(--ouro); }
+
+  .text-b {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--cacao);
+    margin-bottom: 16px;
+    max-width: 440px;
+    font-weight: 400;
+  }
+  .lead-b {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ouro-deep);
+    margin-bottom: 28px;
+    max-width: 440px;
+    font-weight: 300;
+  }
+
+  /* Gold rule quote */
+  .quote-b {
+    position: relative;
+    padding: 28px 0 28px 28px;
+    margin: 24px 0;
+    max-width: 440px;
+  }
+  .quote-b::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--ouro);
+  }
+  .quote-b p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--cacao);
+    margin: 0;
+  }
+
+  /* Callout luxury */
+  .callout-b {
+    padding: 20px 28px;
+    margin: 12px 0;
+    border: 1px solid var(--ouro-pale);
+    border-radius: 10px;
+    max-width: 440px;
+  }
+  .callout-b p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--cacao);
+    margin: 0;
+  }
+
+  /* Agent list — luxury: minimal, no cards */
+  .agents-b {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    max-width: 460px;
+  }
+  .ag-b {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(180,166,140,.18);
+  }
+  .ag-b .name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--cacao);
+  }
+  .ag-b .role {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro-deep);
+    margin-top: 1px;
+  }
+  .ag-b .desc {
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--mirror);
+    margin-top: 3px;
+  }
+
+  /* Tasks luxury */
+  .tasks-b {
+    list-style: none;
+    max-width: 400px;
+  }
+  .tasks-b li {
+    padding: 16px 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--cacao);
+    border-bottom: 1px solid rgba(180,166,140,.12);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .tasks-b li:last-child { border-bottom: none; }
+  .gold-dot {
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+    background: var(--ouro);
+    border-radius: 50%;
+  }
+
+  .h3-b {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ouro-deep);
+    margin-bottom: 6px;
+    margin-top: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="page">
+  <div class="cover-b">
+    <div class="ornament"></div>
+    <div class="label">Documento Interno</div>
+    <div class="title">O que eu <em>construí</em> nas <span class="gold">últimas semanas</span></div>
+    <div class="subtitle">Um time de agentes de inteligência artificial que vai acelerar tudo o que a gente faz.</div>
+    <div class="meta-row">
+      <span>Apresentação</span>
+      <span class="sep">·</span>
+      <span>6 páginas</span>
+      <span class="sep">·</span>
+      <span>Março 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="inner-b">
+    <div class="header-b">
+      <span class="left">Dona System</span>
+      <span class="right">Isis Moreira</span>
+    </div>
+    <div class="header-b-line"></div>
+    <div class="body-b">
+      <div class="sec-b">01 · Contexto</div>
+      <div class="title-b">Por que algumas coisas <em class="gold">atrasaram</em></div>
+
+      <p class="text-b">Vocês perceberam que nas últimas semanas eu segurei algumas entregas. Os 10 áudios de elevação, a mensagem de ouro, o funil, o desafio, os 365 dias de áudio. Tudo está na minha lista e nada foi esquecido.</p>
+
+      <p class="text-b">Eu tomei uma decisão estratégica: parar pra construir uma infraestrutura que vai fazer a gente produzir em dias o que antes levava semanas.</p>
+
+      <div class="quote-b">
+        <p>Eu montei um time de agentes de IA. Não é ChatGPT. É um sistema construído sob medida pra nossa operação.</p>
+      </div>
+
+      <p class="text-b">Um time que trabalha 24 horas, não erra tom de voz, não esquece briefing, e entrega em minutos. Esse tempo foi o investimento. O retorno começa agora.</p>
+    </div>
+    <div class="footer-b-line"></div>
+    <div class="footer-b">
+      <span>Dona System · Documento Interno</span>
+      <span>02</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page">
+  <div class="inner-b">
+    <div class="header-b">
+      <span class="left">Dona System</span>
+      <span class="right">Isis Moreira</span>
+    </div>
+    <div class="header-b-line"></div>
+    <div class="body-b">
+      <div class="sec-b">02 · O Sistema</div>
+      <div class="title-b">Conheçam a <em>Dona</em> e seu <span class="gold">time</span></div>
+
+      <p class="lead-b">A Dona é minha executiva operacional. Cada tarefa ela delega pra um agente especializado.</p>
+
+      <div class="agents-b">
+        <div class="ag-b"><div class="name">Dona</div><div class="role">COO · Coordenação</div><div class="desc">Coordena o time, analisa dados, executa estratégia.</div></div>
+        <div class="ag-b"><div class="name">Atlas</div><div class="role">Estrategista</div><div class="desc">Planeja sequências de produção e gerencia riscos.</div></div>
+        <div class="ag-b"><div class="name">Vega</div><div class="role">Social Media</div><div class="desc">Conteúdo omnichannel. Pesquisa tendências e reels virais.</div></div>
+        <div class="ag-b"><div class="name">Masterson</div><div class="role">Escritor</div><div class="desc">Ebooks, páginas de vendas, materiais longos.</div></div>
+        <div class="ag-b"><div class="name">Aurora</div><div class="role">Designer</div><div class="desc">Materiais visuais alinhados à marca.</div></div>
+        <div class="ag-b"><div class="name">Harpia</div><div class="role">Vídeo</div><div class="desc">Roteiros e direção criativa audiovisual.</div></div>
+        <div class="ag-b"><div class="name">Helios</div><div class="role">Tráfego</div><div class="desc">Campanhas pagas, métricas, ROI.</div></div>
+        <div class="ag-b"><div class="name">Orion</div><div class="role">Dev</div><div class="desc">Código, automações, integrações.</div></div>
+        <div class="ag-b"><div class="name">Nexa</div><div class="role">Imagem</div><div class="desc">Geração e curadoria visual da marca.</div></div>
+        <div class="ag-b"><div class="name">Eva</div><div class="role">Arquiteta</div><div class="desc">Cria e evolui os próprios agentes.</div></div>
+      </div>
+    </div>
+    <div class="footer-b-line"></div>
+    <div class="footer-b">
+      <span>Dona System · Documento Interno</span>
+      <span>03</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page">
+  <div class="inner-b">
+    <div class="header-b">
+      <span class="left">Dona System</span>
+      <span class="right">Isis Moreira</span>
+    </div>
+    <div class="header-b-line"></div>
+    <div class="body-b">
+      <div class="sec-b">03 · O que muda</div>
+      <div class="title-b">Na prática, o que vocês vão <em class="gold">perceber</em></div>
+
+      <div class="h3-b" style="margin-top:0">Velocidade</div>
+      <p class="text-b">Materiais que levavam dias agora saem em horas. Masterson escreve, Aurora transforma em PDF. Tudo em sequência automática.</p>
+
+      <div class="h3-b">Consistência</div>
+      <p class="text-b">Todo material sai com o mesmo padrão visual, tom de voz, cores e fontes. O sistema conhece nossa identidade.</p>
+
+      <div class="h3-b">Volume</div>
+      <p class="text-b">Mais produção sem perder qualidade. Pendências destravadas e espaço pra projetos novos.</p>
+    </div>
+    <div class="footer-b-line"></div>
+    <div class="footer-b">
+      <span>Dona System · Documento Interno</span>
+      <span>04</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page">
+  <div class="inner-b">
+    <div class="header-b">
+      <span class="left">Dona System</span>
+      <span class="right">Isis Moreira</span>
+    </div>
+    <div class="header-b-line"></div>
+    <div class="body-b">
+      <div class="sec-b">04 · Pendências</div>
+      <div class="title-b">O que vai ser <em>destravado</em> <span class="gold">agora</span></div>
+
+      <ul class="tasks-b">
+        <li><span class="gold-dot"></span> 10 áudios de elevação</li>
+        <li><span class="gold-dot"></span> Mensagem de ouro</li>
+        <li><span class="gold-dot"></span> Funil Dona</li>
+        <li><span class="gold-dot"></span> Desafio Manifeste em 7 Dias</li>
+        <li><span class="gold-dot"></span> Áudio de ativação de feminilidade</li>
+        <li><span class="gold-dot"></span> 365 dias de áudio</li>
+        <li><span class="gold-dot"></span> Rotina Milionária</li>
+      </ul>
+
+      <p class="text-b" style="margin-top: 20px;">O time cuida de texto, estrutura, design e estratégia. O que depende da minha voz, eu faço com mais espaço.</p>
+    </div>
+    <div class="footer-b-line"></div>
+    <div class="footer-b">
+      <span>Dona System · Documento Interno</span>
+      <span>05</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 6 -->
+<div class="page">
+  <div class="inner-b">
+    <div class="header-b">
+      <span class="left">Dona System</span>
+      <span class="right">Isis Moreira</span>
+    </div>
+    <div class="header-b-line"></div>
+    <div class="body-b">
+      <div class="sec-b">05 · Próximos passos</div>
+      <div class="title-b">Como a gente <em class="gold">segue</em></div>
+
+      <p class="lead-b">O sistema já está rodando. O que muda pra vocês:</p>
+
+      <div class="callout-b">
+        <p><strong>Entregas mais rápidas.</strong> O time de agentes cuida da produção pesada.</p>
+      </div>
+      <div class="callout-b">
+        <p><strong>Mais consistência.</strong> Tudo no padrão definido. Sem improvisos.</p>
+      </div>
+      <div class="callout-b">
+        <p><strong>Eu mais disponível.</strong> Mais espaço pra estratégia, gravação e vocês.</p>
+      </div>
+
+      <p class="text-b" style="margin-top: 20px;">Quis compartilhar porque fazemos parte do mesmo time. O investimento já foi feito. Agora é colher.</p>
+
+      <div style="margin-top: 36px;">
+        <div style="width: 1px; height: 40px; background: var(--ouro); margin-bottom: 16px;"></div>
+        <div style="font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--cacao);">Isis Moreira</div>
+        <div style="font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--mirror); margin-top: 5px;">Março 2026</div>
+      </div>
+    </div>
+    <div class="footer-b-line"></div>
+    <div class="footer-b">
+      <span>Dona System · Documento Interno</span>
+      <span>06</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
