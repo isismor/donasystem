@@ -34,7 +34,7 @@
 - Orquestrador deve usar completion events de sessions_spawn como gatilho para spawnar próximo step.
 - Estado da cadeia sempre gravado em projects.md. Se sessão cair, retoma de onde parou.
 - Briefings para Aurora devem ser estruturados (tipo, dimensões, público, referências, hierarquia). Texto solto = output ruim.
-- Todo output público: acentuação correta em português. Sem exceções.
+- Todo output: acentuação correta em português. Sem exceções.
 
 ### Modelos e Custo
 - Heartbeat e crons: Haiku. Interação direta: Sonnet. Nunca Opus em automações.
@@ -60,10 +60,10 @@
 - Parar serviço antes de dormir durante incidente: `systemctl stop` + `disable` evita wear no restart counter.
 
 ### Gateway e Workspace
-- Gateway cacheia workspace files (SOUL.md, AGENTS.md, etc). Editar sem restart = modelo usa versao antiga. Sempre reiniciar apos mudancas.
-- openclaw config set com valores negativos (ex: chat IDs do Telegram) precisa de "--" antes do valor pra nao ser interpretado como flag.
+- Gateway cacheia workspace files (SOUL.md, AGENTS.md, etc). Editar sem restart = modelo usa versão antiga. Sempre reiniciar após mudanças.
+- openclaw config set com valores negativos (ex: chat IDs do Telegram) precisa de "--" antes do valor pra não ser interpretado como flag.
 - Hierarquia de prioridade: System prompt > SOUL.md > AGENTS.md > IDENTITY.md > USER.md/TOOLS.md
-- Se SOUL.md ancora forte numa identidade, modelo resiste a assumir outra mesmo com AGENTS.md. Solucao: SOUL.md deve mencionar explicitamente o sistema de identidades.
+- Se SOUL.md ancora forte numa identidade, modelo resiste a assumir outra mesmo com AGENTS.md. Solução: SOUL.md deve mencionar explicitamente o sistema de identidades.
 - Heartbeat to para Telegram topics: formato "<chatId>:topic:<threadId>".
 
 ### Arquivos via Telegram

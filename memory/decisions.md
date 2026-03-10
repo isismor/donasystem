@@ -3,67 +3,67 @@
 > Decisões que o agente deve respeitar SEMPRE.
 
 ### Credenciais no 1Password (08/03/2026)
-Toda credencial vive no 1Password. Sem excecoes. Nunca hardcodar chaves em codigo, .env ou markdown.
+Toda credencial vive no 1Password. Sem exceções. Nunca hardcodar chaves em código, .env ou markdown.
 
-### Dona nao e conhecida pela equipe (08/03/2026)
-Marlua e Erica nao sabem que Dona existe. Qualquer mencao para equipe externa exige aprovacao de Isis.
+### Dona não é conhecida pela equipe (08/03/2026)
+Marlua e Érica não sabem que Dona existe. Qualquer menção para equipe externa exige aprovação de Isis.
 
-### Acoes vermelhas exigem aprovacao explicita (08/03/2026)
-Postar no Instagram, enviar email em nome de Isis, apagar conteudo, executar integracoes novas, decisoes estrategicas — todas exigem aprovacao antes de agir.
+### Ações vermelhas exigem aprovação explícita (08/03/2026)
+Postar no Instagram, enviar email em nome de Isis, apagar conteúdo, executar integrações novas, decisões estratégicas — todas exigem aprovação antes de agir.
 
-### Tom de comunicacao (08/03/2026)
-Sem emojis. Sem travessao. Sem corporativismo. Sem ingles desnecessario. Genero neutro. Bullet points. Direto.
+### Tom de comunicação (08/03/2026)
+Sem emojis. Sem travessão. Sem corporativismo. Sem inglês desnecessário. Gênero neutro. Bullet points. Direto.
 
 ---
 
-## 10 Regras Invioaveis (09/03/2026)
-Licoes de 13 dias rodando agentes AI em producao. Inviolaveis.
+## 10 Regras Invioláveis (09/03/2026)
+Lições de 13 dias rodando agentes AI em produção. Invioláveis.
 
 ### Regra 1 — Crons sempre isolated + agentTurn
 sessionTarget: "isolated", payload.kind: "agentTurn", delivery: { mode: "announce" }.
-Nunca systemEvent + main em crons (durationMs ~0ms, nao executa nada).
+Nunca systemEvent + main em crons (durationMs ~0ms, não executa nada).
 
 ### Regra 2 — Nunca hardcodar credenciais
-Todas as chaves vivem no .env (chmod 600) ou 1Password. Zero excecoes.
+Todas as chaves vivem no .env (chmod 600) ou 1Password. Zero exceções.
 
 ### Regra 3 — dmPolicy: allowlist desde o Dia 1
 Telegram ID configurado no allowlist antes de qualquer outra coisa. Nunca deixar "open".
 
-### Regra 4 — Extrair licoes ANTES de cada compactacao (INVIOLAVEL)
-Antes de CADA compactacao: licoes → lessons.md, decisoes → decisions.md, pendencias → pending.md.
-Compactacao descarta 80% do contexto. Sem extracao = HD formatado sem backup.
+### Regra 4 — Extrair lições ANTES de cada compactação (INVIOLÁVEL)
+Antes de CADA compactação: lições → lessons.md, decisões → decisions.md, pendências → pending.md.
+Compactação descarta 80% do contexto. Sem extração = HD formatado sem backup.
 
 ### Regra 5 — Todo agente novo começa N1 (Junior)
-Sem autonomia sem historico. N1 = output sempre revisado. Promocao via performance review semanal.
-Sistema de niveis: N1 Junior · N2 Pleno · N3 Senior · N4 Principal
+Sem autonomia sem histórico. N1 = output sempre revisado. Promoção via performance review semanal.
+Sistema de níveis: N1 Junior · N2 Pleno · N3 Sênior · N4 Principal
 
 ### Regra 6 — Split de modelos por custo
-Crons de execucao: Sonnet. Heartbeats: Haiku. Interacao direta e analise estrategica: Opus.
-Sem split = $100-150/mes. Com split = $18-36/mes.
+Crons de execução: Sonnet. Heartbeats: Haiku. Interação direta e análise estratégica: Opus.
+Sem split = $100-150/mês. Com split = $18-36/mês.
 
-### Regra 7 — Backup antes de mudancas estruturais
+### Regra 7 — Backup antes de mudanças estruturais
 Antes de criar agentes, modificar gateway config ou reorganizar workspace: salvar config + criar ROLLBACK.md.
-config.patch reinicia gateway e mata crons em execucao.
+config.patch reinicia gateway e mata crons em execução.
 
 ### Regra 8 — Sub-agent travou: retry 2x, depois alerta humano
 Nunca fire and forget. Sucesso = resumo. Falha = retry 2x. Falhou 2x = alerta imediato.
 
-### Regra 9 — SOUL.md personalizado nao e opcional
-Anti-patterns com exemplos. "Never dos" explicitos. USER.md com 400+ linhas ideal.
-SOUL.md generico = agente generico = ChatGPT caro.
+### Regra 9 — SOUL.md personalizado não é opcional
+Anti-patterns com exemplos. "Never dos" explícitos. USER.md com 400+ linhas ideal.
+SOUL.md genérico = agente genérico = ChatGPT caro.
 
-### Regra 10 — Creators sao skills, nao agentes
+### Regra 10 — Creators são skills, não agentes
 LinkedIn Creator, Newsletter Writer, Instagram Caption = prompts/skills dentro de 1 agente.
 1 agente com 8 skills > 8 agentes separados. Cada agente extra = mais custo, mais falha, cold start.
 
-### Arquitetura: supergrupo com topicos, nao grupos separados (09/03/2026)
-Um unico agente main. Dona assume identidades por topico via AGENTS.md. Workspace e memoria centralizados. Binding unico. Grupos separados so fazem sentido com isolamento real (segunda empresa, cliente diferente).
+### Arquitetura: supergrupo com tópicos, não grupos separados (09/03/2026)
+Um único agente main. Dona assume identidades por tópico via AGENTS.md. Workspace e memória centralizados. Binding único. Grupos separados só fazem sentido com isolamento real (segunda empresa, cliente diferente).
 
-### Cache do gateway: restart obrigatorio apos editar workspace files (10/03/2026)
-O gateway cacheia SOUL.md, AGENTS.md e outros workspace files. Editar sem restart = modelo usa versao antiga. Sempre reiniciar gateway apos mudancas nos MDs.
+### Cache do gateway: restart obrigatório após editar workspace files (10/03/2026)
+O gateway cacheia SOUL.md, AGENTS.md e outros workspace files. Editar sem restart = modelo usa versão antiga. Sempre reiniciar gateway após mudanças nos MDs.
 
 ### SOUL.md deve mencionar sistema de identidades (10/03/2026)
-Se SOUL.md diz apenas "Nome: Dona" sem explicar que assumir identidades por topico e parte do design, o modelo resiste a trocar de persona. O sistema de identidades precisa estar explicito no SOUL.md.
+Se SOUL.md diz apenas "Nome: Dona" sem explicar que assumir identidades por tópico é parte do design, o modelo resiste a trocar de persona. O sistema de identidades precisa estar explícito no SOUL.md.
 
 ### Heartbeat para Telegram topics: formato do campo to (10/03/2026)
 Formato correto: `to: "<chatId>:topic:<threadId>"`. Exemplo: `"-1003514367085:topic:4"`.
@@ -76,8 +76,8 @@ Nunca improvisar cores, fontes ou espaçamentos fora do sistema.
 ### Pipeline de cadeias: Atlas orquestra, Dona supervisiona (10/03/2026)
 Cadeias com 2+ agentes são orquestradas por Atlas. Dona supervisiona e faz override se travar. Tarefas diretas (1 agente) ficam com Dona. Sem sobreposição. Gates vermelhos (output público) param e esperam ok de Isis. Gates verdes (conteúdo bruto entre agentes) seguem automático. Estado sempre gravado em projects.md. Modelo completo em `memory/pipeline-model.md`.
 
-### Acentuação obrigatória em output público (10/03/2026)
-Todo material que vira público deve ter acentuação correta em português. Guardrail global no AGENTS.md.
+### Acentuação obrigatória em todo contexto (10/03/2026)
+Todo texto produzido por qualquer agente, em qualquer contexto (chats, materiais, outputs, páginas, memory files), deve usar português correto com acentuação. Sem exceções.
 
 ### Briefings estruturados para Aurora (10/03/2026)
 Briefings para Aurora devem conter: tipo de peça, dimensões, público, referências visuais, hierarquia de conteúdo. Nunca texto solto.
@@ -94,7 +94,7 @@ Variáveis de ambiente (token, etc) podem ser removidas silenciosamente por um n
 ### Rollback é prioridade quando investigação não converge (10/03/2026)
 Se o comportamento da nova versão é opaco e a investigação não converge após 30-60 minutos, rollback imediato. Não insistir em fix-forward.
 
-### Bonus — 3 regras operacionais
-- Espacar crons por 15-30 min (colisao = rate limit)
-- config.patch em horario sem crons (reinicia gateway e mata crons rodando)
-- systemEvent nao notifica no Telegram — usar agentTurn + message send para lembretes
+### Bônus — 3 regras operacionais
+- Espaçar crons por 15-30 min (colisão = rate limit)
+- config.patch em horário sem crons (reinicia gateway e mata crons rodando)
+- systemEvent não notifica no Telegram — usar agentTurn + message send para lembretes
