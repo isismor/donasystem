@@ -25,7 +25,7 @@
 
 ## Aguardando Terceiros
 
-- nenhum bloqueio externo no momento
+- [ ] Livro "Acorda! Sonhar não Basta" (Isis Moreira) — arquivo digital pendente da editora Gente. Isis vai solicitar. Quando chegar, salvar em knowledge/ (contém toda a história dela)
 
 ## Concluido (mover para decisions/lessons se necessario)
 

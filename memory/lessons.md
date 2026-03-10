@@ -66,6 +66,12 @@
 - Se SOUL.md ancora forte numa identidade, modelo resiste a assumir outra mesmo com AGENTS.md. Solução: SOUL.md deve mencionar explicitamente o sistema de identidades.
 - Heartbeat to para Telegram topics: formato "<chatId>:topic:<threadId>".
 
+### PDFs grandes e contexto
+- PDFs de 300+ páginas travam sessões quando enviados pelo chat. O texto extraído inteiro vai pro prompt e estoura o contexto de 200k.
+- Solução: usar ferramenta `pdf` com parâmetro `pages` pra processar em blocos (ex: "1-30", "31-60").
+- Alternativa: gerar resumo em markdown no Claude.com e mandar como arquivo .md.
+- Regra: arquivos grandes NUNCA vão direto no chat. Sempre processados em blocos.
+
 ### Arquivos via Telegram
 - HTML grande (75kb+) colado no chat trava a sessão. Sempre enviar como arquivo anexo.
 - Arquivos de até 1,5MB chegam sem problema via Telegram.
