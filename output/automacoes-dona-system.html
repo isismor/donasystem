@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Automações — Dona System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --ok: #34A853;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    background: var(--marfim);
+    font-size: 13px;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 44px 52px;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+    background: var(--marfim);
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 56px;
+  }
+  .cover-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--ouro-deep);
+    margin-bottom: 20px;
+  }
+  .cover-line {
+    width: 80px;
+    height: 2px;
+    background: var(--ouro);
+    margin-bottom: 20px;
+  }
+  .cover-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 40px;
+    line-height: 1.15;
+    color: var(--cacao);
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+    max-width: 480px;
+  }
+  .cover-subtitle {
+    font-size: 15px;
+    color: var(--ouro-deep);
+    max-width: 440px;
+    line-height: 1.5;
+    margin-bottom: 36px;
+  }
+  .cover-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--mirror);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 6px;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    color: var(--cacao);
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--cacao);
+    margin-bottom: 6px;
+    margin-top: 16px;
+  }
+  p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--cacao);
+    margin-bottom: 12px;
+    max-width: 520px;
+  }
+  .highlight-box {
+    background: var(--creme);
+    border-left: 3px solid var(--ouro);
+    padding: 16px 20px;
+    margin: 14px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .highlight-box p { margin-bottom: 0; }
+
+  /* Cron table */
+  .cron-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .cron-item {
+    background: var(--creme);
+    border: 1px solid rgba(180,166,140,.25);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .cron-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: rgba(180,166,140,.20);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ouro-deep);
+    font-weight: 500;
+  }
+  .cron-info { flex: 1; }
+  .cron-name {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--cacao);
+    margin-bottom: 2px;
+  }
+  .cron-desc {
+    font-size: 11px;
+    color: var(--ouro-deep);
+    line-height: 1.4;
+  }
+  .cron-freq {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--mirror);
+    margin-top: 3px;
+  }
+
+  /* Skill cards */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .skill-card {
+    background: var(--creme);
+    border: 1px solid rgba(180,166,140,.25);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .skill-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--cacao);
+    margin-bottom: 3px;
+  }
+  .skill-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ouro-deep);
+    margin-bottom: 5px;
+  }
+  .skill-desc {
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--cacao);
+    opacity: 0.85;
+  }
+
+  /* Pipeline */
+  .pipeline-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .pipeline-step {
+    background: var(--creme);
+    border: 1px solid rgba(180,166,140,.30);
+    border-radius: 8px;
+    padding: 10px 14px;
+    text-align: center;
+    min-width: 90px;
+  }
+  .pipeline-step .step-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--cacao);
+  }
+  .pipeline-step .step-role {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ouro-deep);
+  }
+  .pipeline-arrow {
+    font-size: 18px;
+    color: var(--ouro);
+    padding: 0 6px;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--ouro-pale);
+    margin: 20px 0;
+  }
+
+  .page-number {
+    position: absolute;
+    bottom: 28px;
+    right: 52px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+  }
+  .footer-brand {
+    position: absolute;
+    bottom: 28px;
+    left: 52px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ouro-pale);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="cover-label">Dona System · Guia de Automações</div>
+  <div class="cover-line"></div>
+  <div class="cover-title">Tudo que roda no automático</div>
+  <div class="cover-subtitle">
+    Skills, automações, integrações e processos que o sistema Dona executa sem intervenção manual. O que antes dependia de tempo e esforço repetitivo, agora acontece sozinho.
+  </div>
+  <div class="cover-meta">Isis Moreira · Março 2026</div>
+</div>
+
+<!-- PAGE 2: CRONS AUTOMÁTICOS (parte 1) -->
+<div class="page">
+  <div class="section-label">01 · Automações Diárias</div>
+  <h2>O que roda todos os dias sem eu pedir</h2>
+
+  <p>O sistema tem 10 tarefas automáticas programadas. Elas rodam em horários definidos, verificam o que precisa de atenção, organizam dados e me avisam só quando algo realmente importa.</p>
+
+  <div class="cron-grid">
+    <div class="cron-item">
+      <div class="cron-icon">4x</div>
+      <div class="cron-info">
+        <div class="cron-name">Checagem Proativa</div>
+        <div class="cron-desc">Verifica pendências, projetos parados e anomalias. Me avisa só se algo precisa de atenção.</div>
+        <div class="cron-freq">08h · 12h · 16h · 20h</div>
+      </div>
+    </div>
+    <div class="cron-item">
+      <div class="cron-icon">1x</div>
+      <div class="cron-info">
+        <div class="cron-name">Coleta de Métricas</div>
+        <div class="cron-desc">Analisa performance de conteúdo, métricas de vendas e tendências do nicho.</div>
+        <div class="cron-freq">Diário às 11h</div>
+      </div>
+    </div>
+    <div class="cron-item">
+      <div class="cron-icon">1x</div>
+      <div class="cron-info">
+        <div class="cron-name">Lembrete de Tarefas</div>
+        <div class="cron-desc">Lista tudo que está pendente há mais de 3 dias ou projetos parados há mais de 7.</div>
+        <div class="cron-freq">Diário às 14h</div>
+      </div>
+    </div>
+    <div class="cron-item">
+      <div class="cron-icon">24h</div>
+      <div class="cron-info">
+        <div class="cron-name">Monitor de Saúde</div>
+        <div class="cron-desc">Verifica se o gateway, sessões e crons estão funcionando. Alerta se algo quebrou.</div>
+        <div class="cron-freq">A cada hora</div>
+      </div>
+    </div>
+    <div class="cron-item">
+      <div class="cron-icon">1x</div>
+      <div class="cron-info">
+        <div class="cron-name">Watchdog de Crons</div>
+        <div class="cron-desc">Verifica se todas as automações rodaram. Se alguma falhou, tenta rodar de novo. Se falhar 3x, me avisa.</div>
+        <div class="cron-freq">Diário às 09h</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-brand">Dona System</div>
+  <div class="page-number">02</div>
+</div>
+
+<!-- PAGE 3: CRONS (parte 2) -->
+<div class="page">
+  <div class="section-label">01 · Automações Diárias (continuação)</div>
+  <h2>Manutenção e segurança</h2>
+
+  <div class="cron-grid">
+    <div class="cron-item">
+      <div class="cron-icon">1x</div>
+      <div class="cron-info">
+        <div class="cron-name">Organização de Memória</div>
+        <div class="cron-desc">Consolida notas do dia nos arquivos permanentes. Indexa a memória pra busca rápida.</div>
+        <div class="cron-freq">Diário às 23h</div>
+      </div>
+    </div>
+    <div class="cron-item">
+      <div class="cron-icon">1x</div>
+      <div class="cron-info">
+        <div class="cron-name">Backup Diário</div>
+        <div class="cron-desc">Salva cópia completa do workspace e configurações. Nunca perder dados.</div>
+        <div class="cron-freq">Diário às 03h</div>
+      </div>
+    </div>
+    <div class="cron-item">
+      <div class="cron-icon">2x</div>
+      <div class="cron-info">
+        <div class="cron-name">Renovação Canva</div>
+        <div class="cron-desc">Renova automaticamente os tokens de acesso à API do Canva pra manter a integração ativa.</div>
+        <div class="cron-freq">08h e 20h</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label">Semanais</div>
+  <h2>O que roda uma vez por semana</h2>
+
+  <div class="cron-grid">
+    <div class="cron-item">
+      <div class="cron-icon">Dom</div>
+      <div class="cron-info">
+        <div class="cron-name">Auditoria de Segurança</div>
+        <div class="cron-desc">Verifica permissões de arquivos sensíveis, credenciais expostas e acesso ao 1Password. Alerta só se encontrar vulnerabilidade real.</div>
+        <div class="cron-freq">Domingos às 10h</div>
+      </div>
+    </div>
+    <div class="cron-item">
+      <div class="cron-icon">Seg</div>
+      <div class="cron-info">
+        <div class="cron-name">Consolidação de Memória</div>
+        <div class="cron-desc">Revisa todas as notas da semana, extrai decisões e lições, atualiza projetos, limpa notas antigas.</div>
+        <div class="cron-freq">Segundas às 02h</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Total: 10 automações ativas.</strong> Rodando 24h, sem custo operacional humano. Se algo falha, o watchdog detecta e tenta corrigir sozinho antes de me avisar.</p>
+  </div>
+
+  <div class="footer-brand">Dona System</div>
+  <div class="page-number">03</div>
+</div>
+
+<!-- PAGE 4: SKILLS E INTEGRAÇÕES -->
+<div class="page">
+  <div class="section-label">02 · Skills e Integrações</div>
+  <h2>Ferramentas que o sistema usa</h2>
+
+  <p>Cada skill é uma capacidade específica. O sistema escolhe automaticamente qual usar dependendo do que eu peço.</p>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-name">Canva Connect</div>
+      <div class="skill-tag">Design · Exportação</div>
+      <div class="skill-desc">Acessa a API do Canva. Lista designs, exporta em PNG/PDF, faz upload de assets e preenche templates automaticamente.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Whisper (OpenAI)</div>
+      <div class="skill-tag">Transcrição de Áudio</div>
+      <div class="skill-desc">Transcreve qualquer áudio em texto com precisão. Funciona com arquivos locais ou URLs públicas.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Geração de PDF</div>
+      <div class="skill-tag">Documentos · Materiais</div>
+      <div class="skill-desc">Cria PDFs profissionais a partir de HTML com o Design System ISIS v7. Ebooks, relatórios, apresentações.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Video Frames</div>
+      <div class="skill-tag">Análise de Vídeo</div>
+      <div class="skill-desc">Extrai frames e clipes de vídeos. Útil pra analisar reels, criar thumbnails e revisar conteúdo gravado.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Instagram Analytics</div>
+      <div class="skill-tag">Dados · Performance</div>
+      <div class="skill-desc">Puxa posts e reels de qualquer perfil. Analisa o que está performando, identifica padrões de conteúdo.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">YouTube Analytics</div>
+      <div class="skill-tag">Dados · Pesquisa</div>
+      <div class="skill-desc">Acessa vídeos de canais. Útil pra pesquisa de tendências e análise de concorrência.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Remoção de Fundo</div>
+      <div class="skill-tag">Imagem · Edição</div>
+      <div class="skill-desc">Remove fundo de imagens automaticamente. Pra fotos de produto, materiais de marketing, posts.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Text to Speech</div>
+      <div class="skill-tag">Áudio · Voz</div>
+      <div class="skill-desc">Converte texto em áudio. Útil pra protótipos de conteúdo em áudio e acessibilidade.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Pesquisa Web</div>
+      <div class="skill-tag">Dados · Tendências</div>
+      <div class="skill-desc">Busca informações em tempo real na internet. Tendências, referências, dados de mercado, notícias.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">1Password</div>
+      <div class="skill-tag">Segurança · Credenciais</div>
+      <div class="skill-desc">Gerencia todas as senhas e chaves de API com segurança. Nada fica exposto em texto claro.</div>
+    </div>
+  </div>
+
+  <div class="footer-brand">Dona System</div>
+  <div class="page-number">04</div>
+</div>
+
+<!-- PAGE 5: PIPELINE DE PRODUÇÃO -->
+<div class="page">
+  <div class="section-label">03 · Produção em Cadeia</div>
+  <h2>Como um material é produzido</h2>
+
+  <p>Quando peço um material complexo (um ebook, por exemplo), o sistema monta uma cadeia de produção automática. Cada agente faz sua parte e passa pro próximo.</p>
+
+  <h3>Exemplo: produção de um ebook</h3>
+
+  <div class="pipeline-steps">
+    <div class="pipeline-step">
+      <div class="step-name">Atlas</div>
+      <div class="step-role">Plano</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="step-name">Vega</div>
+      <div class="step-role">Redação</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="step-name">Masterson</div>
+      <div class="step-role">Tom e CTA</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="step-name">Aurora</div>
+      <div class="step-role">Design PDF</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step" style="border-color: var(--ouro); border-width: 2px;">
+      <div class="step-name">Isis</div>
+      <div class="step-role">Aprovação</div>
+    </div>
+  </div>
+
+  <p>Cada etapa é automática. O sistema só para e me pede aprovação quando o material vai virar público. Conteúdo bruto entre agentes flui sem esperar.</p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">04 · O que vem pela frente</div>
+  <h2>Próximas capacidades</h2>
+
+  <div class="highlight-box">
+    <p><strong>Análise diária automática às 08h</strong><br>Relatório com performance de conteúdo, métricas de vendas, tendências do nicho e oportunidades. Entregue em bullet points, sem eu precisar pedir.</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Integração com Cademi</strong><br>Acompanhar vendas, alunas ativas e métricas de produtos diretamente pelo sistema.</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Funis automatizados</strong><br>Sequências de email, páginas de captura e nutrição escritas pelo Masterson, desenhadas pela Aurora, monitoradas pelo Helios.</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Produção de vídeo assistida</strong><br>Harpia cria roteiros e briefings de edição. Com a integração de ferramentas de vídeo, vai gerar cortes e legendas automaticamente.</p>
+  </div>
+
+  <div style="margin-top: 28px;">
+    <div class="cover-line" style="width: 80px; height: 2px; background: var(--ouro); margin-bottom: 16px;"></div>
+    <p style="font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ouro-deep);">O sistema evolui toda semana. Cada nova skill e integração multiplica o que a gente consegue fazer.</p>
+  </div>
+
+  <div class="footer-brand">Dona System</div>
+  <div class="page-number">05</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dona System — Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    background: var(--marfim);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 48px 56px;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+    background: var(--marfim);
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  /* Page 1: Cover */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    padding: 64px;
+  }
+
+  .cover-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--ouro-deep);
+    margin-bottom: 24px;
+  }
+
+  .cover-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 42px;
+    line-height: 1.15;
+    color: var(--cacao);
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+    max-width: 500px;
+  }
+
+  .cover-subtitle {
+    font-size: 16px;
+    color: var(--ouro-deep);
+    max-width: 440px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+  }
+
+  .cover-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--mirror);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .cover-line {
+    width: 80px;
+    height: 2px;
+    background: var(--ouro);
+    margin-bottom: 24px;
+  }
+
+  /* Content pages */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    color: var(--cacao);
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--cacao);
+    margin-bottom: 8px;
+    margin-top: 20px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--cacao);
+    margin-bottom: 14px;
+    max-width: 520px;
+  }
+
+  .highlight-box {
+    background: var(--creme);
+    border-left: 3px solid var(--ouro);
+    padding: 20px 24px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .highlight-box p {
+    margin-bottom: 0;
+  }
+
+  /* Agent cards */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .agent-card {
+    background: var(--creme);
+    border: 1px solid rgba(180,166,140,.30);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+
+  .agent-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--cacao);
+    margin-bottom: 4px;
+  }
+
+  .agent-role {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro-deep);
+    margin-bottom: 6px;
+  }
+
+  .agent-desc {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--cacao);
+    opacity: 0.85;
+  }
+
+  /* Pendências */
+  .task-list {
+    list-style: none;
+    margin: 16px 0;
+  }
+
+  .task-list li {
+    padding: 10px 16px;
+    background: var(--creme);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .task-status {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(180,166,140,.25);
+    color: var(--ouro-deep);
+    white-space: nowrap;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--ouro-pale);
+    margin: 24px 0;
+  }
+
+  .page-number {
+    position: absolute;
+    bottom: 32px;
+    right: 56px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+
+  .footer-brand {
+    position: absolute;
+    bottom: 32px;
+    left: 56px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ouro-pale);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="cover-label">Documento interno</div>
+  <div class="cover-line"></div>
+  <div class="cover-title">O que eu construí nas últimas semanas</div>
+  <div class="cover-subtitle">
+    Um time de agentes de inteligência artificial que vai acelerar tudo o que a gente faz. Quero explicar pra vocês o que é, como funciona e por que vale cada minuto que investi.
+  </div>
+  <div class="cover-meta">Isis Moreira · Março 2026 · Confidencial</div>
+</div>
+
+<!-- PAGE 2: CONTEXTO -->
+<div class="page">
+  <div class="section-label">01 · Contexto</div>
+  <h2>Por que algumas coisas atrasaram</h2>
+  
+  <p>Vocês perceberam que nas últimas semanas eu segurei algumas entregas. Os 10 áudios de elevação, a mensagem de ouro, o funil, o desafio, os 365 dias de áudio. Tudo isso está na minha lista e nada foi esquecido.</p>
+  
+  <p>O que aconteceu é que eu tomei uma decisão estratégica: parar pra construir uma infraestrutura que vai fazer a gente produzir em dias o que antes levava semanas.</p>
+
+  <div class="highlight-box">
+    <p>Eu montei um time de agentes de IA. Não é ChatGPT. Não é uma ferramenta genérica. É um sistema construído sob medida pra nossa operação, com agentes especializados que entendem nosso tom, nosso público e nosso padrão visual.</p>
+  </div>
+
+  <p>Pensa assim: eu contratei um time inteiro que trabalha 24 horas, não erra tom de voz, não esquece briefing, e entrega material em minutos. Mas pra esse time funcionar bem, precisei dedicar tempo pra treinar, configurar e testar tudo.</p>
+
+  <p>Esse tempo foi o investimento. O retorno começa agora.</p>
+
+  <div class="footer-brand">Isis Moreira</div>
+  <div class="page-number">02</div>
+</div>
+
+<!-- PAGE 3: O QUE É O SISTEMA -->
+<div class="page">
+  <div class="section-label">02 · O sistema</div>
+  <h2>Conheçam a Dona e seu time</h2>
+
+  <p>A Dona é minha executiva operacional. Ela coordena tudo: análise de dados, produção de materiais, estratégia, execução. Cada tarefa específica ela delega pra um agente especializado.</p>
+
+  <div class="agents-grid">
+    <div class="agent-card">
+      <div class="agent-name">Dona</div>
+      <div class="agent-role">COO · Coordenação Geral</div>
+      <div class="agent-desc">Braço direito operacional. Coordena o time, analisa dados, executa estratégia.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Atlas</div>
+      <div class="agent-role">Estrategista · Orquestrador</div>
+      <div class="agent-desc">Planeja antes de executar. Monta sequências de produção e gerencia riscos.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Vega</div>
+      <div class="agent-role">Conteúdo Educativo</div>
+      <div class="agent-desc">Escreve conteúdo que constrói autoridade. Posts, aulas, newsletters, artigos.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Masterson</div>
+      <div class="agent-role">Copywriter</div>
+      <div class="agent-desc">Textos que convertem. Emails, páginas de captura, sequências, CTAs.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Aurora</div>
+      <div class="agent-role">Designer Sênior</div>
+      <div class="agent-desc">Materiais visuais alinhados à marca. Ebooks, PDFs, apresentações.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Harpia</div>
+      <div class="agent-role">Produção de Vídeo</div>
+      <div class="agent-desc">Roteiros, briefings de edição, direção criativa de conteúdo audiovisual.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Helios</div>
+      <div class="agent-role">Tráfego Pago</div>
+      <div class="agent-desc">Estratégia de campanhas, análise de métricas, otimização de ROI.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Orion</div>
+      <div class="agent-role">Desenvolvedor</div>
+      <div class="agent-desc">Código, automações, integrações técnicas e manutenção do sistema.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Nexa</div>
+      <div class="agent-role">Imagem e Visual</div>
+      <div class="agent-desc">Geração e curadoria de imagens, consistência visual da marca.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">Eva</div>
+      <div class="agent-role">Arquiteta de Agentes</div>
+      <div class="agent-desc">Cria e melhora os próprios agentes. O sistema evolui sozinho.</div>
+    </div>
+  </div>
+
+  <div class="footer-brand">Isis Moreira</div>
+  <div class="page-number">03</div>
+</div>
+
+<!-- PAGE 4: O QUE MUDA -->
+<div class="page">
+  <div class="section-label">03 · O que muda</div>
+  <h2>Na prática, o que vocês vão perceber</h2>
+
+  <h3>Velocidade</h3>
+  <p>Materiais que levavam dias agora saem em horas. Um ebook, por exemplo: Vega escreve o conteúdo, Masterson ajusta o tom e as chamadas pra ação, Aurora transforma em PDF com nosso design system. Tudo em sequência, sem eu precisar ficar no meio de cada etapa.</p>
+
+  <h3>Consistência</h3>
+  <p>Todo material sai com o mesmo padrão visual, o mesmo tom de voz, as mesmas cores e fontes. Não importa se é um post, um ebook ou uma página de vendas. O sistema conhece nossa identidade e aplica automaticamente.</p>
+
+  <h3>Volume</h3>
+  <p>A gente vai conseguir produzir muito mais sem perder qualidade. Isso significa destravar todas aquelas pendências que estavam paradas e ainda abrir espaço pra projetos novos.</p>
+
+  <div class="divider"></div>
+
+  <div class="section-label">04 · Pendências</div>
+  <h2>O que vai ser destravado agora</h2>
+
+  <ul class="task-list">
+    <li><span class="task-status">Prioridade</span> 10 áudios de elevação</li>
+    <li><span class="task-status">Prioridade</span> Mensagem de ouro</li>
+    <li><span class="task-status">Prioridade</span> Funil Dona</li>
+    <li><span class="task-status">Prioridade</span> Desafio Manifeste em 7 Dias</li>
+    <li><span class="task-status">Prioridade</span> Áudio de ativação de feminilidade</li>
+    <li><span class="task-status">Prioridade</span> 365 dias de áudio</li>
+    <li><span class="task-status">Prioridade</span> Rotina Milionária</li>
+  </ul>
+
+  <p>Cada uma dessas demandas agora tem um caminho claro de produção. O time de agentes vai trabalhar nas partes que dependem de texto, estrutura, design e estratégia. O que depende da minha voz e presença pessoal, eu faço com mais espaço porque o resto está coberto.</p>
+
+  <div class="footer-brand">Isis Moreira</div>
+  <div class="page-number">04</div>
+</div>
+
+<!-- PAGE 5: ENCERRAMENTO -->
+<div class="page">
+  <div class="section-label">05 · Próximos passos</div>
+  <h2>Como a gente segue</h2>
+
+  <p>O sistema já está rodando. Vocês não precisam interagir com os agentes diretamente. O que muda pra vocês é:</p>
+
+  <div class="highlight-box">
+    <p><strong>Entregas mais rápidas.</strong> Materiais que eu pedir vão chegar mais rápido porque o time de agentes cuida da produção pesada.</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Mais consistência.</strong> Tudo sai no padrão visual e de comunicação que a gente já definiu. Sem improvisos.</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Eu mais disponível.</strong> Com a operação mais automatizada, tenho mais espaço pra pensar estratégia, gravar conteúdo e acompanhar vocês de perto.</p>
+  </div>
+
+  <p>Quis compartilhar isso com vocês porque fazemos parte do mesmo time. O investimento de tempo já foi feito. Agora é colher os resultados.</p>
+
+  <p>Qualquer dúvida, me chamem.</p>
+
+  <div style="margin-top: 40px;">
+    <div class="cover-line"></div>
+    <p style="font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ouro-deep);">Isis Moreira</p>
+    <p style="font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--mirror);">Março 2026</p>
+  </div>
+
+  <div class="footer-brand">Isis Moreira</div>
+  <div class="page-number">05</div>
+</div>
+
+</body>
+</html>
