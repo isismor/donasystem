@@ -32,7 +32,7 @@ const navGroups: NavGroup[] = [
   },
   {
     id: 'observe',
-    label: 'OBSERVE',
+    label: 'OBSERVAR',
     items: [
       { id: 'activity', label: 'Activity', icon: <ActivityIcon />, priority: true },
       { id: 'logs', label: 'Logs', icon: <LogsIcon />, priority: false },
@@ -43,7 +43,7 @@ const navGroups: NavGroup[] = [
   },
   {
     id: 'automate',
-    label: 'AUTOMATE',
+    label: 'AUTOMATIZAR',
     items: [
       { id: 'cron', label: 'Cron', icon: <CronIcon />, priority: false },
       { id: 'spawn', label: 'Spawn', icon: <SpawnIcon />, priority: false, requiresGateway: true },
@@ -54,7 +54,7 @@ const navGroups: NavGroup[] = [
   },
   {
     id: 'admin',
-    label: 'ADMIN',
+    label: 'ADMINISTRAR',
     items: [
       { id: 'users', label: 'Users', icon: <UsersIcon />, priority: false },
       { id: 'audit', label: 'Audit', icon: <AuditIcon />, priority: false },
@@ -95,22 +95,24 @@ export function NavRail() {
       <nav
         role="navigation"
         aria-label="Main navigation"
-        className={`hidden md:flex flex-col bg-card border-r border-border shrink-0 transition-all duration-200 ease-in-out ${
+        style={{ background: 'hsl(var(--sidebar))', borderRight: '1px solid hsl(var(--sidebar-border))' }}
+        className={`hidden md:flex flex-col shrink-0 transition-all duration-200 ease-in-out ${
           sidebarExpanded ? 'w-[220px]' : 'w-14'
         }`}
       >
         {/* Header: Logo + toggle */}
         <div className={`flex items-center shrink-0 ${sidebarExpanded ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0">
-            <span className="text-primary-foreground font-bold text-xs">MC</span>
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'hsl(var(--sidebar-active))' }}>
+            <span className="font-bold text-xs" style={{ color: 'hsl(var(--sidebar))' }}>TD</span>
           </div>
           {sidebarExpanded && (
-            <span className="text-sm font-semibold text-foreground truncate flex-1">Torre Dona</span>
+            <span className="text-sm font-semibold truncate flex-1" style={{ color: 'hsl(var(--sidebar-foreground))' }}>Torre Dona</span>
           )}
           <button
             onClick={toggleSidebar}
             title={sidebarExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
-            className="w-7 h-7 rounded-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth shrink-0"
+            className="w-7 h-7 rounded-md flex items-center justify-center transition-smooth shrink-0"
+            style={{ color: 'hsl(var(--sidebar-muted))' }}
           >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
               {sidebarExpanded ? (
@@ -128,7 +130,7 @@ export function NavRail() {
             <div key={group.id}>
               {/* Divider between groups (not before first) */}
               {groupIndex > 0 && (
-                <div className={`my-1.5 border-t border-border ${sidebarExpanded ? 'mx-3' : 'mx-2'}`} />
+                <div className={`my-1.5 ${sidebarExpanded ? 'mx-3' : 'mx-2'}`} style={{ borderTop: '1px solid hsl(var(--sidebar-border))' }} />
               )}
 
               {/* Group header (expanded mode, only for groups with labels) */}
@@ -137,7 +139,7 @@ export function NavRail() {
                   onClick={() => toggleGroup(group.id)}
                   className="w-full flex items-center justify-between px-3 mt-3 mb-1 group/header"
                 >
-                  <span className="text-[10px] tracking-wider text-muted-foreground/60 font-semibold select-none">
+                  <span className="text-[10px] tracking-wider font-semibold select-none" style={{ color: 'hsl(var(--sidebar-muted) / 0.6)' }}>
                     {group.label}
                   </span>
                   <svg
@@ -190,11 +192,11 @@ export function NavRail() {
                 ? 'bg-blue-500'
                 : connection.isConnected ? 'bg-green-500 pulse-dot' : 'bg-red-500'
             }`}
-            title={isLocal ? 'Local Mode' : connection.isConnected ? 'Gateway connected' : 'Gateway disconnected'}
+            title={isLocal ? 'Modo Local' : connection.isConnected ? 'Gateway conectado' : 'Gateway desconectado'}
           />
           {sidebarExpanded && (
-            <span className="text-xs text-muted-foreground truncate">
-              {isLocal ? 'Local Mode' : connection.isConnected ? 'Connected' : 'Disconnected'}
+            <span className="text-xs truncate" style={{ color: 'hsl(var(--sidebar-muted))' }}>
+              {isLocal ? 'Modo Local' : connection.isConnected ? 'Conectado' : 'Desconectado'}
             </span>
           )}
         </div>
@@ -214,7 +216,7 @@ function NavButton({ item, active, expanded, disabled, onClick }: {
   onClick: () => void
 }) {
   const disabledClass = disabled ? 'opacity-40 pointer-events-none' : ''
-  const tooltipLabel = disabled ? `${item.label} (Requires gateway)` : item.label
+  const tooltipLabel = disabled ? `${item.label} (Requer gateway)` : item.label
 
   if (expanded) {
     return (
@@ -222,14 +224,14 @@ function NavButton({ item, active, expanded, disabled, onClick }: {
         onClick={onClick}
         aria-current={active ? 'page' : undefined}
         aria-disabled={disabled || undefined}
-        className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left transition-smooth relative ${disabledClass} ${
-          active
-            ? 'bg-primary/15 text-primary'
-            : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-        }`}
+        className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left transition-smooth relative ${disabledClass}`}
+        style={{
+          color: active ? 'hsl(var(--sidebar-active))' : 'hsl(var(--sidebar-muted))',
+          background: active ? 'hsl(var(--sidebar-active) / 0.15)' : 'transparent',
+        }}
       >
         {active && (
-          <span className="absolute left-0 w-0.5 h-5 bg-primary rounded-r" />
+          <span className="absolute left-0 w-0.5 h-5 rounded-r" style={{ background: 'hsl(var(--sidebar-active))' }} />
         )}
         <div className="w-5 h-5 shrink-0">{item.icon}</div>
         <span className="text-sm truncate">{item.label}</span>
@@ -243,11 +245,11 @@ function NavButton({ item, active, expanded, disabled, onClick }: {
       title={tooltipLabel}
       aria-current={active ? 'page' : undefined}
       aria-disabled={disabled || undefined}
-      className={`w-10 h-10 rounded-lg flex items-center justify-center transition-smooth group relative ${disabledClass} ${
-        active
-          ? 'bg-primary/15 text-primary'
-          : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-      }`}
+      className={`w-10 h-10 rounded-lg flex items-center justify-center transition-smooth group relative ${disabledClass}`}
+      style={{
+        color: active ? 'hsl(var(--sidebar-active))' : 'hsl(var(--sidebar-muted))',
+        background: active ? 'hsl(var(--sidebar-active) / 0.15)' : 'transparent',
+      }}
     >
       <div className="w-5 h-5">{item.icon}</div>
       {/* Tooltip */}
@@ -256,7 +258,7 @@ function NavButton({ item, active, expanded, disabled, onClick }: {
       </span>
       {/* Active indicator */}
       {active && (
-        <span className="absolute left-0 w-0.5 h-5 bg-primary rounded-r" />
+        <span className="absolute left-0 w-0.5 h-5 rounded-r" style={{ background: 'hsl(var(--sidebar-active))' }} />
       )}
     </button>
   )

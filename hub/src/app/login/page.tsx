@@ -101,11 +101,11 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center mb-3">
-            <span className="text-primary-foreground font-bold text-lg">MC</span>
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-3" style={{ background: 'hsl(24 14% 14%)' }}>
+            <span className="font-bold text-lg" style={{ color: 'hsl(39 21% 63%)' }}>TD</span>
           </div>
           <h1 className="text-xl font-semibold text-foreground">Torre Dona</h1>
-          <p className="text-sm text-muted-foreground mt-1">Sign in to continue</p>
+          <p className="text-sm text-muted-foreground mt-1">Acesse para continuar</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -116,14 +116,14 @@ export default function LoginPage() {
           )}
 
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1.5">Username</label>
+            <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1.5">Usuário</label>
             <input
               id="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full h-10 px-3 rounded-lg bg-secondary border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-smooth"
-              placeholder="Enter username"
+              placeholder="Digite seu usuário"
               autoComplete="username"
               autoFocus
               required
@@ -132,14 +132,14 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1.5">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1.5">Senha</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full h-10 px-3 rounded-lg bg-secondary border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-smooth"
-              placeholder="Enter password"
+              placeholder="Digite sua senha"
               autoComplete="current-password"
               required
               aria-required="true"
@@ -154,17 +154,17 @@ export default function LoginPage() {
             {loading ? (
               <>
                 <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                Signing in...
+                Entrando...
               </>
             ) : (
-              'Sign in'
+              'Entrar'
             )}
           </button>
         </form>
 
         <div className="my-4 flex items-center gap-2">
           <div className="h-px flex-1 bg-border" />
-          <span className="text-xs text-muted-foreground">or</span>
+          <span className="text-xs text-muted-foreground">ou</span>
           <div className="h-px flex-1 bg-border" />
         </div>
 
@@ -172,12 +172,12 @@ export default function LoginPage() {
           {googleClientId ? (
             <div className="min-h-[44px]" ref={googleBtnRef} />
           ) : (
-            <div className="text-xs text-muted-foreground">Google sign-in not configured</div>
+            <div className="text-xs text-muted-foreground">Login Google não configurado</div>
           )}
         </div>
-        {googleClientId && !googleReady && <p className="text-center text-xs text-muted-foreground mt-2">Loading Google Sign-In...</p>}
+        {googleClientId && !googleReady && <p className="text-center text-xs text-muted-foreground mt-2">Carregando login Google...</p>}
 
-        <p className="text-center text-xs text-muted-foreground mt-6">OpenClaw Agent Orchestration</p>
+        <p className="text-center text-xs text-muted-foreground mt-6">Torre Dona · Painel de Controle</p>
       </div>
     </div>
   )

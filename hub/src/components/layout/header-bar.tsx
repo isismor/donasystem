@@ -25,28 +25,28 @@ export function HeaderBar() {
 
   const activeSessions = sessions.filter(s => s.active).length
   const tabLabels: Record<string, string> = {
-    overview: 'Overview',
-    agents: 'Agent Squad',
-    tasks: 'Task Board',
-    sessions: 'Sessions',
-    documents: 'Documents',
-    activity: 'Activity Feed',
-    notifications: 'Notifications',
-    standup: 'Daily Standup',
-    logs: 'Log Viewer',
-    spawn: 'Spawn Agent',
+    overview: 'Visão Geral',
+    agents: 'Agentes',
+    tasks: 'Tarefas',
+    sessions: 'Sessões',
+    documents: 'Documentos',
+    activity: 'Atividade',
+    notifications: 'Notificações',
+    standup: 'Standup Diário',
+    logs: 'Logs',
+    spawn: 'Iniciar Agente',
     cron: 'Cron Jobs',
-    memory: 'Memory Browser',
-    tokens: 'Token Usage',
-    history: 'Agent History',
-    audit: 'Audit Trail',
+    memory: 'Memória',
+    tokens: 'Tokens',
+    history: 'Histórico',
+    audit: 'Auditoria',
     webhooks: 'Webhooks',
-    alerts: 'Alert Rules',
-    gateways: 'Gateway Manager',
-    users: 'Users',
+    alerts: 'Regras de Alerta',
+    gateways: 'Gerenciar Gateways',
+    users: 'Usuários',
     workspaces: 'Workspaces',
-    'gateway-config': 'Gateway Config',
-    settings: 'Settings',
+    'gateway-config': 'Config Gateway',
+    settings: 'Configurações',
   }
 
   // Search state
@@ -276,16 +276,16 @@ function MobileConnectionDot({
 
   if (isLocal) {
     dotClass = 'bg-blue-500'
-    title = 'Local Mode'
+    title = 'Modo Local'
   } else if (connection.isConnected) {
     dotClass = 'bg-green-500'
-    title = 'Gateway connected'
+    title = 'Gateway conectado'
   } else if (isReconnecting) {
     dotClass = 'bg-amber-500 animate-pulse'
     title = `Reconnecting (${connection.reconnectAttempts})`
   } else {
     dotClass = 'bg-red-500 animate-pulse'
-    title = 'Gateway disconnected — tap to reconnect'
+    title = 'Gateway desconectado — clique para reconectar'
   }
 
   return (
