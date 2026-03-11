@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  basePath: '/hub',
+
   turbopack: {},
   // Transpile ESM-only packages so they resolve correctly in all environments
   transpilePackages: ['react-markdown', 'remark-gfm'],
