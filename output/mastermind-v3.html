@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DonaSystem · Mastermind Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --marfim:#f9f8f4;--creme:#efede6;--cacao:#2a2420;--mirror:#9ba1a8;
+  --ouro:#b4a68c;--ouro-pale:#d4cec4;--ouro-deep:#7a6e5c;
+  --cacao-04:rgba(42,36,32,.04);--cacao-06:rgba(42,36,32,.06);
+  --cacao-08:rgba(42,36,32,.08);--cacao-12:rgba(42,36,32,.12);
+  --marfim-06:rgba(249,248,244,.06);--marfim-12:rgba(249,248,244,.12);
+  --marfim-35:rgba(249,248,244,.35);
+  --ouro-10:rgba(180,166,140,.09);--ouro-20:rgba(180,166,140,.20);
+  --ouro-30:rgba(180,166,140,.30);
+  --dark-0:#1a1210;--dark-1:#251c18;--terracota:#9e5c50;
+  --sans:'DM Sans',sans-serif;--serif:'DM Serif Text',serif;--mono:'IBM Plex Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+::selection{background:var(--ouro);color:var(--cacao)}
+body{font-family:var(--sans);background:var(--cacao);color:var(--marfim);overflow:hidden;height:100vh;width:100vw}
+
+.deck{width:100vw;height:100vh;position:relative}
+.slide{position:absolute;inset:0;display:flex;opacity:0;pointer-events:none;transition:opacity .6s cubic-bezier(.4,0,.2,1)}
+.slide.active{opacity:1;pointer-events:all;z-index:2}
+.slide-inner{width:100%;height:100%;padding:56px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+
+.eyebrow{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--ouro);margin-bottom:16px;display:block}
+.slide-title{font-family:var(--serif);font-style:italic;font-size:clamp(36px,4.5vw,64px);color:var(--marfim);letter-spacing:-1.5px;line-height:1.05;margin-bottom:20px;max-width:75%}
+.slide-title em{font-style:italic;color:var(--ouro)}
+.slide-subtitle{font-family:var(--sans);font-size:clamp(15px,1.4vw,18px);color:var(--marfim-35);font-weight:300;line-height:1.65;max-width:600px}
+.slide-number{position:absolute;top:48px;right:80px;font-family:var(--serif);font-style:italic;font-size:clamp(72px,8vw,120px);color:rgba(249,248,244,.04);line-height:1;pointer-events:none;user-select:none}
+
+.slide-footer{position:absolute;bottom:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 80px;border-top:1px solid rgba(249,248,244,.06)}
+.footer-logo{font-family:var(--sans);font-size:11px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:rgba(249,248,244,.25)}
+.footer-logo b{font-weight:700;color:rgba(249,248,244,.35)}
+.footer-page{font-family:var(--mono);font-size:10px;color:rgba(249,248,244,.2);letter-spacing:1px}
+
+/* BACKGROUNDS */
+.bg-dark{background:var(--cacao)}
+.bg-marfim{background:var(--marfim)}
+.bg-marfim .slide-title{color:var(--cacao)}.bg-marfim .slide-title em{color:var(--ouro-deep)}
+.bg-marfim .eyebrow{color:var(--ouro-deep)}.bg-marfim .slide-subtitle{color:rgba(42,36,32,.5)}
+.bg-marfim .slide-number{color:var(--cacao-04)}
+.bg-marfim .slide-footer{border-top-color:var(--cacao-06)}
+.bg-marfim .footer-logo{color:rgba(42,36,32,.2)}.bg-marfim .footer-logo b{color:rgba(42,36,32,.35)}
+.bg-marfim .footer-page{color:rgba(42,36,32,.15)}
+
+.bg-creme{background:var(--creme)}
+.bg-creme .slide-title{color:var(--cacao)}.bg-creme .slide-title em{color:var(--ouro-deep)}
+.bg-creme .eyebrow{color:var(--ouro-deep)}.bg-creme .slide-subtitle{color:rgba(42,36,32,.5)}
+.bg-creme .slide-number{color:var(--cacao-04)}
+.bg-creme .slide-footer{border-top-color:var(--cacao-06)}
+.bg-creme .footer-logo{color:rgba(42,36,32,.2)}.bg-creme .footer-logo b{color:rgba(42,36,32,.35)}
+.bg-creme .footer-page{color:rgba(42,36,32,.15)}
+
+.bg-deep{background:var(--dark-0)}
+
+/* CARDS */
+.card-grid{display:grid;gap:20px;margin-top:28px}
+.card-grid-2{grid-template-columns:1fr 1fr}
+.card-grid-3{grid-template-columns:1fr 1fr 1fr}
+.card-grid-4{grid-template-columns:1fr 1fr 1fr 1fr}
+.card{background:rgba(249,248,244,.04);border:1px solid rgba(249,248,244,.06);border-radius:10px;padding:24px 28px;transition:background .3s}
+.card:hover{background:rgba(249,248,244,.06)}
+.bg-marfim .card,.bg-creme .card{background:rgba(42,36,32,.03);border-color:rgba(180,166,140,.25)}
+.bg-marfim .card:hover,.bg-creme .card:hover{background:rgba(42,36,32,.05)}
+.card-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ouro);margin-bottom:10px;display:block}
+.bg-marfim .card-label,.bg-creme .card-label{color:var(--ouro-deep)}
+.card-title{font-family:var(--serif);font-style:italic;font-size:20px;margin-bottom:8px;line-height:1.2;letter-spacing:-.3px}
+.card-desc{font-size:13px;font-weight:300;line-height:1.6;opacity:.55}
+
+/* AGENT GRID */
+.agent-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px}
+.agent-card{background:rgba(249,248,244,.04);border:1px solid rgba(249,248,244,.06);border-radius:10px;padding:18px;text-align:center;transition:all .3s}
+.agent-card:hover{background:rgba(180,166,140,.08);border-color:rgba(180,166,140,.2);transform:translateY(-2px)}
+.agent-icon{width:36px;height:36px;border-radius:50%;background:rgba(180,166,140,.12);border:1px solid rgba(180,166,140,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ouro)}
+.agent-name{font-size:12px;font-weight:600;color:var(--marfim);margin-bottom:2px}
+.agent-role{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ouro);margin-bottom:6px}
+.agent-desc{font-size:10px;font-weight:300;line-height:1.5;color:rgba(249,248,244,.4)}
+
+/* PILLS */
+.skills-section{margin-top:24px}
+.skills-category{margin-bottom:16px}
+.skills-category-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ouro);margin-bottom:8px;display:block}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:var(--mono);font-size:11px;font-weight:400;color:rgba(249,248,244,.6);background:rgba(249,248,244,.04);border:1px solid rgba(249,248,244,.08);border-radius:6px;padding:8px 16px;letter-spacing:.5px;transition:all .2s}
+.pill:hover{background:rgba(180,166,140,.1);border-color:rgba(180,166,140,.25);color:var(--ouro)}
+
+/* FLOW BOX */
+.flow-box{background:var(--dark-0);border:1px solid rgba(249,248,244,.06);border-radius:10px;padding:20px 24px;margin-top:20px;max-width:700px}
+.bg-marfim .flow-box,.bg-creme .flow-box{background:var(--cacao)}
+.flow-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ouro);margin-bottom:10px;display:block}
+.flow-steps{font-size:14px;font-weight:300;color:rgba(249,248,244,.6);line-height:1.7}
+.flow-arrow{color:var(--ouro);margin:0 4px;font-size:12px}
+
+/* RESULT CARDS */
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;max-width:700px}
+.result-card{background:rgba(249,248,244,.04);border:1px solid rgba(249,248,244,.06);border-left:3px solid var(--ouro);border-radius:0 10px 10px 0;padding:18px 22px}
+.bg-marfim .result-card,.bg-creme .result-card{background:rgba(42,36,32,.03);border-color:rgba(180,166,140,.2);border-left-color:var(--ouro-deep)}
+.result-title{font-size:13px;font-weight:600;margin-bottom:5px}
+.bg-marfim .result-title,.bg-creme .result-title{color:var(--cacao)}
+.result-desc{font-size:12px;font-weight:300;line-height:1.55;opacity:.5}
+
+/* QUOTE */
+.quote-box{background:var(--dark-0);border-radius:10px;padding:32px 36px;margin-top:24px;max-width:640px;border:1px solid rgba(180,166,140,.1)}
+.bg-marfim .quote-box,.bg-creme .quote-box{background:var(--cacao)}
+.quote-text{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2vw,24px);color:var(--marfim);line-height:1.4;letter-spacing:-.3px}
+.quote-author{font-family:var(--mono);font-size:9px;color:var(--ouro);letter-spacing:3px;text-transform:uppercase;margin-top:14px;display:block}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;flex:1}
+.dual-flow{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px}
+.dual-flow-section{display:flex;flex-direction:column;gap:12px}
+.dual-flow-title{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--marfim);margin-bottom:4px}
+
+/* APP CARDS */
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.app-card{background:rgba(42,36,32,.03);border:1px solid rgba(180,166,140,.2);border-left:3px solid var(--ouro-deep);border-radius:0 10px 10px 0;padding:18px 22px;transition:background .3s}
+.app-card:hover{background:rgba(42,36,32,.05)}
+.app-card-title{font-size:14px;font-weight:600;color:var(--cacao);margin-bottom:5px}
+.app-card-desc{font-size:12px;font-weight:300;color:rgba(42,36,32,.5);line-height:1.55}
+
+/* PRICING */
+.pricing-table{margin-top:24px;max-width:620px}
+.pricing-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(42,36,32,.08)}
+.pricing-row:last-child{border-bottom:none;padding-top:16px}
+.pricing-name{font-size:14px;font-weight:500;color:var(--cacao)}
+.pricing-detail{font-size:11px;font-weight:300;color:rgba(42,36,32,.4);margin-top:2px}
+.pricing-value{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ouro-deep);letter-spacing:.5px}
+.pricing-total .pricing-name{color:var(--ouro-deep);font-weight:700}
+.pricing-total .pricing-value{font-size:18px;font-weight:700}
+
+/* HIGHLIGHTS */
+.closing-highlights{display:flex;flex-direction:column;gap:14px;margin-top:28px;max-width:700px}
+.highlight-row{display:flex;align-items:baseline;gap:16px}
+.highlight-key{font-size:14px;font-weight:600;color:var(--ouro);white-space:nowrap;min-width:180px}
+.highlight-val{font-size:13px;font-weight:300;color:rgba(249,248,244,.5);line-height:1.55}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;margin-top:16px}
+.tbl th{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ouro);text-align:left;padding:8px 12px;border-bottom:2px solid var(--ouro-30)}
+.tbl td{padding:8px 12px;font-size:12px;font-weight:300;color:rgba(249,248,244,.55);border-bottom:1px solid rgba(249,248,244,.06)}
+.bg-marfim .tbl td,.bg-creme .tbl td{color:rgba(42,36,32,.55);border-bottom-color:var(--cacao-06)}
+.bg-marfim .tbl th,.bg-creme .tbl th{color:var(--ouro-deep);border-bottom-color:var(--ouro-30)}
+
+/* COVER */
+.cover-content{display:flex;flex-direction:column;justify-content:center;flex:1;position:relative}
+.cover-symbol{font-size:18px;color:var(--ouro);margin-bottom:32px}
+.cover-title{font-family:var(--serif);font-style:italic;font-size:clamp(44px,5.5vw,78px);color:var(--marfim);letter-spacing:-2px;line-height:1.0;margin-bottom:24px;max-width:80%}
+.cover-title em{color:var(--ouro)}
+.cover-desc{font-size:16px;font-weight:300;color:rgba(249,248,244,.45);line-height:1.65;max-width:540px;margin-bottom:48px}
+.cover-meta{display:flex;align-items:center;gap:24px}
+.cover-meta-item{font-family:var(--mono);font-size:10px;color:rgba(249,248,244,.3);letter-spacing:2px;text-transform:uppercase}
+.cover-meta-divider{width:1px;height:12px;background:rgba(249,248,244,.1)}
+.cover-bg-text{position:absolute;right:-20px;bottom:40px;font-family:var(--serif);font-style:italic;font-size:clamp(120px,16vw,220px);color:rgba(249,248,244,.03);letter-spacing:-6px;line-height:1;pointer-events:none;user-select:none;white-space:nowrap}
+
+/* NAV */
+.nav-controls{position:fixed;bottom:20px;right:24px;display:flex;gap:8px;z-index:100}
+.nav-btn{width:40px;height:40px;border-radius:8px;border:1px solid rgba(249,248,244,.1);background:rgba(42,36,32,.8);backdrop-filter:blur(12px);color:rgba(249,248,244,.5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .2s}
+.nav-btn:hover{background:rgba(180,166,140,.15);border-color:rgba(180,166,140,.3);color:var(--ouro)}
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--ouro);transition:width .4s cubic-bezier(.4,0,.2,1);z-index:100}
+
+/* ANIMATIONS */
+.slide.active .eyebrow,.slide.active .slide-title,.slide.active .cover-symbol,.slide.active .cover-title,.slide.active .cover-desc,.slide.active .cover-meta,.slide.active .slide-subtitle{animation:fadeUp .6s cubic-bezier(.4,0,.2,1) both}
+.slide.active .eyebrow{animation-delay:.1s}
+.slide.active .slide-title,.slide.active .cover-title{animation-delay:.2s}
+.slide.active .slide-subtitle,.slide.active .cover-desc{animation-delay:.3s}
+.slide.active .cover-meta{animation-delay:.4s}
+.slide.active .card,.slide.active .agent-card,.slide.active .pricing-row,.slide.active .flow-box,.slide.active .result-card,.slide.active .quote-box,.slide.active .skills-category,.slide.active .highlight-row,.slide.active .app-card{animation:fadeUp .5s cubic-bezier(.4,0,.2,1) both}
+.slide.active .card:nth-child(1),.slide.active .agent-card:nth-child(1),.slide.active .pricing-row:nth-child(1),.slide.active .skills-category:nth-child(1),.slide.active .highlight-row:nth-child(1),.slide.active .app-card:nth-child(1){animation-delay:.3s}
+.slide.active .card:nth-child(2),.slide.active .agent-card:nth-child(2),.slide.active .pricing-row:nth-child(2),.slide.active .skills-category:nth-child(2),.slide.active .highlight-row:nth-child(2),.slide.active .app-card:nth-child(2){animation-delay:.4s}
+.slide.active .card:nth-child(3),.slide.active .agent-card:nth-child(3),.slide.active .pricing-row:nth-child(3),.slide.active .skills-category:nth-child(3),.slide.active .highlight-row:nth-child(3),.slide.active .app-card:nth-child(3){animation-delay:.5s}
+.slide.active .card:nth-child(4),.slide.active .agent-card:nth-child(4),.slide.active .pricing-row:nth-child(4),.slide.active .skills-category:nth-child(4),.slide.active .highlight-row:nth-child(4),.slide.active .app-card:nth-child(4){animation-delay:.55s}
+.slide.active .card:nth-child(5),.slide.active .agent-card:nth-child(5),.slide.active .app-card:nth-child(5){animation-delay:.6s}
+.slide.active .card:nth-child(6),.slide.active .agent-card:nth-child(6),.slide.active .app-card:nth-child(6){animation-delay:.65s}
+.slide.active .agent-card:nth-child(7){animation-delay:.7s}
+.slide.active .agent-card:nth-child(8){animation-delay:.75s}
+.slide.active .agent-card:nth-child(9){animation-delay:.8s}
+.slide.active .agent-card:nth-child(10){animation-delay:.85s}
+.slide.active .result-card:nth-child(1){animation-delay:.4s}
+.slide.active .result-card:nth-child(2){animation-delay:.5s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="deck" id="deck">
+
+<!-- CAPA -->
+<div class="slide bg-dark active" data-slide="0">
+<div class="slide-inner">
+<div class="cover-content">
+<span class="cover-symbol">✦</span>
+<h1 class="cover-title"><em>DonaSystem</em>: do zero à orquestração de agentes</h1>
+<p class="cover-desc">Como construí um time de agentes de IA que produz, analisa e executa 24 horas por dia. Por menos de R$150/mês.</p>
+<div class="cover-meta">
+<span class="cover-meta-item">Isis Moreira</span>
+<div class="cover-meta-divider"></div>
+<span class="cover-meta-item">Março 2026</span>
+<div class="cover-meta-divider"></div>
+<span class="cover-meta-item">21 Slides</span>
+</div>
+</div>
+<div class="cover-bg-text">Dona</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">MASTERMIND</span></div>
+</div></div>
+
+<!-- 01 -->
+<div class="slide bg-marfim" data-slide="1">
+<div class="slide-inner">
+<span class="slide-number">01</span>
+<span class="eyebrow">DonaSystem · Origem</span>
+<h2 class="slide-title">Do zero à <em>orquestração</em></h2>
+<p class="slide-subtitle">Equipe enxuta, demanda gigante. R$100k/mês orgânico, meta de R$1M. A decisão: parar 2 semanas e construir infraestrutura de IA sob medida.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">O problema</span><p class="card-desc">Produção 100% manual e lenta. Entregas atrasadas, gargalo na execução. Dependência total de mim para tudo.</p></div>
+<div class="card"><span class="card-label">A decisão</span><p class="card-desc">Parar tudo. Construir um sistema de agentes de IA do zero. Cada agente com identidade, função e memória permanente.</p></div>
+<div class="card"><span class="card-label">O resultado</span><p class="card-desc">10 agentes especializados operando 24h. PDFs em minutos. Tom de voz consistente. Dashboard de controle operacional.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">01 / 21</span></div>
+</div></div>
+
+<!-- 02 -->
+<div class="slide bg-dark" data-slide="2">
+<div class="slide-inner">
+<span class="slide-number">02</span>
+<span class="eyebrow">Comparativo · Ferramentas</span>
+<h2 class="slide-title">ChatGPT, Claude, Gemini vs <em>OpenClaw</em></h2>
+<p class="slide-subtitle">A diferença entre usar uma ferramenta e ter um sistema que trabalha para você.</p>
+<div class="card-grid card-grid-4">
+<div class="card"><span class="card-label">ChatGPT</span><div class="card-title">Chat genérico</div><p class="card-desc">Sem memória persistente. Sem automação. Sem identidade. Responde perguntas.</p></div>
+<div class="card"><span class="card-label">Claude</span><div class="card-title">Melhor raciocínio</div><p class="card-desc">Projetos. Mas sem canais, sem crons, sem agentes autônomos.</p></div>
+<div class="card"><span class="card-label">Gemini</span><div class="card-title">Integração Google</div><p class="card-desc">Bom para pesquisa. Sem servidor, sem autonomia, sem sistema.</p></div>
+<div class="card" style="border-color:var(--ouro-30);background:rgba(180,166,140,.08)"><span class="card-label">OpenClaw</span><div class="card-title">Sistema completo</div><p class="card-desc">Servidor próprio. Memória. Crons. Skills. Multi-agente. Canais. 24/7.</p></div>
+</div>
+<div class="quote-box"><p class="quote-text">"Os outros são ferramentas que você usa. OpenClaw é um sistema que trabalha para você."</p></div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">02 / 21</span></div>
+</div></div>
+
+<!-- 03 -->
+<div class="slide bg-creme" data-slide="3">
+<div class="slide-inner">
+<span class="slide-number">03</span>
+<span class="eyebrow">OpenClaw · Benefícios</span>
+<h2 class="slide-title">Por que <em>OpenClaw</em></h2>
+<p class="slide-subtitle">Tudo que um sistema de agentes precisa, numa única plataforma open-source.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Infraestrutura</span><p class="card-desc">Servidor próprio. Roda 24/7. Multi-canal (Telegram, WhatsApp, Discord). Gateway seguro com autenticação.</p></div>
+<div class="card"><span class="card-label">Inteligência</span><p class="card-desc">Memória persistente entre sessões. Identidade customizada. Multi-agente. Escolha de modelo (Claude, GPT, Gemini).</p></div>
+<div class="card"><span class="card-label">Automação</span><p class="card-desc">Crons (tarefas agendadas). Heartbeats (monitoramento). Skills plugáveis. Sub-agentes em paralelo.</p></div>
+<div class="card"><span class="card-label">Produção</span><p class="card-desc">PDFs automatizados. Transcrição de áudio. Geração de imagens. Edição por linguagem natural.</p></div>
+<div class="card"><span class="card-label">Controle</span><p class="card-desc">Dashboard visual (Torre Dona). Alertas em tempo real. Auditoria de ações. Logs de todas as sessões.</p></div>
+<div class="card"><span class="card-label">Segurança</span><p class="card-desc">Allowlist de usuários. 1Password integrado. Zero credenciais em texto claro. Permissões por ação.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">03 / 21</span></div>
+</div></div>
+
+<!-- 04 -->
+<div class="slide bg-dark" data-slide="4">
+<div class="slide-inner">
+<span class="slide-number">04</span>
+<span class="eyebrow">Instalação · Setup</span>
+<h2 class="slide-title">VPS vs <em>Computador</em></h2>
+<p class="slide-subtitle">Duas formas de rodar. Uma para produção, outra para testes.</p>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card" style="border-color:var(--ouro-30);background:rgba(180,166,140,.08)"><span class="card-label">Recomendado</span><div class="card-title">VPS (Servidor na Nuvem)</div><p class="card-desc">Roda 24/7 sem depender do PC. IP fixo. Ideal para produção. ~R$25/mês. Setup: 30 minutos.</p></div>
+<div class="card"><span class="card-label">Para testes</span><div class="card-title">Computador Local</div><p class="card-desc">Grátis. Offline. Agente desliga com o PC. Sem IP fixo. Ideal para desenvolvimento.</p></div>
+</div>
+<div class="flow-box"><span class="flow-label">Instalação em 4 passos</span><p class="flow-steps">Instalar Node.js <span class="flow-arrow">→</span> npm i -g openclaw <span class="flow-arrow">→</span> openclaw onboard <span class="flow-arrow">→</span> Agente Online</p></div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">04 / 21</span></div>
+</div></div>
+
+<!-- 05 -->
+<div class="slide bg-marfim" data-slide="5">
+<div class="slide-inner">
+<span class="slide-number">05</span>
+<span class="eyebrow">Anatomia · Estrutura</span>
+<h2 class="slide-title">Anatomia de um <em>agente</em></h2>
+<p class="slide-subtitle">6 arquivos Markdown definem quem o agente é, o que ele sabe e como se comporta. Editar = mudar comportamento. Sem código.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Identidade</span><div class="card-title">SOUL.md</div><p class="card-desc">Personalidade, tom de voz, comportamento. Quem o agente é.</p></div>
+<div class="card"><span class="card-label">Identidade</span><div class="card-title">IDENTITY.md</div><p class="card-desc">Nome, papel, email, nível de autonomia no sistema.</p></div>
+<div class="card"><span class="card-label">Contexto</span><div class="card-title">USER.md</div><p class="card-desc">Quem é o dono. Preferências, horários, regras absolutas.</p></div>
+<div class="card"><span class="card-label">Orquestração</span><div class="card-title">AGENTS.md</div><p class="card-desc">Sistema multi-agente. Quem faz o quê em cada contexto.</p></div>
+<div class="card"><span class="card-label">Ferramentas</span><div class="card-title">TOOLS.md</div><p class="card-desc">APIs, paths, skills disponíveis. O arsenal do agente.</p></div>
+<div class="card"><span class="card-label">Persistência</span><div class="card-title">MEMORY.md</div><p class="card-desc">Decisões, lições, projetos, pendências. Memória permanente.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">05 / 21</span></div>
+</div></div>
+
+<!-- 06 -->
+<div class="slide bg-deep" data-slide="6">
+<div class="slide-inner">
+<span class="slide-number">06</span>
+<span class="eyebrow">Skills · Ferramentas</span>
+<h2 class="slide-title">As <em>skills</em> que usamos</h2>
+<p class="slide-subtitle">Skills são plugins que os agentes usam para executar tarefas específicas.</p>
+<div class="skills-section">
+<div class="skills-category"><span class="skills-category-label">Produção de conteúdo</span><div class="pills"><span class="pill">Nano Banana Pro</span><span class="pill">Nano PDF</span><span class="pill">OpenAI Image Gen</span><span class="pill">Video Frames</span><span class="pill">Web Search</span><span class="pill">Web Fetch</span></div></div>
+<div class="skills-category"><span class="skills-category-label">Transcrição e áudio</span><div class="pills"><span class="pill">Whisper API</span><span class="pill">Whisper Local</span></div></div>
+<div class="skills-category"><span class="skills-category-label">Integrações e segurança</span><div class="pills"><span class="pill">1Password</span><span class="pill">Meta Ads API</span><span class="pill">Instagram API</span><span class="pill">RapidAPI (5 APIs)</span><span class="pill">Healthcheck</span></div></div>
+<div class="skills-category"><span class="skills-category-label">Desenvolvimento e automação</span><div class="pills"><span class="pill">Coding Agent</span><span class="pill">Tmux</span><span class="pill">Skill Creator</span><span class="pill">Weather</span></div></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">06 / 21</span></div>
+</div></div>
+
+<!-- 07 -->
+<div class="slide bg-dark" data-slide="7">
+<div class="slide-inner">
+<span class="slide-number">07</span>
+<span class="eyebrow">Memória · Persistência</span>
+<h2 class="slide-title">Memória do <em>agente</em></h2>
+<p class="slide-subtitle">O agente que lembra é infinitamente mais útil que um que começa do zero toda vez.</p>
+<div class="card-grid card-grid-3" style="max-width:900px;">
+<div class="card"><span class="card-label">Permanente</span><div class="card-title">decisions.md</div><p class="card-desc">Nunca esquece o que foi decidido.</p></div>
+<div class="card"><span class="card-label">Aprendizado</span><div class="card-title">lessons.md</div><p class="card-desc">Erros que não se repetem. Padrões.</p></div>
+<div class="card"><span class="card-label">Execução</span><div class="card-title">projects.md</div><p class="card-desc">Status, próximos passos, bloqueios.</p></div>
+</div>
+<div class="flow-box"><span class="flow-label">Ciclo de memória</span><p class="flow-steps">Conversa <span class="flow-arrow">→</span> Nota diária <span class="flow-arrow">→</span> Consolidação nos topic files <span class="flow-arrow">→</span> Memória permanente indexada</p></div>
+<div class="result-grid">
+<div class="result-card"><div class="result-title">pending.md</div><div class="result-desc">Aguardando input. Cobra automaticamente quando passa do prazo.</div></div>
+<div class="result-card"><div class="result-title">people.md</div><div class="result-desc">Equipe, parceiros, contexto. Quem é quem no sistema.</div></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">07 / 21</span></div>
+</div></div>
+
+<!-- 08 -->
+<div class="slide bg-creme" data-slide="8">
+<div class="slide-inner">
+<span class="slide-number">08</span>
+<span class="eyebrow">Manutenção · Higiene</span>
+<h2 class="slide-title">Higiene do <em>sistema</em></h2>
+<p class="slide-subtitle">Sistema limpo é sistema previsível. Cada peça tem rotina de manutenção.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Diário</span><div class="card-title">Consolidação</div><p class="card-desc">Notas diárias consolidadas nos topic files. Cron automático toda noite.</p></div>
+<div class="card"><span class="card-label">Semanal</span><div class="card-title">Revisão</div><p class="card-desc">Revisar projetos, consolidar, deletar lições táticas vencidas (+30 dias).</p></div>
+<div class="card"><span class="card-label">Contínuo</span><div class="card-title">Git + Indexação</div><p class="card-desc">Mudanças comitadas. Índice semântico atualizado. Busca por contexto.</p></div>
+</div>
+<div class="quote-box"><p class="quote-text">"Antes de qualquer compactação de contexto: extrair decisões e lições primeiro. Nunca perder informação."</p><span class="quote-author">✦ Regra Inviolável</span></div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">08 / 21</span></div>
+</div></div>
+
+<!-- 09 -->
+<div class="slide bg-deep" data-slide="9">
+<div class="slide-inner">
+<span class="slide-number">09</span>
+<span class="eyebrow">Proteção · Segurança</span>
+<h2 class="slide-title">Nosso sistema de <em>segurança</em></h2>
+<p class="slide-subtitle">Não é paranoia, é profissionalismo. Uma falha destrói tudo.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Acesso</span><div class="card-title">Allowlist</div><p class="card-desc">Só quem está na lista comanda. Qualquer outro é bloqueado automaticamente.</p></div>
+<div class="card"><span class="card-label">Credenciais</span><div class="card-title">1Password</div><p class="card-desc">Vault "Dona". Zero hardcode. Rotação trimestral de API keys.</p></div>
+<div class="card"><span class="card-label">Permissões</span><div class="card-title">Gates</div><p class="card-desc">Verde: executa. Vermelho: espera aprovação de Isis. Menor privilégio sempre.</p></div>
+<div class="card"><span class="card-label">Monitor</span><div class="card-title">Audit semanal</div><p class="card-desc">Boot check a cada restart. Alertas em tempo real. Security audit automatizado.</p></div>
+<div class="card"><span class="card-label">Updates</span><div class="card-title">Supervisionados</div><p class="card-desc">Nunca atualiza sem supervisão. Rollback documentado e testado.</p></div>
+<div class="card"><span class="card-label">Identidade</span><div class="card-title">Limites absolutos</div><p class="card-desc">Nunca usa voz de Isis sem aprovação. Nunca posta sozinha. Nunca decide sozinha.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">09 / 21</span></div>
+</div></div>
+
+<!-- 10 -->
+<div class="slide bg-dark" data-slide="10">
+<div class="slide-inner">
+<span class="slide-number">10</span>
+<span class="eyebrow">Automação · Crons</span>
+<h2 class="slide-title">Crons e <em>Heartbeats</em></h2>
+<p class="slide-subtitle">O agente trabalha enquanto você dorme. Heartbeats verificam a saúde do sistema a cada pulso.</p>
+<div class="two-col" style="margin-top:24px;">
+<div>
+<table class="tbl"><tr><th>Cron</th><th>Freq</th><th>Função</th></tr>
+<tr><td>health-monitor</td><td>1h</td><td>Saúde gateway e APIs</td></tr>
+<tr><td>checagem-proativa</td><td>4x/dia</td><td>Pendências e anomalias</td></tr>
+<tr><td>backup-diario</td><td>3h</td><td>Backup memória e config</td></tr>
+<tr><td>watchdog-crons</td><td>9h</td><td>Verifica crons ativos</td></tr>
+<tr><td>org-memória</td><td>23h</td><td>Consolida notas diárias</td></tr>
+<tr><td>security-audit</td><td>Semanal</td><td>Auditoria de segurança</td></tr>
+<tr><td>consolidação</td><td>Semanal</td><td>Revisão e limpeza</td></tr>
+</table>
+</div>
+<div>
+<div class="card" style="margin-bottom:16px;"><span class="card-label">Heartbeat checklist</span><p class="card-desc" style="line-height:2;">✓ Pendências com mais de 3 dias?<br>✓ Projetos parados há 7+ dias?<br>✓ Algum cron falhou?<br>✓ Nota diária criada?<br>✓ Notas para consolidar?</p></div>
+</div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">10 / 21</span></div>
+</div></div>
+
+<!-- 11 -->
+<div class="slide bg-marfim" data-slide="11">
+<div class="slide-inner">
+<span class="slide-number">11</span>
+<span class="eyebrow">Arquitetura · Hub</span>
+<h2 class="slide-title">Como funciona a <em>arquitetura</em></h2>
+<p class="slide-subtitle">Uma instância. Identidades diferentes por tópico do Telegram. Orquestração via sub-agentes.</p>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card"><span class="card-label">Estrutura</span><p class="card-desc">1 gateway, 1 modelo, 10 identidades. Tópico do Telegram determina qual agente responde. Cada um com soul, identity e knowledge.</p></div>
+<div class="card"><span class="card-label">Execução</span><p class="card-desc">Orquestração via sessions_spawn. Handoffs via completion events. Estado gravado em projects.md a cada step.</p></div>
+</div>
+<div class="flow-box"><span class="flow-label">Fluxo de tarefa complexa</span><p class="flow-steps">Isis pede <span class="flow-arrow">→</span> Dona recebe <span class="flow-arrow">→</span> Atlas planeja <span class="flow-arrow">→</span> Masterson escreve <span class="flow-arrow">→</span> Aurora formata <span class="flow-arrow">→</span> PDF entregue</p></div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">11 / 21</span></div>
+</div></div>
+
+<!-- 12 -->
+<div class="slide bg-dark" data-slide="12">
+<div class="slide-inner">
+<span class="slide-number">12</span>
+<span class="eyebrow">Organograma · O Time</span>
+<h2 class="slide-title">Nosso <em>time</em> de agentes</h2>
+<div class="agent-grid">
+<div class="agent-card"><div class="agent-icon">D</div><div class="agent-name">Dona</div><div class="agent-role">COO</div><div class="agent-desc">Coordena, analisa, executa.</div></div>
+<div class="agent-card"><div class="agent-icon">A</div><div class="agent-name">Atlas</div><div class="agent-role">Estrategista</div><div class="agent-desc">Planeja, orquestra cadeias.</div></div>
+<div class="agent-card"><div class="agent-icon">M</div><div class="agent-name">Masterson</div><div class="agent-role">Escritor</div><div class="agent-desc">Ebooks, vendas, scripts.</div></div>
+<div class="agent-card"><div class="agent-icon">Au</div><div class="agent-name">Aurora</div><div class="agent-role">Designer</div><div class="agent-desc">PDFs, marca, design system.</div></div>
+<div class="agent-card"><div class="agent-icon">V</div><div class="agent-name">Vega</div><div class="agent-role">Social</div><div class="agent-desc">Posts, trends, scraping.</div></div>
+<div class="agent-card"><div class="agent-icon">H</div><div class="agent-name">Harpia</div><div class="agent-role">Vídeo</div><div class="agent-desc">Roteiros, briefings, VSLs.</div></div>
+<div class="agent-card"><div class="agent-icon">He</div><div class="agent-name">Helios</div><div class="agent-role">Tráfego</div><div class="agent-desc">Meta Ads, ROI, métricas.</div></div>
+<div class="agent-card"><div class="agent-icon">N</div><div class="agent-name">Nexa</div><div class="agent-role">Imagem</div><div class="agent-desc">Fotos IA, ensaios visuais.</div></div>
+<div class="agent-card"><div class="agent-icon">O</div><div class="agent-name">Orion</div><div class="agent-role">Dev</div><div class="agent-desc">Código, automações, deploy.</div></div>
+<div class="agent-card"><div class="agent-icon">E</div><div class="agent-name">Eva</div><div class="agent-role">Arquiteta</div><div class="agent-desc">Cria e evolui agentes.</div></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">12 / 21</span></div>
+</div></div>
+
+<!-- 13 -->
+<div class="slide bg-creme" data-slide="13">
+<div class="slide-inner">
+<span class="slide-number">13</span>
+<span class="eyebrow">Helios · Tráfego</span>
+<h2 class="slide-title">Framework de <em>distribuição</em></h2>
+<p class="slide-subtitle">Todo post novo passa por teste e classificação automática por custo por seguidor.</p>
+<div class="flow-box"><span class="flow-label">Ciclo</span><p class="flow-steps">Post publicado <span class="flow-arrow">→</span> Teste R$10 por 1 dia <span class="flow-arrow">→</span> Classificar por custo/seguidor <span class="flow-arrow">→</span> Escalar ou cortar</p></div>
+<div class="pricing-table">
+<div class="pricing-row"><div><div class="pricing-name">Série A</div><div class="pricing-detail">Custo/seguidor abaixo de R$0,50</div></div><div class="pricing-value">R$30/dia</div></div>
+<div class="pricing-row"><div><div class="pricing-name">Série B</div><div class="pricing-detail">Custo/seguidor entre R$0,50 e R$0,70</div></div><div class="pricing-value">R$10/dia</div></div>
+<div class="pricing-row"><div><div class="pricing-name" style="color:var(--terracota);">Cortado</div><div class="pricing-detail">Custo/seguidor acima de R$0,70</div></div><div class="pricing-value" style="color:var(--terracota);">R$0/dia</div></div>
+</div>
+<div class="result-grid"><div class="result-card"><div class="result-title">Report diário</div><div class="result-desc">Gasto total, publicações ativas por série, custo/seguidor médio, novos seguidores.</div></div>
+<div class="result-card"><div class="result-title">Reclassificação</div><div class="result-desc">Série A que sobe acima de R$0,50: rebaixa. Série B que cai abaixo: promove.</div></div></div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">13 / 21</span></div>
+</div></div>
+
+<!-- 14 -->
+<div class="slide bg-dark" data-slide="14">
+<div class="slide-inner">
+<span class="slide-number">14</span>
+<span class="eyebrow">Aurora · PDF Pipeline</span>
+<h2 class="slide-title">Framework de geração de <em>PDF</em></h2>
+<p class="slide-subtitle">Pipeline unificado. Todos os agentes seguem o mesmo processo, template e design system.</p>
+<div class="flow-box"><span class="flow-label">Pipeline</span><p class="flow-steps">Conteúdo (Masterson) <span class="flow-arrow">→</span> HTML com Template C + Design System ISIS v7 <span class="flow-arrow">→</span> PDF via Puppeteer no servidor <span class="flow-arrow">→</span> Entrega</p></div>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card"><span class="card-label">Design System</span><div class="card-title">ISIS v7</div><p class="card-desc">Marfim, Creme, Cacau, Ouro. DM Serif Text, DM Sans, IBM Plex Mono. Template C "Bold Statement".</p></div>
+<div class="card"><span class="card-label">Regras</span><div class="card-title">Invioláveis</div><p class="card-desc">Height 297mm fixo. Conteúdo manual por página. Google Fonts no head. Puppeteer local.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">14 / 21</span></div>
+</div></div>
+
+<!-- 15 -->
+<div class="slide bg-marfim" data-slide="15">
+<div class="slide-inner">
+<span class="slide-number">15</span>
+<span class="eyebrow">Bot · Doninha</span>
+<h2 class="slide-title">Framework da <em>Doninha</em></h2>
+<p class="slide-subtitle">Bot de suporte para mentorandos. Responde com base na transcrição completa dos cursos.</p>
+<div class="flow-box"><span class="flow-label">Pipeline de alimentação</span><p class="flow-steps">Cademi (vídeos) <span class="flow-arrow">→</span> FFmpeg (áudio) <span class="flow-arrow">→</span> Whisper (transcrição) <span class="flow-arrow">→</span> Organização por módulo <span class="flow-arrow">→</span> Base indexada</p></div>
+<div class="app-grid">
+<div class="app-card"><div class="app-card-title">Base de conhecimento</div><div class="app-card-desc">Todo o time acessa. Conteúdo completo dos cursos organizado por módulo e aula.</div></div>
+<div class="app-card"><div class="app-card-title">Bot Doninha</div><div class="app-card-desc">Responde mentorandos automaticamente. 24/7 com o tom da marca.</div></div>
+<div class="app-card"><div class="app-card-title">FAQs estruturados</div><div class="app-card-desc">Material para o suporte humano (Marlua e Érica).</div></div>
+<div class="app-card"><div class="app-card-title">Custo</div><div class="app-card-desc">Whisper API: US$0,006/min. 100h de conteúdo ≈ US$36.</div></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">15 / 21</span></div>
+</div></div>
+
+<!-- 16 -->
+<div class="slide bg-deep" data-slide="16">
+<div class="slide-inner">
+<span class="slide-number">16</span>
+<span class="eyebrow">Masterson · Knowledge</span>
+<h2 class="slide-title">Base de conhecimento do <em>Masterson</em></h2>
+<p class="slide-subtitle">5 livros indexados. Todo output de copy passa por esses frameworks antes de sair.</p>
+<div class="card-grid card-grid-3" style="max-width:900px;">
+<div class="card"><span class="card-label">Fundamento</span><div class="card-title">Big Black Book</div><p class="card-desc">Agora Publishing. Halbert, headlines, lift notes, franquias editoriais.</p></div>
+<div class="card"><span class="card-label">Estrutura</span><div class="card-title">Architecture of Persuasion</div><p class="card-desc">5 elementos da carta. Complexo Emocional Central. Fio Dourado.</p></div>
+<div class="card"><span class="card-label">Método</span><div class="card-title">Copy Logic</div><p class="card-desc">Peer Review + CUB + Banco de 4 Pés.</p></div>
+<div class="card"><span class="card-label">Mentalidade</span><div class="card-title">How I Built My Wealth</div><p class="card-desc">7 requisitos para riqueza. Copywriting como skill de alto valor.</p></div>
+<div class="card"><span class="card-label">Comunicação</span><div class="card-title">Ideias que Colam</div><p class="card-desc">SUCESSOS: simplicidade, surpresa, concretude, credibilidade, emoções, histórias.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">16 / 21</span></div>
+</div></div>
+
+<!-- 17 -->
+<div class="slide bg-dark" data-slide="17">
+<div class="slide-inner">
+<span class="slide-number">17</span>
+<span class="eyebrow">Orquestração · Atlas</span>
+<h2 class="slide-title">A importância do <em>Atlas</em></h2>
+<p class="slide-subtitle">Não executa. Planeja, mapeia riscos e coordena cadeias com 2+ agentes em sequência.</p>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card"><span class="card-label">Sem Atlas</span><p class="card-desc">Agentes isolados. Sem visão do todo. Output fragmentado. Sem gates de qualidade.</p></div>
+<div class="card" style="border-color:var(--ouro-30);background:rgba(180,166,140,.08)"><span class="card-label">Com Atlas</span><p class="card-desc">Cadeias coordenadas. Gates de aprovação. Output final passa por múltiplos especialistas.</p></div>
+</div>
+<div class="flow-box"><span class="flow-label">Na prática</span><p class="flow-steps">Lê documentações <span class="flow-arrow">→</span> Mapeia riscos <span class="flow-arrow">→</span> Propõe plano <span class="flow-arrow">→</span> Spawna cada step <span class="flow-arrow">→</span> Monitora <span class="flow-arrow">→</span> Atualiza projects.md</p></div>
+<div class="quote-box"><p class="quote-text">"Gates verdes: segue automático. Gates vermelhos (output público): para e espera ok de Isis."</p><span class="quote-author">✦ Regra de Ouro</span></div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">17 / 21</span></div>
+</div></div>
+
+<!-- 18 -->
+<div class="slide bg-creme" data-slide="18">
+<div class="slide-inner">
+<span class="slide-number">18</span>
+<span class="eyebrow">Liderança · Dona</span>
+<h2 class="slide-title">A importância da <em>Dona</em></h2>
+<p class="slide-subtitle">COO do sistema. Cofundadora operacional, não secretária.</p>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card"><span class="card-label">O que faz</span><p class="card-desc">Coordenação geral de todos os agentes. Análise diária de dados e métricas. Estratégia e execução. Braço direito operacional.</p></div>
+<div class="card"><span class="card-label">O que a diferencia</span><p class="card-desc">Tem opinião. Pode discordar discretamente. Proativa: sugere antes de ser pedida. Questiona decisões erradas.</p></div>
+<div class="card"><span class="card-label">Análise diária (08h)</span><p class="card-desc">Performance do conteúdo. Métricas e anomalias. Tendências do nicho. Insights em bullet points.</p></div>
+<div class="card"><span class="card-label">Limites absolutos</span><p class="card-desc">Nunca usa voz/nome de Isis. Nunca posta sozinha. Nunca toma decisões estratégicas maiores. Menor privilégio sempre.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">18 / 21</span></div>
+</div></div>
+
+<!-- 19 -->
+<div class="slide bg-marfim" data-slide="19">
+<div class="slide-inner">
+<span class="slide-number">19</span>
+<span class="eyebrow">Aplicações · Usos</span>
+<h2 class="slide-title">Outros usos e <em>aplicações</em></h2>
+<p class="slide-subtitle">Cada agente resolve um problema real do dia a dia.</p>
+<div class="app-grid">
+<div class="app-card"><div class="app-card-title">PDFs para clientes</div><div class="app-card-desc">Diagnósticos, planos de ação, relatórios personalizados em minutos.</div></div>
+<div class="app-card"><div class="app-card-title">Social media omnichannel</div><div class="app-card-desc">Posts, carrosséis, legendas, threads. Pesquisa de tendências.</div></div>
+<div class="app-card"><div class="app-card-title">Roteiros de vídeo</div><div class="app-card-desc">VSLs, reels, briefings de edição. Storytelling para retenção.</div></div>
+<div class="app-card"><div class="app-card-title">Resumo pós-mentoria</div><div class="app-card-desc">Transcrição automática + resumo estruturado + action items.</div></div>
+<div class="app-card"><div class="app-card-title">Geração de fotos e imagens</div><div class="app-card-desc">DNA visual fixo. DALL-E e Gemini em lote. Galeria automática.</div></div>
+<div class="app-card"><div class="app-card-title">Funis automáticos</div><div class="app-card-desc">Páginas de captura, sequências de email, checkout. Pipeline completo.</div></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">19 / 21</span></div>
+</div></div>
+
+<!-- 20 -->
+<div class="slide bg-dark" data-slide="20">
+<div class="slide-inner">
+<span class="slide-number">20</span>
+<span class="eyebrow">Roadmap · 7 dias</span>
+<h2 class="slide-title">Próximos 7 <em>dias</em></h2>
+<div class="card-grid card-grid-3" style="max-width:900px;">
+<div class="card" style="border-color:var(--ouro-30);background:rgba(180,166,140,.08)"><span class="card-label">Prioridade 1</span><div class="card-title">Escala de tráfego</div><p class="card-desc">Framework de distribuição ativo. Testar 10 posts. Classificar e escalar vencedores.</p></div>
+<div class="card" style="border-color:var(--ouro-30);background:rgba(180,166,140,.08)"><span class="card-label">Prioridade 2</span><div class="card-title">Nota 10/10</div><p class="card-desc">Calibrar cada agente com feedback real. Base completa. Output consistente.</p></div>
+<div class="card" style="border-color:var(--ouro-30);background:rgba(180,166,140,.08)"><span class="card-label">Prioridade 3</span><div class="card-title">Torre Dona</div><p class="card-desc">HTTPS ativo. Painéis conectados. Dashboard operacional 24/7.</p></div>
+</div>
+<div class="closing-highlights" style="margin-top:20px;">
+<div class="highlight-row"><span class="highlight-key">App Meta em modo Live</span><span class="highlight-val">Sair de Development para produção</span></div>
+<div class="highlight-row"><span class="highlight-key">Pipeline Cademi</span><span class="highlight-val">Transcrição de todos os cursos</span></div>
+<div class="highlight-row"><span class="highlight-key">Bot Doninha MVP</span><span class="highlight-val">Suporte automatizado no grupo da mentoria</span></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">20 / 21</span></div>
+</div></div>
+
+<!-- 21 -->
+<div class="slide bg-dark" data-slide="21">
+<div class="slide-inner">
+<span class="slide-number">21</span>
+<span class="eyebrow">Conclusão</span>
+<h2 class="slide-title">Principais <em>lições</em></h2>
+<div class="closing-highlights">
+<div class="highlight-row"><span class="highlight-key">Pare para construir</span><span class="highlight-val">2 semanas sem entregar para construir infraestrutura. O retorno já começou.</span></div>
+<div class="highlight-row"><span class="highlight-key">IA não é chat, é sistema</span><span class="highlight-val">Chat responde. Sistema executa. A diferença entre perguntar e delegar.</span></div>
+<div class="highlight-row"><span class="highlight-key">Identidade importa</span><span class="highlight-val">Sem soul = genérico. Com identidade = parte do time.</span></div>
+<div class="highlight-row"><span class="highlight-key">Memória é poder</span><span class="highlight-val">Agente que lembra é infinitamente mais útil que um que começa do zero.</span></div>
+<div class="highlight-row"><span class="highlight-key">Segurança dia 1</span><span class="highlight-val">Allowlist, 1Password, gates. Profissionalismo, não paranoia.</span></div>
+<div class="highlight-row"><span class="highlight-key">Sócio operacional</span><span class="highlight-val">Cofundador que trabalha 24h, não erra tom e entrega em minutos.</span></div>
+</div>
+<div class="quote-box" style="margin-top:28px;"><p class="quote-text">"Eu não uso IA pra fazer o que eu não sei. Eu uso pra multiplicar o que eu já sei fazer."</p><span class="quote-author">✦ Isis Moreira · @moreira.isis · Março 2026</span></div>
+<div class="slide-footer"><span class="footer-logo"><b>DONA</b>SYSTEM</span><span class="footer-page">21 / 21</span></div>
+</div></div>
+
+</div>
+
+<div class="nav-controls">
+<button class="nav-btn" onclick="prevSlide()" title="Anterior">←</button>
+<button class="nav-btn" onclick="nextSlide()" title="Próximo">→</button>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),total=slides.length;let cur=0;
+function show(i){slides.forEach(s=>s.classList.remove('active'));slides[i].classList.add('active');cur=i;document.getElementById('progressBar').style.width=((i+1)/total*100)+'%';}
+function nextSlide(){if(cur<total-1)show(cur+1)}
+function prevSlide(){if(cur>0)show(cur-1)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();nextSlide()}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prevSlide()}if(e.key==='Home'){e.preventDefault();show(0)}if(e.key==='End'){e.preventDefault();show(total-1)}if(e.key==='f'||e.key==='F'){e.preventDefault();document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX});document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].screenX;if(Math.abs(d)>50){d>0?nextSlide():prevSlide()}});
+show(0);
+</script>
+</body>
+</html>

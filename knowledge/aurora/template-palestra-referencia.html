@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como eu uso IA pra rodar meu negócio · Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   ISIS v7 · Presentation Deck
+   Design System Tokens
+═══════════════════════════════════════════ */
+:root {
+  --marfim:   #f9f8f4;
+  --creme:    #efede6;
+  --cacao:    #2a2420;
+  --mirror:   #9ba1a8;
+  --ouro:     #b4a68c;
+  --ouro-pale:#d4cec4;
+  --ouro-deep:#7a6e5c;
+  --cacao-04:  rgba(42,36,32,.04);
+  --cacao-06:  rgba(42,36,32,.06);
+  --cacao-08:  rgba(42,36,32,.08);
+  --cacao-12:  rgba(42,36,32,.12);
+  --cacao-20:  rgba(42,36,32,.20);
+  --marfim-06: rgba(249,248,244,.06);
+  --marfim-12: rgba(249,248,244,.12);
+  --marfim-35: rgba(249,248,244,.35);
+  --ouro-10:   rgba(180,166,140,.09);
+  --ouro-20:   rgba(180,166,140,.20);
+  --ouro-30:   rgba(180,166,140,.30);
+  --dark-0: #1a1210;
+  --dark-1: #251c18;
+  --dark-2: #2f2219;
+  --dark-3: #382820;
+  --sans:  'DM Sans', sans-serif;
+  --serif: 'DM Serif Text', serif;
+  --mono:  'IBM Plex Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+::selection { background: var(--ouro); color: var(--cacao); }
+
+body {
+  font-family: var(--sans);
+  background: var(--cacao);
+  color: var(--marfim);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ═══════════════════════════════════════════
+   SLIDE ENGINE
+═══════════════════════════════════════════ */
+.deck {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 2;
+}
+
+.slide-inner {
+  width: 100%;
+  height: 100%;
+  padding: 64px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════ */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.slide-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(36px, 4.5vw, 64px);
+  color: var(--marfim);
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  max-width: 75%;
+}
+
+.slide-title em {
+  font-style: italic;
+  color: var(--ouro);
+}
+
+.slide-subtitle {
+  font-family: var(--sans);
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: var(--marfim-35);
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 600px;
+}
+
+.slide-number {
+  position: absolute;
+  top: 48px;
+  right: 80px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(72px, 8vw, 120px);
+  color: rgba(249,248,244,.04);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER BAR
+═══════════════════════════════════════════ */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+  border-top: 1px solid rgba(249,248,244,.06);
+}
+
+.footer-logo {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(249,248,244,.25);
+}
+.footer-logo b { font-weight: 700; color: rgba(249,248,244,.35); }
+
+.footer-page {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(249,248,244,.2);
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════════
+   BACKGROUNDS
+═══════════════════════════════════════════ */
+.bg-dark {
+  background: var(--cacao);
+}
+.bg-marfim {
+  background: var(--marfim);
+}
+.bg-marfim .slide-title { color: var(--cacao); }
+.bg-marfim .slide-title em { color: var(--ouro-deep); }
+.bg-marfim .eyebrow { color: var(--ouro-deep); }
+.bg-marfim .slide-subtitle { color: rgba(42,36,32,.5); }
+.bg-marfim .slide-number { color: var(--cacao-04); }
+.bg-marfim .slide-footer { border-top-color: var(--cacao-06); }
+.bg-marfim .footer-logo { color: rgba(42,36,32,.2); }
+.bg-marfim .footer-logo b { color: rgba(42,36,32,.35); }
+.bg-marfim .footer-page { color: rgba(42,36,32,.15); }
+
+.bg-creme {
+  background: var(--creme);
+}
+.bg-creme .slide-title { color: var(--cacao); }
+.bg-creme .slide-title em { color: var(--ouro-deep); }
+.bg-creme .eyebrow { color: var(--ouro-deep); }
+.bg-creme .slide-subtitle { color: rgba(42,36,32,.5); }
+.bg-creme .slide-number { color: var(--cacao-04); }
+.bg-creme .slide-footer { border-top-color: var(--cacao-06); }
+.bg-creme .footer-logo { color: rgba(42,36,32,.2); }
+.bg-creme .footer-logo b { color: rgba(42,36,32,.35); }
+.bg-creme .footer-page { color: rgba(42,36,32,.15); }
+
+.bg-deep {
+  background: var(--dark-0);
+}
+
+/* ═══════════════════════════════════════════
+   CARDS & COMPONENTS
+═══════════════════════════════════════════ */
+.card-grid {
+  display: grid;
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.card-grid-2 { grid-template-columns: 1fr 1fr; }
+.card-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.card {
+  background: rgba(249,248,244,.04);
+  border: 1px solid rgba(249,248,244,.06);
+  border-radius: 10px;
+  padding: 28px;
+  transition: background 0.3s;
+}
+
+.card:hover {
+  background: rgba(249,248,244,.06);
+}
+
+.bg-marfim .card,
+.bg-creme .card {
+  background: rgba(42,36,32,.03);
+  border-color: rgba(180,166,140,.25);
+}
+.bg-marfim .card:hover,
+.bg-creme .card:hover {
+  background: rgba(42,36,32,.05);
+}
+
+.card-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.bg-marfim .card-label,
+.bg-creme .card-label { color: var(--ouro-deep); }
+
+.card-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  margin-bottom: 8px;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+
+.card-desc {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
+  opacity: 0.55;
+}
+
+/* ═══════════════════════════════════════════
+   AGENT GRID (slide 4)
+═══════════════════════════════════════════ */
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.agent-card {
+  background: rgba(249,248,244,.04);
+  border: 1px solid rgba(249,248,244,.06);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.agent-card:hover {
+  background: rgba(180,166,140,.08);
+  border-color: rgba(180,166,140,.2);
+  transform: translateY(-2px);
+}
+
+.agent-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(180,166,140,.12);
+  border: 1px solid rgba(180,166,140,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ouro);
+}
+
+.agent-name {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--marfim);
+  margin-bottom: 3px;
+}
+
+.agent-role {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 8px;
+}
+
+.agent-desc {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(249,248,244,.4);
+}
+
+/* ═══════════════════════════════════════════
+   PRICING TABLE (slide 3)
+═══════════════════════════════════════════ */
+.pricing-table {
+  margin-top: 32px;
+  max-width: 620px;
+}
+
+.pricing-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(42,36,32,.08);
+}
+
+.pricing-row:last-child {
+  border-bottom: none;
+  padding-top: 20px;
+}
+
+.pricing-name {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--cacao);
+}
+
+.pricing-detail {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(42,36,32,.4);
+  margin-top: 2px;
+}
+
+.pricing-value {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ouro-deep);
+  letter-spacing: 0.5px;
+}
+
+.pricing-total .pricing-name {
+  color: var(--ouro-deep);
+  font-weight: 700;
+}
+
+.pricing-total .pricing-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ouro-deep);
+}
+
+/* ═══════════════════════════════════════════
+   SKILLS PILLS (slide 5)
+═══════════════════════════════════════════ */
+.skills-section {
+  margin-top: 28px;
+}
+
+.skills-category {
+  margin-bottom: 20px;
+}
+
+.skills-category-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(249,248,244,.6);
+  background: rgba(249,248,244,.04);
+  border: 1px solid rgba(249,248,244,.08);
+  border-radius: 6px;
+  padding: 8px 16px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.pill:hover {
+  background: rgba(180,166,140,.1);
+  border-color: rgba(180,166,140,.25);
+  color: var(--ouro);
+}
+
+/* ═══════════════════════════════════════════
+   FLOW BOX (slides 7-10)
+═══════════════════════════════════════════ */
+.flow-box {
+  background: var(--dark-0);
+  border: 1px solid rgba(249,248,244,.06);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-top: 24px;
+  max-width: 700px;
+}
+
+.bg-marfim .flow-box,
+.bg-creme .flow-box {
+  background: var(--cacao);
+}
+
+.flow-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.flow-steps {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(249,248,244,.6);
+  line-height: 1.7;
+}
+
+.flow-arrow {
+  color: var(--ouro);
+  margin: 0 4px;
+  font-size: 12px;
+}
+
+/* ═══════════════════════════════════════════
+   RESULT CARDS
+═══════════════════════════════════════════ */
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+  max-width: 700px;
+}
+
+.result-card {
+  background: rgba(249,248,244,.04);
+  border: 1px solid rgba(249,248,244,.06);
+  border-left: 3px solid var(--ouro);
+  border-radius: 0 10px 10px 0;
+  padding: 20px 24px;
+}
+
+.bg-marfim .result-card,
+.bg-creme .result-card {
+  background: rgba(42,36,32,.03);
+  border-color: rgba(180,166,140,.2);
+  border-left-color: var(--ouro-deep);
+}
+
+.result-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.bg-marfim .result-title,
+.bg-creme .result-title { color: var(--cacao); }
+
+.result-desc {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.55;
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════════
+   QUOTE BOX
+═══════════════════════════════════════════ */
+.quote-box {
+  background: var(--dark-0);
+  border-radius: 10px;
+  padding: 36px 40px;
+  margin-top: 32px;
+  max-width: 640px;
+  border: 1px solid rgba(180,166,140,.1);
+}
+
+.bg-marfim .quote-box,
+.bg-creme .quote-box {
+  background: var(--cacao);
+}
+
+.quote-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--marfim);
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+}
+
+.quote-author {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ouro);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 16px;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════
+   TWO COLUMN LAYOUT
+═══════════════════════════════════════════ */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+  flex: 1;
+}
+
+.col-left, .col-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════
+   COVER SLIDE
+═══════════════════════════════════════════ */
+.cover-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+}
+
+.cover-symbol {
+  font-size: 18px;
+  color: var(--ouro);
+  margin-bottom: 32px;
+}
+
+.cover-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(44px, 5.5vw, 78px);
+  color: var(--marfim);
+  letter-spacing: -2px;
+  line-height: 1.0;
+  margin-bottom: 24px;
+  max-width: 80%;
+}
+
+.cover-title em {
+  color: var(--ouro);
+}
+
+.cover-desc {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(249,248,244,.45);
+  line-height: 1.65;
+  max-width: 540px;
+  margin-bottom: 48px;
+}
+
+.cover-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cover-meta-item {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(249,248,244,.3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.cover-meta-divider {
+  width: 1px;
+  height: 12px;
+  background: rgba(249,248,244,.1);
+}
+
+.cover-bg-text {
+  position: absolute;
+  right: -20px;
+  bottom: 40px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(120px, 16vw, 220px);
+  color: rgba(249,248,244,.03);
+  letter-spacing: -6px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════
+   CLOSING SLIDE
+═══════════════════════════════════════════ */
+.closing-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+  max-width: 700px;
+}
+
+.highlight-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.highlight-key {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ouro);
+  white-space: nowrap;
+  min-width: 180px;
+}
+
+.highlight-val {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(249,248,244,.5);
+  line-height: 1.55;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+.nav-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 24px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+
+.nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid rgba(249,248,244,.1);
+  background: rgba(42,36,32,.8);
+  backdrop-filter: blur(12px);
+  color: rgba(249,248,244,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+.nav-btn:hover {
+  background: rgba(180,166,140,.15);
+  border-color: rgba(180,166,140,.3);
+  color: var(--ouro);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--ouro);
+  transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  z-index: 100;
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+.slide.active .eyebrow,
+.slide.active .slide-title,
+.slide.active .cover-symbol,
+.slide.active .cover-title,
+.slide.active .cover-desc,
+.slide.active .cover-meta,
+.slide.active .slide-subtitle {
+  animation: fadeUp 0.6s cubic-bezier(.4,0,.2,1) both;
+}
+
+.slide.active .eyebrow { animation-delay: 0.1s; }
+.slide.active .slide-title,
+.slide.active .cover-title { animation-delay: 0.2s; }
+.slide.active .slide-subtitle,
+.slide.active .cover-desc { animation-delay: 0.3s; }
+.slide.active .cover-meta { animation-delay: 0.4s; }
+
+.slide.active .card,
+.slide.active .agent-card,
+.slide.active .pricing-row,
+.slide.active .flow-box,
+.slide.active .result-card,
+.slide.active .quote-box,
+.slide.active .skills-category,
+.slide.active .highlight-row {
+  animation: fadeUp 0.5s cubic-bezier(.4,0,.2,1) both;
+}
+
+.slide.active .card:nth-child(1),
+.slide.active .agent-card:nth-child(1),
+.slide.active .pricing-row:nth-child(1),
+.slide.active .skills-category:nth-child(1),
+.slide.active .highlight-row:nth-child(1) { animation-delay: 0.3s; }
+
+.slide.active .card:nth-child(2),
+.slide.active .agent-card:nth-child(2),
+.slide.active .pricing-row:nth-child(2),
+.slide.active .skills-category:nth-child(2),
+.slide.active .highlight-row:nth-child(2) { animation-delay: 0.4s; }
+
+.slide.active .card:nth-child(3),
+.slide.active .agent-card:nth-child(3),
+.slide.active .pricing-row:nth-child(3),
+.slide.active .skills-category:nth-child(3),
+.slide.active .highlight-row:nth-child(3) { animation-delay: 0.5s; }
+
+.slide.active .card:nth-child(4),
+.slide.active .agent-card:nth-child(4),
+.slide.active .pricing-row:nth-child(4),
+.slide.active .skills-category:nth-child(4) { animation-delay: 0.55s; }
+
+.slide.active .agent-card:nth-child(5) { animation-delay: 0.6s; }
+.slide.active .agent-card:nth-child(6) { animation-delay: 0.65s; }
+.slide.active .agent-card:nth-child(7) { animation-delay: 0.7s; }
+.slide.active .agent-card:nth-child(8) { animation-delay: 0.75s; }
+.slide.active .agent-card:nth-child(9) { animation-delay: 0.8s; }
+.slide.active .agent-card:nth-child(10) { animation-delay: 0.85s; }
+
+.slide.active .result-card:nth-child(1) { animation-delay: 0.4s; }
+.slide.active .result-card:nth-child(2) { animation-delay: 0.5s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   DECORATIVE
+═══════════════════════════════════════════ */
+.deco-line {
+  width: 48px;
+  height: 2px;
+  background: var(--ouro);
+  margin-bottom: 20px;
+  border-radius: 1px;
+}
+
+.bg-marfim .deco-line,
+.bg-creme .deco-line {
+  background: var(--ouro-deep);
+}
+
+/* Application cards for slide 6 */
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.app-card {
+  background: rgba(42,36,32,.03);
+  border: 1px solid rgba(180,166,140,.2);
+  border-left: 3px solid var(--ouro-deep);
+  border-radius: 0 10px 10px 0;
+  padding: 20px 24px;
+}
+
+.app-card-title {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cacao);
+  margin-bottom: 6px;
+}
+
+.app-card-desc {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(42,36,32,.5);
+  line-height: 1.55;
+}
+
+/* Dual flow for slide 10 */
+.dual-flow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 28px;
+}
+
+.dual-flow-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dual-flow-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--marfim);
+  margin-bottom: 4px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 1 · CAPA
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-dark active" data-slide="1">
+    <div class="slide-inner">
+      <div class="cover-content">
+        <span class="cover-symbol">✦</span>
+        <h1 class="cover-title">Como eu uso <em>Inteligência Artificial</em> pra rodar meu negócio</h1>
+        <p class="cover-desc">O sistema de agentes que automatiza conteúdo, tráfego, design, copy e suporte. Tudo por menos de R$150/mês.</p>
+        <div class="cover-meta">
+          <span class="cover-meta-item">Isis Moreira</span>
+          <div class="cover-meta-divider"></div>
+          <span class="cover-meta-item">Março 2026</span>
+          <div class="cover-meta-divider"></div>
+          <span class="cover-meta-item">11 Slides</span>
+        </div>
+      </div>
+      <div class="cover-bg-text">IA</div>
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">GUIA COMPLETO</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 2 · FRAMEWORK
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-marfim" data-slide="2">
+    <div class="slide-inner">
+      <span class="slide-number">01</span>
+      <span class="eyebrow">Sistema de Agentes · Framework</span>
+      <h2 class="slide-title">Meu <em>framework</em> de agentes</h2>
+      <p class="slide-subtitle">Um time de IA que trabalha 24 horas, entende minha marca, meu tom de voz e meu público. Não é ChatGPT. É um sistema construído sob medida.</p>
+
+      <div class="card-grid card-grid-3" style="margin-top:32px; max-width:900px;">
+        <div class="card">
+          <span class="card-label">O que é</span>
+          <p class="card-desc">Um servidor na nuvem rodando OpenClaw, uma plataforma open-source que conecta modelos de IA a canais de comunicação. Cada agente tem identidade, função e regras próprias.</p>
+        </div>
+        <div class="card">
+          <span class="card-label">Como funciona</span>
+          <p class="card-desc">Eu mando mensagem pelo Telegram para o agente que preciso. Ele executa, consulta a base de conhecimento da marca, aplica o design system e entrega.</p>
+        </div>
+        <div class="card">
+          <span class="card-label">Por que não é ChatGPT</span>
+          <p class="card-desc">O ChatGPT esquece tudo a cada conversa. Meus agentes têm memória permanente, conhecem meu negócio, minha história, minhas cores, minhas fontes.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">02 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 3 · INVESTIMENTO
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-creme" data-slide="3">
+    <div class="slide-inner">
+      <span class="slide-number">02</span>
+      <span class="eyebrow">Sistema de Agentes · Investimento</span>
+      <h2 class="slide-title">Quanto <em>custa</em> manter esse time</h2>
+      <p class="slide-subtitle">Menos de R$150/mês pra ter 10 agentes funcionando 24 horas.</p>
+
+      <div class="pricing-table">
+        <div class="pricing-row">
+          <div>
+            <div class="pricing-name">Hostinger KVM4</div>
+            <div class="pricing-detail">Servidor VPS · 4 vCPU · 16GB RAM · 200GB NVMe</div>
+          </div>
+          <div class="pricing-value">~R$50/mês</div>
+        </div>
+        <div class="pricing-row">
+          <div>
+            <div class="pricing-name">OpenClaw</div>
+            <div class="pricing-detail">Plataforma de agentes · Open Source</div>
+          </div>
+          <div class="pricing-value">Gratuito</div>
+        </div>
+        <div class="pricing-row">
+          <div>
+            <div class="pricing-name">Claude Pro</div>
+            <div class="pricing-detail">API Anthropic · Modelo Claude Opus</div>
+          </div>
+          <div class="pricing-value">US$20/mês</div>
+        </div>
+        <div class="pricing-row pricing-total">
+          <div>
+            <div class="pricing-name">Total estimado</div>
+          </div>
+          <div class="pricing-value">~R$150/mês</div>
+        </div>
+      </div>
+
+      <div class="quote-box" style="margin-top:28px;">
+        <p class="quote-text">"Um time inteiro de especialistas por menos do que o custo de um almoço executivo por semana."</p>
+        <span class="quote-author">✦ Isis Moreira</span>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">03 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 4 · O TIME
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-dark" data-slide="4">
+    <div class="slide-inner">
+      <span class="slide-number">03</span>
+      <span class="eyebrow">Sistema de Agentes · O Time</span>
+      <h2 class="slide-title">Meus 10 agentes e suas <em>funções</em></h2>
+
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-icon">D</div>
+          <div class="agent-name">Dona</div>
+          <div class="agent-role">COO</div>
+          <div class="agent-desc">Coordena o time, analisa dados, executa estratégia.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">A</div>
+          <div class="agent-name">Atlas</div>
+          <div class="agent-role">Estrategista</div>
+          <div class="agent-desc">Planeja sequências, gerencia riscos, orquestra cadeias.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">V</div>
+          <div class="agent-name">Vega</div>
+          <div class="agent-role">Social Media</div>
+          <div class="agent-desc">Conteúdo omnichannel, trending topics, scraping de reels.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">M</div>
+          <div class="agent-name">Masterson</div>
+          <div class="agent-role">Escritor</div>
+          <div class="agent-desc">Ebooks, páginas de vendas, sequências de email, scripts.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">Au</div>
+          <div class="agent-name">Aurora</div>
+          <div class="agent-role">Designer</div>
+          <div class="agent-desc">PDFs, ebooks visuais, materiais alinhados à marca.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">H</div>
+          <div class="agent-name">Harpia</div>
+          <div class="agent-role">Vídeo</div>
+          <div class="agent-desc">Roteiros, briefings de edição, direção criativa audiovisual.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">He</div>
+          <div class="agent-name">Helios</div>
+          <div class="agent-role">Tráfego</div>
+          <div class="agent-desc">Análise de campanhas, métricas, otimização de ROI.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">N</div>
+          <div class="agent-name">Nexa</div>
+          <div class="agent-role">Imagem</div>
+          <div class="agent-desc">Geração de fotos, curadoria visual, ensaios de imagem.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">O</div>
+          <div class="agent-name">Orion</div>
+          <div class="agent-role">Dev</div>
+          <div class="agent-desc">Código, automações, integrações, scripts, deploys.</div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-icon">E</div>
+          <div class="agent-name">Eva</div>
+          <div class="agent-role">Arquiteta</div>
+          <div class="agent-desc">Cria e evolui os próprios agentes do sistema.</div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">04 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 5 · SKILLS / FERRAMENTAS
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-deep" data-slide="5">
+    <div class="slide-inner">
+      <span class="slide-number">04</span>
+      <span class="eyebrow">Sistema de Agentes · Ferramentas</span>
+      <h2 class="slide-title">As <em>skills</em> que eu uso</h2>
+      <p class="slide-subtitle">Skills são ferramentas que os agentes usam pra executar tarefas específicas. Funcionam como plugins.</p>
+
+      <div class="skills-section">
+        <div class="skills-category">
+          <span class="skills-category-label">Produção de conteúdo</span>
+          <div class="pills">
+            <span class="pill">Whisper API</span>
+            <span class="pill">Video Frames</span>
+            <span class="pill">Nano Banana Pro</span>
+            <span class="pill">Nano PDF</span>
+            <span class="pill">Web Search</span>
+            <span class="pill">Web Fetch</span>
+          </div>
+        </div>
+        <div class="skills-category">
+          <span class="skills-category-label">Integrações</span>
+          <div class="pills">
+            <span class="pill">1Password</span>
+            <span class="pill">Canva Connect</span>
+            <span class="pill">Meta Ads API</span>
+            <span class="pill">Instagram API</span>
+            <span class="pill">RapidAPI</span>
+          </div>
+        </div>
+        <div class="skills-category">
+          <span class="skills-category-label">Automação</span>
+          <div class="pills">
+            <span class="pill">Cron Jobs</span>
+            <span class="pill">Health Monitor</span>
+            <span class="pill">Memory Index</span>
+            <span class="pill">Git Backup</span>
+            <span class="pill">Watchdog</span>
+          </div>
+        </div>
+        <div class="skills-category">
+          <span class="skills-category-label">Desenvolvimento</span>
+          <div class="pills">
+            <span class="pill">Coding Agent</span>
+            <span class="pill">Tmux</span>
+            <span class="pill">Healthcheck</span>
+            <span class="pill">Skill Creator</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">05 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 6 · APLICAÇÕES REAIS
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-marfim" data-slide="6">
+    <div class="slide-inner">
+      <span class="slide-number">05</span>
+      <span class="eyebrow">Sistema de Agentes · Aplicações</span>
+      <h2 class="slide-title"><em>Usos</em> e aplicações reais</h2>
+      <p class="slide-subtitle">Cada agente resolve um problema real do meu dia a dia.</p>
+
+      <div class="app-grid">
+        <div class="app-card">
+          <div class="app-card-title">Mentoria para Material</div>
+          <div class="app-card-desc">Gravo mentoria, transcrevo automaticamente, agente gera resumo em PDF com design da marca. Entrego pras alunas no mesmo dia.</div>
+        </div>
+        <div class="app-card">
+          <div class="app-card-title">Tráfego Inteligente</div>
+          <div class="app-card-desc">Helios conecta direto na conta do Meta Ads. Analisa campanhas, identifica o que funciona, sugere realocação de orçamento.</div>
+        </div>
+        <div class="app-card">
+          <div class="app-card-title">Conteúdo Viral</div>
+          <div class="app-card-desc">Vega pesquisa trending topics, transcreve reels virais, sugere hooks. Eu gravo com minha personalidade.</div>
+        </div>
+        <div class="app-card">
+          <div class="app-card-title">Ensaio de Fotos com IA</div>
+          <div class="app-card-desc">Nexa gera fotos profissionais com minha identidade visual: poses, roupas e fundos alinhados à marca.</div>
+        </div>
+        <div class="app-card" style="grid-column: span 2;">
+          <div class="app-card-title">Suporte Automatizado</div>
+          <div class="app-card-desc">Doninha vai atender as alunas no grupo da mentoria. FAQ, acolhimento e direcionamento. 24 horas.</div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">06 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 7 · FLUXO 1
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-dark" data-slide="7">
+    <div class="slide-inner">
+      <span class="slide-number">06</span>
+      <span class="eyebrow">Fluxo 1</span>
+      <h2 class="slide-title"><em>Mentoria</em> vira material em minutos</h2>
+      <p class="slide-subtitle">Toda mentoria que eu faço vira material de estudo pras alunas. Automaticamente.</p>
+
+      <div class="flow-box">
+        <span class="flow-label">Fluxo de produção</span>
+        <p class="flow-steps">
+          Gravar mentoria <span class="flow-arrow">→</span> Coconote transcreve <span class="flow-arrow">→</span> Mando o PDF da transcrição pelo Telegram <span class="flow-arrow">→</span> Dona processa e extrai frameworks <span class="flow-arrow">→</span> Aurora transforma em PDF com design da marca <span class="flow-arrow">→</span> Entrego pras alunas
+        </p>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-title">O que sai disso</div>
+          <div class="result-desc">PDF com resumo estruturado: frameworks, passo a passo, frases marcantes, casos práticos. Tudo no padrão visual da marca.</div>
+        </div>
+        <div class="result-card">
+          <div class="result-title">Tempo real</div>
+          <div class="result-desc">Mentoria de 2 horas gera PDF de 8 páginas em menos de 5 minutos. Sem edição manual.</div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">07 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 8 · FLUXO 2
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-creme" data-slide="8">
+    <div class="slide-inner">
+      <span class="slide-number">07</span>
+      <span class="eyebrow">Fluxo 2</span>
+      <h2 class="slide-title">Base de <em>conhecimento</em> + tráfego</h2>
+      <p class="slide-subtitle">O Helios não é um robô genérico de ads. Ele conhece meu negócio, minhas margens, meu público. Toda decisão é contextualizada.</p>
+
+      <div class="flow-box">
+        <span class="flow-label">Framework de distribuição</span>
+        <p class="flow-steps">
+          Conectar Meta Ads API <span class="flow-arrow">→</span> Helios puxa métricas reais <span class="flow-arrow">→</span> Cruza com base de conhecimento <span class="flow-arrow">→</span> Identifica o que funciona <span class="flow-arrow">→</span> Sugere redistribuição
+        </p>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-title">O que o Helios analisa</div>
+          <div class="result-desc">ROAS por campanha, CPA por criativo, CTR por público, tendências de custo. Tudo em tempo real via API.</div>
+        </div>
+        <div class="result-card">
+          <div class="result-title">Decisão baseada em dados</div>
+          <div class="result-desc">Em vez de olhar o Gerenciador e tentar interpretar, o Helios diz exatamente onde realocar o orçamento.</div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">08 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 9 · FLUXO 3
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-dark" data-slide="9">
+    <div class="slide-inner">
+      <span class="slide-number">08</span>
+      <span class="eyebrow">Fluxo 3</span>
+      <h2 class="slide-title"><em>Curso</em> inteiro vira base da Doninha</h2>
+      <p class="slide-subtitle">Transcrevo meus cursos e alimento a base de conhecimento do bot de suporte. As alunas perguntam e a Doninha responde com o conteúdo do curso.</p>
+
+      <div class="flow-box">
+        <span class="flow-label">Fluxo de conhecimento</span>
+        <p class="flow-steps">
+          Curso gravado <span class="flow-arrow">→</span> Whisper transcreve cada aula <span class="flow-arrow">→</span> Dona processa e organiza em markdown <span class="flow-arrow">→</span> Salva na base de conhecimento <span class="flow-arrow">→</span> Doninha usa pra responder alunas
+        </p>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-card">
+          <div class="result-title">Doninha: suporte 24h</div>
+          <div class="result-desc">Bot de suporte no grupo da mentoria. Responde dúvidas com base no conteúdo real dos cursos. Não inventa. Não alucina. Fala com o tom da marca.</div>
+        </div>
+        <div class="result-card">
+          <div class="result-title">Resultado</div>
+          <div class="result-desc">Alunas com suporte imediato. Eu com mais tempo pra criar, gravar e estrategiar. Sem ficar respondendo as mesmas perguntas.</div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">09 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 10 · FLUXOS 4 E 5
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-deep" data-slide="10">
+    <div class="slide-inner">
+      <span class="slide-number">09</span>
+      <span class="eyebrow">Fluxos 4 e 5</span>
+      <h2 class="slide-title"><em>Imagem</em> e conteúdo na velocidade certa</h2>
+
+      <div class="dual-flow">
+        <div class="dual-flow-section">
+          <div class="dual-flow-title">Ensaio de Fotos com IA</div>
+          <p class="slide-subtitle" style="margin-bottom:12px;">Mando "crie" pra Nexa e ela gera 4 fotos profissionais com minha foto de referência. Poses, roupas e cenários variados. Tudo dentro da paleta da marca.</p>
+          <div class="flow-box" style="margin-top:0;">
+            <span class="flow-label">Fluxo de imagem</span>
+            <p class="flow-steps">
+              Comando "crie 4" <span class="flow-arrow">→</span> Nexa seleciona pose, roupa, fundo <span class="flow-arrow">→</span> Gera via IA <span class="flow-arrow">→</span> Entrega no Telegram
+            </p>
+          </div>
+        </div>
+        <div class="dual-flow-section">
+          <div class="dual-flow-title">Conteúdo com Deep Search</div>
+          <p class="slide-subtitle" style="margin-bottom:12px;">Vega pesquisa trending topics em tempo real, transcreve reels com mais de 1 milhão de views, extrai hooks. Eu recebo tudo mastigado e gravo com minha personalidade.</p>
+          <div class="flow-box" style="margin-top:0;">
+            <span class="flow-label">Fluxo de conteúdo</span>
+            <p class="flow-steps">
+              Vega pesquisa tendências <span class="flow-arrow">→</span> Scraping de reels virais <span class="flow-arrow">→</span> Transcrição automática <span class="flow-arrow">→</span> Hooks prontos pra eu gravar
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">10 / 11</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SLIDE 11 · CONCLUSÃO
+  ═══════════════════════════════════════════ -->
+  <div class="slide bg-dark" data-slide="11">
+    <div class="slide-inner">
+      <span class="slide-number">10</span>
+      <span class="eyebrow">Conclusão</span>
+      <h2 class="slide-title">O futuro do <em>negócio</em> é agêntico</h2>
+      <p class="slide-subtitle">Não é sobre substituir pessoas. É sobre multiplicar você.</p>
+
+      <div class="closing-highlights">
+        <div class="highlight-row">
+          <span class="highlight-key">10 agentes</span>
+          <span class="highlight-val">Trabalhando em paralelo. Conteúdo, design, copy, tráfego, suporte. Tudo no padrão da marca. Tudo conectado.</span>
+        </div>
+        <div class="highlight-row">
+          <span class="highlight-key">Menos de R$150/mês</span>
+          <span class="highlight-val">Sem equipe CLT. Sem freelancer. Sem depender de agenda de ninguém. Disponível 24 horas.</span>
+        </div>
+        <div class="highlight-row">
+          <span class="highlight-key">Memória permanente</span>
+          <span class="highlight-val">Os agentes aprendem com cada interação. Conhecem meu negócio, meu público, meu tom. Ficam melhores com o tempo.</span>
+        </div>
+      </div>
+
+      <div class="quote-box" style="margin-top:28px;">
+        <p class="quote-text">"Eu não uso IA pra fazer o que eu não sei. Eu uso pra multiplicar o que eu já sei fazer."</p>
+        <span class="quote-author">✦ Isis Moreira · @moreira.isis · Março 2026</span>
+      </div>
+
+      <div class="slide-footer">
+        <span class="footer-logo"><b>ISIS</b>MOREIRA</span>
+        <span class="footer-page">11 / 11</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prevSlide()" title="Anterior">←</button>
+  <button class="nav-btn" onclick="nextSlide()" title="Próximo">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+
+function showSlide(index) {
+  slides.forEach(s => s.classList.remove('active'));
+  slides[index].classList.add('active');
+  currentSlide = index;
+  document.getElementById('progressBar').style.width = 
+    ((index + 1) / totalSlides * 100) + '%';
+}
+
+function nextSlide() {
+  if (currentSlide < totalSlides - 1) showSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+  if (currentSlide > 0) showSlide(currentSlide - 1);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+    e.preventDefault();
+    nextSlide();
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault();
+    prevSlide();
+  }
+  if (e.key === 'Home') {
+    e.preventDefault();
+    showSlide(0);
+  }
+  if (e.key === 'End') {
+    e.preventDefault();
+    showSlide(totalSlides - 1);
+  }
+});
+
+// Touch / swipe support
+let touchStartX = 0;
+document.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+document.addEventListener('touchend', (e) => {
+  const diff = touchStartX - e.changedTouches[0].screenX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) nextSlide();
+    else prevSlide();
+  }
+});
+
+// Initialize
+showSlide(0);
+</script>
+
+</body>
+</html>

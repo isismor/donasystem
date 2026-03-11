@@ -9,9 +9,23 @@ Distribuir posts e reels do @moreira.isis via Meta Ads com o objetivo de levar p
 
 ## Conta de Anúncios
 
-- **Ad Account ID:** act_777100762498033
-- **Página:** Moreira.Isis (ID: 101741828467105) / Isis Moreira (ID: 984391171599553)
-- **Token:** Salvo no servidor (variável META_ACCESS_TOKEN)
+- **Token:** variável de ambiente META_ACCESS_TOKEN (válido, testado 11/03/2026)
+- **System User:** Conversions API System User (ID: 983724147397665)
+
+### Contas de anúncios disponíveis
+| Conta | ID | Status |
+|---|---|---|
+| Mulher de Negócios | act_777100762498033 | Ativa (principal) |
+| Cursos | act_454194124788700 | Ativa |
+| Empreenda Sem Limites | act_1800246393477679 | Ativa |
+| Matriz | act_417894832158958 | Desabilitada |
+| Cursos 2 - Nova | act_1444266696329197 | Não revisada |
+
+### Páginas disponíveis
+| Página | ID |
+|---|---|
+| Isis Moreira | 984391171599553 |
+| Moreira.Isis | 101741828467105 |
 
 ## Ciclo de Classificação
 

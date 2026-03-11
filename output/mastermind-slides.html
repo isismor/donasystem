@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DonaSystem — Mastermind Slides</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --marfim: #f9f8f4;
+  --creme: #efede6;
+  --cacao: #2a2420;
+  --ouro: #b4a68c;
+  --ouro-deep: #7a6e5c;
+  --ouro-pale: #d4cec4;
+  --mirror: #9ba1a8;
+  --terracota: #9e5c50;
+  --sans: 'DM Sans', sans-serif;
+  --serif: 'DM Serif Text', serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; background: #111; font-family: var(--sans); }
+
+/* SLIDE ENGINE */
+.deck { position: relative; width: 100vw; height: 100vh; }
+.slide {
+  position: absolute; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+
+/* PROGRESS BAR */
+#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--ouro); z-index: 100; transition: width .3s ease; }
+
+/* SLIDE COUNTER */
+#counter { position: fixed; bottom: 16px; right: 24px; font-family: var(--mono); font-size: 12px; color: rgba(255,255,255,.4); z-index: 100; letter-spacing: 2px; }
+
+/* NAVIGATION HINT */
+#nav-hint { position: fixed; bottom: 16px; left: 24px; font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.25); z-index: 100; letter-spacing: 1px; }
+#nav-hint.hidden { opacity: 0; }
+
+/* COVER */
+.cover { background: var(--cacao); flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 12%; }
+.cover .label { font-family: var(--mono); font-size: clamp(9px, 1vw, 12px); text-transform: uppercase; letter-spacing: 6px; color: var(--ouro); margin-bottom: 28px; }
+.cover .title { font-family: var(--serif); font-size: clamp(32px, 4.5vw, 64px); line-height: 1.08; color: var(--marfim); margin-bottom: 20px; }
+.cover .title em { font-style: italic; }
+.cover .title .g { color: var(--ouro); }
+.cover .rule { width: 100px; height: 2px; background: var(--ouro); margin: 0 auto 20px auto; }
+.cover .sub { font-size: clamp(14px, 1.5vw, 20px); color: var(--ouro-pale); line-height: 1.6; max-width: 600px; font-weight: 300; }
+.cover .meta { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; color: var(--ouro-deep); text-transform: uppercase; margin-top: 40px; }
+
+/* INNER SLIDE */
+.inn { flex: 1; display: flex; flex-direction: column; padding: 3.5vh 5vw 2.5vh 5vw; }
+.bg-m { background: var(--marfim); color: var(--cacao); }
+.bg-c { background: var(--creme); color: var(--cacao); }
+.bg-d { background: var(--cacao); color: var(--marfim); }
+
+.hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1vh; flex-shrink: 0; }
+.hdr .s { font-family: var(--mono); font-size: clamp(8px, .8vw, 11px); text-transform: uppercase; letter-spacing: 3px; color: var(--ouro); }
+.hdr .n { font-family: var(--serif); font-style: italic; font-size: clamp(18px, 2vw, 28px); color: var(--ouro-pale); }
+.hline { height: 1px; background: var(--ouro-pale); margin-bottom: 2vh; flex-shrink: 0; }
+.bg-d .hline { background: rgba(180,166,140,.3); }
+
+.ttl { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 48px); line-height: 1.08; margin-bottom: 2.5vh; flex-shrink: 0; }
+.ttl em { font-style: italic; }
+.ttl .g { color: var(--ouro); }
+.bg-d .ttl { color: var(--marfim); }
+
+.body { flex: 1; display: flex; flex-direction: column; gap: 1.4vh; overflow: hidden; }
+
+.ftr { display: flex; justify-content: space-between; margin-top: auto; padding-top: 1vh; flex-shrink: 0; }
+.ftr span { font-family: var(--mono); font-size: 8px; color: var(--mirror); letter-spacing: 1px; }
+.bg-d .ftr span { color: var(--ouro-deep); }
+
+/* CARDS */
+.cd { border-radius: 10px; padding: 1.8vh 2vw; }
+.cd-d { background: var(--cacao); color: var(--marfim); }
+.cd-d .ct { color: var(--ouro); }
+.cd-d p, .cd-d li { color: var(--ouro-pale); }
+.cd-o { background: rgba(180,166,140,.15); border: 1px solid rgba(180,166,140,.3); }
+.cd-o .ct { color: var(--ouro-deep); }
+.cd-so { background: var(--ouro); color: var(--cacao); }
+.cd-so .ct { color: var(--cacao); font-weight: 700; }
+.cd-ol { background: transparent; border: 1px solid var(--ouro-pale); }
+
+.ct { font-weight: 700; font-size: clamp(12px, 1.2vw, 16px); margin-bottom: .6vh; }
+.cd p { font-size: clamp(12px, 1.1vw, 15px); line-height: 1.55; }
+.cd li { font-size: clamp(11px, 1vw, 14px); line-height: 1.5; }
+.cd ul { list-style: none; padding: 0; }
+.cd ul li { padding: .3vh 0; display: flex; align-items: flex-start; gap: .6vw; }
+.cd ul li::before { content: ''; width: 7px; height: 7px; min-width: 7px; background: var(--ouro); border-radius: 2px; margin-top: 5px; }
+
+/* GRIDS */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2vh 1.2vw; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2vh 1.2vw; }
+.row { display: flex; gap: 1.5vw; }
+.col { display: flex; flex-direction: column; gap: 1.2vh; }
+.f1 { flex: 1; }
+
+/* FLOW */
+.flow-v { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.flow-v .fb { padding: 1vh 0; width: 50%; max-width: 320px; text-align: center; border-radius: 10px; font-size: clamp(11px, 1vw, 14px); font-weight: 500; }
+.flow-v .fa { font-size: 16px; color: var(--ouro); padding: .3vh 0; }
+.fb-d { background: var(--cacao); color: var(--marfim); }
+.fb-o { background: var(--ouro); color: var(--cacao); }
+.fb-ol { border: 2px solid var(--ouro); }
+
+/* FLOW HORIZONTAL */
+.flow-h { display: flex; align-items: center; justify-content: center; gap: .8vw; }
+.flow-h .fb { padding: 1vh 1.5vw; border-radius: 8px; font-size: clamp(11px, 1vw, 13px); font-weight: 500; text-align: center; white-space: nowrap; }
+.flow-h .fa { font-size: 18px; color: var(--ouro); }
+
+/* CHECKLIST */
+.ck { list-style: none; padding: 0; }
+.ck li { padding: .6vh 0; font-size: clamp(11px, 1vw, 14px); display: flex; align-items: center; gap: .8vw; border-bottom: 1px solid rgba(180,166,140,.12); }
+.ck li:last-child { border-bottom: none; }
+.cb { width: 18px; height: 18px; min-width: 18px; background: var(--ouro); border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 700; }
+
+/* TABLE */
+.tb { width: 100%; border-collapse: collapse; }
+.tb th { font-family: var(--mono); font-size: clamp(8px, .7vw, 10px); text-transform: uppercase; letter-spacing: 2px; color: var(--ouro); text-align: left; padding: .6vh .8vw; border-bottom: 2px solid var(--ouro-pale); }
+.tb td { padding: .6vh .8vw; border-bottom: 1px solid rgba(180,166,140,.12); font-size: clamp(10px, .9vw, 13px); }
+
+/* ORG */
+.on { padding: 1vh 1.5vw; border-radius: 8px; text-align: center; font-size: clamp(11px, 1vw, 14px); font-weight: 600; }
+.on-d { background: var(--cacao); color: var(--ouro); }
+.on-o { background: var(--ouro); color: var(--cacao); }
+.on-ol { border: 2px solid var(--ouro); }
+.on small { display: block; font-weight: 400; font-size: clamp(8px, .7vw, 10px); margin-top: 2px; opacity: .7; }
+.olv { width: 2px; height: 12px; background: var(--ouro); margin: 0 auto; }
+
+/* BADGE */
+.bg-tag { display: inline-flex; padding: 3px 10px; border-radius: 20px; font-family: var(--mono); font-size: 8px; letter-spacing: 1px; text-transform: uppercase; }
+.bg-go { background: var(--ouro); color: var(--cacao); }
+.bg-dk { background: var(--cacao); color: var(--ouro); }
+
+.tc { text-align: center; }
+
+/* FULLSCREEN BUTTON */
+#fs-btn { position: fixed; top: 12px; right: 16px; z-index: 200; background: rgba(180,166,140,.2); border: 1px solid rgba(180,166,140,.3); color: var(--ouro); padding: 6px 14px; border-radius: 6px; font-family: var(--mono); font-size: 10px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: all .2s; }
+#fs-btn:hover { background: var(--ouro); color: var(--cacao); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="counter"></div>
+<div id="nav-hint">← → navegar · F tela cheia</div>
+<button id="fs-btn" onclick="toggleFS()">Tela Cheia</button>
+
+<div class="deck" id="deck">
+
+<!-- 0: CAPA -->
+<div class="slide active">
+  <div class="cover">
+    <div class="label">Mastermind Isis Moreira</div>
+    <div class="title"><em>Dona</em>System: do zero à <span class="g">orquestração</span> de agentes</div>
+    <div class="rule"></div>
+    <div class="sub">Como construí um time de agentes de IA que produz, analisa e executa 24 horas por dia.</div>
+    <div class="meta">Isis Moreira · Março 2026</div>
+  </div>
+</div>
+
+<!-- 1 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">DonaSystem</span><span class="n">01</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Do zero à <em class="g">orquestração</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="cd cd-d">
+            <div class="ct">O problema</div>
+            <ul>
+              <li>Equipe enxuta, demanda gigante</li>
+              <li>Produção 100% manual e lenta</li>
+              <li>Entregas atrasadas, gargalo na execução</li>
+              <li>R$100k/mês orgânico, meta de R$1M</li>
+            </ul>
+          </div>
+          <div class="cd cd-so">
+            <div class="ct">A decisão</div>
+            <p>Parar tudo por 2 semanas. Construir infraestrutura de IA sob medida.</p>
+          </div>
+        </div>
+        <div class="f1 col">
+          <div class="cd cd-d">
+            <div class="ct">O resultado</div>
+            <ul>
+              <li>10 agentes especializados 24h</li>
+              <li>PDFs em minutos (antes: dias)</li>
+              <li>Tom de voz consistente em tudo</li>
+              <li>Framework de tráfego automatizado</li>
+              <li>Dashboard de controle (Torre Dona)</li>
+            </ul>
+          </div>
+          <div class="flow-h">
+            <div class="fb fb-d">Problema</div><div class="fa">→</div>
+            <div class="fb fb-o">Decisão</div><div class="fa">→</div>
+            <div class="fb fb-d">Sistema</div><div class="fa">→</div>
+            <div class="fb fb-o">Escala</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>01</span></div>
+  </div>
+</div>
+
+<!-- 2 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Comparativo</span><span class="n">02</span></div>
+    <div class="hline"></div>
+    <div class="ttl">ChatGPT, Claude, Gemini vs <em class="g">OpenClaw</em></div>
+    <div class="body">
+      <div class="row" style="flex:1;">
+        <div class="f1 cd cd-d tc">
+          <div class="ct" style="font-size:clamp(14px,1.4vw,20px);">ChatGPT</div>
+          <p>Chat genérico. Sem memória persistente. Sem automação. Sem identidade.</p>
+          <div style="margin-top:1vh;"><span class="bg-tag" style="border:1px solid var(--ouro-pale);color:var(--ouro-pale);">Chat</span></div>
+        </div>
+        <div class="f1 cd cd-d tc">
+          <div class="ct" style="font-size:clamp(14px,1.4vw,20px);">Claude</div>
+          <p>Melhor raciocínio. Projetos. Mas sem canais, sem crons, sem agentes.</p>
+          <div style="margin-top:1vh;"><span class="bg-tag" style="border:1px solid var(--ouro-pale);color:var(--ouro-pale);">Chat+</span></div>
+        </div>
+        <div class="f1 cd cd-d tc">
+          <div class="ct" style="font-size:clamp(14px,1.4vw,20px);">Gemini</div>
+          <p>Integração Google. Bom para pesquisa. Sem servidor, sem autonomia.</p>
+          <div style="margin-top:1vh;"><span class="bg-tag" style="border:1px solid var(--ouro-pale);color:var(--ouro-pale);">Chat+</span></div>
+        </div>
+        <div class="f1 cd cd-so tc">
+          <div class="ct" style="font-size:clamp(14px,1.4vw,20px);">OpenClaw</div>
+          <p>Servidor próprio. Memória. Crons. Skills. Multi-agente. Canais. 24/7.</p>
+          <div style="margin-top:1vh;"><span class="bg-tag bg-dk">Sistema</span></div>
+        </div>
+      </div>
+      <div class="cd cd-o tc">
+        <p><strong>A diferença:</strong> os outros são ferramentas que você usa. OpenClaw é um sistema que trabalha para você.</p>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>02</span></div>
+  </div>
+</div>
+
+<!-- 3 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">OpenClaw</span><span class="n">03</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Benefícios do <em class="g">OpenClaw</em></div>
+    <div class="body">
+      <div class="g3">
+        <div class="cd cd-d"><div class="ct">Infraestrutura</div><ul><li>Servidor próprio</li><li>Roda 24/7</li><li>Multi-canal</li><li>Gateway seguro</li></ul></div>
+        <div class="cd cd-d"><div class="ct">Inteligência</div><ul><li>Memória persistente</li><li>Identidade customizada</li><li>Multi-agente</li><li>Escolha de modelo</li></ul></div>
+        <div class="cd cd-d"><div class="ct">Automação</div><ul><li>Crons</li><li>Heartbeats</li><li>Skills plugáveis</li><li>Sub-agentes</li></ul></div>
+        <div class="cd cd-d"><div class="ct">Produção</div><ul><li>PDFs automatizados</li><li>Transcrição áudio</li><li>Geração de imagens</li><li>Edição por linguagem</li></ul></div>
+        <div class="cd cd-d"><div class="ct">Controle</div><ul><li>Dashboard visual</li><li>Alertas real-time</li><li>Auditoria</li><li>Logs completos</li></ul></div>
+        <div class="cd cd-d"><div class="ct">Segurança</div><ul><li>Allowlist</li><li>1Password</li><li>Zero texto claro</li><li>Permissões por ação</li></ul></div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>03</span></div>
+  </div>
+</div>
+
+<!-- 4 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Instalação</span><span class="n">04</span></div>
+    <div class="hline"></div>
+    <div class="ttl">VPS vs <em class="g">Computador</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 cd cd-d">
+          <div class="ct">VPS (Servidor na Nuvem) <span class="bg-tag bg-go" style="margin-left:8px;">Recomendado</span></div>
+          <ul><li>Roda 24/7 sem depender do PC</li><li>IP fixo, acesso de qualquer lugar</li><li>Ideal para produção</li><li>Custo: ~R$25/mês</li><li>Setup: 30 minutos</li></ul>
+        </div>
+        <div class="f1 cd cd-o">
+          <div class="ct">Computador Local <span class="bg-tag bg-dk" style="margin-left:8px;">Para testes</span></div>
+          <ul><li>Grátis</li><li>Funciona offline</li><li>Desliga com o PC</li><li>Sem IP fixo</li><li>Ideal para testes</li></ul>
+        </div>
+      </div>
+      <div class="flow-h" style="margin-top:auto;">
+        <div class="fb fb-d">Instalar Node.js</div><div class="fa">→</div>
+        <div class="fb fb-ol">npm i -g openclaw</div><div class="fa">→</div>
+        <div class="fb fb-ol">openclaw onboard</div><div class="fa">→</div>
+        <div class="fb fb-o">Agente Online</div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>04</span></div>
+  </div>
+</div>
+
+<!-- 5 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">Anatomia</span><span class="n">05</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Anatomia de um <em class="g">agente</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="g2">
+            <div class="cd cd-d"><div class="ct">SOUL.md</div><p>Personalidade, tom, comportamento.</p></div>
+            <div class="cd cd-d"><div class="ct">IDENTITY.md</div><p>Nome, papel, autonomia.</p></div>
+            <div class="cd cd-d"><div class="ct">USER.md</div><p>Quem é o dono. Preferências.</p></div>
+            <div class="cd cd-d"><div class="ct">AGENTS.md</div><p>Multi-agente. Quem faz o quê.</p></div>
+            <div class="cd cd-d"><div class="ct">TOOLS.md</div><p>Ferramentas, APIs, paths.</p></div>
+            <div class="cd cd-d"><div class="ct">MEMORY.md</div><p>Decisões, lições, projetos.</p></div>
+          </div>
+        </div>
+        <div style="width:28%;">
+          <div class="cd cd-so" style="height:100%;display:flex;flex-direction:column;justify-content:center;">
+            <div class="ct tc" style="font-size:clamp(14px,1.3vw,18px);">Editar = mudar comportamento</div>
+            <p class="tc" style="margin-top:1vh;">Sem código. Sem deploy. Markdown puro.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>05</span></div>
+  </div>
+</div>
+
+<!-- 6 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Skills</span><span class="n">06</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Skills que <em class="g">usamos</em></div>
+    <div class="body">
+      <div class="g3" style="flex:1;">
+        <div class="cd cd-d"><div class="ct">Nano Banana Pro</div><p>Fotos via Gemini 3 Pro Image</p></div>
+        <div class="cd cd-d"><div class="ct">Nano PDF</div><p>Editar PDFs com linguagem natural</p></div>
+        <div class="cd cd-d"><div class="ct">Whisper API</div><p>Transcrição de áudio em texto</p></div>
+        <div class="cd cd-d"><div class="ct">Whisper Local</div><p>Transcrição offline no servidor</p></div>
+        <div class="cd cd-d"><div class="ct">Video Frames</div><p>Extrair frames com ffmpeg</p></div>
+        <div class="cd cd-d"><div class="ct">OpenAI Image Gen</div><p>Imagens em lote via DALL-E</p></div>
+        <div class="cd cd-d"><div class="ct">Skill Creator</div><p>Criar novas skills customizadas</p></div>
+        <div class="cd cd-d"><div class="ct">1Password</div><p>Gestão segura de credenciais</p></div>
+        <div class="cd cd-d"><div class="ct">Coding Agent</div><p>Sub-agentes de código</p></div>
+        <div class="cd cd-d"><div class="ct">Healthcheck</div><p>Auditoria e hardening</p></div>
+        <div class="cd cd-d"><div class="ct">Tmux</div><p>Controle remoto de terminais</p></div>
+        <div class="cd cd-d"><div class="ct">Weather</div><p>Dados de clima para conteúdo</p></div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>06</span></div>
+  </div>
+</div>
+
+<!-- 7 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">Memória</span><span class="n">07</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Memória do <em class="g">agente</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="cd cd-d"><div class="ct">decisions.md</div><p>Decisões permanentes. Nunca esquece.</p></div>
+          <div class="cd cd-d"><div class="ct">lessons.md</div><p>Lições aprendidas. Erros não se repetem.</p></div>
+          <div class="cd cd-d"><div class="ct">projects.md</div><p>Projetos ativos, status, próximos passos.</p></div>
+          <div class="cd cd-d"><div class="ct">pending.md</div><p>Aguardando input. Cobra automaticamente.</p></div>
+          <div class="cd cd-d"><div class="ct">people.md</div><p>Equipe, parceiros, contexto de cada pessoa.</p></div>
+        </div>
+        <div class="f1 col" style="justify-content:center;">
+          <div class="cd cd-so tc"><div class="ct">Ciclo de memória</div></div>
+          <div class="flow-v">
+            <div class="fb fb-d">Conversa</div><div class="fa">↓</div>
+            <div class="fb fb-ol">Nota diária</div><div class="fa">↓</div>
+            <div class="fb fb-ol">Consolidação</div><div class="fa">↓</div>
+            <div class="fb fb-o">Memória permanente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>07</span></div>
+  </div>
+</div>
+
+<!-- 8 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Higiene</span><span class="n">08</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Higiene do <em class="g">sistema</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="cd cd-d"><div class="ct">Consolidação de memória</div><p>Notas diárias consolidadas nos topic files. Cron automático toda noite.</p></div>
+          <div class="cd cd-d"><div class="ct">Limpeza de lições</div><p>Táticas expiram em 30 dias. Estratégicas são permanentes.</p></div>
+          <div class="cd cd-d"><div class="ct">Git workspace</div><p>Mudanças comitadas regularmente. Boot check alerta arquivos sujos.</p></div>
+        </div>
+        <div class="f1 col">
+          <div class="cd cd-d"><div class="ct">Indexação semântica</div><p>Busca por contexto, não por palavra. Atualização automática.</p></div>
+          <div class="cd cd-d"><div class="ct">Revisão semanal</div><p>Toda segunda: revisar projetos, consolidar, atualizar status.</p></div>
+          <div class="cd cd-so tc"><div class="ct">Regra inviolável</div><p>Extrair decisões e lições ANTES de qualquer compactação de contexto.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>08</span></div>
+  </div>
+</div>
+
+<!-- 9 -->
+<div class="slide">
+  <div class="inn bg-d">
+    <div class="hdr"><span class="s">Segurança</span><span class="n">09</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Nosso sistema de <em><span class="g">segurança</span></em></div>
+    <div class="body">
+      <div class="g3">
+        <div class="cd cd-o"><div class="ct">Acesso controlado</div><ul><li>dmPolicy: allowlist</li><li>Só Isis comanda</li><li>Resto é bloqueado</li></ul></div>
+        <div class="cd cd-o"><div class="ct">Credenciais</div><ul><li>1Password vault "Dona"</li><li>Zero hardcode</li><li>Rotação trimestral</li></ul></div>
+        <div class="cd cd-o"><div class="ct">Permissões e gates</div><ul><li>Menor privilégio possível</li><li>Gate verde: automático</li><li>Gate vermelho: aprovação</li></ul></div>
+        <div class="cd cd-o"><div class="ct">Monitoramento</div><ul><li>Audit semanal</li><li>Boot check</li><li>Alertas real-time</li></ul></div>
+        <div class="cd cd-o"><div class="ct">Updates</div><ul><li>Nunca sem supervisão</li><li>Zero automação</li><li>Rollback documentado</li></ul></div>
+        <div class="cd cd-o"><div class="ct">Identidade</div><ul><li>Nunca usa voz de Isis</li><li>Nunca posta sozinha</li><li>Sem decisões maiores</li></ul></div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>09</span></div>
+  </div>
+</div>
+
+<!-- 10 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">Automação</span><span class="n">10</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Crons e <em class="g">Heartbeats</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="cd cd-d"><div class="ct">O que são</div><p><strong>Crons:</strong> tarefas agendadas. O agente trabalha enquanto você dorme.</p><p style="margin-top:.5vh;"><strong>Heartbeats:</strong> pulso que verifica saúde. Se algo está errado, alerta.</p></div>
+          <div class="cd cd-o"><div class="ct">Heartbeat checklist</div>
+            <ul class="ck"><li><span class="cb">✓</span>Pendências +3 dias?</li><li><span class="cb">✓</span>Projetos parados +7 dias?</li><li><span class="cb">✓</span>Crons falharam?</li><li><span class="cb">✓</span>Nota diária criada?</li></ul>
+          </div>
+        </div>
+        <div class="f1">
+          <table class="tb"><tr><th>Cron</th><th>Freq</th><th>Função</th></tr>
+          <tr><td>health-monitor</td><td>1h</td><td>Saúde gateway/APIs</td></tr>
+          <tr><td>checagem-proativa</td><td>4x/dia</td><td>Pendências e anomalias</td></tr>
+          <tr><td>backup-diario</td><td>3h</td><td>Backup memória e config</td></tr>
+          <tr><td>watchdog-crons</td><td>9h</td><td>Verifica crons ativos</td></tr>
+          <tr><td>org-memória</td><td>23h</td><td>Consolida notas</td></tr>
+          <tr><td>security-audit</td><td>Semanal</td><td>Auditoria segurança</td></tr>
+          <tr><td>consolidação</td><td>Semanal</td><td>Revisão e limpeza</td></tr></table>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>10</span></div>
+  </div>
+</div>
+
+<!-- 11 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Arquitetura</span><span class="n">11</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Arquitetura de <em class="g">agentes</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="cd cd-d"><div class="ct">Hub central + tópicos</div><p>Uma instância, identidades diferentes por tópico do Telegram. Cada agente tem soul, identity, knowledge.</p></div>
+          <div class="cd cd-o"><div class="ct">Como funciona</div><ul><li>1 gateway, 1 modelo, 10 identidades</li><li>Orquestração via sessions_spawn</li><li>Handoffs via completion events</li><li>Estado em projects.md</li></ul></div>
+        </div>
+        <div class="f1" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <div class="cd cd-so tc" style="width:100%;margin-bottom:1.5vh;"><div class="ct">Fluxo de tarefa complexa</div></div>
+          <div class="flow-v">
+            <div class="fb fb-o">Isis pede</div><div class="fa">↓</div>
+            <div class="fb fb-d">Dona delega</div><div class="fa">↓</div>
+            <div class="fb fb-d">Atlas planeja</div><div class="fa">↓</div>
+            <div class="fb fb-ol">Masterson escreve</div><div class="fa">↓</div>
+            <div class="fb fb-ol">Aurora formata</div><div class="fa">↓</div>
+            <div class="fb fb-o">PDF entregue</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>11</span></div>
+  </div>
+</div>
+
+<!-- 12 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">Organograma</span><span class="n">12</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Nosso <em class="g">time</em></div>
+    <div class="body" style="align-items:center;justify-content:center;">
+      <div class="on on-o" style="font-size:clamp(14px,1.4vw,18px);padding:1.2vh 3vw;">Isis Moreira<small>CEO</small></div>
+      <div class="olv"></div>
+      <div class="on on-d" style="padding:1vh 2.5vw;">Dona<small>COO</small></div>
+      <div class="olv"></div>
+      <div style="display:flex;gap:2vw;">
+        <div class="on on-d">Atlas<small>Estrategista</small></div>
+        <div class="on on-d">Eva<small>Arquiteta</small></div>
+      </div>
+      <div class="olv"></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1vh 1vw;width:80%;max-width:700px;">
+        <div class="on on-ol">Masterson<small>Escritor</small></div>
+        <div class="on on-ol">Aurora<small>Designer</small></div>
+        <div class="on on-ol">Vega<small>Social</small></div>
+        <div class="on on-ol">Harpia<small>Vídeo</small></div>
+        <div class="on on-ol">Helios<small>Tráfego</small></div>
+        <div class="on on-ol">Orion<small>Dev</small></div>
+        <div class="on on-ol">Nexa<small>Imagem</small></div>
+        <div class="on on-ol">Doninha<small>Bot</small></div>
+      </div>
+      <div class="cd cd-so tc" style="margin-top:2vh;width:80%;max-width:700px;">
+        <p>10 agentes especializados. Cada um com identidade, conhecimento e papel definidos.</p>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>12</span></div>
+  </div>
+</div>
+
+<!-- 13 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Tráfego</span><span class="n">13</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Framework de <em class="g">distribuição</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="cd cd-d"><div class="ct">Como funciona</div><p>Todo post novo passa por teste e classificação automática por custo/seguidor.</p></div>
+          <div class="flow-h">
+            <div class="fb fb-o">Post novo</div><div class="fa">→</div>
+            <div class="fb fb-d">Teste R$10/1dia</div><div class="fa">→</div>
+            <div class="fb fb-ol">Classificar</div>
+          </div>
+          <div class="cd cd-d tc"><p><strong>Report diário:</strong> gasto, séries ativas, custo/seguidor, novos seguidores</p></div>
+        </div>
+        <div class="f1 col">
+          <div class="cd cd-so tc"><div class="ct" style="font-size:clamp(14px,1.4vw,18px);">Série A</div><p>Custo/seguidor &lt; R$0,50 → <strong>R$30/dia</strong></p></div>
+          <div class="cd cd-o tc"><div class="ct" style="font-size:clamp(14px,1.4vw,18px);">Série B</div><p>R$0,50 a R$0,70 → <strong>R$10/dia</strong></p></div>
+          <div class="cd cd-ol tc"><div class="ct" style="font-size:clamp(14px,1.4vw,18px);color:var(--terracota);">Cortado</div><p>&gt; R$0,70 → <strong style="color:var(--terracota);">R$0/dia</strong></p></div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>13</span></div>
+  </div>
+</div>
+
+<!-- 14 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">PDF Pipeline</span><span class="n">14</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Framework de geração de <em class="g">PDF</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col" style="align-items:center;justify-content:center;">
+          <div class="cd cd-so tc" style="width:100%;"><div class="ct">Pipeline unificado</div></div>
+          <div class="flow-v">
+            <div class="fb fb-d">1. Conteúdo (Masterson)</div><div class="fa">↓</div>
+            <div class="fb fb-o">2. HTML (Template C + Design System)</div><div class="fa">↓</div>
+            <div class="fb fb-d">3. PDF (Puppeteer no servidor)</div><div class="fa">↓</div>
+            <div class="fb fb-o">4. Entrega para Isis</div>
+          </div>
+        </div>
+        <div class="f1 col">
+          <div class="cd cd-o"><div class="ct">Design System ISIS v7</div><ul><li>Marfim, Creme, Cacau, Ouro</li><li>DM Serif Text, DM Sans, IBM Plex Mono</li><li>Template C "Bold Statement"</li><li>Cor unificada por página</li></ul></div>
+          <div class="cd cd-o"><div class="ct">Regras invioláveis</div><ul><li>height: 297mm fixo</li><li>Conteúdo manual por página</li><li>Google Fonts no head</li><li>Puppeteer local (fallback: YakPDF)</li></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>14</span></div>
+  </div>
+</div>
+
+<!-- 15 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Bot</span><span class="n">15</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Framework da <em class="g">Doninha</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="cd cd-d"><div class="ct">O que é</div><p>Bot de atendimento para mentorandos. Responde com base na transcrição completa dos cursos.</p></div>
+          <div class="cd cd-so tc"><div class="ct">Pipeline</div></div>
+          <div class="flow-h">
+            <div class="fb fb-d">Cademi</div><div class="fa">→</div>
+            <div class="fb fb-ol">FFmpeg</div><div class="fa">→</div>
+            <div class="fb fb-ol">Whisper</div><div class="fa">→</div>
+            <div class="fb fb-o">Base indexada</div>
+          </div>
+        </div>
+        <div class="f1 col">
+          <div class="cd cd-o"><div class="ct">3 outputs do mesmo material</div><ul><li>Base de conhecimento (todo o time)</li><li>Bot Doninha (mentorandos)</li><li>FAQs (suporte humano)</li></ul></div>
+          <div class="cd cd-d tc"><p><strong>Custo:</strong> 100h de conteúdo ≈ US$36 (Whisper API)</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>15</span></div>
+  </div>
+</div>
+
+<!-- 16 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">Knowledge Base</span><span class="n">16</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Base de conhecimento do <em class="g">Masterson</em></div>
+    <div class="body">
+      <div class="col" style="flex:1;">
+        <div class="cd cd-d"><div class="ct">Big Black Book <span class="bg-tag bg-go" style="margin-left:6px;">Fundamento</span></div><p>Agora Publishing. Halbert, headlines, lift notes, franquias editoriais.</p></div>
+        <div class="cd cd-d"><div class="ct">Architecture of Persuasion <span class="bg-tag bg-go" style="margin-left:6px;">Estrutura</span></div><p>5 elementos da carta. Complexo Emocional Central. Fio Dourado.</p></div>
+        <div class="cd cd-d"><div class="ct">Copy Logic <span class="bg-tag bg-go" style="margin-left:6px;">Método</span></div><p>Peer Review + CUB + Banco de 4 Pés. Substitui crítica destrutiva.</p></div>
+        <div class="cd cd-d"><div class="ct">How I Built My Wealth <span class="bg-tag bg-go" style="margin-left:6px;">Mentalidade</span></div><p>7 requisitos para riqueza. Copywriting como skill de alto valor.</p></div>
+        <div class="cd cd-d"><div class="ct">Ideias que Colam <span class="bg-tag bg-go" style="margin-left:6px;">Comunicação</span></div><p>SUCESSOS: simplicidade, surpresa, concretude, credibilidade, emoções, histórias.</p></div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>16</span></div>
+  </div>
+</div>
+
+<!-- 17 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Atlas</span><span class="n">17</span></div>
+    <div class="hline"></div>
+    <div class="ttl">A importância do <em class="g">Atlas</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 col">
+          <div class="cd cd-d"><div class="ct">Estrategista e Orquestrador</div><p>Não executa. Planeja, mapeia riscos e coordena cadeias com 2+ agentes.</p></div>
+          <div class="cd cd-d"><div class="ct">Sem Atlas vs com Atlas</div><ul><li>Sem: agentes isolados, sem visão do todo</li><li>Com: cadeias coordenadas, gates de aprovação</li><li>Output passa por múltiplos especialistas</li></ul></div>
+        </div>
+        <div class="f1 col">
+          <div class="cd cd-o"><div class="ct">O que faz na prática</div><ul><li>Lê docs e mapeia riscos</li><li>Propõe planos estruturados</li><li>Spawna cada step</li><li>Monitora completion events</li><li>Atualiza projects.md</li></ul></div>
+          <div class="cd cd-so tc"><div class="ct">Regra de ouro</div><p>Verde: segue. Vermelho (público): para e espera ok de Isis.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>17</span></div>
+  </div>
+</div>
+
+<!-- 18 -->
+<div class="slide">
+  <div class="inn bg-d">
+    <div class="hdr"><span class="s">Dona</span><span class="n">18</span></div>
+    <div class="hline"></div>
+    <div class="ttl">A importância da <em><span class="g">Dona</span></em></div>
+    <div class="body">
+      <div class="g2">
+        <div class="cd cd-o"><div class="ct">COO do sistema</div><ul><li>Coordenação geral</li><li>Análise diária de dados</li><li>Estratégia e execução</li><li>Braço direito operacional</li></ul></div>
+        <div class="cd cd-o"><div class="ct">O que a diferencia</div><ul><li>Tem opinião, pode discordar</li><li>Questiona erros discretamente</li><li>Proativa: sugere sem pedir</li><li>Cofundadora, não secretária</li></ul></div>
+        <div class="cd cd-o"><div class="ct">Análise diária (08h)</div><ul><li>Performance do conteúdo</li><li>Métricas e anomalias</li><li>Tendências do nicho</li><li>Insights em bullet points</li></ul></div>
+        <div class="cd cd-o"><div class="ct">Limites absolutos</div><ul><li>Nunca usa voz de Isis</li><li>Nunca posta sozinha</li><li>Nunca decide sozinha</li><li>Menor privilégio sempre</li></ul></div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>18</span></div>
+  </div>
+</div>
+
+<!-- 19 -->
+<div class="slide">
+  <div class="inn bg-m">
+    <div class="hdr"><span class="s">Aplicações</span><span class="n">19</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Outros usos e <em class="g">aplicações</em></div>
+    <div class="body">
+      <div class="g2" style="flex:1;">
+        <div class="cd cd-d"><div class="ct">PDFs para clientes</div><p>Diagnósticos, planos de ação, relatórios personalizados em minutos.</p></div>
+        <div class="cd cd-d"><div class="ct">Social media omnichannel</div><p>Posts, carrosséis, legendas, threads. Pesquisa de tendências.</p></div>
+        <div class="cd cd-d"><div class="ct">Roteiros de vídeo</div><p>VSLs, reels, briefings de edição. Storytelling para retenção.</p></div>
+        <div class="cd cd-d"><div class="ct">Resumo pós-mentoria</div><p>Transcrição + resumo estruturado + action items.</p></div>
+        <div class="cd cd-d"><div class="ct">Geração de fotos e imagens</div><p>DNA visual fixo. DALL-E e Gemini em lote. Galeria automática.</p></div>
+        <div class="cd cd-d"><div class="ct">Carrossel em massa</div><p>Dezenas de carrosséis educativos gerados automaticamente.</p></div>
+        <div class="cd cd-d"><div class="ct">Funis automáticos</div><p>Páginas de captura, sequências de email, checkout.</p></div>
+        <div class="cd cd-d"><div class="ct">Edição de vídeos</div><p>Roteiros, briefings, direção criativa audiovisual.</p></div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>19</span></div>
+  </div>
+</div>
+
+<!-- 20 -->
+<div class="slide">
+  <div class="inn bg-c">
+    <div class="hdr"><span class="s">Próximos passos</span><span class="n">20</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Próximos 7 <em class="g">dias</em></div>
+    <div class="body">
+      <div class="row">
+        <div class="f1 cd cd-so tc"><div style="font-family:var(--serif);font-size:clamp(28px,3vw,42px);font-style:italic;">01</div><div class="ct" style="font-size:clamp(14px,1.3vw,18px);">Escala de tráfego</div><p>Framework de distribuição ativo. Testar, classificar, escalar.</p></div>
+        <div class="f1 cd cd-so tc"><div style="font-family:var(--serif);font-size:clamp(28px,3vw,42px);font-style:italic;">02</div><div class="ct" style="font-size:clamp(14px,1.3vw,18px);">Nota 10/10</div><p>Calibrar cada agente. Base completa. Output consistente.</p></div>
+        <div class="f1 cd cd-so tc"><div style="font-family:var(--serif);font-size:clamp(28px,3vw,42px);font-style:italic;">03</div><div class="ct" style="font-size:clamp(14px,1.3vw,18px);">Torre Dona</div><p>HTTPS. Painéis conectados. Dashboard 24/7.</p></div>
+      </div>
+      <div class="cd cd-d">
+        <div class="ct">Checklist</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 3vw;">
+          <ul class="ck"><li style="color:var(--ouro-pale);"><span class="cb">✓</span>App Meta em modo Live</li><li style="color:var(--ouro-pale);"><span class="cb">✓</span>Token Marketing Essencial</li><li style="color:var(--ouro-pale);"><span class="cb">✓</span>Livro "Acorda" na base</li></ul>
+          <ul class="ck"><li style="color:var(--ouro-pale);"><span class="cb">✓</span>Pipeline Cademi ativo</li><li style="color:var(--ouro-pale);"><span class="cb">✓</span>HTTPS Torre Dona</li><li style="color:var(--ouro-pale);"><span class="cb">✓</span>Bot Doninha MVP</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>20</span></div>
+  </div>
+</div>
+
+<!-- 21 -->
+<div class="slide">
+  <div class="inn bg-d">
+    <div class="hdr"><span class="s">Lições</span><span class="n">21</span></div>
+    <div class="hline"></div>
+    <div class="ttl">Principais <em><span class="g">lições</span></em></div>
+    <div class="body">
+      <div class="g2">
+        <div class="cd cd-o"><div class="ct" style="font-size:clamp(13px,1.2vw,17px);">Pare para construir</div><p>2 semanas sem entregar para construir infraestrutura. O retorno já começou.</p></div>
+        <div class="cd cd-o"><div class="ct" style="font-size:clamp(13px,1.2vw,17px);">IA não é chat, é sistema</div><p>Chat responde. Sistema executa. A diferença entre perguntar e delegar.</p></div>
+        <div class="cd cd-o"><div class="ct" style="font-size:clamp(13px,1.2vw,17px);">Identidade importa</div><p>Sem soul = genérico. Com identidade = parte do time.</p></div>
+        <div class="cd cd-o"><div class="ct" style="font-size:clamp(13px,1.2vw,17px);">Memória é poder</div><p>Agente que lembra é infinitamente mais útil que um que começa do zero.</p></div>
+        <div class="cd cd-o"><div class="ct" style="font-size:clamp(13px,1.2vw,17px);">Segurança desde o dia 1</div><p>Allowlist, 1Password, gates. Não é paranoia, é profissionalismo.</p></div>
+        <div class="cd cd-o"><div class="ct" style="font-size:clamp(13px,1.2vw,17px);">Agente = sócio operacional</div><p>Cofundador que trabalha 24h, não erra tom e entrega em minutos.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:auto;">
+        <div style="width:80px;height:2px;background:var(--ouro);margin:0 auto 10px auto;"></div>
+        <div style="font-family:var(--serif);font-style:italic;font-size:clamp(18px,2vw,26px);color:var(--marfim);">Isis Moreira</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--ouro-deep);margin-top:4px;">MARÇO 2026</div>
+      </div>
+    </div>
+    <div class="ftr"><span>DonaSystem</span><span>21</span></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+const total = slides.length;
+
+function go(i) {
+  if (i < 0 || i >= total) return;
+  slides[current].classList.remove('active');
+  current = i;
+  slides[current].classList.add('active');
+  document.getElementById('progress').style.width = ((current / (total - 1)) * 100) + '%';
+  document.getElementById('counter').textContent = current + ' / ' + (total - 1);
+  if (current > 0) document.getElementById('nav-hint').classList.add('hidden');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+  if (e.key === 'Home') { e.preventDefault(); go(0); }
+  if (e.key === 'End') { e.preventDefault(); go(total - 1); }
+  if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFS(); }
+});
+
+// Touch
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const diff = e.changedTouches[0].clientX - tx;
+  if (Math.abs(diff) > 50) diff < 0 ? go(current + 1) : go(current - 1);
+});
+
+// Click sides
+document.addEventListener('click', e => {
+  if (e.target.closest('#fs-btn')) return;
+  const x = e.clientX / window.innerWidth;
+  x > 0.65 ? go(current + 1) : x < 0.35 ? go(current - 1) : null;
+});
+
+function toggleFS() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+}
+
+go(0);
+</script>
+</body>
+</html>
