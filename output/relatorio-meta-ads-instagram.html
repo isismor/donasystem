@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório Meta Ads + Instagram — Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .cover-c {
+    background: var(--cacao);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 64px;
+  }
+  .cover-c .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ouro);
+    margin-bottom: 28px;
+  }
+  .cover-c .title {
+    font-family: var(--serif);
+    font-size: 52px;
+    line-height: 1.05;
+    color: var(--marfim);
+    margin-bottom: 20px;
+    max-width: 560px;
+  }
+  .cover-c .title em { font-style: italic; }
+  .cover-c .title .gold { color: var(--ouro); }
+  .cover-c .rule {
+    width: 120px;
+    height: 2px;
+    background: var(--ouro);
+    margin: 0 auto 20px auto;
+  }
+  .cover-c .subtitle {
+    font-size: 16px;
+    color: var(--ouro-pale);
+    line-height: 1.6;
+    max-width: 420px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .cover-c .meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--ouro-deep);
+    text-transform: uppercase;
+  }
+
+  .inner-c {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .inner-c.bg-marfim { background: var(--marfim); }
+  .inner-c.bg-creme { background: var(--creme); }
+
+  .header-c {
+    padding: 36px 72px 14px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .header-c .left {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+  .header-c .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ouro-pale);
+  }
+  .header-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+
+  .body-c {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 28px 72px 0 72px;
+  }
+
+  .footer-c {
+    padding: 14px 72px 28px 72px;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+  .footer-c span {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+
+  .sec-c {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 12px;
+  }
+  .title-c {
+    font-family: var(--serif);
+    font-size: 40px;
+    line-height: 1.08;
+    color: var(--cacao);
+    margin-bottom: 24px;
+    max-width: 520px;
+  }
+  .title-c em { font-style: italic; }
+  .title-c .gold { color: var(--ouro); }
+
+  .text-c {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cacao);
+    margin-bottom: 14px;
+    max-width: 480px;
+  }
+  .lead-c {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ouro-deep);
+    margin-bottom: 20px;
+    max-width: 480px;
+    font-weight: 400;
+  }
+
+  .info-box {
+    padding: 20px 24px;
+    margin: 8px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .info-box .info-title {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .info-box .info-text {
+    font-size: 12px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .info-box.box-ouro { background: var(--ouro); }
+  .info-box.box-ouro .info-title { color: var(--cacao); }
+  .info-box.box-ouro .info-text { color: var(--cacao); opacity: 0.85; }
+  .info-box.box-dark { background: var(--cacao); }
+  .info-box.box-dark .info-title { color: var(--ouro); }
+  .info-box.box-dark .info-text { color: var(--marfim); opacity: 0.85; }
+  .info-box.box-creme { background: var(--creme); border: 1px solid rgba(180,166,140,.25); }
+  .info-box.box-creme .info-title { color: var(--cacao); }
+  .info-box.box-creme .info-text { color: var(--cacao); opacity: 0.8; }
+
+  .callout-c {
+    padding: 16px 24px;
+    margin: 8px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .callout-c p { font-size: 13px; line-height: 1.6; margin: 0; }
+  .callout-dark { background: var(--cacao); color: var(--marfim); }
+  .callout-dark p { color: var(--marfim); }
+  .callout-dark strong { color: var(--ouro); }
+  .callout-ouro { background: var(--ouro); color: var(--cacao); }
+  .callout-ouro p { color: var(--cacao); }
+  .callout-ouro strong { color: var(--cacao); font-weight: 700; }
+  .callout-marfim { background: var(--marfim); border: 1px solid var(--ouro-pale); color: var(--cacao); }
+  .callout-marfim p { color: var(--cacao); }
+  .callout-marfim strong { color: var(--ouro-deep); }
+
+  /* DATA TABLE */
+  .data-table {
+    width: 100%;
+    max-width: 480px;
+    margin: 10px auto;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  .data-table th {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro-deep);
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 2px solid var(--ouro);
+  }
+  .data-table td {
+    padding: 7px 6px;
+    border-bottom: 1px solid rgba(180,166,140,.15);
+    font-size: 11px;
+    color: var(--cacao);
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table .num-col { text-align: right; font-family: var(--mono); font-size: 10px; }
+  .data-table .rank { font-family: var(--serif); font-style: italic; color: var(--ouro); font-size: 14px; }
+  .data-table .highlight { background: rgba(180,166,140,.08); }
+
+  /* METRIC CARDS */
+  .metric-row {
+    display: flex;
+    gap: 10px;
+    max-width: 480px;
+    margin: 10px auto;
+    width: 100%;
+  }
+  .metric-card {
+    flex: 1;
+    border-radius: 10px;
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .metric-card .metric-value {
+    font-family: var(--serif);
+    font-size: 26px;
+    color: var(--cacao);
+    margin-bottom: 2px;
+  }
+  .metric-card .metric-label {
+    font-family: var(--mono);
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro-deep);
+  }
+  .metric-card.card-ouro { background: var(--ouro); }
+  .metric-card.card-ouro .metric-value { color: var(--cacao); }
+  .metric-card.card-ouro .metric-label { color: var(--cacao); opacity: 0.7; }
+  .metric-card.card-dark { background: var(--cacao); }
+  .metric-card.card-dark .metric-value { color: var(--marfim); }
+  .metric-card.card-dark .metric-label { color: var(--ouro); }
+  .metric-card.card-outline { background: transparent; border: 1px solid var(--ouro-pale); }
+
+  .stmt-quote {
+    padding: 20px 24px;
+    margin: 16px auto;
+    max-width: 480px;
+    width: 100%;
+    border-radius: 10px;
+    background: rgba(180,166,140,.12);
+    border: 1px solid rgba(180,166,140,.25);
+  }
+  .stmt-quote p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--cacao);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page">
+  <div class="cover-c">
+    <div class="label">Relatório Helios</div>
+    <div class="title">Análise <em>completa</em> de <span class="gold">tráfego e Instagram</span></div>
+    <div class="rule"></div>
+    <div class="subtitle">Métricas consolidadas das contas Meta Ads e ranking de performance dos posts do @moreira.isis</div>
+    <div class="meta">Isis Moreira · Março 2026 · 8 páginas</div>
+  </div>
+</div>
+
+<!-- PÁGINA 2: Visão Geral do Perfil -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Helios · Instagram</span>
+      <span class="num">01</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Perfil @moreira.isis</div>
+      <div class="title-c">Visão geral do <em class="gold">Instagram</em></div>
+
+      <div class="metric-row">
+        <div class="metric-card card-ouro">
+          <div class="metric-value">377.408</div>
+          <div class="metric-label">Seguidores</div>
+        </div>
+        <div class="metric-card card-dark">
+          <div class="metric-value">541</div>
+          <div class="metric-label">Publicações</div>
+        </div>
+        <div class="metric-card card-ouro">
+          <div class="metric-value">326</div>
+          <div class="metric-label">Seguindo</div>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-card card-dark">
+          <div class="metric-value">902</div>
+          <div class="metric-label">Média likes/post</div>
+        </div>
+        <div class="metric-card card-dark">
+          <div class="metric-value">107</div>
+          <div class="metric-label">Média comments/post</div>
+        </div>
+        <div class="metric-card card-dark">
+          <div class="metric-value">0,27%</div>
+          <div class="metric-label">Taxa engajamento</div>
+        </div>
+      </div>
+
+      <p class="text-c" style="margin-top: 16px;">Amostra analisada: 150 posts mais recentes (junho 2025 a março 2026). Taxa de engajamento calculada sobre base de 377k seguidores.</p>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Engajamento por tipo de conteúdo</div>
+        <div class="info-text">Vídeo/Reels: 1.207 média (103 posts) · Imagem: 1.136 média (7 posts) · Carrossel: 476 média (40 posts). Vídeos performam 2,5x mais que carrosséis.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Melhor mês: Setembro 2025</div>
+        <div class="info-text">2.909 de engajamento médio por post (32 publicações). Puxado por 3 virais: "Poder das palavras" (32.971), "Ferida emocional" (19.755) e "15 sentidos" (11.632).</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Helios · Relatório</span>
+      <span>02</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 3: Ranking Top 15 Posts -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Helios · Ranking</span>
+      <span class="num">02</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Ranking de posts</div>
+      <div class="title-c">Top 15 por <em class="gold">engajamento</em></div>
+
+      <table class="data-table">
+        <tr><th>#</th><th>Data</th><th>Tipo</th><th>Post</th><th style="text-align:right">Likes</th><th style="text-align:right">Com.</th><th style="text-align:right">Total</th></tr>
+        <tr class="highlight"><td class="rank">1</td><td>17/set</td><td>Reel</td><td>Poder das palavras</td><td class="num-col">32.647</td><td class="num-col">324</td><td class="num-col">32.971</td></tr>
+        <tr><td class="rank">2</td><td>23/set</td><td>Reel</td><td>Ferida emocional</td><td class="num-col">15.606</td><td class="num-col">4.149</td><td class="num-col">19.755</td></tr>
+        <tr class="highlight"><td class="rank">3</td><td>29/set</td><td>Reel</td><td>15 sentidos</td><td class="num-col">9.682</td><td class="num-col">1.950</td><td class="num-col">11.632</td></tr>
+        <tr><td class="rank">4</td><td>19/set</td><td>Reel</td><td>Visão da criação</td><td class="num-col">6.110</td><td class="num-col">522</td><td class="num-col">6.632</td></tr>
+        <tr class="highlight"><td class="rank">5</td><td>18/dez</td><td>Imagem</td><td>Milhares de vidas</td><td class="num-col">5.928</td><td class="num-col">20</td><td class="num-col">5.948</td></tr>
+        <tr><td class="rank">6</td><td>23/jan</td><td>Reel</td><td>De repente...</td><td class="num-col">2.710</td><td class="num-col">91</td><td class="num-col">2.801</td></tr>
+        <tr class="highlight"><td class="rank">7</td><td>17/set</td><td>Carrossel</td><td>2009</td><td class="num-col">1.382</td><td class="num-col">1.233</td><td class="num-col">2.615</td></tr>
+        <tr><td class="rank">8</td><td>03/out</td><td>Reel</td><td>Já pensou sobre isso?</td><td class="num-col">2.098</td><td class="num-col">82</td><td class="num-col">2.180</td></tr>
+        <tr class="highlight"><td class="rank">9</td><td>19/nov</td><td>Reel</td><td>Você sabia disso?</td><td class="num-col">1.548</td><td class="num-col">42</td><td class="num-col">1.590</td></tr>
+        <tr><td class="rank">10</td><td>26/set</td><td>Reel</td><td>Normalize</td><td class="num-col">1.398</td><td class="num-col">59</td><td class="num-col">1.457</td></tr>
+        <tr class="highlight"><td class="rank">11</td><td>01/jan</td><td>Carrossel</td><td>Eu permito</td><td class="num-col">1.298</td><td class="num-col">93</td><td class="num-col">1.391</td></tr>
+        <tr><td class="rank">12</td><td>02/set</td><td>Reel</td><td>Mãe flor e borboleta</td><td class="num-col">1.114</td><td class="num-col">243</td><td class="num-col">1.357</td></tr>
+        <tr class="highlight"><td class="rank">13</td><td>18/set</td><td>Carrossel</td><td>2009 (parte 2)</td><td class="num-col">1.212</td><td class="num-col">62</td><td class="num-col">1.274</td></tr>
+        <tr><td class="rank">14</td><td>18/dez</td><td>Reel</td><td>Dona do ouro</td><td class="num-col">1.129</td><td class="num-col">55</td><td class="num-col">1.184</td></tr>
+        <tr class="highlight"><td class="rank">15</td><td>16/set</td><td>Reel</td><td>Recomeçar e conquistar</td><td class="num-col">1.054</td><td class="num-col">125</td><td class="num-col">1.179</td></tr>
+      </table>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Helios · Relatório</span>
+      <span>03</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 4: Engajamento Mensal -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Helios · Tendência</span>
+      <span class="num">03</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Evolução mensal</div>
+      <div class="title-c">Engajamento por <em class="gold">mês</em></div>
+
+      <table class="data-table">
+        <tr><th>Mês</th><th style="text-align:right">Posts</th><th style="text-align:right">Eng. total</th><th style="text-align:right">Média/post</th><th>Tendência</th></tr>
+        <tr class="highlight"><td>Set 2025</td><td class="num-col">32</td><td class="num-col">93.079</td><td class="num-col">2.909</td><td style="color:#b4a68c;font-weight:700">Pico</td></tr>
+        <tr><td>Out 2025</td><td class="num-col">9</td><td class="num-col">5.599</td><td class="num-col">622</td><td></td></tr>
+        <tr><td>Nov 2025</td><td class="num-col">9</td><td class="num-col">5.407</td><td class="num-col">601</td><td></td></tr>
+        <tr><td>Dez 2025</td><td class="num-col">12</td><td class="num-col">10.469</td><td class="num-col">872</td><td></td></tr>
+        <tr><td>Jan 2026</td><td class="num-col">34</td><td class="num-col">18.013</td><td class="num-col">530</td><td></td></tr>
+        <tr><td>Fev 2026</td><td class="num-col">23</td><td class="num-col">6.326</td><td class="num-col">275</td><td style="color:#9ba1a8">Queda</td></tr>
+        <tr><td>Mar 2026</td><td class="num-col">5</td><td class="num-col">1.647</td><td class="num-col">329</td><td style="color:#9ba1a8">Parcial</td></tr>
+      </table>
+
+      <div class="callout-c callout-dark" style="margin-top: 20px;">
+        <p><strong>Diagnóstico:</strong> Setembro foi excepcional com 3 virais que somaram 64.358 engajamentos. Desde outubro, a média caiu 81% (de 2.909 para 530 em janeiro). Fevereiro registrou a menor média do período: 275 por post.</p>
+      </div>
+
+      <div class="callout-c callout-dark">
+        <p><strong>Padrão identificado:</strong> Meses com mais posts NÃO geram mais engajamento por post. Janeiro teve 34 posts com média 530. Dezembro teve 12 posts com média 872. Qualidade > quantidade.</p>
+      </div>
+
+      <div class="callout-c callout-dark">
+        <p><strong>Reels dominam:</strong> 103 dos 150 posts analisados são vídeo. Média de engajamento 1.207 vs 476 de carrosséis. Reels geram 2,5x mais engajamento. Foco deve ser Reels.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Helios · Relatório</span>
+      <span>04</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 5: Meta Ads - Conta Cursos -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Helios · Meta Ads</span>
+      <span class="num">04</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Conta Cursos (act_454194124788700)</div>
+      <div class="title-c">Histórico de <em class="gold">investimento</em></div>
+
+      <div class="metric-row">
+        <div class="metric-card card-ouro">
+          <div class="metric-value">R$408k</div>
+          <div class="metric-label">Investido total</div>
+        </div>
+        <div class="metric-card card-ouro">
+          <div class="metric-value">36,5M</div>
+          <div class="metric-label">Impressões</div>
+        </div>
+        <div class="metric-card card-ouro">
+          <div class="metric-value">426.902</div>
+          <div class="metric-label">Cliques</div>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-card card-ouro">
+          <div class="metric-value">R$0,96</div>
+          <div class="metric-label">CPC médio</div>
+        </div>
+        <div class="metric-card card-ouro">
+          <div class="metric-value">1,17%</div>
+          <div class="metric-label">CTR médio</div>
+        </div>
+        <div class="metric-card card-ouro">
+          <div class="metric-value">444</div>
+          <div class="metric-label">Compras</div>
+        </div>
+      </div>
+
+      <p class="text-c" style="margin-top: 12px;">Período ativo: fevereiro 2023 a março 2024 (14 meses). 5.728 leads gerados. Conta parada desde abril 2024.</p>
+
+      <table class="data-table" style="margin-top: 8px;">
+        <tr><th>Mês</th><th style="text-align:right">Gasto</th><th style="text-align:right">Impressões</th><th style="text-align:right">Cliques</th><th style="text-align:right">Compras</th></tr>
+        <tr><td>Fev 2023</td><td class="num-col">R$11.677</td><td class="num-col">4,6M</td><td class="num-col">44.919</td><td class="num-col">0</td></tr>
+        <tr><td>Mar 2023</td><td class="num-col">R$35.250</td><td class="num-col">9,4M</td><td class="num-col">86.365</td><td class="num-col">0</td></tr>
+        <tr class="highlight"><td>Abr 2023</td><td class="num-col">R$63.419</td><td class="num-col">5,2M</td><td class="num-col">63.155</td><td class="num-col">0</td></tr>
+        <tr><td>Jun 2023</td><td class="num-col">R$27.607</td><td class="num-col">2,9M</td><td class="num-col">36.555</td><td class="num-col">0</td></tr>
+        <tr><td>Set 2023</td><td class="num-col">R$36.105</td><td class="num-col">840k</td><td class="num-col">20.135</td><td class="num-col">29</td></tr>
+        <tr class="highlight"><td>Out 2023</td><td class="num-col">R$55.208</td><td class="num-col">2,9M</td><td class="num-col">43.855</td><td class="num-col">63</td></tr>
+        <tr><td>Jan 2024</td><td class="num-col">R$57.949</td><td class="num-col">1,8M</td><td class="num-col">20.484</td><td class="num-col">139</td></tr>
+        <tr class="highlight"><td>Mar 2024</td><td class="num-col">R$23.428</td><td class="num-col">860k</td><td class="num-col">14.427</td><td class="num-col">143</td></tr>
+      </table>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Helios · Relatório</span>
+      <span>05</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 6: Top campanhas da conta Cursos -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Helios · Campanhas</span>
+      <span class="num">05</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Conta Cursos</div>
+      <div class="title-c">Melhores <em class="gold">campanhas</em></div>
+
+      <table class="data-table">
+        <tr><th>#</th><th>Campanha</th><th style="text-align:right">Gasto</th><th style="text-align:right">CPC</th><th style="text-align:right">CTR</th></tr>
+        <tr class="highlight"><td class="rank">1</td><td>Tráfego Direto SDV (quente)</td><td class="num-col">R$34.624</td><td class="num-col">R$3,56</td><td class="num-col">1,43%</td></tr>
+        <tr><td class="rank">2</td><td>Cadastro Fogueira abr/23 Q02</td><td class="num-col">R$27.788</td><td class="num-col">R$1,50</td><td class="num-col">0,92%</td></tr>
+        <tr class="highlight"><td class="rank">3</td><td>Pack90 Meteórico (WhatsApp)</td><td class="num-col">R$26.582</td><td class="num-col">R$3,45</td><td class="num-col">0,87%</td></tr>
+        <tr><td class="rank">4</td><td>Cadastro Fogueira abr/22 F02</td><td class="num-col">R$22.624</td><td class="num-col">R$0,88</td><td class="num-col">1,36%</td></tr>
+        <tr class="highlight"><td class="rank">5</td><td>Vendas Imersão 7D</td><td class="num-col">R$12.641</td><td class="num-col">R$4,41</td><td class="num-col">1,02%</td></tr>
+        <tr><td class="rank">6</td><td>High Mentoring (mensagem)</td><td class="num-col">R$12.415</td><td class="num-col">R$5,08</td><td class="num-col">0,60%</td></tr>
+        <tr class="highlight"><td class="rank">7</td><td>Sala 7 Mentoras (vendas)</td><td class="num-col">R$11.549</td><td class="num-col">R$4,41</td><td class="num-col">0,98%</td></tr>
+        <tr><td class="rank">8</td><td>6D Camp Webinar (quente)</td><td class="num-col">R$9.429</td><td class="num-col">R$1,02</td><td class="num-col">3,85%</td></tr>
+        <tr class="highlight"><td class="rank">9</td><td>Growth Melhores Reels</td><td class="num-col">R$8.466</td><td class="num-col">R$0,25</td><td class="num-col">1,47%</td></tr>
+        <tr><td class="rank">10</td><td>Desafio 5K (vendas)</td><td class="num-col">R$8.390</td><td class="num-col">R$4,01</td><td class="num-col">0,97%</td></tr>
+      </table>
+
+      <div class="callout-c callout-dark" style="margin-top: 16px;">
+        <p><strong>Destaque:</strong> Growth Melhores Reels teve CPC de R$0,25 com 2,3M de impressões. É exatamente o tipo de campanha que o framework de distribuição replica: impulsionar posts orgânicos com custo baixo para crescer audiência.</p>
+      </div>
+
+      <div class="callout-c callout-dark">
+        <p><strong>Melhor eficiência geral:</strong> "Instagram post: Cruz" com CPC de R$0,09, 4,5M de impressões e 23.297 cliques por apenas R$2.040. Melhor investimento de todo o histórico.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Helios · Relatório</span>
+      <span>06</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 7: Conta Cursos 2 Nova -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Helios · Meta Ads</span>
+      <span class="num">06</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Conta Cursos 2 Nova (act_1444266696329197)</div>
+      <div class="title-c">Segunda conta de <em class="gold">anúncios</em></div>
+
+      <div class="metric-row">
+        <div class="metric-card card-dark">
+          <div class="metric-value">R$42,5k</div>
+          <div class="metric-label">Investido total</div>
+        </div>
+        <div class="metric-card card-dark">
+          <div class="metric-value">2,8M</div>
+          <div class="metric-label">Impressões</div>
+        </div>
+        <div class="metric-card card-dark">
+          <div class="metric-value">68.080</div>
+          <div class="metric-label">Cliques</div>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-card card-dark">
+          <div class="metric-value">R$0,63</div>
+          <div class="metric-label">CPC médio</div>
+        </div>
+        <div class="metric-card card-dark">
+          <div class="metric-value">2,39%</div>
+          <div class="metric-label">CTR médio</div>
+        </div>
+        <div class="metric-card card-dark">
+          <div class="metric-value">1,2M</div>
+          <div class="metric-label">Alcance</div>
+        </div>
+      </div>
+
+      <p class="text-c" style="margin-top: 12px;">Período: abril 2024 a setembro 2025 (14 meses intermitentes). Focada em aplicações para mentorias e impulsionamento de posts orgânicos.</p>
+
+      <table class="data-table" style="margin-top: 8px;">
+        <tr><th>#</th><th>Campanha</th><th style="text-align:right">Gasto</th><th style="text-align:right">CPC</th><th style="text-align:right">CTR</th></tr>
+        <tr class="highlight"><td class="rank">1</td><td>Aplicações Madrinha</td><td class="num-col">R$5.850</td><td class="num-col">R$1,20</td><td class="num-col">2,38%</td></tr>
+        <tr><td class="rank">2</td><td>Aplicações TGM</td><td class="num-col">R$3.832</td><td class="num-col">R$1,90</td><td class="num-col">1,94%</td></tr>
+        <tr class="highlight"><td class="rank">3</td><td>TFM Aplicações</td><td class="num-col">R$2.417</td><td class="num-col">R$1,76</td><td class="num-col">5,00%</td></tr>
+        <tr><td class="rank">4</td><td>Consultoria Individual</td><td class="num-col">R$2.350</td><td class="num-col">R$1,56</td><td class="num-col">4,13%</td></tr>
+        <tr class="highlight"><td class="rank">5</td><td>CONSULTORIA</td><td class="num-col">R$1.673</td><td class="num-col">R$1,38</td><td class="num-col">3,65%</td></tr>
+      </table>
+
+      <div class="callout-c callout-marfim" style="margin-top: 12px;">
+        <p><strong>Posts impulsionados com melhor CPC nesta conta:</strong> "Envia no direct pra amiga" (R$0,20), "Divirta-se com um desafio" (R$0,22), "Continue" (R$0,22), "A mulher com mais de 30" (R$0,25). Todos abaixo de R$0,30 por clique.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Helios · Relatório</span>
+      <span>07</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 8: Consolidado e Próximos Passos -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Helios · Estratégia</span>
+      <span class="num">07</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Consolidado</div>
+      <div class="title-c">Diagnóstico e <em>próximos</em> <span class="gold">passos</span></div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Investimento total (todas as contas)</div>
+        <div class="info-text">R$450.860 investidos · 39,4M impressões · 494.982 cliques · 444 compras · 5.728 leads</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Status atual: todas as contas paradas</div>
+        <div class="info-text">Cursos parada desde março 2024. Cursos 2 parada desde setembro 2025. Mulher de Negócios nunca rodou. Zero reais investidos nos últimos 6 meses.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Oportunidade: posts orgânicos com CPC baixíssimo</div>
+        <div class="info-text">Histórico mostra que impulsionar posts orgânicos gera CPCs entre R$0,09 e R$0,30. O framework de distribuição replica isso de forma sistemática.</div>
+      </div>
+
+      <div class="stmt-quote">
+        <p>Engajamento caiu 81% desde setembro 2025. Contas de ads paradas há meses. O framework de distribuição resolve as duas coisas: amplifica o alcance orgânico e traz audiência nova por custo baixo.</p>
+      </div>
+
+      <p class="text-c" style="margin-top: 16px;"><strong>Próximos passos imediatos:</strong></p>
+      <p class="text-c">1. Aguardar liberação da restrição do Business Manager (24-48h)</p>
+      <p class="text-c">2. Configurar token permanente do usuário de sistema</p>
+      <p class="text-c">3. Iniciar Fase 1 do framework: testar os 10 posts mais recentes com R$10 cada</p>
+      <p class="text-c">4. Após 24h: classificar por custo por seguidor (Série A, B ou Cortado)</p>
+      <p class="text-c">5. Escalar os melhores e reportar diariamente</p>
+
+      <div style="margin-top: 28px;">
+        <div style="width: 120px; height: 2px; background: var(--ouro); margin-bottom: 14px;"></div>
+        <div style="font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--cacao);">Helios</div>
+        <div style="font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--mirror); margin-top: 6px;">Março 2026</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Helios · Relatório</span>
+      <span>08</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

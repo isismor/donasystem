@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Estratégia Omnichannel — Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .cover-c {
+    background: var(--cacao);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 64px;
+  }
+  .cover-c .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ouro);
+    margin-bottom: 28px;
+  }
+  .cover-c .title {
+    font-family: var(--serif);
+    font-size: 52px;
+    line-height: 1.08;
+    color: var(--marfim);
+    margin-bottom: 20px;
+    max-width: 580px;
+  }
+  .cover-c .title em { font-style: italic; }
+  .cover-c .title .gold { color: var(--ouro); }
+  .cover-c .rule {
+    width: 120px;
+    height: 2px;
+    background: var(--ouro);
+    margin: 0 auto 20px auto;
+  }
+  .cover-c .subtitle {
+    font-size: 16px;
+    color: var(--ouro-pale);
+    line-height: 1.6;
+    max-width: 440px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .cover-c .meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--ouro-deep);
+    text-transform: uppercase;
+  }
+
+  .inner-c {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .inner-c.bg-marfim { background: var(--marfim); }
+  .inner-c.bg-creme { background: var(--creme); }
+
+  .header-c {
+    padding: 36px 72px 14px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .header-c .left {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+  .header-c .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ouro-pale);
+  }
+  .header-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+
+  .body-c {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 32px 72px 0 72px;
+  }
+
+  .footer-c {
+    padding: 14px 72px 28px 72px;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+  .footer-c span {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+
+  .sec-c {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 12px;
+  }
+  .title-c {
+    font-family: var(--serif);
+    font-size: 42px;
+    line-height: 1.08;
+    color: var(--cacao);
+    margin-bottom: 24px;
+    max-width: 520px;
+  }
+  .title-c em { font-style: italic; }
+  .title-c .gold { color: var(--ouro); }
+
+  .text-c {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cacao);
+    margin-bottom: 14px;
+    max-width: 480px;
+  }
+  .lead-c {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ouro-deep);
+    margin-bottom: 20px;
+    max-width: 480px;
+    font-weight: 400;
+  }
+
+  .callout-c {
+    padding: 16px 24px;
+    margin: 8px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .callout-c p {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .callout-ouro {
+    background: var(--ouro);
+    color: var(--cacao);
+  }
+  .callout-ouro p { color: var(--cacao); }
+  .callout-ouro strong { color: var(--cacao); font-weight: 700; }
+  .callout-dark {
+    background: var(--cacao);
+    color: var(--marfim);
+  }
+  .callout-dark p { color: var(--marfim); }
+  .callout-dark strong { color: var(--ouro); }
+  .callout-marfim {
+    background: var(--marfim);
+    border: 1px solid var(--ouro-pale);
+    color: var(--cacao);
+  }
+  .callout-marfim p { color: var(--cacao); }
+  .callout-marfim strong { color: var(--ouro-deep); }
+
+  .info-box {
+    padding: 20px 24px;
+    margin: 10px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .info-box .info-title {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  .info-box .info-text {
+    font-size: 12px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .info-box.box-ouro {
+    background: var(--ouro);
+  }
+  .info-box.box-ouro .info-title { color: var(--cacao); }
+  .info-box.box-ouro .info-text { color: var(--cacao); opacity: 0.85; }
+  .info-box.box-dark {
+    background: var(--cacao);
+  }
+  .info-box.box-dark .info-title { color: var(--ouro); }
+  .info-box.box-dark .info-text { color: var(--marfim); opacity: 0.85; }
+  .info-box.box-creme {
+    background: var(--creme);
+    border: 1px solid rgba(180,166,140,.25);
+  }
+  .info-box.box-creme .info-title { color: var(--cacao); }
+  .info-box.box-creme .info-text { color: var(--cacao); opacity: 0.8; }
+  .info-box.box-marfim {
+    background: var(--marfim);
+    border: 1px solid rgba(180,166,140,.25);
+  }
+  .info-box.box-marfim .info-title { color: var(--cacao); }
+  .info-box.box-marfim .info-text { color: var(--cacao); opacity: 0.8; }
+
+  .stmt-quote {
+    padding: 20px 24px;
+    margin: 16px auto;
+    max-width: 480px;
+    width: 100%;
+    border-radius: 10px;
+    background: rgba(180,166,140,.12);
+    border: 1px solid rgba(180,166,140,.25);
+  }
+  .stmt-quote p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--cacao);
+    margin: 0;
+  }
+
+  .h3-c {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--cacao);
+    margin-bottom: 6px;
+    margin-top: 18px;
+  }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    max-width: 480px;
+    margin: 8px auto;
+    width: 100%;
+  }
+  .metric-card {
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .metric-card .metric-val {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .metric-card .metric-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .metric-card.m-ouro {
+    background: var(--ouro);
+  }
+  .metric-card.m-ouro .metric-val { color: var(--cacao); }
+  .metric-card.m-ouro .metric-label { color: var(--cacao); opacity: 0.7; }
+  .metric-card.m-dark {
+    background: var(--cacao);
+  }
+  .metric-card.m-dark .metric-val { color: var(--marfim); }
+  .metric-card.m-dark .metric-label { color: var(--ouro); }
+
+  .tasks-c {
+    list-style: none;
+    max-width: 480px;
+    margin: 8px auto;
+    width: 100%;
+  }
+  .tasks-c li {
+    padding: 10px 0;
+    font-size: 13px;
+    color: var(--cacao);
+    border-bottom: 1px solid rgba(180,166,140,.18);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .tasks-c li:last-child { border-bottom: none; }
+  .sq-dot {
+    width: 7px;
+    height: 7px;
+    min-width: 7px;
+    background: var(--ouro);
+    border-radius: 2px;
+    margin-top: 5px;
+  }
+
+  .timeline-item {
+    padding: 14px 20px;
+    margin: 6px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .timeline-item .tl-phase {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .timeline-item .tl-title {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .timeline-item .tl-desc {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .flow-row {
+    display: flex;
+    gap: 10px;
+    max-width: 480px;
+    margin: 8px auto;
+    width: 100%;
+  }
+  .flow-step {
+    flex: 1;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .flow-step .fs-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .flow-step .fs-val {
+    font-family: var(--serif);
+    font-size: 16px;
+    margin-bottom: 3px;
+  }
+  .flow-step .fs-desc {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .mini-table {
+    width: 100%;
+    max-width: 480px;
+    margin: 8px auto;
+    border-collapse: collapse;
+  }
+  .mini-table th {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro-deep);
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--ouro-pale);
+  }
+  .mini-table td {
+    font-size: 12px;
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(180,166,140,.12);
+    line-height: 1.4;
+  }
+  .mini-table tr:last-child td { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page">
+  <div class="cover-c">
+    <div class="label">Estratégia de Crescimento</div>
+    <div class="title">De 377k para <em>1 milhão</em> em <span class="gold">90 dias</span></div>
+    <div class="rule"></div>
+    <div class="subtitle">Plano omnichannel para Instagram e YouTube. Audiência nova, autoridade consolidada, receita escalada.</div>
+    <div class="meta">Vega · Social Media · Isis Moreira · Março 2026 · 10 páginas</div>
+  </div>
+</div>
+
+<!-- PÁGINA 2: CENÁRIO ATUAL — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">01</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Diagnóstico</div>
+      <div class="title-c">Onde estamos <em class="gold">hoje</em></div>
+
+      <p class="lead-c">Uma operação lucrativa com audiência estagnada. O produto converte. O conteúdo engaja a base existente. O gargalo é alcance.</p>
+
+      <div class="metric-grid">
+        <div class="metric-card m-ouro">
+          <div class="metric-val">377k</div>
+          <div class="metric-label">Seguidores Instagram</div>
+        </div>
+        <div class="metric-card m-ouro">
+          <div class="metric-val">R$100k</div>
+          <div class="metric-label">Receita mensal orgânica</div>
+        </div>
+        <div class="metric-card m-ouro">
+          <div class="metric-val">40k+</div>
+          <div class="metric-label">Alunas formadas</div>
+        </div>
+        <div class="metric-card m-ouro">
+          <div class="metric-val">R$30M</div>
+          <div class="metric-label">Vendas acumuladas</div>
+        </div>
+      </div>
+
+      <div class="info-box box-ouro" style="margin-top: 12px;">
+        <div class="info-title">Oportunidade identificada</div>
+        <div class="info-text">Taxa de conversão alta com base atual, mas crescimento de seguidores abaixo de 2% ao mês. YouTube zerado: canal de descoberta inexplorado. Cross-platform inexistente. O potencial de escala está em audiência nova, não em espremer a base.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">O que precisa mudar</div>
+        <div class="info-text">Conteúdo otimizado para alcance (não só engajamento). YouTube como motor de descoberta. Investimento pago com framework de validação. Reels como porta de entrada. Funil orgânico entre plataformas.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>02</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 3: INSTAGRAM PLANO — bg creme, containers dark -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">02</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Instagram @moreira.isis</div>
+      <div class="title-c">Plano de <em>conteúdo</em> <span class="gold">Instagram</span></div>
+
+      <p class="text-c">Meta: 377k para 1M de seguidores. Estratégia: Reels como motor de alcance, carrosséis como motor de autoridade, stories como motor de conexão.</p>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Reels (5x por semana)</div>
+        <div class="info-text">Formato curto, 15 a 45 segundos. Hook nos primeiros 2 segundos. Temas: verdades sobre empreender, bastidores reais, mentalidade prática, tecnologia aplicada. Horários: 07h, 12h, 19h (teste A/B semanal). Objetivo: alcance e novos seguidores.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Carrosséis (3x por semana)</div>
+        <div class="info-text">5 a 7 slides. Design System ISIS v7. Temas: frameworks de negócio, listas práticas, dados de mercado, comparativos. Horários: 08h e 18h. Objetivo: salvamentos e compartilhamentos.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Stories (diário)</div>
+        <div class="info-text">5 a 8 stories por dia. Mix: bastidores (40%), conteúdo rápido (30%), enquetes e caixas de perguntas (20%), CTA para bio/YouTube (10%). Objetivo: retenção e nutrição da base.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Lives (1x por semana)</div>
+        <div class="info-text">Quartas às 20h. 30 a 45 minutos. Temas profundos com interação ao vivo. Recortar em 3 a 5 Reels por live. Objetivo: autoridade e conteúdo derivado.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>03</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 4: YOUTUBE PLANO — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">03</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">YouTube</div>
+      <div class="title-c">De zero a <em>100k</em> <span class="gold">inscritos</span></div>
+
+      <p class="text-c">YouTube é o motor de descoberta de longo prazo. Conteúdo perene que aparece no Google, gera autoridade e alimenta o funil orgânico por meses.</p>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Vídeos longos (2x por semana)</div>
+        <div class="info-text">8 a 15 minutos. Roteiro estruturado: hook, problema, framework, aplicação, CTA. Temas: como começar um negócio digital, mentalidade de quem fatura 6 dígitos, ferramentas e tecnologia para empreendedoras. SEO no título, descrição e tags. Thumbnail padrão ISIS v7.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Shorts (5x por semana)</div>
+        <div class="info-text">Reaproveitamento de Reels com adaptação de formato vertical. Cortes de lives e vídeos longos. Conteúdo nativo quando o tema pedir. Objetivo: alcance rápido e inscrições.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Séries temáticas</div>
+        <div class="info-text">3 séries iniciais com 4 episódios cada: "Negócio do Zero" (empreendedorismo prático), "Mente de Dona" (mentalidade e energia), "Tech para Donas" (tecnologia acessível). Séries criam hábito de consumo e aumentam watch time.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Estratégia de lançamento do canal</div>
+        <div class="info-text">Semana 1: anunciar no Instagram com contagem regressiva. 3 vídeos publicados no dia da estreia. Primeiro mês: 12 vídeos longos + 20 Shorts. Objetivo: sair de 0 para 10k inscritos nos primeiros 30 dias com apoio da base existente.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>04</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 5: FRAMEWORK PAGO — bg creme, containers dark -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">04</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Crescimento Pago</div>
+      <div class="title-c">Framework de <em>validação</em> <span class="gold">por estágios</span></div>
+
+      <p class="text-c">Todo conteúdo com potencial de alcance entra no funil de impulsionamento. O framework garante que só escale o que converte barato.</p>
+
+      <div class="flow-row">
+        <div class="flow-step" style="background: var(--cacao);">
+          <div class="fs-label" style="color: var(--ouro);">Teste</div>
+          <div class="fs-val" style="color: var(--marfim);">R$10/dia</div>
+          <div class="fs-desc" style="color: var(--ouro-pale);">1 dia. Todo Reel com mais de 5% de engajamento entra no teste. Público: lookalike de compradoras + interesses amplos.</div>
+        </div>
+        <div class="flow-step" style="background: var(--cacao);">
+          <div class="fs-label" style="color: var(--ouro);">Série A</div>
+          <div class="fs-val" style="color: var(--marfim);">&lt;R$0,50/seg</div>
+          <div class="fs-desc" style="color: var(--ouro-pale);">R$30/dia por 7 dias. Custo por seguidor abaixo de R$0,50. Escala controlada com público validado.</div>
+        </div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-step" style="background: var(--cacao);">
+          <div class="fs-label" style="color: var(--ouro);">Série B</div>
+          <div class="fs-val" style="color: var(--marfim);">R$0,50 a R$0,70</div>
+          <div class="fs-desc" style="color: var(--ouro-pale);">R$10/dia manutenção. Custo aceitável. Mantém rodando em volume baixo para captar no longo prazo.</div>
+        </div>
+        <div class="flow-step" style="background: var(--cacao);">
+          <div class="fs-label" style="color: var(--ouro);">Cortado</div>
+          <div class="fs-val" style="color: var(--marfim);">&gt;R$0,70/seg</div>
+          <div class="fs-desc" style="color: var(--ouro-pale);">Pausa imediata. Custo acima do teto. Redirecionar verba para criativos validados.</div>
+        </div>
+      </div>
+
+      <div class="info-box box-dark" style="margin-top: 12px;">
+        <div class="info-title">Orçamento estimado</div>
+        <div class="info-text">Fase 1 (dias 1 a 30): R$1.500 a R$3.000/mês em testes. Fase 2 (dias 31 a 60): R$3.000 a R$6.000/mês escalando validados. Fase 3 (dias 61 a 90): R$5.000 a R$10.000/mês em criativos de Série A. Projeção: 150k a 300k seguidores novos via pago nos 90 dias.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Regra de ouro</div>
+        <div class="info-text">Nunca escalar sem dados. Nunca manter campanha acima de R$0,70 por seguidor. Revisão semanal de criativos com corte dos 20% piores e dobra dos 20% melhores.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>05</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 6: CRESCIMENTO ORGÂNICO — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">05</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Crescimento Orgânico</div>
+      <div class="title-c">Alavancas de <em>alcance</em> <span class="gold">sem verba</span></div>
+
+      <p class="text-c">O orgânico sustenta 70% do crescimento. Reels viralizam. Carrosséis geram compartilhamento. SEO no YouTube traz tráfego perene. A base existente amplifica tudo.</p>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Reels otimizados para algoritmo</div>
+        <div class="info-text">Watch time acima de 80%. Loop no final para replay. Texto na tela nos primeiros 2 segundos. Hashtags: 5 a 8 por post, mix de volume (500k+) e nicho (50k a 200k). Música trending quando aplicável.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Colaborações estratégicas</div>
+        <div class="info-text">2 collabs por mês com perfis de 100k a 500k no nicho adjacente (finanças femininas, produtividade, lifestyle empreendedor). Formato: Reel conjunto ou live cruzada. Meta: 5k a 15k novos seguidores por collab.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Conteúdo de alta compartilhabilidade</div>
+        <div class="info-text">1 carrossel viral por semana: listas, verdades incômodas, comparativos antes/depois, dados surpreendentes. Formato que gera salvamento e envio para amigas. Benchmark: 500+ compartilhamentos por post.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">SEO YouTube como motor perene</div>
+        <div class="info-text">Títulos com palavras-chave de busca real. Descrições com 500+ caracteres e links. Capítulos nos vídeos. Cards e end screens interligando séries. Playlists temáticas. Resultado: tráfego orgânico crescente mesmo sem postar.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>06</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 7: CROSS-POLLINATION — bg creme, containers dark -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">06</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Cross-Pollination</div>
+      <div class="title-c">Cada plataforma <em>alimenta</em> a <span class="gold">outra</span></div>
+
+      <p class="text-c">Não são canais isolados. Cada peça de conteúdo gera derivados para outras plataformas. O público circula entre elas e se aprofunda no funil.</p>
+
+      <table class="mini-table" style="background: var(--cacao); border-radius: 10px; overflow: hidden; margin-top: 8px;">
+        <thead>
+          <tr>
+            <th style="color: var(--ouro); border-color: rgba(180,166,140,.3);">Origem</th>
+            <th style="color: var(--ouro); border-color: rgba(180,166,140,.3);">Derivado</th>
+            <th style="color: var(--ouro); border-color: rgba(180,166,140,.3);">Destino</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">Live Instagram</td>
+            <td style="color: var(--ouro-pale); border-color: rgba(180,166,140,.15);">Cortes editados</td>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">Reels + Shorts</td>
+          </tr>
+          <tr>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">Vídeo YouTube</td>
+            <td style="color: var(--ouro-pale); border-color: rgba(180,166,140,.15);">Trechos de 30s</td>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">Reels + Stories</td>
+          </tr>
+          <tr>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">Carrossel Instagram</td>
+            <td style="color: var(--ouro-pale); border-color: rgba(180,166,140,.15);">Roteiro expandido</td>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">Vídeo YouTube</td>
+          </tr>
+          <tr>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">Reel viral</td>
+            <td style="color: var(--ouro-pale); border-color: rgba(180,166,140,.15);">Versão expandida</td>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">YouTube longo</td>
+          </tr>
+          <tr>
+            <td style="color: var(--marfim); border-color: rgba(180,166,140,.15);">YouTube longo</td>
+            <td style="color: var(--ouro-pale); border-color: rgba(180,166,140,.15);">Áudio extraído</td>
+            <td style="color: var(--marfim);">Podcast futuro</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box box-dark" style="margin-top: 14px;">
+        <div class="info-title">Funil de migração entre plataformas</div>
+        <div class="info-text">Instagram > YouTube: CTA em stories ("vídeo completo no canal"), link na bio, menção em Reels. YouTube > Instagram: cards e end screens, descrição com @, menção verbal nos vídeos. Objetivo: 10% da audiência de cada plataforma migra para a outra nos primeiros 60 dias.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Calendário de reaproveitamento</div>
+        <div class="info-text">Segunda: gravar 1 vídeo longo (YouTube). Terça: editar e publicar vídeo + extrair 3 Shorts. Quarta: live no Instagram, gerar 4 cortes. Quinta e sexta: carrosséis e Reels nativos. Sábado: compilação semanal nos Stories. 1 gravação gera até 8 peças.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>07</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 8: MÉTRICAS E KPIs — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">07</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Métricas e KPIs</div>
+      <div class="title-c">O que <em>medir</em> em cada <span class="gold">fase</span></div>
+
+      <table class="mini-table" style="background: var(--ouro); border-radius: 10px; overflow: hidden;">
+        <thead>
+          <tr>
+            <th style="color: var(--cacao); border-color: rgba(42,36,32,.2);">Métrica</th>
+            <th style="color: var(--cacao); border-color: rgba(42,36,32,.2);">Fase 1 (0-30d)</th>
+            <th style="color: var(--cacao); border-color: rgba(42,36,32,.2);">Fase 2 (31-60d)</th>
+            <th style="color: var(--cacao); border-color: rgba(42,36,32,.2);">Fase 3 (61-90d)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);"><strong>Seguidores IG</strong></td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">450k</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">650k</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">1M</td>
+          </tr>
+          <tr>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);"><strong>Inscritos YT</strong></td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">10k</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">40k</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">100k</td>
+          </tr>
+          <tr>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);"><strong>Alcance/semana IG</strong></td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">500k</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">1.5M</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">3M+</td>
+          </tr>
+          <tr>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);"><strong>Views YT/mês</strong></td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">50k</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">200k</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">500k+</td>
+          </tr>
+          <tr>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);"><strong>Custo/seguidor</strong></td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">&lt;R$0,60</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">&lt;R$0,50</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">&lt;R$0,40</td>
+          </tr>
+          <tr>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);"><strong>Taxa engajamento</strong></td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">4%+</td>
+            <td style="color: var(--cacao); border-color: rgba(42,36,32,.1);">3.5%+</td>
+            <td style="color: var(--cacao);">3%+</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="h3-c" style="margin-top: 16px;">KPIs secundários por plataforma</div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Instagram</div>
+        <div class="info-text">Salvamentos por post (meta: 200+). Compartilhamentos por Reel (meta: 500+). Taxa de conclusão de Reels (meta: 60%+). Crescimento semanal de seguidores (meta: 5% na Fase 1, 7% na Fase 2, 10% na Fase 3). Cliques no link da bio por semana (meta: 2k+).</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">YouTube</div>
+        <div class="info-text">Watch time médio por vídeo (meta: 50%+). CTR de thumbnail (meta: 8%+). Taxa de inscrição por view (meta: 3%+). Impressões orgânicas/mês (meta: crescente 20% mês a mês). Retenção nos primeiros 30 segundos (meta: 70%+).</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>08</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 9: CRONOGRAMA 90 DIAS — bg creme, containers dark -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">08</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Cronograma</div>
+      <div class="title-c">90 dias, <em>3 fases</em>, <span class="gold">milestones claros</span></div>
+
+      <div class="timeline-item" style="background: var(--cacao);">
+        <div class="tl-phase" style="color: var(--ouro);">Fase 1 · Dias 1 a 30 · Fundação</div>
+        <div class="tl-title" style="color: var(--marfim);">Ativar máquina de conteúdo</div>
+        <div class="tl-desc" style="color: var(--ouro-pale);">
+          Semana 1: Configurar canal YouTube, gravar 3 vídeos de estreia, definir identidade visual do canal. Publicar 5 Reels por semana no Instagram.<br>
+          Semana 2: Lançar canal YouTube com evento no Instagram. Iniciar testes pagos (R$10/dia por Reel). Primeira live semanal.<br>
+          Semana 3: Primeira collab agendada. Analisar dados dos testes. Escalar validados para Série A. Publicar 2 vídeos YouTube por semana.<br>
+          Semana 4: Review completo. Cortar campanhas acima de R$0,70. Ajustar calendário editorial conforme dados.
+        </div>
+      </div>
+
+      <div class="timeline-item" style="background: var(--cacao);">
+        <div class="tl-phase" style="color: var(--ouro);">Fase 2 · Dias 31 a 60 · Escala</div>
+        <div class="tl-title" style="color: var(--marfim);">Acelerar crescimento</div>
+        <div class="tl-desc" style="color: var(--ouro-pale);">
+          Semana 5 a 6: Dobrar orçamento de Série A. 2 collabs por mês. Lançar primeira série YouTube ("Negócio do Zero"). Reels diários com tema trending.<br>
+          Semana 7 a 8: Cross-pollination ativa entre plataformas. Lançar segunda série YouTube ("Mente de Dona"). Testar formatos novos de carrossel. Meta: 650k seguidores IG, 40k inscritos YT.
+        </div>
+      </div>
+
+      <div class="timeline-item" style="background: var(--cacao);">
+        <div class="tl-phase" style="color: var(--ouro);">Fase 3 · Dias 61 a 90 · Consolidação</div>
+        <div class="tl-title" style="color: var(--marfim);">Cruzar a marca</div>
+        <div class="tl-desc" style="color: var(--ouro-pale);">
+          Semana 9 a 10: Orçamento pago no pico. Terceira série YouTube ("Tech para Donas"). Campanha de marco: contagem regressiva para 1M no Instagram.<br>
+          Semana 11 a 12: Sprint final. Conteúdo viral planejado. Collabs simultâneas. Evento ao vivo no YouTube. Meta: 1M seguidores IG, 100k inscritos YT.
+        </div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>09</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 10: MILESTONES + FECHAMENTO — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Estratégia Omnichannel</span>
+      <span class="num">09</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Milestones e Gatilhos</div>
+      <div class="title-c">Marcos que <em>sinalizam</em> <span class="gold">progresso</span></div>
+
+      <ul class="tasks-c">
+        <li><span class="sq-dot"></span>Dia 7: Canal YouTube ao vivo com 3 vídeos publicados</li>
+        <li><span class="sq-dot"></span>Dia 14: Primeiro Reel acima de 500k views</li>
+        <li><span class="sq-dot"></span>Dia 21: Primeira campanha paga em Série A validada</li>
+        <li><span class="sq-dot"></span>Dia 30: 450k seguidores IG + 10k inscritos YT</li>
+        <li><span class="sq-dot"></span>Dia 45: YouTube com 20k inscritos e watch time crescente</li>
+        <li><span class="sq-dot"></span>Dia 60: 650k seguidores IG + 40k inscritos YT</li>
+        <li><span class="sq-dot"></span>Dia 75: 850k seguidores IG + 70k inscritos YT</li>
+        <li><span class="sq-dot"></span>Dia 90: 1M seguidores IG + 100k inscritos YT</li>
+      </ul>
+
+      <div class="stmt-quote" style="margin-top: 16px;">
+        <p>O crescimento de audiência não é vaidade. É infraestrutura. Cada seguidor novo é uma pessoa que pode mudar de vida com o que Isis ensina. A meta de 1 milhão é sobre alcance de impacto.</p>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <div style="width: 120px; height: 2px; background: var(--ouro); margin-bottom: 14px;"></div>
+        <div style="font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--cacao);">Vega</div>
+        <div style="font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--mirror); margin-top: 6px;">Social Media · Isis Moreira · Março 2026</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>10</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

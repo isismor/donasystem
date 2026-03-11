@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>10 Pautas + 10 Roteiros de Reels — Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .cover-c {
+    background: var(--cacao);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 64px;
+  }
+  .cover-c .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ouro);
+    margin-bottom: 28px;
+  }
+  .cover-c .title {
+    font-family: var(--serif);
+    font-size: 48px;
+    line-height: 1.1;
+    color: var(--marfim);
+    margin-bottom: 20px;
+    max-width: 560px;
+  }
+  .cover-c .title em { font-style: italic; }
+  .cover-c .title .gold { color: var(--ouro); }
+  .cover-c .rule {
+    width: 120px;
+    height: 2px;
+    background: var(--ouro);
+    margin: 0 auto 20px auto;
+  }
+  .cover-c .subtitle {
+    font-size: 16px;
+    color: var(--ouro-pale);
+    line-height: 1.6;
+    max-width: 420px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .cover-c .meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--ouro-deep);
+    text-transform: uppercase;
+  }
+
+  .inner-c {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .inner-c.bg-marfim { background: var(--marfim); }
+  .inner-c.bg-creme { background: var(--creme); }
+
+  .header-c {
+    padding: 36px 72px 14px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .header-c .left {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+  .header-c .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ouro-pale);
+  }
+  .header-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+
+  .body-c {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 32px 72px 0 72px;
+  }
+
+  .footer-c {
+    padding: 14px 72px 28px 72px;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+  .footer-c span {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+
+  .sec-c {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 12px;
+  }
+  .title-c {
+    font-family: var(--serif);
+    font-size: 40px;
+    line-height: 1.08;
+    color: var(--cacao);
+    margin-bottom: 24px;
+    max-width: 520px;
+  }
+  .title-c em { font-style: italic; }
+  .title-c .gold { color: var(--ouro); }
+
+  .text-c {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cacao);
+    margin-bottom: 14px;
+    max-width: 480px;
+  }
+  .lead-c {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ouro-deep);
+    margin-bottom: 24px;
+    max-width: 480px;
+    font-weight: 400;
+  }
+
+  .callout-c {
+    padding: 16px 24px;
+    margin: 8px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .callout-c p {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .callout-dark {
+    background: var(--cacao);
+    color: var(--marfim);
+  }
+  .callout-dark p { color: var(--marfim); }
+  .callout-dark strong { color: var(--ouro); }
+  .callout-gold {
+    background: rgba(180,166,140,.15);
+    border: 1px solid rgba(180,166,140,.35);
+    color: var(--cacao);
+  }
+  .callout-gold p { color: var(--cacao); }
+  .callout-gold strong { color: var(--ouro-deep); }
+  .callout-ouro {
+    background: var(--ouro);
+    color: var(--cacao);
+  }
+  .callout-ouro p { color: var(--cacao); }
+  .callout-ouro strong { color: var(--cacao); font-weight: 700; }
+  .callout-marfim {
+    background: var(--marfim);
+    border: 1px solid var(--ouro-pale);
+    color: var(--cacao);
+  }
+  .callout-marfim p { color: var(--cacao); }
+  .callout-marfim strong { color: var(--ouro-deep); }
+
+  .info-box {
+    padding: 20px 24px;
+    margin: 10px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .info-box .info-title {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  .info-box .info-text {
+    font-size: 12px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .info-box.box-ouro {
+    background: var(--ouro);
+  }
+  .info-box.box-ouro .info-title { color: var(--cacao); }
+  .info-box.box-ouro .info-text { color: var(--cacao); opacity: 0.85; }
+  .info-box.box-dark {
+    background: var(--cacao);
+  }
+  .info-box.box-dark .info-title { color: var(--ouro); }
+  .info-box.box-dark .info-text { color: var(--marfim); opacity: 0.85; }
+  .info-box.box-creme {
+    background: var(--creme);
+    border: 1px solid rgba(180,166,140,.25);
+  }
+  .info-box.box-creme .info-title { color: var(--cacao); }
+  .info-box.box-creme .info-text { color: var(--cacao); opacity: 0.8; }
+
+  .stmt-quote {
+    padding: 20px 24px;
+    margin: 16px auto;
+    max-width: 480px;
+    width: 100%;
+    border-radius: 10px;
+    background: rgba(180,166,140,.12);
+    border: 1px solid rgba(180,166,140,.25);
+  }
+  .stmt-quote p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--cacao);
+    margin: 0;
+  }
+
+  .pauta-item {
+    margin-bottom: 14px;
+    max-width: 480px;
+  }
+  .pauta-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    margin-bottom: 3px;
+  }
+  .pauta-title {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--cacao);
+    margin-bottom: 3px;
+  }
+  .pauta-gancho {
+    font-size: 12px;
+    color: var(--ouro-deep);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .roteiro-section {
+    margin-bottom: 10px;
+    max-width: 480px;
+  }
+  .roteiro-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    margin-bottom: 4px;
+  }
+  .roteiro-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--cacao);
+  }
+  .roteiro-text strong { color: var(--ouro-deep); }
+
+  .hashtags {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--mirror);
+    line-height: 1.5;
+    max-width: 480px;
+  }
+
+  .legenda-box {
+    padding: 16px 20px;
+    margin: 10px auto;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page">
+  <div class="cover-c">
+    <div class="label">Vega // Social Media</div>
+    <div class="title">10 Pautas + 10 <em>Roteiros</em> de <span class="gold">Reels</span></div>
+    <div class="rule"></div>
+    <div class="subtitle">Pautas sequestradas dos padrões virais de @rony, adaptadas para o universo de Isis Moreira. Prontas para gravar.</div>
+    <div class="meta">Isis Moreira · Março 2026 · Vega</div>
+  </div>
+</div>
+
+<!-- PÁGINA 2: INTRODUÇÃO -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">01</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Metodologia</div>
+      <div class="title-c">Padrões que <em>param</em> o <span class="gold">scroll</span></div>
+
+      <p class="lead-c">Analisei os 10 reels mais visualizados de @rony e identifiquei os padrões que geram retenção e viralização. Cada padrão foi traduzido para o tom, o público e a profundidade de Isis.</p>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">O que funciona nos virais</div>
+        <div class="info-text">Ganchos que provocam desconforto imediato. Storytelling que sustenta atenção nos primeiros 10 segundos. Verdades que o público sente mas nunca ouviu em voz alta. Viradas emocionais que geram salvamentos e compartilhamentos. CTA que conecta com identidade, não com ação genérica.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Adaptação para Isis</div>
+        <div class="info-text">Cada pauta foi reescrita para mulheres empreendedoras 30+. O tom é o de Isis: firme, espiritual, aterrado. Sem fórmulas de coach. Sem frases de efeito vazias. Linguagem que ativa, não que enfeita.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Como usar este material</div>
+        <div class="info-text">Parte 1: 10 pautas com título, gancho, ângulo e justificativa. Parte 2: roteiro completo de cada reel com tempo marcado, formato sugerido, legenda e hashtags. Pronto para gravar.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>02</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 3: PAUTAS 1-5 -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">02</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 1 — Pautas</div>
+      <div class="title-c">As 10 <em>pautas</em> <span class="gold">sequestradas</span></div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 01</div>
+        <div class="pauta-title">A mulher que fatura e ainda se sente devendo</div>
+        <div class="pauta-gancho">"Você fatura 30, 50, 100 mil por mês e ainda sente que não é suficiente."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: O sucesso financeiro sem ancoragem interna gera uma sensação crônica de insuficiência. Funciona porque toca numa dor silenciosa que mulheres bem sucedidas não admitem em público.</p>
+      </div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 02</div>
+        <div class="pauta-title">Seu negócio cresce no ritmo da sua verdade</div>
+        <div class="pauta-gancho">"Toda vez que você mente pra si mesma sobre o que quer, seu negócio estagna."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: Alinhamento interno como motor real de crescimento. Funciona porque substitui o discurso de "estratégia" por responsabilidade emocional, algo que ninguém no nicho fala.</p>
+      </div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 03</div>
+        <div class="pauta-title">Você não precisa de mais método. Precisa de mais corpo.</div>
+        <div class="pauta-gancho">"Você já sabe o que fazer. O problema é que seu corpo não aguenta a mulher que você precisa ser."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: A limitação não é intelectual, é nervosa. Funciona porque confronta a ilusão de que mais conhecimento resolve e nomeia algo que o público sente fisicamente.</p>
+      </div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 04</div>
+        <div class="pauta-title">O dia que eu parei de pedir permissão pra faturar</div>
+        <div class="pauta-gancho">"Durante anos eu cobrava menos do que valia. E achava que era humildade."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: Storytelling pessoal sobre a relação entre autoestima e precificação. Funciona porque história pessoal gera identificação imediata e o tema "cobrar o que vale" é gatilho forte nesse público.</p>
+      </div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 05</div>
+        <div class="pauta-title">Tecnologia não substitui presença. Amplifica quem você já é.</div>
+        <div class="pauta-gancho">"Se você tem medo de IA, o problema não é a tecnologia. É o quanto você confia no que sabe."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: Desmistificar IA mostrando que é extensão, não ameaça. Funciona porque a maioria do público feminino 30+ sente resistência à tecnologia e essa abordagem transforma medo em curiosidade.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>03</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 4: PAUTAS 6-10 -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">03</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 1 — Pautas (continuação)</div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 06</div>
+        <div class="pauta-title">A solidão de quem constrói sozinha (e como isso sabota seu crescimento)</div>
+        <div class="pauta-gancho">"Ninguém te disse que empreender ia ser tão solitário. E essa solidão está te custando dinheiro."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: Solidão empreendedora como fator real de estagnação. Funciona porque valida uma dor que o público carrega calado e conecta com a necessidade de comunidade e mentoria.</p>
+      </div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 07</div>
+        <div class="pauta-title">Você está trabalhando demais porque tem medo de parar</div>
+        <div class="pauta-gancho">"Se você tira um dia de folga e sente culpa, isso não é dedicação. É ferida."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: A produtividade compulsiva como mecanismo de fuga emocional. Funciona porque inverte uma narrativa que o público orgulhosamente compartilha ("trabalho muito") e revela a sombra por trás.</p>
+      </div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 08</div>
+        <div class="pauta-title">Seu conteúdo não converte porque você fala pro mercado, não pra sua gente</div>
+        <div class="pauta-gancho">"Você posta todo dia, segue todas as tendências, e ninguém compra. Sabe por quê?"</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: Conteúdo genérico como sintoma de desconexão com a própria voz. Funciona porque o público vive essa frustração e a resposta surpreende: o problema não é técnico, é de identidade.</p>
+      </div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 09</div>
+        <div class="pauta-title">Dinheiro segue clareza. Não segue esforço.</div>
+        <div class="pauta-gancho">"Eu conheço mulheres que trabalham 14 horas por dia e faturam menos do que quem trabalha 5."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: A relação entre clareza de posicionamento e resultado financeiro. Funciona porque desafia a crença mais forte do empreendedorismo feminino: "se eu trabalhar mais, vai dar certo".</p>
+      </div>
+
+      <div class="pauta-item">
+        <div class="pauta-num">Pauta 10</div>
+        <div class="pauta-title">Você não está estagnada. Está em transição e confundindo isso com fracasso.</div>
+        <div class="pauta-gancho">"Aquela fase onde nada parece funcionar? Não é o fim. É exatamente o meio."</div>
+        <p class="text-c" style="font-size:11px; margin-top:4px; margin-bottom:0;">Ângulo: Reframing de um momento doloroso como parte necessária do processo de evolução. Funciona porque acolhe sem ser condescendente e renomeia uma experiência que gera vergonha.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>04</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 01 -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">04</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 01</div>
+      <div class="title-c">A mulher que fatura e ainda se <em>sente</em> <span class="gold">devendo</span></div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Você fatura 30, 50, 100 mil por mês e ainda sente que não é suficiente."</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Olha nos meus olhos. Isso não é síndrome de impostora. Isso é um desalinhamento entre o que você construiu por fora e o que você sustenta por dentro. Você cresceu rápido. Aprendeu a vender, a escalar, a gerenciar. Mas ninguém te ensinou a habitar o lugar de quem prospera. Você mora no seu negócio. Mas não mora em você mesma. E enquanto isso, cada conquista parece um empréstimo que você vai ter que devolver.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">O dinheiro já chegou. A pergunta agora é: você vai se permitir ficar com ele? Porque abundância não é só faturar. É se reconhecer como alguém que merece a vida que construiu. Sem pedir desculpa. Sem diminuir.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se isso te tocou, salva esse vídeo. Porque você vai precisar ouvir de novo no dia em que duvidar. E manda pra aquela amiga que fatura alto e ainda se sente pequena.</div>
+      </div>
+
+      <div class="callout-c callout-marfim">
+        <p><strong>Formato:</strong> Talking head, câmera próxima, olhar direto. Fundo neutro. Sem cortes nos primeiros 10 segundos. Texto na tela no gancho.</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        Faturar alto e sentir que está devendo.<br>
+        Essa é a ferida mais silenciosa do empreendedorismo feminino.<br>
+        Ninguém fala sobre isso porque parece "problema bom".<br>
+        Mas eu sei o que é olhar pra conta e ainda sentir um vazio.<br>
+        O problema nunca foi o dinheiro. Foi a permissão.<br>
+        Salva. Manda pra alguém. Esse assunto precisa de voz.
+      </div>
+
+      <div class="hashtags">#empreendedorismofeminino #mentalidadedeabundancia #mulheresdenegocios #mindset #isismoreira #donasdoouro #negociosfemininos</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>05</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 02 -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">05</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 02</div>
+      <div class="title-c">Seu negócio cresce no ritmo da sua <em class="gold">verdade</em></div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Toda vez que você mente pra si mesma sobre o que quer, seu negócio estagna."</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Você diz que quer escalar. Mas no fundo quer descansar. Você diz que ama o que faz. Mas acorda com peso no peito. Você fala em liberdade. Mas vive presa numa rotina que criou pra agradar quem nem está prestando atenção. E sabe o que acontece? Seu negócio sente. Ele para. Trava. Dá sinais. Porque um negócio é espelho. Ele reflete exatamente a mulher que está por trás. E quando essa mulher está dividida, o negócio também racha.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">Seu próximo nível de faturamento não vai vir de uma nova estratégia. Vai vir de uma conversa honesta consigo mesma. Sobre o que você realmente quer. Sobre o que você precisa largar. Sobre a mulher que está pronta pra nascer dentro de você.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Comenta "VERDADE" se isso te pegou. E segue esse perfil se você quer conteúdo que te acorda, não que te anestesia.</div>
+      </div>
+
+      <div class="callout-c callout-gold">
+        <p><strong>Formato:</strong> Talking head, plano médio. Transição para close no momento da virada. Texto na tela no gancho e na frase "negócio é espelho".</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        Seu negócio não mente. Ele reflete.<br>
+        Quando você está dividida, ele estagna.<br>
+        Quando você se alinha, ele explode.<br>
+        Não é sobre mais estratégia. É sobre mais verdade.<br>
+        Comenta VERDADE e salva pra reler quando precisar.
+      </div>
+
+      <div class="hashtags">#empreendedorafeminina #verdade #posicionamento #isismoreira #mentalidade #mulherdenegocios #crescimentopessoal</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>06</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 03 -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">06</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 03</div>
+      <div class="title-c">Você não precisa de mais <em>método.</em> Precisa de mais <span class="gold">corpo.</span></div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Você já sabe o que fazer. O problema é que seu corpo não aguenta a mulher que você precisa ser."</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Eu sei que você adora um curso. Uma formação. Um método novo. E eu também. Mas em algum momento eu percebi uma coisa: eu não tinha um problema de conhecimento. Eu tinha um problema de sustentação. Meu sistema nervoso não aguentava o tamanho do próximo passo. Meu corpo entrava em alerta cada vez que eu tentava aparecer mais. Cada vez que eu cobrava mais caro. Cada vez que eu ocupava mais espaço. E eu voltava pro lugar pequeno. Porque pequeno era seguro.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">Crescer no empreendedorismo é um projeto de corpo inteiro. Não é só mente. Não é só estratégia. É sistema nervoso. É respiração. É a capacidade de sustentar o desconforto de ser grande sem fugir pra zona de conforto.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se você sentiu isso no corpo enquanto assistia, salva esse vídeo. Seu corpo está te dizendo alguma coisa. Escuta.</div>
+      </div>
+
+      <div class="callout-c callout-marfim">
+        <p><strong>Formato:</strong> Talking head, câmera próxima. Ritmo mais lento, pausas intencionais. Sem música nos primeiros 15 segundos. B-roll sutil de mãos, respiração.</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        Não é falta de conhecimento.<br>
+        É falta de sustentação.<br>
+        Seu corpo precisa aguentar o tamanho do lugar que você quer ocupar.<br>
+        E isso não se resolve com mais um curso.<br>
+        Se resolve com presença. Com regulação. Com verdade.<br>
+        Salva e manda pra quem precisa ouvir.
+      </div>
+
+      <div class="hashtags">#sistemanervoso #empreendedorismofeminino #corpo #mentalidade #isismoreira #regulaçãoemocional #mulherdenegocios</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>07</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 04 -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">07</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 04</div>
+      <div class="title-c">O dia que eu parei de pedir <em>permissão</em> pra <span class="gold">faturar</span></div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Durante anos eu cobrava menos do que valia. E achava que era humildade."</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Eu fazia mentorias de graça "pra ajudar". Eu dava desconto antes da pessoa pedir. Eu suava frio na hora de falar o preço. E por dentro eu justificava: "é porque eu me importo com as pessoas". Mentira. Era medo. Medo de ser julgada por cobrar. Medo de ouvir que era cara demais. Medo de ser vista como gananciosa. E sabe o que acontecia? Eu atraía gente que não valorizava. Porque eu mesma não estava valorizando.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">O dia que eu virei foi o dia que eu entendi: cobrar o que eu valho não me faz menos generosa. Me faz sustentável. E uma mulher sustentável alcança mais gente do que uma mulher esgotada dando tudo de graça.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se você se viu nessa história, comenta "VIREI". E segue esse perfil. Aqui a gente fala sobre empreender com verdade, não com fantasia.</div>
+      </div>
+
+      <div class="callout-c callout-gold">
+        <p><strong>Formato:</strong> Talking head, storytelling puro. Começar sentada, levantar na virada. Texto na tela apenas na frase final do insight.</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        Anos cobrando menos. Achando que era generosidade.<br>
+        Era medo.<br>
+        Medo de ser vista. De ser julgada. De ocupar espaço com dinheiro.<br>
+        No dia que eu parei de pedir permissão, tudo mudou.<br>
+        Se isso faz sentido pra você, comenta VIREI.
+      </div>
+
+      <div class="hashtags">#precificação #empreendedorafeminina #mentalidadederiqueza #isismoreira #donasdoouro #valorizacao #negócios</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>08</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 05 -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">08</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 05</div>
+      <div class="title-c">Tecnologia não substitui <em>presença.</em> Amplifica quem você <span class="gold">já é.</span></div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Se você tem medo de IA, o problema não é a tecnologia. É o quanto você confia no que sabe."</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Eu escuto muito mulher dizendo: "IA vai me substituir". "Robô vai tirar meu emprego". "Isso é coisa de homem de tecnologia". E eu entendo o medo. De verdade. Mas preciso te contar o que eu vi do outro lado. Eu construí um time inteiro de inteligência artificial. Não pra me substituir. Pra me amplificar. A IA escreve o rascunho. Eu coloco a alma. A IA organiza os dados. Eu tomo a decisão. A IA trabalha enquanto eu durmo. Mas acorda comigo.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">Mulher que domina tecnologia no próprio negócio não está seguindo tendência. Está construindo soberania. E soberania é a coisa mais feminina que existe.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se você quer entender como usar IA no seu negócio sem perder sua essência, segue esse perfil. E salva esse vídeo pra assistir quando o medo bater.</div>
+      </div>
+
+      <div class="callout-c callout-marfim">
+        <p><strong>Formato:</strong> Talking head + B-roll mostrando tela de computador, dashboard, ferramentas em uso. Texto na tela na frase "soberania é a coisa mais feminina que existe".</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        IA não veio te substituir.<br>
+        Veio te amplificar.<br>
+        Mas só funciona se você confia no que sabe.<br>
+        Mulher que domina tecnologia no próprio negócio constrói soberania.<br>
+        E isso muda tudo.<br>
+        Salva e segue pra mais conteúdo sobre negócios e tecnologia.
+      </div>
+
+      <div class="hashtags">#inteligenciaartificial #mulheretecnologia #empreendedorismofeminino #IA #isismoreira #tecnologia #negóciosdigitais</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>09</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 06 -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">09</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 06</div>
+      <div class="title-c">A <em>solidão</em> de quem constrói <span class="gold">sozinha</span></div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Ninguém te disse que empreender ia ser tão solitário. E essa solidão está te custando dinheiro."</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Você toma todas as decisões sozinha. Não tem com quem dividir as dúvidas reais. Suas amigas não entendem o que você faz. Sua família acha que é "fase". E aí você segue. Firme por fora, rachando por dentro. O que ninguém te conta é que solidão estratégica é um gargalo tão real quanto falta de caixa. Porque quando você não tem espelho, não enxerga os próprios pontos cegos. Repete erros. Demora mais pra decidir. Perde oportunidades que uma conversa de 20 minutos resolveria.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">O salto que eu dei no meu negócio não veio de um curso. Veio de estar perto de mulheres que falavam a minha língua. Que entendiam o peso. Que me faziam perguntas que eu estava evitando. Proximidade certa é o recurso mais subvalorizado do empreendedorismo.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se você está construindo sozinha e sente que precisa de gente que entende, manda esse vídeo pra outra mulher empreendedora. Vocês duas precisam dessa conversa.</div>
+      </div>
+
+      <div class="callout-c callout-gold">
+        <p><strong>Formato:</strong> Talking head, tom mais íntimo, voz baixa no início. Subir o tom na virada. Sem música até os 15s. Texto na tela: "solidão estratégica é gargalo".</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        Ninguém fala sobre a solidão de empreender.<br>
+        Porque parece fraqueza admitir.<br>
+        Mas solidão estratégica custa caro. Custa tempo, dinheiro e saúde.<br>
+        A virada acontece quando você encontra mulheres que falam a sua língua.<br>
+        Marca uma amiga empreendedora aqui. Ela precisa ler isso.
+      </div>
+
+      <div class="hashtags">#solidãoempreendedora #comunidade #mentoria #mulherdenegocios #isismoreira #donasdoouro #empreendedorismofeminino</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 07 -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">10</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 07</div>
+      <div class="title-c">Você está trabalhando demais porque tem <em>medo</em> de <span class="gold">parar</span></div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Se você tira um dia de folga e sente culpa, isso não é dedicação. É ferida."</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">A gente glamouriza o trabalho excessivo. "Ela é guerreira". "Ela não para nunca". "Ela é incansável". Eu já fui essa mulher. E vou te dizer uma coisa que ninguém quer ouvir: eu não era incansável. Eu era incapaz de parar. Porque parar significava sentir. E sentir significava olhar pra coisas que eu não estava pronta pra enfrentar. Então eu enchia a agenda. Criava mais projetos. Aceitava mais demandas. E chamava isso de "fase intensa".</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">Descanso não é recompensa por produtividade. Descanso é estrutura. Uma mulher que não descansa não está construindo um império. Está construindo uma bomba relógio. E quando estoura, leva tudo junto.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se você se reconheceu, para. Respira. Salva esse vídeo. E começa a tratar descanso como parte do seu plano de negócios. Não como luxo.</div>
+      </div>
+
+      <div class="callout-c callout-marfim">
+        <p><strong>Formato:</strong> Talking head, câmera estática, fundo clean. Ritmo lento, pausas longas. Sem texto na tela até a virada. Na frase "bomba relógio", texto aparece em destaque.</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        Eu chamava de dedicação. Era fuga.<br>
+        Trabalhava demais pra não sentir demais.<br>
+        E o negócio crescia por fora enquanto eu rachava por dentro.<br>
+        Descanso é estrutura. Não é recompensa.<br>
+        Se isso fez sentido, salva e manda pra quem precisa parar de correr.
+      </div>
+
+      <div class="hashtags">#burnout #descanso #saúdemental #empreendedorafeminina #isismoreira #mentalidade #equilíbrio #mulherdenegocios</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>11</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 08 -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">11</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 08</div>
+      <div class="title-c">Seu conteúdo não converte porque você fala pro <em>mercado,</em> não pra sua <span class="gold">gente</span></div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Você posta todo dia, segue todas as tendências, e ninguém compra. Sabe por quê?"</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Porque você está falando pro algoritmo. Pra métrica. Pro "mercado". Você copia ganchos virais, usa áudios em alta, faz os carrosséis certinhos. E nada acontece. Sabe o que está faltando? Sua voz. Sua história. A coisa que só você viveu e que só você sabe contar daquele jeito. Seu público não quer perfeição. Quer reconhecimento. Quer olhar pro seu conteúdo e pensar: "ela está falando comigo".</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">O conteúdo que converte não é o mais bonito. É o mais verdadeiro. É o que faz a pessoa sentir que você entrou na cabeça dela e descreveu exatamente o que ela vive. Isso não vem de template. Vem de conhecer sua gente melhor do que ela se conhece.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se você está cansada de postar sem resultado, comenta "MINHA VOZ". Porque é por aí que começa.</div>
+      </div>
+
+      <div class="callout-c callout-gold">
+        <p><strong>Formato:</strong> Talking head, gestos enfáticos. Cortes rápidos entre frases no desenvolvimento. Texto na tela no gancho e na frase "o mais verdadeiro".</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        Posta todo dia e ninguém compra.<br>
+        Segue tendência e o engajamento morre.<br>
+        O problema não é frequência. É frequência sem identidade.<br>
+        Seu público quer reconhecimento, não perfeição.<br>
+        Quer ouvir a sua voz. Não a voz do mercado.<br>
+        Comenta MINHA VOZ se isso fez sentido.
+      </div>
+
+      <div class="hashtags">#conteúdoqueconverte #marketingdigital #voz #identidade #isismoreira #socialmedia #empreendedorafeminina</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>12</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 09 -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">12</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 09</div>
+      <div class="title-c">Dinheiro segue <em>clareza.</em> Não segue <span class="gold">esforço.</span></div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Eu conheço mulheres que trabalham 14 horas por dia e faturam menos do que quem trabalha 5."</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Isso não é injustiça. É física do dinheiro. A mulher que trabalha 5 horas e fatura mais não é mais inteligente. Ela é mais clara. Clara sobre o que vende. Clara sobre pra quem vende. Clara sobre o valor do que entrega. Enquanto isso, a mulher que trabalha 14 horas está ocupada demais pra pensar. Está respondendo mensagens, apagando incêndios, fazendo reels, criando produtos que ninguém pediu. Muito movimento. Pouca direção.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">Seu negócio não precisa de mais horas suas. Precisa de mais clareza sua. E clareza vem de parar, olhar pra dentro e responder com honestidade: o que eu faço de melhor, pra quem, e por que essa pessoa precisa de mim? Quem responde isso com precisão, fatura com leveza.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se você está trabalhando muito e faturando pouco, salva esse vídeo. A resposta não está em fazer mais. Está em enxergar melhor. Me segue pra conteúdo que clareia.</div>
+      </div>
+
+      <div class="callout-c callout-marfim">
+        <p><strong>Formato:</strong> Talking head, plano médio. Ritmo firme, sem pressa. Texto na tela: "muito movimento, pouca direção" e "clareza vem de parar".</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        14 horas por dia e o faturamento não muda.<br>
+        Não é falta de esforço. É falta de clareza.<br>
+        Sobre o que você vende. Pra quem. E por quê.<br>
+        Dinheiro segue direção, não velocidade.<br>
+        Salva esse vídeo e revê quando estiver correndo sem rumo.
+      </div>
+
+      <div class="hashtags">#clareza #faturamento #empreendedorismofeminino #posicionamento #isismoreira #negócios #mentalidade #estratégia</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>13</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROTEIRO 10 -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Pautas + Roteiros</span>
+      <span class="num">13</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Parte 2 — Roteiro 10</div>
+      <div class="title-c">Você não está <em>estagnada.</em> Está em <span class="gold">transição.</span></div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Gancho (0-3s)</div>
+        <div class="info-text">"Aquela fase onde nada parece funcionar? Não é o fim. É exatamente o meio."</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Desenvolvimento (3-30s)</div>
+        <div class="info-text">Eu sei como é. Você fez tudo certo. O lançamento, o funil, o conteúdo. E mesmo assim os números caíram. Os seguidores pararam. As vendas esfriaram. E começa aquela voz: "será que eu perdi a mão?" "Será que o mercado mudou e eu não percebi?" "Será que acabou pra mim?" Não. Não acabou. Você está num lugar que toda mulher que cresce de verdade passa. É o espaço entre quem você era e quem você está se tornando. E esse espaço é silencioso. Confuso. Solitário.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Virada / Insight (30-45s)</div>
+        <div class="info-text">Transição parece fracasso porque ninguém documenta o meio. A gente só vê o antes e o depois. Mas o meio é onde tudo acontece. É onde você larga o que não serve mais e começa a construir o que realmente é seu. Se está difícil agora, pode ser o sinal mais claro de que algo grande está nascendo.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">CTA (45-60s)</div>
+        <div class="info-text">Se você está nesse lugar agora, eu preciso que você salve esse vídeo. E que leia o que vou escrever na legenda. Porque foi feito pra você. Nesse momento. Nessa fase.</div>
+      </div>
+
+      <div class="callout-c callout-gold">
+        <p><strong>Formato:</strong> Talking head, câmera close, tom acolhedor mas firme. Iluminação mais quente. Sem cortes rápidos. Música suave de fundo a partir dos 20s. Texto na tela: "transição parece fracasso".</p>
+      </div>
+
+      <div class="legenda-box" style="background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 10px;">
+        <strong style="color: var(--ouro-deep);">Legenda sugerida:</strong><br>
+        Quando tudo para, parece o fim.<br>
+        Parece que você perdeu a mão. Que o mercado te deixou pra trás.<br>
+        Mas não é isso.<br>
+        É transição. É o meio do caminho.<br>
+        O lugar onde quem você era morre pra quem você está virando poder nascer.<br>
+        Ninguém documenta o meio. Mas é no meio que tudo acontece.<br>
+        Fica. Respira. Você está exatamente onde precisa estar.<br>
+        Salva e manda pra alguém que precisa ouvir isso hoje.
+      </div>
+
+      <div class="hashtags">#transição #empreendedorismofeminino #processo #mentalidade #isismoreira #donasdoouro #crescimento #fé</div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>14</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

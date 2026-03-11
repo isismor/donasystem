@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Análise de Reels @rony — Top 10 por Visualizações</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .cover-c {
+    background: var(--cacao);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 64px;
+  }
+  .cover-c .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ouro);
+    margin-bottom: 28px;
+  }
+  .cover-c .title {
+    font-family: var(--serif);
+    font-size: 52px;
+    line-height: 1.05;
+    color: var(--marfim);
+    margin-bottom: 20px;
+    max-width: 560px;
+  }
+  .cover-c .title em { font-style: italic; }
+  .cover-c .title .gold { color: var(--ouro); }
+  .cover-c .rule {
+    width: 120px;
+    height: 2px;
+    background: var(--ouro);
+    margin: 0 auto 20px auto;
+  }
+  .cover-c .subtitle {
+    font-size: 16px;
+    color: var(--ouro-pale);
+    line-height: 1.6;
+    max-width: 420px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .cover-c .meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--ouro-deep);
+    text-transform: uppercase;
+  }
+
+  .inner-c {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .inner-c.bg-marfim { background: var(--marfim); }
+  .inner-c.bg-creme { background: var(--creme); }
+
+  .header-c {
+    padding: 36px 72px 14px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .header-c .left {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+  .header-c .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ouro-pale);
+  }
+  .header-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+
+  .body-c {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 28px 72px 0 72px;
+  }
+
+  .footer-c {
+    padding: 14px 72px 28px 72px;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+  .footer-c span {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+
+  .sec-c {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 10px;
+  }
+  .title-c {
+    font-family: var(--serif);
+    font-size: 38px;
+    line-height: 1.08;
+    color: var(--cacao);
+    margin-bottom: 20px;
+    max-width: 520px;
+  }
+  .title-c em { font-style: italic; }
+  .title-c .gold { color: var(--ouro); }
+
+  .text-c {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--cacao);
+    margin-bottom: 12px;
+    max-width: 480px;
+  }
+  .lead-c {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ouro-deep);
+    margin-bottom: 20px;
+    max-width: 480px;
+    font-weight: 400;
+  }
+
+  .callout-c {
+    padding: 16px 24px;
+    margin: 8px 0;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .callout-c p {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .callout-dark {
+    background: var(--cacao);
+    color: var(--marfim);
+  }
+  .callout-dark p { color: var(--marfim); }
+  .callout-dark strong { color: var(--ouro); }
+  .callout-ouro {
+    background: var(--ouro);
+    color: var(--cacao);
+  }
+  .callout-ouro p { color: var(--cacao); }
+  .callout-ouro strong { color: var(--cacao); font-weight: 700; }
+  .callout-marfim {
+    background: var(--marfim);
+    border: 1px solid var(--ouro-pale);
+    color: var(--cacao);
+  }
+  .callout-marfim p { color: var(--cacao); }
+  .callout-marfim strong { color: var(--ouro-deep); }
+  .callout-gold {
+    background: rgba(180,166,140,.15);
+    border: 1px solid rgba(180,166,140,.35);
+    color: var(--cacao);
+  }
+  .callout-gold p { color: var(--cacao); }
+  .callout-gold strong { color: var(--ouro-deep); }
+
+  .info-box {
+    padding: 18px 24px;
+    margin: 8px 0;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .info-box .info-title {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .info-box .info-text {
+    font-size: 12px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .info-box.box-ouro {
+    background: var(--ouro);
+  }
+  .info-box.box-ouro .info-title { color: var(--cacao); }
+  .info-box.box-ouro .info-text { color: var(--cacao); opacity: 0.85; }
+  .info-box.box-dark {
+    background: var(--cacao);
+  }
+  .info-box.box-dark .info-title { color: var(--ouro); }
+  .info-box.box-dark .info-text { color: var(--marfim); opacity: 0.85; }
+  .info-box.box-creme {
+    background: var(--creme);
+    border: 1px solid rgba(180,166,140,.25);
+  }
+  .info-box.box-creme .info-title { color: var(--cacao); }
+  .info-box.box-creme .info-text { color: var(--cacao); opacity: 0.8; }
+
+  .metric-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    max-width: 480px;
+  }
+  .metric-box {
+    flex: 1;
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: center;
+  }
+  .metric-box .metric-val {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .metric-box .metric-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 2px;
+  }
+
+  .h3-c {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--cacao);
+    margin-bottom: 6px;
+    margin-top: 16px;
+  }
+
+  .caption-box {
+    background: rgba(180,166,140,.10);
+    border-left: 3px solid var(--ouro);
+    padding: 12px 16px;
+    margin: 8px 0;
+    border-radius: 0 8px 8px 0;
+    max-width: 480px;
+  }
+  .caption-box p {
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--cacao);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .sq-dot {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    background: var(--ouro);
+    border-radius: 2px;
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .pattern-list {
+    list-style: none;
+    max-width: 480px;
+  }
+  .pattern-list li {
+    padding: 10px 0;
+    font-size: 13px;
+    color: var(--cacao);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-bottom: 1px solid rgba(180,166,140,.15);
+    line-height: 1.5;
+  }
+  .pattern-list li:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page">
+  <div class="cover-c">
+    <div class="label">Vega · Pesquisa de Referência</div>
+    <div class="title">Análise de Reels <em>@rony</em> <span class="gold">Top 10</span> por Visualizações</div>
+    <div class="rule"></div>
+    <div class="subtitle">930k seguidores. 4.579 publicações. O que faz um reel passar de 7 milhões de views em uma semana.</div>
+    <div class="meta">Isis Moreira · Março 2026 · 13 páginas</div>
+  </div>
+</div>
+
+<!-- PÁGINA 2: Visão Geral - bg marfim -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Análise @rony</span>
+      <span class="num">01</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Visão Geral</div>
+      <div class="title-c">Rony Meisler: o <em>empreendedor</em> que virou <span class="gold">creator</span></div>
+
+      <p class="lead-c">Fundador da Reserva (exit ~R$1bi), autor, palestrante, investidor. 930k seguidores no Instagram. Conteúdo sobre empreendedorismo, comportamento e opinião.</p>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Perfil do conteúdo</div>
+        <div class="info-text">Rony fala direto para câmera, com opinião forte, sobre temas que estão no centro da conversa cultural brasileira. Não faz dancinhas. Não segue trends de áudio. A trend dele é a pauta do momento.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Formato dominante</div>
+        <div class="info-text">Talking head. Câmera fixa ou leve movimento. Sem cortes rápidos. Sem texto na tela. A força está na narrativa falada e na capacidade de prender pela história.</div>
+      </div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Performance do top 10</div>
+        <div class="info-text">Os 10 reels mais visualizados somam 10.2 milhões de views, 574k likes e 80k comentários. O reel #1 sozinho representa 73% do total de views.</div>
+      </div>
+
+      <p class="text-c" style="margin-top: 12px;">A análise a seguir examina cada reel individualmente: conteúdo, métricas, e o mecanismo que gerou performance.</p>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>02</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 3: Reel #1 - bg creme -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Reel #1</span>
+      <span class="num">02</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 1 · DVcNpJJCeBj</div>
+      <div class="title-c">Salvem os seus <em>filhos</em> desse <span class="gold">vício</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">7.4M</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">394k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">46k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>"Pela primeira vez na história a geração atual é menos inteligente do que a geração passada, e a grande verdade é que carregamos o vilão dessa situação para todo canto, dentro dos nossos próprios bolsos. Por isso, a mensagem desse vídeo é bem clara e direta: SALVEM OS SEUS FILHOS DESSE VÍCIO!"</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Tema universal com urgência emocional.</strong> Vício em celular entre crianças é uma dor coletiva. Pais sentem culpa e medo. Rony não dá aula: acusa, nomeia o vilão ("dentro dos seus bolsos") e ativa o instinto protetor.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Polarização proposital.</strong> A frase "SALVEM OS SEUS FILHOS" funciona como gatilho de compartilhamento. Quem concorda salva e envia. Quem discorda comenta. 46 mil comentários confirmam.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Dado concreto na abertura.</strong> "Pela primeira vez na história a geração atual é menos inteligente" funciona como hook factual que gera curiosidade imediata.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>03</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 4: Reel #2 - bg marfim -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Reel #2</span>
+      <span class="num">03</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 2 · DVa_d2LgEuo</div>
+      <div class="title-c">Demissão na <em>madrugada</em> do <span class="gold">Flamengo</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">697k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">47k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">2.9k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>"O cara que ganhou a Libertadores, um técnico e ex jogador exemplar dentro e fora do campo que assumiu o Flamengo num momento de pressão máxima sem muita experiência profissional e deu tudo ao clube, foi demitido na madrugada depois de entregar uma goleada, sem despedida. Qual é a mensagem que isso manda pro elenco? Pro próximo técnico? Pra qualquer pessoa que for trabalhar no clube?"</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Sequestro de pauta esportiva.</strong> Rony pega um assunto de futebol (maior audiência do Brasil) e transforma em lição de gestão de pessoas. Atrai quem veio pelo Flamengo e retém quem ficou pela reflexão empresarial.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Perguntas retóricas em sequência.</strong> "Qual é a mensagem pro elenco? Pro próximo técnico? Pra qualquer pessoa?" Cada pergunta amplia o escopo. De futebol para carreira para vida.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Indignação calibrada.</strong> Não xinga. Não grita. Faz as perguntas que o público já está se fazendo. Isso gera identificação e compartilhamento.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>04</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 5: Reel #3 - bg creme -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Reel #3</span>
+      <span class="num">04</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 3 · DVUckbYifaE</div>
+      <div class="title-c">Enquanto tem bambu, tem <span class="gold">flecha</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">630k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">48k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">4.8k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>"Enquanto tem bambu, tem flecha... É isso que uma pessoa confiante sempre pensa. Enquanto ela está viva, ainda dá pra tentar! Foi o que essa neurocientista descobriu, o poder de confiar em si próprio."</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Metáfora como hook.</strong> "Enquanto tem bambu, tem flecha" é uma frase que para o scroll. Gera curiosidade: o que isso significa? O dedo não desliza enquanto a mente não resolve o enigma.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Ciência como validação.</strong> Mencionar uma neurocientista dá peso ao argumento emocional. Não é autoajuda vazia: é autoajuda com respaldo.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Mensagem salvável.</strong> Conteúdo motivacional com profundidade gera saves. Quem não quer compartilhar salva pra rever. Alto ratio de likes/views (7.6%) confirma engajamento profundo.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>05</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 6: Reel #4 - bg marfim -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Reel #4</span>
+      <span class="num">05</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 4 · DVnrgU0gGaR</div>
+      <div class="title-c">O Rony é que é o <em>marido</em> da <span class="gold">Anne</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">370k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">37k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">3.2k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>Homenagem ao Dia da Mulher contando a história de sua esposa Anne, que construiu um império de design (LZ Estúdio) a partir de uma fábrica de fibra de vidro, sem investidores. 5 negócios, 30% de crescimento anual. Finaliza: "Tolinhos! O Rony é que é o marido da Anne."</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Storytelling pessoal com arco completo.</strong> Origem humilde > conquista > revelação emocional. A história da Anne tem conflito (mulher em mundo machista), virada (fez com metade do orçamento), e plot twist (é a esposa dele).</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Vulnerabilidade masculina.</strong> Um CEO dizendo publicamente "sem ela, eu não sou e nunca fui" gera reação emocional intensa. Mulheres compartilham como aspiração. Homens compartilham como referência.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Data comemorativa como amplificador.</strong> Publicado no Dia da Mulher. O algoritmo favorece conteúdo alinhado com a conversa do momento. A pauta social + a história pessoal = distribuição massiva.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>06</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 7: Reel #5 - bg creme -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Reel #5</span>
+      <span class="num">06</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 5 · DVj79dSCStm</div>
+      <div class="title-c">Essa IA pode <em>revolucionar</em> sua forma de <span class="gold">aprender</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">298k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">19k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">15.9k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>"Aprenda do seu jeito com o learn your way. Essa IA pode revolucionar sua forma de aprender e estudar!"</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-marfim">
+        <p><strong>CTA massivo nos comentários.</strong> 15.9k comentários com apenas 298k views indica um CTA forte (provavelmente "comenta X pra receber o link"). Esse ratio de 5.3% de comentários/views é o mais alto do top 10.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Tema tech + educação.</strong> IA aplicada ao aprendizado é um tema que ressoa com o público de Rony: empreendedores que querem vantagem competitiva. O produto é a ponte entre curiosidade e ação.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Conteúdo como funil.</strong> Reel funciona como topo de funil para um produto/serviço. Os 15.9k comentários são leads qualificados que manifestaram interesse ativo.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>07</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 8: Reel #6 - bg marfim -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Reel #6</span>
+      <span class="num">07</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 6 · DVr0jBRiTwZ</div>
+      <div class="title-c">Ame ou odeie a <em>Virgínia</em>, a fofoca é o <span class="gold">espelho</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">160k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">7.7k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">904</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>Análise da Virgínia Fonseca na Sapucaí: enquanto 600k assistiam no Twitch (recorde Brasil), ela era vaiada. Rony destrincha a creator economy (US$5.4bi no Brasil), cita Léo Dias (120 funcionários, 6bi views/mês) e o antropólogo Michel Alcoforado. Conclui: "A fofoca não é o espelho quebrado da sociedade, ela é o espelho."</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Camadas de profundidade.</strong> Começa com fofoca (retém), entra em análise de mercado (agrega valor), termina com reflexão sociológica (diferencia). Três níveis de leitura no mesmo reel.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Dados como âncora.</strong> "5.4 bilhões de dólares", "120 funcionários", "6 bilhões de visualizações por mês". Números tornam a opinião em análise. O público salva e compartilha dados, não opiniões.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Assumir o que ninguém assume.</strong> "Sou assumidamente fofoqueiro." Essa vulnerabilidade destrói a distância entre creator e audiência. Se ele pode ser fofoqueiro e bilionário, a audiência se permite também.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>08</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 9: Reel #7 - bg creme -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Reel #7</span>
+      <span class="num">08</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 7 · DVex2YyiUEu</div>
+      <div class="title-c">Arbitragem do <em>beisebol</em> aplicada à <span class="gold">negociação</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">151k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">7.7k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">2.7k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>"No beisebol, quando o jogador e o time não chegam ao acordo salarial cada lado apresenta um número e um árbitro escolhe um dos dois, sem meio termo. Isso força as duas partes a fazerem propostas realistas. E essa lógica pode ser aplicada em qualquer tipo de negociação."</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Analogia inesperada.</strong> Beisebol e negociação não têm conexão óbvia. Essa fricção cognitiva gera curiosidade. O público fica pra entender a ponte entre os dois mundos.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Conteúdo aplicável.</strong> Não é teoria. É uma técnica que o espectador pode usar na próxima negociação. Conteúdo aplicável gera saves e compartilhamento com colegas de trabalho.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Ratio engajamento/views alto.</strong> 5.1% de likes e 1.8% de comentários indica audiência qualificada e engajada. Conteúdo de nicho performa com profundidade, não volume.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>09</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 10: Reel #8 - bg marfim -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Reel #8</span>
+      <span class="num">09</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 8 · DVXD1f-CRRu</div>
+      <div class="title-c">Amanhã é segunda, bom dia pra <span class="gold">começar</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">139k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">—</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">219</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>"Amanhã é segunda, bom dia pra começar!"</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Simplicidade radical.</strong> Uma frase. Sem explicação. Sem elaboração. Funciona como mantra compartilhável. O poder está na brevidade.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Timing perfeito.</strong> Publicado domingo à noite, quando a ansiedade de segunda atinge o pico. O conteúdo encontra a emoção exata no momento exato.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Formato snackable.</strong> Reels curtos com mensagem direta têm taxa de rewatch alta. 139k views com uma frase indica que o formato visual ou a entrega compensaram a brevidade do texto.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>10</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 11: Reel #9 - bg creme -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Reel #9</span>
+      <span class="num">10</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 9 · DVgdQD0AOJa</div>
+      <div class="title-c">Rebels Ventures investe na <em>Blank</em> <span class="gold">School</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">119k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">4.2k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--cacao);">
+          <div class="metric-val" style="color: var(--ouro);">3.1k</div>
+          <div class="metric-label" style="color: var(--ouro-pale);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>"É com muita alegria que venho aqui anunciar o novo investimento da Rebels Ventures! A Blank School não é só uma escola da nova economia, ela é uma revolução nacional na forma de se fazer marketing. Envia nos comentários a palavra INFLUENTE que eu te mando o link de inscrição por direct."</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Social proof como hook.</strong> "Eles cuidam das minhas redes e elas cresceram absurdamente." A prova está na performance dele mesmo. Quem segue Rony viu o crescimento acontecer em tempo real.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>CTA com palavra-chave.</strong> "Comenta INFLUENTE." 3.1k comentários em 119k views = 2.6% ratio de comentários. O mecanismo de DM automático transforma reel em funil de captação.</p>
+      </div>
+      <div class="callout-c callout-marfim">
+        <p><strong>Anúncio disfarçado de conteúdo.</strong> O reel conta uma história de investimento antes de vender. O pitch vem depois que o interesse já foi construído pela narrativa.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>11</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 12: Reel #10 - bg marfim -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Reel #10</span>
+      <span class="num">11</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Top 10 · DVuOil9CaFj</div>
+      <div class="title-c">Serviços <em>públicos</em> e gente <span class="gold">competente</span></div>
+
+      <div class="metric-row">
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">109k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Views</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">7.4k</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Likes</div>
+        </div>
+        <div class="metric-box" style="background: var(--ouro);">
+          <div class="metric-val" style="color: var(--cacao);">556</div>
+          <div class="metric-label" style="color: var(--ouro-deep);">Comentários</div>
+        </div>
+      </div>
+
+      <div class="caption-box">
+        <p>"Quando queremos, fazemos algo maravilhoso, mas quando falta atitude e gente competente que quer realmente ajudar o povo, aí são serviços como esse, como do gov.br que nos atormentam. Passou da hora de colocarmos gente competente que JÁ CONSTRUIU, já encontrou soluções, pra executar serviços públicos."</p>
+      </div>
+
+      <div class="h3-c">O que funciona</div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Dor coletiva + solução provocativa.</strong> Todo brasileiro já sofreu com burocracia pública. Rony não apenas reclama: propõe que empreendedores assumam a execução. Isso ativa o público dele diretamente.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Ratio likes/views de 6.8%.</strong> O mais alto do top 10 depois do #3. Indica concordância forte. O público não só assistiu: validou com o like.</p>
+      </div>
+      <div class="callout-c callout-ouro">
+        <p><strong>Posicionamento como cidadão.</strong> Rony sai do papel de empresário e assume o papel de cidadão indignado. Essa migração de persona amplia o alcance além da bolha empreendedora.</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>12</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 13: Padrões e Aplicação - bg creme -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Conclusão</span>
+      <span class="num">12</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Padrões Identificados</div>
+      <div class="title-c">O que Isis pode <em>aplicar</em> <span class="gold">agora</span></div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">1. Sequestrar a pauta do momento</div>
+        <div class="info-text">7 dos 10 reels conectam um tema trending (Flamengo, Virgínia, celulares, IA) com a expertise do creator. Isis pode fazer o mesmo: pegar a notícia do dia e conectar com negócios, mentalidade ou tecnologia para mulheres.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">2. Dados concretos no hook</div>
+        <div class="info-text">Rony abre com números: "7.4M", "5.4 bilhões", "pela primeira vez na história". Números param o scroll porque o cérebro tenta processar a escala. Isis deve abrir com dado, não com pergunta retórica.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">3. Opinião forte com indignação calibrada</div>
+        <div class="info-text">Não grita. Não xinga. Faz perguntas que o público já está se fazendo. A indignação gera compartilhamento. Isis pode trazer opinião firme sobre dores reais de mulheres empreendedoras sem apelar.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">4. CTA como mecanismo de funil</div>
+        <div class="info-text">2 dos 10 reels usam "comenta X pra receber o link". Juntos somam 19k comentários. Isis pode aplicar em lançamentos, iscas digitais, e captação de leads diretamente pelo reel.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">5. Storytelling pessoal como diferencial</div>
+        <div class="info-text">O reel da Anne (370k views) prova que histórias pessoais com arco narrativo completo geram engajamento profundo. Isis tem 10 anos de empreendedorismo, 40 mil alunas, e uma jornada que ninguém mais tem. Usar.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">6. Formato talking head, narrativa longa</div>
+        <div class="info-text">Os 10 reels são talking head sem edição elaborada. Sem cortes rápidos. Sem texto overlay. A retenção vem da história, não do formato. Isis não precisa de produção pesada: precisa de pauta boa.</div>
+      </div>
+
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Vega · Isis Moreira</span>
+      <span>13</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

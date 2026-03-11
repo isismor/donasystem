@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Perfeita · Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--marfim:#f9f8f4;--creme:#efede6;--cacao:#2a2420;--mirror:#9ba1a8;--ouro:#b4a68c;--ouro-pale:#d4cec4;--ouro-deep:#7a6e5c;--cacao-04:rgba(42,36,32,.04);--cacao-06:rgba(42,36,32,.06);--marfim-06:rgba(249,248,244,.06);--marfim-35:rgba(249,248,244,.35);--ouro-10:rgba(180,166,140,.09);--ouro-20:rgba(180,166,140,.20);--ouro-30:rgba(180,166,140,.30);--dark-0:#1a1210;--sans:'DM Sans',sans-serif;--serif:'DM Serif Text',serif;--mono:'IBM Plex Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}::selection{background:var(--ouro);color:var(--cacao)}
+body{font-family:var(--sans);background:var(--cacao);color:var(--marfim);overflow:hidden;height:100vh;width:100vw}
+.deck{width:100vw;height:100vh;position:relative}
+.slide{position:absolute;inset:0;display:flex;opacity:0;pointer-events:none;transition:opacity .6s cubic-bezier(.4,0,.2,1)}.slide.active{opacity:1;pointer-events:all;z-index:2}
+.slide-inner{width:100%;height:100%;padding:56px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.eyebrow{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--ouro);margin-bottom:16px;display:block}
+.slide-title{font-family:var(--serif);font-style:italic;font-size:clamp(36px,4.5vw,64px);color:var(--marfim);letter-spacing:-1.5px;line-height:1.05;margin-bottom:20px;max-width:75%}
+.slide-title em{font-style:italic;color:var(--ouro)}.slide-subtitle{font-size:clamp(15px,1.4vw,18px);color:var(--marfim-35);font-weight:300;line-height:1.65;max-width:600px}
+.slide-number{position:absolute;top:48px;right:80px;font-family:var(--serif);font-style:italic;font-size:clamp(72px,8vw,120px);color:rgba(249,248,244,.04);line-height:1;pointer-events:none;user-select:none}
+.slide-footer{position:absolute;bottom:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 80px;border-top:1px solid var(--marfim-06)}
+.footer-logo{font-size:11px;font-weight:300;letter-spacing:4px;text-transform:uppercase;color:rgba(249,248,244,.25)}.footer-logo b{font-weight:700;color:rgba(249,248,244,.35)}
+.footer-page{font-family:var(--mono);font-size:10px;color:rgba(249,248,244,.2);letter-spacing:1px}
+.bg-dark{background:var(--cacao)}.bg-marfim{background:var(--marfim)}.bg-creme{background:var(--creme)}.bg-deep{background:var(--dark-0)}
+.bg-marfim .slide-title,.bg-creme .slide-title{color:var(--cacao)}.bg-marfim .slide-title em,.bg-creme .slide-title em{color:var(--ouro-deep)}
+.bg-marfim .eyebrow,.bg-creme .eyebrow{color:var(--ouro-deep)}.bg-marfim .slide-subtitle,.bg-creme .slide-subtitle{color:rgba(42,36,32,.5)}
+.bg-marfim .slide-number,.bg-creme .slide-number{color:var(--cacao-04)}
+.bg-marfim .slide-footer,.bg-creme .slide-footer{border-top-color:var(--cacao-06)}
+.bg-marfim .footer-logo,.bg-creme .footer-logo{color:rgba(42,36,32,.2)}.bg-marfim .footer-logo b,.bg-creme .footer-logo b{color:rgba(42,36,32,.35)}
+.bg-marfim .footer-page,.bg-creme .footer-page{color:rgba(42,36,32,.15)}
+.card-grid{display:grid;gap:20px;margin-top:28px}.card-grid-2{grid-template-columns:1fr 1fr}.card-grid-3{grid-template-columns:1fr 1fr 1fr}
+.card{background:rgba(249,248,244,.04);border:1px solid var(--marfim-06);border-radius:10px;padding:24px 28px;transition:background .3s}.card:hover{background:rgba(249,248,244,.06)}
+.bg-marfim .card,.bg-creme .card{background:rgba(42,36,32,.03);border-color:rgba(180,166,140,.25)}.bg-marfim .card:hover,.bg-creme .card:hover{background:rgba(42,36,32,.05)}
+.card-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ouro);margin-bottom:10px;display:block}
+.bg-marfim .card-label,.bg-creme .card-label{color:var(--ouro-deep)}
+.card-title{font-family:var(--serif);font-style:italic;font-size:20px;margin-bottom:8px;line-height:1.2;letter-spacing:-.3px}
+.card-desc{font-size:13px;font-weight:300;line-height:1.6;opacity:.55}
+.flow-box{background:var(--dark-0);border:1px solid var(--marfim-06);border-radius:10px;padding:20px 24px;margin-top:20px;max-width:700px}
+.bg-marfim .flow-box,.bg-creme .flow-box{background:var(--cacao)}.flow-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ouro);margin-bottom:10px;display:block}
+.flow-steps{font-size:14px;font-weight:300;color:rgba(249,248,244,.6);line-height:1.7}.flow-arrow{color:var(--ouro);margin:0 4px;font-size:12px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;max-width:700px}
+.result-card{background:rgba(249,248,244,.04);border:1px solid var(--marfim-06);border-left:3px solid var(--ouro);border-radius:0 10px 10px 0;padding:18px 22px}
+.bg-marfim .result-card,.bg-creme .result-card{background:rgba(42,36,32,.03);border-color:rgba(180,166,140,.2);border-left-color:var(--ouro-deep)}
+.result-title{font-size:13px;font-weight:600;margin-bottom:5px}.bg-marfim .result-title,.bg-creme .result-title{color:var(--cacao)}.result-desc{font-size:12px;font-weight:300;line-height:1.55;opacity:.5}
+.quote-box{background:var(--dark-0);border-radius:10px;padding:32px 36px;margin-top:24px;max-width:640px;border:1px solid rgba(180,166,140,.1)}
+.bg-marfim .quote-box,.bg-creme .quote-box{background:var(--cacao)}.quote-text{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2vw,24px);color:var(--marfim);line-height:1.4;letter-spacing:-.3px}
+.quote-author{font-family:var(--mono);font-size:9px;color:var(--ouro);letter-spacing:3px;text-transform:uppercase;margin-top:14px;display:block}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;flex:1}
+.closing-highlights{display:flex;flex-direction:column;gap:14px;margin-top:28px;max-width:700px}
+.highlight-row{display:flex;align-items:baseline;gap:16px}.highlight-key{font-size:14px;font-weight:600;color:var(--ouro);white-space:nowrap;min-width:180px}
+.highlight-val{font-size:13px;font-weight:300;color:rgba(249,248,244,.5);line-height:1.55}
+.cover-content{display:flex;flex-direction:column;justify-content:center;flex:1;position:relative}
+.cover-symbol{font-size:18px;color:var(--ouro);margin-bottom:32px}.cover-title{font-family:var(--serif);font-style:italic;font-size:clamp(44px,5.5vw,78px);color:var(--marfim);letter-spacing:-2px;line-height:1.0;margin-bottom:24px;max-width:80%}
+.cover-title em{color:var(--ouro)}.cover-desc{font-size:16px;font-weight:300;color:rgba(249,248,244,.45);line-height:1.65;max-width:540px;margin-bottom:48px}
+.cover-meta{display:flex;align-items:center;gap:24px}.cover-meta-item{font-family:var(--mono);font-size:10px;color:rgba(249,248,244,.3);letter-spacing:2px;text-transform:uppercase}
+.cover-meta-divider{width:1px;height:12px;background:rgba(249,248,244,.1)}.cover-bg-text{position:absolute;right:-20px;bottom:40px;font-family:var(--serif);font-style:italic;font-size:clamp(120px,16vw,220px);color:rgba(249,248,244,.03);letter-spacing:-6px;line-height:1;pointer-events:none;user-select:none;white-space:nowrap}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.pill{font-family:var(--mono);font-size:11px;color:rgba(249,248,244,.6);background:rgba(249,248,244,.04);border:1px solid rgba(249,248,244,.08);border-radius:6px;padding:8px 16px;letter-spacing:.5px;transition:all .2s}.pill:hover{background:rgba(180,166,140,.1);border-color:var(--ouro-30);color:var(--ouro)}
+.nav-controls{position:fixed;bottom:20px;right:24px;display:flex;gap:8px;z-index:100}
+.nav-btn{width:40px;height:40px;border-radius:8px;border:1px solid rgba(249,248,244,.1);background:rgba(42,36,32,.8);backdrop-filter:blur(12px);color:rgba(249,248,244,.5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .2s}.nav-btn:hover{background:rgba(180,166,140,.15);border-color:var(--ouro-30);color:var(--ouro)}
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--ouro);transition:width .4s cubic-bezier(.4,0,.2,1);z-index:100}
+.slide.active .eyebrow,.slide.active .slide-title,.slide.active .cover-symbol,.slide.active .cover-title,.slide.active .cover-desc,.slide.active .cover-meta,.slide.active .slide-subtitle{animation:fadeUp .6s cubic-bezier(.4,0,.2,1) both}
+.slide.active .eyebrow{animation-delay:.1s}.slide.active .slide-title,.slide.active .cover-title{animation-delay:.2s}.slide.active .slide-subtitle,.slide.active .cover-desc{animation-delay:.3s}.slide.active .cover-meta{animation-delay:.4s}
+.slide.active .card,.slide.active .flow-box,.slide.active .result-card,.slide.active .quote-box,.slide.active .highlight-row{animation:fadeUp .5s cubic-bezier(.4,0,.2,1) both}
+.slide.active .card:nth-child(1),.slide.active .highlight-row:nth-child(1){animation-delay:.3s}.slide.active .card:nth-child(2),.slide.active .highlight-row:nth-child(2){animation-delay:.4s}
+.slide.active .card:nth-child(3),.slide.active .highlight-row:nth-child(3){animation-delay:.5s}.slide.active .card:nth-child(4),.slide.active .highlight-row:nth-child(4){animation-delay:.55s}
+.slide.active .card:nth-child(5),.slide.active .highlight-row:nth-child(5){animation-delay:.6s}.slide.active .card:nth-child(6),.slide.active .highlight-row:nth-child(6){animation-delay:.65s}
+.slide.active .result-card:nth-child(1){animation-delay:.4s}.slide.active .result-card:nth-child(2){animation-delay:.5s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="deck" id="deck">
+
+<!-- CAPA -->
+<div class="slide bg-dark active" data-slide="0">
+<div class="slide-inner"><div class="cover-content">
+<span class="cover-symbol">✦</span>
+<h1 class="cover-title">A anatomia da <em>copy perfeita</em></h1>
+<p class="cover-desc">Os frameworks de Michael Masterson, Gary Halbert e Chip Heath aplicados na prática. Não é fórmula mágica. É arquitetura.</p>
+<div class="cover-meta"><span class="cover-meta-item">Isis Moreira</span><div class="cover-meta-divider"></div><span class="cover-meta-item">Março 2026</span><div class="cover-meta-divider"></div><span class="cover-meta-item">15 Slides</span></div>
+</div><div class="cover-bg-text">Copy</div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">MASTERMIND</span></div>
+</div></div>
+
+<!-- 01: O ERRO -->
+<div class="slide bg-marfim" data-slide="1">
+<div class="slide-inner"><span class="slide-number">01</span>
+<span class="eyebrow">O erro fundamental</span>
+<h2 class="slide-title">Copy não é <em>escrever bonito</em></h2>
+<p class="slide-subtitle">A maioria escreve copy como se fosse redação de escola. O que vende não é estilo. É arquitetura.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">O que as pessoas fazem</span><p class="card-desc">Escrevem o que acham bonito. Usam frases de efeito. Copiam fórmulas de carrossel. Resultado: copy genérica que parece IA.</p></div>
+<div class="card"><span class="card-label">O que funciona</span><p class="card-desc">Entender o que o prospect sente, pensa e deseja ANTES de escrever uma única linha. Depois construir uma estrutura que guia ele até a decisão.</p></div>
+<div class="card"><span class="card-label">A diferença</span><p class="card-desc">Copy boa é invisível. O leitor não sente que está sendo vendido. Sente que encontrou exatamente o que precisava.</p></div>
+</div>
+<div class="quote-box"><p class="quote-text">"Uma boa escrita é a expressão clara de ideias interessantes e úteis, apoiadas por evidências persuasivas e apresentadas em uma voz autêntica."</p><span class="quote-author">✦ Michael Masterson</span></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">01 / 15</span></div>
+</div></div>
+
+<!-- 02: OS 5 ELEMENTOS -->
+<div class="slide bg-dark" data-slide="2">
+<div class="slide-inner"><span class="slide-number">02</span>
+<span class="eyebrow">Architecture of Persuasion</span>
+<h2 class="slide-title">Os 5 elementos de toda <em>copy</em></h2>
+<p class="slide-subtitle">Masterson compara a copy com uma conquista romântica. Cada etapa tem propósito, problema e possibilidade.</p>
+<div class="card-grid card-grid-3" style="max-width:900px;">
+<div class="card"><span class="card-label">Emocional</span><div class="card-title">1. Teaser</div><p class="card-desc">Faz o prospect abrir. Não vende. Gera curiosidade. O melhor teaser é indireto.</p></div>
+<div class="card"><span class="card-label">Emocional</span><div class="card-title">2. Headline</div><p class="card-desc">Reforça o teaser. Consistência emocional. Se o teaser criou uma expectativa, a headline confirma.</p></div>
+<div class="card"><span class="card-label">Emocional</span><div class="card-title">3. Lead</div><p class="card-desc">Faz 80% do trabalho. Conquista o coração. Se o lead for bom, o resto só sustenta o momentum.</p></div>
+<div class="card"><span class="card-label">Racional</span><div class="card-title">4. Argumento</div><p class="card-desc">Conquista a mente. Promessas + afirmações + provas. A razão justifica o que a emoção já decidiu.</p></div>
+<div class="card"><span class="card-label">Racional</span><div class="card-title">5. Fechamento</div><p class="card-desc">Elimina ceticismo. Fechamento falso: benefício extra inesperado. Surpreende e encanta.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">02 / 15</span></div>
+</div></div>
+
+<!-- 03: COMPLEXO EMOCIONAL -->
+<div class="slide bg-creme" data-slide="3">
+<div class="slide-inner"><span class="slide-number">03</span>
+<span class="eyebrow">O conceito mais importante</span>
+<h2 class="slide-title">Complexo <em>Emocional Central</em></h2>
+<p class="slide-subtitle">Esqueça "ganância e medo". As emoções que realmente vendem são mais profundas e menos óbvias.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Mais forte que medo</span><div class="card-title">Vergonha</div><p class="card-desc">O prospect nunca vai admitir. Mas é a vergonha que o move. Nunca nomeie diretamente.</p></div>
+<div class="card"><span class="card-label">Mais forte que ganância</span><div class="card-title">Inveja</div><p class="card-desc">"Se você quer ser como eu, faça o que eu fiz." Inveja não precisa ser negativa. Pode ser aspiracional.</p></div>
+<div class="card"><span class="card-label">Universal</span><div class="card-title">Solidão</div><p class="card-desc">Desejo evolutivo de pertencer. Todo produto que cria comunidade toca aqui.</p></div>
+<div class="card"><span class="card-label">Oculto</span><div class="card-title">Status social</div><p class="card-desc">Explica relógios de R$100.000. Ninguém admite, mas todo mundo quer.</p></div>
+<div class="card"><span class="card-label">Acumulada</span><div class="card-title">Exasperação</div><p class="card-desc">Frustração de não resolver problemas persistentes. "Já tentei tudo e nada funciona."</p></div>
+<div class="card"><span class="card-label">Regra de ouro</span><div class="card-title">Nunca nomeie</div><p class="card-desc">Dizer "Você tem vergonha?" provoca negação. Chegue ao sentimento por um ângulo indireto.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">03 / 15</span></div>
+</div></div>
+
+<!-- 04: FIO DOURADO -->
+<div class="slide bg-dark" data-slide="4">
+<div class="slide-inner"><span class="slide-number">04</span>
+<span class="eyebrow">Architecture of Persuasion</span>
+<h2 class="slide-title">O <em>Fio Dourado</em></h2>
+<p class="slide-subtitle">Uma vez que você descobre o Complexo Emocional Central, encapsule em uma ou duas frases. Essa frase conecta cada parágrafo da sua copy.</p>
+<div class="flow-box"><span class="flow-label">Como funciona</span><p class="flow-steps">Descubra o sentimento profundo <span class="flow-arrow">→</span> Encapsule em 1-2 frases <span class="flow-arrow">→</span> Conecte cada parágrafo a essa frase <span class="flow-arrow">→</span> Se um trecho não está conectado, corte</p></div>
+<div class="result-grid">
+<div class="result-card"><div class="result-title">Antes de escrever, pergunte</div><div class="result-desc">Onde o prospect estará quando ler? Que hora do dia? Quais são seus maiores medos? Qual desejo o frustra mais?</div></div>
+<div class="result-card"><div class="result-title">Durante a escrita</div><div class="result-desc">Cada parágrafo é um fio conectado ao mesmo pacote de energia emocional. Se desconectar, o leitor abandona.</div></div>
+</div>
+<div class="quote-box"><p class="quote-text">"Grandes cartas de vendas não dizem ao cliente o que pensar. Elas localizam os sentimentos e desejos do prospect e os estimulam."</p><span class="quote-author">✦ Michael Masterson</span></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">04 / 15</span></div>
+</div></div>
+
+<!-- 05: LEAD -->
+<div class="slide bg-marfim" data-slide="5">
+<div class="slide-inner"><span class="slide-number">05</span>
+<span class="eyebrow">Regra 80/20</span>
+<h2 class="slide-title">O lead faz <em>80% do trabalho</em></h2>
+<p class="slide-subtitle">A headline + primeiras 200-400 palavras. Se o lead for poderoso, o resto só sustenta.</p>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card"><span class="card-label">O que o lead deve fazer</span><p class="card-desc">Manter a atenção. Converter curiosidade em processo de pensamento. Declarar benefício imediato. Prometer benefício mais profundo. Neutralizar pensamentos negativos. Elevar desejo a nível irresistível.</p></div>
+<div class="card"><span class="card-label">A reação que você quer</span><p class="card-desc">"Isso é muito bom! Estou feliz por estar lendo isso!" Se o prospect pensar isso após o lead, a venda já está 80% feita.</p></div>
+</div>
+<div class="flow-box"><span class="flow-label">Processo de 12 passos (Masterson)</span><p class="flow-steps">Listar sentimentos do prospect <span class="flow-arrow">→</span> Classificar por intensidade <span class="flow-arrow">→</span> Escolher 1-2 para o lead <span class="flow-arrow">→</span> Identificar desejo recíproco <span class="flow-arrow">→</span> Listar ideias negativas <span class="flow-arrow">→</span> Escrever respostas positivas <span class="flow-arrow">→</span> Escrever 3 versões <span class="flow-arrow">→</span> Avaliar de 1 a 4 <span class="flow-arrow">→</span> Meta: nota 3.2+</p></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">05 / 15</span></div>
+</div></div>
+
+<!-- 06: TRÍADE -->
+<div class="slide bg-deep" data-slide="6">
+<div class="slide-inner"><span class="slide-number">06</span>
+<span class="eyebrow">Argumento de vendas</span>
+<h2 class="slide-title">A tríade: promessas, afirmações e <em>provas</em></h2>
+<p class="slide-subtitle">O lead conquista o coração. O argumento conquista a mente. O truque é satisfazer a mente sem perder o coração.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Nível 1</span><div class="card-title">Promessas</div><p class="card-desc">O que você vai fazer pelo cliente. Grandes ("Emagreça 10kg"), pequenas ("Como fazer X ter gosto de Y"), diretas e implícitas.</p></div>
+<div class="card"><span class="card-label">Nível 2</span><div class="card-title">Afirmações</div><p class="card-desc">Declarações que sustentam as promessas. Cada promessa precisa de pelo menos 1-2 afirmações de suporte.</p></div>
+<div class="card"><span class="card-label">Nível 3</span><div class="card-title">Provas</div><p class="card-desc">Estudos, argumentos lógicos, citações de autoridade, fatos, depoimentos, analogias. Cada afirmação precisa de prova.</p></div>
+</div>
+<div class="flow-box"><span class="flow-label">Verificação</span><p class="flow-steps">Destaque cada promessa <span class="flow-arrow">→</span> Procure 1-2 afirmações por promessa <span class="flow-arrow">→</span> Procure 1-2 provas por afirmação <span class="flow-arrow">→</span> Se não encontrar, volte à pesquisa</p></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">06 / 15</span></div>
+</div></div>
+
+<!-- 07: FECHAMENTO -->
+<div class="slide bg-dark" data-slide="7">
+<div class="slide-inner"><span class="slide-number">07</span>
+<span class="eyebrow">O momento da decisão</span>
+<h2 class="slide-title">Fechamento falso e <em>técnicas</em> de close</h2>
+<p class="slide-subtitle">O prospect já estava pronto para comprar. Agora surpreenda com algo a mais.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Técnica</span><div class="card-title">Fechamento falso</div><p class="card-desc">Antes do close real, revele um benefício extra inesperado. Muda a energia de "vou comprar" para "é ainda melhor do que eu imaginava".</p></div>
+<div class="card"><span class="card-label">Técnica</span><div class="card-title">Gota no oceano</div><p class="card-desc">Compare o preço com algo muito mais caro. "Se quisesse entrar no Clube X, pagaria R$5.000. Isso custa R$97."</p></div>
+<div class="card"><span class="card-label">Técnica</span><div class="card-title">Bônus liquidador</div><p class="card-desc">Ofereça um bônus cujo valor de varejo cobre o preço do produto. O cliente pensa: "O bônus já se pagou."</p></div>
+</div>
+<div class="quote-box"><p class="quote-text">"Não é só um fechamento. É uma surpresa que sinaliza: o relacionamento comercial vai ser cheio de surpresas agradáveis."</p><span class="quote-author">✦ Michael Masterson</span></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">07 / 15</span></div>
+</div></div>
+
+<!-- 08: BANCO DE 4 PÉS -->
+<div class="slide bg-creme" data-slide="8">
+<div class="slide-inner"><span class="slide-number">08</span>
+<span class="eyebrow">Copy Logic</span>
+<h2 class="slide-title">O teste do <em>banco de 4 pés</em></h2>
+<p class="slide-subtitle">Toda copy que converte tem 4 pés. Se um estiver faltando, o banco cai.</p>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card"><span class="card-label">Pé 1</span><div class="card-title">A Grande Ideia</div><p class="card-desc">Uma ideia unificadora que captura atenção, confirma crenças profundas e apela a desejos escondidos. Provoca: "Sim! Isso é tão verdade!"</p></div>
+<div class="card"><span class="card-label">Pé 2</span><div class="card-title">Promessa de benefícios</div><p class="card-desc">Não venda características. Vá além dos benefícios óbvios para os emocionais e identitários. "Você vai se sentir mais inteligente."</p></div>
+<div class="card"><span class="card-label">Pé 3</span><div class="card-title">Prova</div><p class="card-desc">Track record com números. Pesquisas independentes. Depoimentos reais. Fotos de antes e depois. Citações com aspas exatas.</p></div>
+<div class="card" style="border-color:var(--ouro-30);background:rgba(180,166,140,.08)"><span class="card-label">Pé 4 (o esquecido)</span><div class="card-title">Credibilidade</div><p class="card-desc">Quem está por trás é tão importante quanto o produto. Perfil pessoal, validação de terceiros, autoridades do setor. Adicionou 50% mais conversão na Agora.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">08 / 15</span></div>
+</div></div>
+
+<!-- 09: CUB -->
+<div class="slide bg-dark" data-slide="9">
+<div class="slide-inner"><span class="slide-number">09</span>
+<span class="eyebrow">Copy Logic</span>
+<h2 class="slide-title">Teste <em>CUB</em>: os 3 assassinos de copy</h2>
+<p class="slide-subtitle">Depois de escrever, passe o teste. Se o leitor sentir qualquer um dos três, ele para de ler.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">C</span><div class="card-title">Confuso</div><p class="card-desc">Pontos esotéricos, números demais numa frase, explicações vagas, distrações da ideia central. Solução: cortar, simplificar, especificar.</p></div>
+<div class="card"><span class="card-label">U</span><div class="card-title">Inverossímil</div><p class="card-desc">Argumento vago, provas insuficientes, clichês, fatos sem fonte, promessas exageradas. Solução: provar ou cortar.</p></div>
+<div class="card"><span class="card-label">B</span><div class="card-title">Tedioso</div><p class="card-desc">Falar o que o leitor já sabe, detalhes técnicos desnecessários, copy que se arrasta. Solução: ir direto ao ponto.</p></div>
+</div>
+<div class="flow-box"><span class="flow-label">Como aplicar</span><p class="flow-steps">Envie para 4-5 leitores variados <span class="flow-arrow">→</span> Instrução: marcar trechos C, U ou B <span class="flow-arrow">→</span> Se 2+ marcaram o mesmo trecho <span class="flow-arrow">→</span> Cortar ou reescrever</p></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">09 / 15</span></div>
+</div></div>
+
+<!-- 10: SUCESSOS -->
+<div class="slide bg-marfim" data-slide="10">
+<div class="slide-inner"><span class="slide-number">10</span>
+<span class="eyebrow">Ideias que Colam</span>
+<h2 class="slide-title">Framework <em>SUCESSOS</em></h2>
+<p class="slide-subtitle">Chip Heath e Dan Heath. Por que algumas ideias são lembradas para sempre e outras morrem em 5 segundos.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">S</span><div class="card-title">Simplicidade</div><p class="card-desc">Encontre a essência. "Quando você diz três coisas, não diz nada." Uma ideia central, clara, priorizada.</p></div>
+<div class="card"><span class="card-label">U</span><div class="card-title">Surpresa</div><p class="card-desc">Quebre um padrão esperado. O cérebro ignora o previsível. O inesperado gera atenção instantânea.</p></div>
+<div class="card"><span class="card-label">C</span><div class="card-title">Concretude</div><p class="card-desc">"87% dos jovens usam internet" vence "muitos jovens usam internet". Números, nomes, detalhes sensoriais.</p></div>
+<div class="card"><span class="card-label">C</span><div class="card-title">Credibilidade</div><p class="card-desc">Fontes confiáveis, dados verificáveis, detalhes que só alguém que viveu saberia. Anti-autoridade funciona.</p></div>
+<div class="card"><span class="card-label">E</span><div class="card-title">Emoções</div><p class="card-desc">Pessoas agem por sentimentos, não por dados. Apele para identidade: "Que tipo de pessoa eu sou?"</p></div>
+<div class="card"><span class="card-label">S</span><div class="card-title">Histórias</div><p class="card-desc">Histórias são simulação mental. O leitor se imagina vivendo a situação. Isso gera ação. Dados geram debate.</p></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">10 / 15</span></div>
+</div></div>
+
+<!-- 11: MALDIÇÃO -->
+<div class="slide bg-deep" data-slide="11">
+<div class="slide-inner"><span class="slide-number">11</span>
+<span class="eyebrow">Ideias que Colam</span>
+<h2 class="slide-title">A <em>maldição</em> do conhecimento</h2>
+<p class="slide-subtitle">O maior inimigo da copy. Quando você sabe demais, esquece como é não saber.</p>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card"><span class="card-label">O experimento</span><p class="card-desc">Pessoas batem uma música na mesa. Acham que 50% dos ouvintes adivinham. Na realidade: 2,5%. Quem bate ouve a melodia na cabeça. Quem ouve, ouve batidas aleatórias.</p></div>
+<div class="card"><span class="card-label">Na prática</span><p class="card-desc">Você fala sobre seu produto usando termos que só você entende. O prospect lê e pensa: "Do que essa pessoa está falando?" A copy morre ali.</p></div>
+</div>
+<div class="quote-box"><p class="quote-text">"Nunca assuma que o leitor sabe algo. Explique tudo. Use palavras curtas. Parágrafos curtos. Histórias e metáforas, não jargões técnicos."</p><span class="quote-author">✦ Big Black Book, Agora</span></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">11 / 15</span></div>
+</div></div>
+
+<!-- 12: 10 ERROS HALBERT -->
+<div class="slide bg-dark" data-slide="12">
+<div class="slide-inner"><span class="slide-number">12</span>
+<span class="eyebrow">Gary Halbert</span>
+<h2 class="slide-title">10 erros que <em>matam</em> sua copy</h2>
+<div class="closing-highlights">
+<div class="highlight-row"><span class="highlight-key">1. Reinventar a roda</span><span class="highlight-val">Pesquise o que já funciona. Dramatize melhor. Não comece do zero.</span></div>
+<div class="highlight-row"><span class="highlight-key">2. Slogan vs copy longa</span><span class="highlight-val">Slogans não vendem. Quanto mais você conta, mais você vende.</span></div>
+<div class="highlight-row"><span class="highlight-key">3. Mudar o que funciona</span><span class="highlight-val">Você cansará da campanha antes do mercado. Não troque o vencedor.</span></div>
+<div class="highlight-row"><span class="highlight-key">4. Não contar a história toda</span><span class="highlight-val">Nunca assuma que o leitor já sabe os benefícios. Dê o pitch completo.</span></div>
+<div class="highlight-row"><span class="highlight-key">5. Não testar o suficiente</span><span class="highlight-val">Teste o que "não faz sentido". Preço alto, preço baixo. Surpresas acontecem.</span></div>
+<div class="highlight-row"><span class="highlight-key">6. Subestimar a ganância</span><span class="highlight-val">Ofereça pechinchas ultrajantes. Descontos. Quando tudo falhar, suborne.</span></div>
+<div class="highlight-row"><span class="highlight-key">7. Superestimar a inteligência</span><span class="highlight-val">O que pode ser mal compreendido, será. Escreva para uma criança.</span></div>
+<div class="highlight-row"><span class="highlight-key">8. Adivinhar</span><span class="highlight-val">Sem histórico? Saia e pergunte às pessoas. Mostre o produto.</span></div>
+<div class="highlight-row"><span class="highlight-key">9. Esquecer o ceticismo</span><span class="highlight-val">Ninguém acredita em você. Endereço real, telefone, detalhes, depoimentos.</span></div>
+<div class="highlight-row"><span class="highlight-key">10. Não pedir ajuda</span><span class="highlight-val">As melhores mentes de marketing são doadoras. Peça opiniões.</span></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">12 / 15</span></div>
+</div></div>
+
+<!-- 13: PEER REVIEW -->
+<div class="slide bg-creme" data-slide="13">
+<div class="slide-inner"><span class="slide-number">13</span>
+<span class="eyebrow">Copy Logic</span>
+<h2 class="slide-title">Peer Review: como <em>melhorar</em> copy sem crítica</h2>
+<p class="slide-subtitle">Críticas destroem criatividade. Sugestões constroem. O sistema que substituiu a revisão destrutiva.</p>
+<div class="card-grid card-grid-2" style="max-width:800px;">
+<div class="card"><span class="card-label">As 3 regras de ouro</span><p class="card-desc">Críticas proibidas. Comentários proibidos. Só sugestões concretas de copy. Uma frase que substitui outra. Sem "está fraco". Sem "gostei". Só: "e se trocar por..."</p></div>
+<div class="card"><span class="card-label">Escala de notas</span><p class="card-desc">1: não continuaria lendo. 2: provavelmente não. 3: continuaria com ceticismo. 4: definitivamente leria com interesse. Meta: nota 3.2+ no lead.</p></div>
+</div>
+<div class="flow-box"><span class="flow-label">Sessão de 30 min</span><p class="flow-steps">Apresentar copy <span class="flow-arrow">→</span> Avaliar headline (nota 1-4) <span class="flow-arrow">→</span> Sugestões de melhoria <span class="flow-arrow">→</span> Reavaliar <span class="flow-arrow">→</span> Avaliar lead <span class="flow-arrow">→</span> Sugestões <span class="flow-arrow">→</span> Nota final ≥ 3 = aprovado</p></div>
+<div class="result-grid"><div class="result-card"><div class="result-title">Resultado</div><div class="result-desc">Copy nível B vira nível A em 20 minutos. Copywriter sai motivado, não defensivo.</div></div>
+<div class="result-card"><div class="result-title">Participantes</div><div class="result-desc">4-6 pessoas. Seniores + juniores + marketing + atendimento. Diversidade de visão.</div></div></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">13 / 15</span></div>
+</div></div>
+
+<!-- 14: CHECKLIST -->
+<div class="slide bg-dark" data-slide="14">
+<div class="slide-inner"><span class="slide-number">14</span>
+<span class="eyebrow">Prática</span>
+<h2 class="slide-title">Checklist antes de <em>publicar</em></h2>
+<p class="slide-subtitle">Passe por essa lista antes de qualquer copy sair.</p>
+<div class="closing-highlights">
+<div class="highlight-row"><span class="highlight-key">Ideia central</span><span class="highlight-val">Há UMA única ideia clara que conecta tudo?</span></div>
+<div class="highlight-row"><span class="highlight-key">Headline</span><span class="highlight-val">Comunica o maior benefício ou gera curiosidade irresistível?</span></div>
+<div class="highlight-row"><span class="highlight-key">Lead</span><span class="highlight-val">Faz o leitor pensar "isso é muito bom, estou feliz por ler"?</span></div>
+<div class="highlight-row"><span class="highlight-key">Fio Dourado</span><span class="highlight-val">Cada parágrafo está conectado ao Complexo Emocional Central?</span></div>
+<div class="highlight-row"><span class="highlight-key">Promessa + Prova</span><span class="highlight-val">Cada promessa tem afirmações e cada afirmação tem prova?</span></div>
+<div class="highlight-row"><span class="highlight-key">4 pés</span><span class="highlight-val">Grande Ideia + Promessa + Prova + Credibilidade?</span></div>
+<div class="highlight-row"><span class="highlight-key">CUB</span><span class="highlight-val">Nenhum trecho confuso, inverossímil ou tedioso?</span></div>
+<div class="highlight-row"><span class="highlight-key">SUCESSOS</span><span class="highlight-val">Simples, surpreendente, concreto, crível, emocional, com história?</span></div>
+<div class="highlight-row"><span class="highlight-key">Voz</span><span class="highlight-val">Autêntica, humana, sem parecer IA ou fórmula?</span></div>
+<div class="highlight-row"><span class="highlight-key">CTA</span><span class="highlight-val">Claro, urgente, sem ambiguidade?</span></div>
+</div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">14 / 15</span></div>
+</div></div>
+
+<!-- 15: CONCLUSÃO -->
+<div class="slide bg-dark" data-slide="15">
+<div class="slide-inner"><span class="slide-number">15</span>
+<span class="eyebrow">Conclusão</span>
+<h2 class="slide-title">Copy é <em>arquitetura</em>, não inspiração</h2>
+<p class="slide-subtitle">Você não precisa ser criativo. Precisa ter método.</p>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Framework 1</span><div class="card-title">Architecture of Persuasion</div><p class="card-desc">5 elementos + Complexo Emocional Central + Fio Dourado. A estrutura da carta de vendas.</p></div>
+<div class="card"><span class="card-label">Framework 2</span><div class="card-title">Copy Logic</div><p class="card-desc">Peer Review + CUB + 4 Pés. O sistema de revisão que substitui a crítica destrutiva.</p></div>
+<div class="card"><span class="card-label">Framework 3</span><div class="card-title">SUCESSOS</div><p class="card-desc">Simplicidade, Surpresa, Concretude, Credibilidade, Emoções, Histórias. A checklist da ideia que cola.</p></div>
+</div>
+<div class="quote-box" style="margin-top:24px;"><p class="quote-text">"Negócios não devem ser como a guerra. Devem ser como o amor. Não uma noite de paixão fugaz, mas um romance mutuamente benéfico que dura a vida inteira."</p><span class="quote-author">✦ Michael Masterson · Apresentação: Isis Moreira · @moreira.isis · Março 2026</span></div>
+<div class="slide-footer"><span class="footer-logo"><b>ISIS</b>MOREIRA</span><span class="footer-page">15 / 15</span></div>
+</div></div>
+
+</div>
+<div class="nav-controls"><button class="nav-btn" onclick="prevSlide()">←</button><button class="nav-btn" onclick="nextSlide()">→</button></div>
+<script>
+const slides=document.querySelectorAll('.slide'),total=slides.length;let cur=0;
+function show(i){slides.forEach(s=>s.classList.remove('active'));slides[i].classList.add('active');cur=i;document.getElementById('progressBar').style.width=((i+1)/total*100)+'%'}
+function nextSlide(){if(cur<total-1)show(cur+1)}function prevSlide(){if(cur>0)show(cur-1)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();nextSlide()}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prevSlide()}if(e.key==='Home'){e.preventDefault();show(0)}if(e.key==='End'){e.preventDefault();show(total-1)}if(e.key==='f'||e.key==='F'){e.preventDefault();document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX});document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].screenX;if(Math.abs(d)>50){d>0?nextSlide():prevSlide()}});
+show(0);
+</script>
+</body>
+</html>

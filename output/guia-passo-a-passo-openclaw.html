@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Passo a Passo OpenClaw · Do Zero ao Sistema</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--marfim:#f9f8f4;--creme:#efede6;--cacao:#2a2420;--ouro:#b4a68c;--ouro-deep:#7a6e5c;--ouro-pale:#d4cec4;--mirror:#9ba1a8;--sans:'DM Sans',sans-serif;--serif:'DM Serif Text',serif;--mono:'IBM Plex Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+@page{size:A4;margin:0}
+body{font-family:var(--sans);color:var(--cacao);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;overflow:hidden;position:relative;page-break-after:always;display:flex;flex-direction:column}
+.page:last-child{page-break-after:auto}
+
+/* COVER */
+.cover{background:var(--cacao);height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 56px;position:relative;overflow:hidden}
+.cover .sym{font-size:16px;color:var(--ouro);margin-bottom:24px}
+.cover .t{font-family:var(--serif);font-style:italic;font-size:44px;color:var(--marfim);line-height:1.05;letter-spacing:-1.5px;margin-bottom:16px;max-width:480px}
+.cover .t em{color:var(--ouro)}
+.cover .rule{width:80px;height:2px;background:var(--ouro);margin-bottom:16px}
+.cover .sub{font-size:15px;color:rgba(249,248,244,.45);font-weight:300;line-height:1.65;max-width:440px;margin-bottom:40px}
+.cover .meta{display:flex;gap:16px;align-items:center}
+.cover .meta span{font-family:var(--mono);font-size:9px;color:rgba(249,248,244,.3);letter-spacing:2px;text-transform:uppercase}
+.cover .meta .div{width:1px;height:10px;background:rgba(249,248,244,.1)}
+.cover .bg-text{position:absolute;right:-10px;bottom:30px;font-family:var(--serif);font-style:italic;font-size:180px;color:rgba(249,248,244,.03);letter-spacing:-4px;pointer-events:none}
+
+/* INNER */
+.inn{flex:1;display:flex;flex-direction:column;padding:36px 48px 28px 48px}
+.bg-m{background:var(--marfim)}.bg-c{background:var(--creme)}.bg-d{background:var(--cacao);color:var(--marfim)}
+
+.eyebrow{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--ouro-deep);margin-bottom:12px}
+.bg-d .eyebrow{color:var(--ouro)}
+
+.ttl{font-family:var(--serif);font-style:italic;font-size:32px;line-height:1.08;letter-spacing:-1px;margin-bottom:16px}
+.ttl em{color:var(--ouro-deep)}
+.bg-d .ttl{color:var(--marfim)}.bg-d .ttl em{color:var(--ouro)}
+
+.sub{font-size:13px;font-weight:300;color:rgba(42,36,32,.5);line-height:1.6;max-width:480px;margin-bottom:16px}
+.bg-d .sub{color:rgba(249,248,244,.4)}
+
+.num{position:absolute;top:32px;right:48px;font-family:var(--serif);font-style:italic;font-size:80px;color:rgba(42,36,32,.04);line-height:1}
+.bg-d .num{color:rgba(249,248,244,.04)}
+
+.ftr{position:absolute;bottom:0;left:0;right:0;height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-top:1px solid rgba(42,36,32,.06)}
+.ftr span{font-family:var(--sans);font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:rgba(42,36,32,.2)}
+.ftr b{font-weight:700;color:rgba(42,36,32,.3)}
+.ftr .pg{font-family:var(--mono);font-size:9px;color:rgba(42,36,32,.15);letter-spacing:1px}
+.bg-d .ftr{border-top-color:rgba(249,248,244,.06)}
+.bg-d .ftr span{color:rgba(249,248,244,.2)}.bg-d .ftr b{color:rgba(249,248,244,.3)}.bg-d .ftr .pg{color:rgba(249,248,244,.15)}
+
+.body{flex:1;display:flex;flex-direction:column;gap:10px}
+
+/* STEP */
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-n{width:28px;height:28px;min-width:28px;border-radius:50%;background:var(--ouro);color:var(--cacao);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;margin-top:2px}
+.bg-d .step-n{background:var(--ouro)}
+.step-body{flex:1}
+.step-title{font-weight:700;font-size:13px;margin-bottom:3px}
+.step-desc{font-size:12px;font-weight:300;line-height:1.55;color:rgba(42,36,32,.55)}
+.bg-d .step-desc{color:rgba(249,248,244,.45)}
+
+/* CODE */
+.code{font-family:var(--mono);font-size:11px;background:var(--cacao);color:var(--ouro);padding:8px 14px;border-radius:6px;margin-top:4px;display:inline-block}
+.bg-d .code{background:rgba(249,248,244,.06)}
+
+/* CARD */
+.cd{border-radius:10px;padding:16px 20px}
+.cd-d{background:var(--cacao);color:var(--marfim)}
+.cd-d .ct{color:var(--ouro)}.cd-d p,.cd-d li{color:rgba(249,248,244,.5)}
+.cd-o{background:rgba(180,166,140,.12);border:1px solid rgba(180,166,140,.25)}
+.cd-o .ct{color:var(--ouro-deep)}
+.cd-so{background:var(--ouro);color:var(--cacao)}
+
+.ct{font-weight:700;font-size:13px;margin-bottom:5px}
+.cd p{font-size:12px;line-height:1.55;font-weight:300}
+.cd ul{list-style:none;padding:0}.cd li{font-size:12px;line-height:1.5;font-weight:300;padding:2px 0;display:flex;align-items:flex-start;gap:8px}
+.cd li::before{content:'';width:6px;height:6px;min-width:6px;background:var(--ouro);border-radius:2px;margin-top:5px}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* WARN */
+.warn{background:rgba(158,92,80,.08);border:1px solid rgba(158,92,80,.2);border-radius:8px;padding:12px 16px;font-size:12px;font-weight:300;line-height:1.55;color:rgba(42,36,32,.7)}
+.warn b{font-weight:700;color:#9e5c50}
+
+/* FLOW */
+.flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.flow .fb{padding:6px 14px;border-radius:6px;font-size:11px;font-weight:500}
+.flow .fa{font-size:14px;color:var(--ouro)}
+.fb-d{background:var(--cacao);color:var(--marfim)}.fb-o{background:var(--ouro);color:var(--cacao)}
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page">
+<div class="cover">
+<div class="sym">✦</div>
+<div class="t">OpenClaw: <em>do zero ao sistema</em> de agentes</div>
+<div class="rule"></div>
+<div class="sub">Guia passo a passo. Tudo que fizemos desde a instalação até ter 10 agentes operando, com segurança, memória, crons e automações.</div>
+<div class="meta"><span>Isis Moreira</span><div class="div"></div><span>Março 2026</span><div class="div"></div><span>Guia prático</span></div>
+<div class="bg-text">OC</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">GUIA COMPLETO</span></div>
+</div>
+</div>
+
+<!-- P1: FASE 1 — SERVIDOR -->
+<div class="page">
+<div class="inn bg-m">
+<div class="num">01</div>
+<div class="eyebrow">Fase 1 · Infraestrutura</div>
+<div class="ttl">Contratar e preparar o <em>servidor</em></div>
+<div class="sub">Tudo começa com um VPS. Sem servidor, não tem agente 24/7.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Contratar um VPS</div><div class="step-desc">Hostinger, Hetzner ou DigitalOcean. Recomendação mínima: 2 vCPU, 4GB RAM, 80GB SSD. Custo: ~R$25/mês. Nós usamos Hostinger KVM4 (4 vCPU, 16GB RAM, 200GB NVMe).</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Acessar via SSH</div><div class="step-desc">Com o IP do servidor e a senha root, conectar via terminal.</div><div class="code">ssh root@seu-ip-do-servidor</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Criar usuário dedicado</div><div class="step-desc">Nunca rodar o agente como root. Criar usuário próprio com home directory.</div><div class="code">adduser openclaw && usermod -aG sudo openclaw</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Instalar Node.js (v22+)</div><div class="step-desc">OpenClaw roda em Node.js. Instalar via nvm ou apt.</div><div class="code">curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt install -y nodejs</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Instalar OpenClaw</div><div class="step-desc">Instalação global via npm. Uma linha.</div><div class="code">npm i -g openclaw</div></div></div>
+<div class="step"><div class="step-n">6</div><div class="step-body"><div class="step-title">Rodar o onboard</div><div class="step-desc">Assistente interativo que configura tudo: modelo, canal, identidade.</div><div class="code">openclaw onboard</div></div></div>
+<div class="warn"><b>Atenção:</b> Se você vai usar Telegram, tenha o token do bot pronto (criado no @BotFather). O onboard vai pedir.</div>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">01 / 12</span></div>
+</div>
+</div>
+
+<!-- P2: FASE 2 — BOT TELEGRAM -->
+<div class="page">
+<div class="inn bg-c">
+<div class="num">02</div>
+<div class="eyebrow">Fase 2 · Canal de comunicação</div>
+<div class="ttl">Conectar ao <em>Telegram</em></div>
+<div class="sub">O Telegram é o canal principal. É por onde você conversa com seu agente.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Criar bot no @BotFather</div><div class="step-desc">Abrir @BotFather no Telegram, enviar /newbot, definir nome e username. Copiar o token gerado.</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Configurar o token no OpenClaw</div><div class="step-desc">O onboard pede o token. Se já fez onboard, configurar manualmente:</div><div class="code">openclaw config set telegram.token "SEU_TOKEN_AQUI"</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Configurar allowlist (CRÍTICO)</div><div class="step-desc">Seu Telegram ID na allowlist. Sem isso, qualquer pessoa comanda o agente. Pegar seu ID: enviar mensagem para @userinfobot.</div><div class="code">openclaw config set telegram.dmPolicy allowlist<br>openclaw config set telegram.dmAllowlist -- "[SEU_TELEGRAM_ID]"</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Iniciar o gateway</div><div class="step-desc">Subir o agente. Primeira mensagem no Telegram e ele responde.</div><div class="code">openclaw gateway start</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Instalar como serviço (opcional mas recomendado)</div><div class="step-desc">Para que o agente reinicie automaticamente se o servidor reiniciar.</div><div class="code">openclaw gateway install</div></div></div>
+<div class="warn"><b>Lição real:</b> Deixamos dmPolicy como "open" nos primeiros 5 minutos. Qualquer pessoa que encontrasse o bot poderia comandar o agente. Corrigimos imediatamente. Allowlist primeiro, sempre.</div>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">02 / 12</span></div>
+</div>
+</div>
+
+<!-- P3: FASE 3 — IDENTIDADE -->
+<div class="page">
+<div class="inn bg-m">
+<div class="num">03</div>
+<div class="eyebrow">Fase 3 · Identidade do agente</div>
+<div class="ttl">Criar a <em>personalidade</em></div>
+<div class="sub">Um agente sem identidade é um ChatGPT caro. Com identidade, ele vira parte do time.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Editar SOUL.md</div><div class="step-desc">O arquivo mais importante. Define quem o agente é: tom de voz, comportamento, limites, proatividade. Quanto mais detalhado, melhor. Anti-patterns com exemplos. "Never dos" explícitos. O nosso tem 80+ linhas.</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Editar IDENTITY.md</div><div class="step-desc">Nome, email, papel, nível de autonomia. Identidade formal do agente no sistema.</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Editar USER.md</div><div class="step-desc">Quem é você. Preferências, horários, regras de comunicação. O agente lê isso toda sessão e sabe como te tratar. O nosso tem informações de negócio, equipe, tom de voz para conteúdo.</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Editar TOOLS.md</div><div class="step-desc">Notas sobre ferramentas, APIs, paths do sistema. Cheat sheet do agente.</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Reiniciar o gateway</div><div class="step-desc">O gateway cacheia esses arquivos. Toda edição exige restart para aplicar.</div><div class="code">openclaw gateway restart</div></div></div>
+<div class="cd cd-so" style="margin-top:6px;text-align:center;">
+<p style="font-weight:500;">Todos os arquivos ficam em: ~/.openclaw/workspace/</p>
+<p>Editar = mudar comportamento. Markdown puro. Sem código. Sem deploy.</p>
+</div>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">03 / 12</span></div>
+</div>
+</div>
+
+<!-- P4: FASE 4 — SEGURANÇA -->
+<div class="page">
+<div class="inn bg-d">
+<div class="num">04</div>
+<div class="eyebrow">Fase 4 · Segurança</div>
+<div class="ttl">Blindar o <em>sistema</em></div>
+<div class="sub">Segurança não é etapa final. É a primeira coisa depois de ligar.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">dmPolicy: allowlist</div><div class="step-desc">Já feito na Fase 2. Confirmar que está ativo. Sem isso, nada mais importa.</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Instalar 1Password CLI</div><div class="step-desc">Gerenciador de credenciais. Todas as senhas, tokens e API keys ficam no vault. Zero hardcode.</div><div class="code">wget -qO /tmp/op.zip "https://cache.agilebits.com/dist/1P/op2/pkg/v2.30.3/op_linux_amd64_v2.30.3.zip" && unzip /tmp/op.zip -d ~/.local/bin/</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Criar vault dedicado</div><div class="step-desc">No 1Password, criar vault exclusivo para o agente. Nós usamos "Dona". Criar service account com acesso só a esse vault.</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Configurar variáveis de ambiente</div><div class="step-desc">Tokens de API (Anthropic, OpenAI, etc) ficam em variáveis de ambiente no .service, não em arquivos texto.</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Testar acesso</div><div class="step-desc">Confirmar que o agente consegue ler do vault e que nenhum token está em texto claro.</div><div class="code">op read "op://Dona/RapidAPI Key/credential"</div></div></div>
+</div>
+<div class="cd cd-o" style="margin-top:6px;">
+<div class="ct" style="color:var(--ouro);">Regras de segurança que seguimos desde o dia 1</div>
+<ul><li>Toda credencial no 1Password. Sem exceções.</li><li>Allowlist antes de qualquer outra configuração.</li><li>Nunca automatizar updates do OpenClaw (incidente de 5h de downtime).</li><li>Audit semanal automatizado via cron.</li><li>Rotação trimestral de API keys.</li></ul>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">04 / 12</span></div>
+</div>
+</div>
+
+<!-- P5: FASE 5 — MEMÓRIA -->
+<div class="page">
+<div class="inn bg-m">
+<div class="num">05</div>
+<div class="eyebrow">Fase 5 · Sistema de memória</div>
+<div class="ttl">Criar <em>memória</em> permanente</div>
+<div class="sub">Sem memória, o agente começa do zero toda vez. Com memória, ele acumula conhecimento.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Criar MEMORY.md</div><div class="step-desc">Índice central que referencia todos os topic files. O agente consulta isso para saber onde encontrar cada tipo de informação.</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Criar topic files</div><div class="step-desc">Cada tipo de informação vive em seu arquivo dentro de memory/:</div></div></div>
+<div class="g2" style="margin-left:42px;">
+<div class="cd cd-d"><div class="ct">decisions.md</div><p>Decisões permanentes. O agente nunca esquece o que foi decidido.</p></div>
+<div class="cd cd-d"><div class="ct">lessons.md</div><p>Erros e acertos. Padrões identificados. Estratégicas (permanentes) e táticas (expiram 30 dias).</p></div>
+<div class="cd cd-d"><div class="ct">projects.md</div><p>Projetos ativos, status, próximos passos, bloqueios.</p></div>
+<div class="cd cd-d"><div class="ct">pending.md</div><p>O que está aguardando input. Agente cobra automaticamente.</p></div>
+</div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Indexar a memória</div><div class="step-desc">Cria índice semântico para buscas por contexto, não por palavra-chave.</div><div class="code">openclaw memory index --force</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Configurar HEARTBEAT.md</div><div class="step-desc">Checklist que o agente verifica a cada pulso periódico: pendências antigas, projetos parados, crons falhando, notas para consolidar.</div></div></div>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">05 / 12</span></div>
+</div>
+</div>
+
+<!-- P6: FASE 6 — SKILLS -->
+<div class="page">
+<div class="inn bg-c">
+<div class="num">06</div>
+<div class="eyebrow">Fase 6 · Skills e ferramentas</div>
+<div class="ttl">Instalar <em>skills</em></div>
+<div class="sub">Skills são plugins que dão capacidades ao agente. Sem skills, ele só conversa. Com skills, ele executa.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Ver skills disponíveis</div><div class="step-desc">OpenClaw vem com 51 skills. Listar quais estão prontas e quais faltam instalar.</div><div class="code">openclaw skills list</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Instalar as essenciais</div><div class="step-desc">As que usamos no dia a dia:</div></div></div>
+<div class="g2" style="margin-left:42px;">
+<div class="cd cd-d"><div class="ct">Nano Banana Pro</div><p>Geração de fotos via Gemini</p></div>
+<div class="cd cd-d"><div class="ct">Nano PDF</div><p>Editar PDFs com linguagem natural</p></div>
+<div class="cd cd-d"><div class="ct">Whisper API</div><p>Transcrição de áudio em texto</p></div>
+<div class="cd cd-d"><div class="ct">Video Frames</div><p>Extrair frames de vídeos</p></div>
+<div class="cd cd-d"><div class="ct">1Password</div><p>Gestão segura de credenciais</p></div>
+<div class="cd cd-d"><div class="ct">Healthcheck</div><p>Auditoria de segurança</p></div>
+</div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Configurar APIs externas</div><div class="step-desc">Algumas skills precisam de API keys: OpenAI (Whisper, DALL-E), Google (Gemini), RapidAPI (Instagram, YouTube, YakPDF). Salvar tudo no 1Password e configurar como variáveis de ambiente.</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Instalar binários auxiliares</div><div class="step-desc">FFmpeg para vídeo/áudio. Puppeteer/Chromium para geração de PDF no servidor.</div><div class="code">npm i -g puppeteer && npx puppeteer browsers install chrome</div></div></div>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">06 / 12</span></div>
+</div>
+</div>
+
+<!-- P7: FASE 7 — CRONS -->
+<div class="page">
+<div class="inn bg-m">
+<div class="num">07</div>
+<div class="eyebrow">Fase 7 · Automação</div>
+<div class="ttl">Configurar <em>crons</em> e heartbeats</div>
+<div class="sub">Crons fazem o agente trabalhar sozinho. Heartbeats verificam se está tudo saudável.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Entender a regra de ouro dos crons</div><div class="step-desc">SEMPRE usar: sessionTarget "isolated" + payload "agentTurn" + delivery "announce". Nunca systemEvent + main (não executa nada, só mostra status ok).</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Criar crons essenciais</div><div class="step-desc">Os que rodamos diariamente:</div></div></div>
+<div class="cd cd-d" style="margin-left:42px;">
+<table style="width:100%;border-collapse:collapse;font-size:11px;">
+<tr style="border-bottom:1px solid rgba(249,248,244,.1);"><td style="padding:5px 8px;color:var(--ouro);font-weight:600;">health-monitor</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">A cada 1h</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">Verifica saúde do gateway e APIs</td></tr>
+<tr style="border-bottom:1px solid rgba(249,248,244,.1);"><td style="padding:5px 8px;color:var(--ouro);font-weight:600;">backup-diario</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">3h</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">Backup de memória e configurações</td></tr>
+<tr style="border-bottom:1px solid rgba(249,248,244,.1);"><td style="padding:5px 8px;color:var(--ouro);font-weight:600;">checagem-proativa</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">4x/dia</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">Pendências, projetos parados, anomalias</td></tr>
+<tr style="border-bottom:1px solid rgba(249,248,244,.1);"><td style="padding:5px 8px;color:var(--ouro);font-weight:600;">org-memória</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">23h</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">Consolida notas diárias</td></tr>
+<tr style="border-bottom:1px solid rgba(249,248,244,.1);"><td style="padding:5px 8px;color:var(--ouro);font-weight:600;">security-audit</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">Semanal</td><td style="padding:5px 8px;color:rgba(249,248,244,.5);">Auditoria completa de segurança</td></tr>
+</table>
+</div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Espaçar crons</div><div class="step-desc">Mínimo 15-30 minutos entre crons. Colisão de horários causa rate limit e falhas silenciosas.</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Usar modelos baratos para automação</div><div class="step-desc">Heartbeats: Haiku. Crons de execução: Sonnet. Interação direta: Opus. Sem split = US$100+/mês. Com split = US$18-36/mês.</div></div></div>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">07 / 12</span></div>
+</div>
+</div>
+
+<!-- P8: FASE 8 — MULTI-AGENTE -->
+<div class="page">
+<div class="inn bg-d">
+<div class="num">08</div>
+<div class="eyebrow">Fase 8 · Multi-agente</div>
+<div class="ttl">Criar o <em>time</em> de agentes</div>
+<div class="sub">Um agente é útil. Dez agentes especializados são um time inteiro.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Criar supergrupo no Telegram com tópicos</div><div class="step-desc">Um supergrupo com tópicos ativados. Cada tópico = um agente. Adicionar o bot ao grupo e dar admin. Não precisa de múltiplas instâncias.</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Criar AGENTS.md</div><div class="step-desc">Arquivo que mapeia cada topic_id para uma identidade. Quando mensagem chega no tópico 7, o agente assume identidade "Harpia". Tópico 8, assume "Masterson". E assim por diante.</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Definir cada agente</div><div class="step-desc">Para cada agente: nome, papel, tom, reporta para quem, o que faz, o que não faz, base de conhecimento.</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Mencionar o sistema de identidades no SOUL.md</div><div class="step-desc">Se o SOUL.md diz só "Nome: Dona" sem explicar que assumir identidades é parte do design, o modelo resiste a trocar de persona. Isso precisa estar explícito.</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Configurar grupo no OpenClaw</div><div class="step-desc">Adicionar o chat ID do grupo na configuração para o agente responder nos tópicos.</div></div></div>
+</div>
+<div class="cd cd-o" style="margin-top:6px;">
+<div class="ct" style="color:var(--ouro);">Nosso organograma (10 agentes)</div>
+<p style="color:rgba(249,248,244,.5);">Dona (COO) → Atlas (Estrategista) + Eva (Arquiteta) → Masterson (Escritor), Aurora (Designer), Vega (Social), Harpia (Vídeo), Helios (Tráfego), Orion (Dev), Nexa (Imagem), Doninha (Bot)</p>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">08 / 12</span></div>
+</div>
+</div>
+
+<!-- P9: FASE 9 — BASE DE CONHECIMENTO -->
+<div class="page">
+<div class="inn bg-m">
+<div class="num">09</div>
+<div class="eyebrow">Fase 9 · Conhecimento</div>
+<div class="ttl">Alimentar a <em>base</em></div>
+<div class="sub">O agente só é tão bom quanto o conhecimento que você dá a ele.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Criar pasta knowledge/</div><div class="step-desc">Cada agente pode ter sua subpasta com documentos específicos. O agente lê sob demanda via memory_search.</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Alimentar com livros e frameworks</div><div class="step-desc">Nós indexamos 5 livros de copywriting para o Masterson. Cada livro resumido em markdown, salvo em knowledge/masterson/. O agente aplica esses frameworks em tudo que escreve.</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Criar Design System</div><div class="step-desc">Se você produz material visual, documente: cores, fontes, espaçamentos, templates. O nosso (ISIS v7) está salvo e é obrigatório em todos os materiais.</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Documentar processos</div><div class="step-desc">Cada framework operacional vira documento em knowledge/. Framework de tráfego, pipeline de PDF, processo de geração de fotos. Tudo documentado.</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Transcrever conteúdo existente</div><div class="step-desc">Mentorias, cursos, aulas gravadas. Transcrever via Whisper e salvar como base de conhecimento. 100 horas de conteúdo custa ~US$36 para transcrever.</div></div></div>
+<div class="step"><div class="step-n">6</div><div class="step-body"><div class="step-title">Reindexar após cada adição</div><div class="step-desc">Toda vez que adicionar conteúdo novo à base:</div><div class="code">openclaw memory index --force</div></div></div>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">09 / 12</span></div>
+</div>
+</div>
+
+<!-- P10: FASE 10 — INTEGRAÇÕES -->
+<div class="page">
+<div class="inn bg-c">
+<div class="num">10</div>
+<div class="eyebrow">Fase 10 · Integrações</div>
+<div class="ttl">Conectar <em>APIs</em> externas</div>
+<div class="sub">O agente ganha poder real quando conecta a sistemas externos.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Meta Ads API</div><div class="step-desc">Para análise de tráfego pago. Criar system user no Business Manager, gerar token com permissões ads_read, ads_management, pages_read_engagement. Salvar token como variável de ambiente.</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">RapidAPI</div><div class="step-desc">Hub de APIs. Configuramos 5: Instagram (posts e reels), YouTube (vídeos de canal), Whisper via URL, Background Removal, YakPDF (HTML para PDF como fallback).</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">GitHub (deploy)</div><div class="step-desc">SSH deploy key para push automático. O agente faz push e dispara redeploy.</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Coolify (hosting)</div><div class="step-desc">Plataforma de deploy. API para disparar redeploy automático após push no GitHub.</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Dashboard (Torre Dona)</div><div class="step-desc">Mission Control conectado ao gateway do OpenClaw. 28 painéis: Tasks, Agents, Crons, Memory, Health, Sessions. Interface visual para monitorar tudo.</div></div></div>
+</div>
+<div class="warn"><b>Lição real:</b> IPs de cloud (Hetzner, DigitalOcean, AWS) são bloqueados por YouTube, Instagram e X. Usar RapidAPI como proxy para essas plataformas.</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">10 / 12</span></div>
+</div>
+</div>
+
+<!-- P11: 10 REGRAS -->
+<div class="page">
+<div class="inn bg-d">
+<div class="num">11</div>
+<div class="eyebrow">Referência · 10 Regras</div>
+<div class="ttl">10 regras <em>invioláveis</em></div>
+<div class="sub">Lições de 13 dias rodando agentes de IA em produção.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Crons: isolated + agentTurn + announce</div><div class="step-desc">Nunca systemEvent + main. Parece funcionar mas não executa nada.</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Nunca hardcodar credenciais</div><div class="step-desc">1Password ou .env com chmod 600. Zero exceções.</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">dmPolicy: allowlist desde o minuto zero</div><div class="step-desc">Antes de qualquer outra configuração.</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Extrair lições ANTES de compactação</div><div class="step-desc">Compactação descarta 80% do contexto. Sem extração = perda permanente.</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Todo agente começa N1 (Junior)</div><div class="step-desc">Sem autonomia sem histórico. Output sempre revisado.</div></div></div>
+<div class="step"><div class="step-n">6</div><div class="step-body"><div class="step-title">Split de modelos por custo</div><div class="step-desc">Crons: Haiku/Sonnet. Interação: Opus. Economia de 70-80%.</div></div></div>
+<div class="step"><div class="step-n">7</div><div class="step-body"><div class="step-title">Backup antes de mudanças estruturais</div><div class="step-desc">config.patch reinicia gateway e mata crons. Criar ROLLBACK.md.</div></div></div>
+<div class="step"><div class="step-n">8</div><div class="step-body"><div class="step-title">Sub-agent travou: retry 2x, depois alerta</div><div class="step-desc">Nunca fire and forget. Nunca limbo silencioso.</div></div></div>
+<div class="step"><div class="step-n">9</div><div class="step-body"><div class="step-title">SOUL.md personalizado é obrigatório</div><div class="step-desc">SOUL.md genérico = ChatGPT caro.</div></div></div>
+<div class="step"><div class="step-n">10</div><div class="step-body"><div class="step-title">Creators são skills, não agentes</div><div class="step-desc">1 agente com 8 skills > 8 agentes separados.</div></div></div>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">11 / 12</span></div>
+</div>
+</div>
+
+<!-- P12: RESUMO -->
+<div class="page">
+<div class="inn bg-m">
+<div class="num">12</div>
+<div class="eyebrow">Resumo · Roadmap completo</div>
+<div class="ttl">As 10 fases do <em>zero ao sistema</em></div>
+<div class="sub">Checklist completo. Siga na ordem.</div>
+<div class="body">
+<div class="step"><div class="step-n">1</div><div class="step-body"><div class="step-title">Servidor</div><div class="step-desc">VPS + Node.js + npm i -g openclaw + openclaw onboard</div></div></div>
+<div class="step"><div class="step-n">2</div><div class="step-body"><div class="step-title">Canal</div><div class="step-desc">Bot no Telegram + token + allowlist + gateway start</div></div></div>
+<div class="step"><div class="step-n">3</div><div class="step-body"><div class="step-title">Identidade</div><div class="step-desc">SOUL.md + IDENTITY.md + USER.md + TOOLS.md</div></div></div>
+<div class="step"><div class="step-n">4</div><div class="step-body"><div class="step-title">Segurança</div><div class="step-desc">1Password + allowlist + variáveis de ambiente</div></div></div>
+<div class="step"><div class="step-n">5</div><div class="step-body"><div class="step-title">Memória</div><div class="step-desc">MEMORY.md + topic files + HEARTBEAT.md + indexação</div></div></div>
+<div class="step"><div class="step-n">6</div><div class="step-body"><div class="step-title">Skills</div><div class="step-desc">Instalar essenciais + configurar APIs + binários auxiliares</div></div></div>
+<div class="step"><div class="step-n">7</div><div class="step-body"><div class="step-title">Crons</div><div class="step-desc">Automações + heartbeats + split de modelos por custo</div></div></div>
+<div class="step"><div class="step-n">8</div><div class="step-body"><div class="step-title">Multi-agente</div><div class="step-desc">Supergrupo + tópicos + AGENTS.md + identidades</div></div></div>
+<div class="step"><div class="step-n">9</div><div class="step-body"><div class="step-title">Conhecimento</div><div class="step-desc">knowledge/ + livros + design system + transcrições + frameworks</div></div></div>
+<div class="step"><div class="step-n">10</div><div class="step-body"><div class="step-title">Integrações</div><div class="step-desc">Meta Ads + RapidAPI + GitHub + Coolify + Dashboard</div></div></div>
+</div>
+<div class="cd cd-so" style="text-align:center;margin-top:auto;">
+<p style="font-family:var(--serif);font-style:italic;font-size:18px;">Isis Moreira · @moreira.isis · Março 2026</p>
+</div>
+<div class="ftr"><span><b>DONA</b>SYSTEM</span><span class="pg">12 / 12</span></div>
+</div>
+</div>
+
+</body>
+</html>

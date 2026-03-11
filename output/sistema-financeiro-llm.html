@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Financeiro LLM · DonaSystem</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:0}
+:root{--marfim:#f9f8f4;--creme:#efede6;--cacao:#2a2420;--ouro:#b4a68c;--ouro-deep:#7a6e5c;--ouro-pale:#d4cec4;--mirror:#9ba1a8;--dark-0:#1a1210;--sans:'DM Sans',sans-serif;--serif:'DM Serif Text',serif;--mono:'IBM Plex Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--marfim);color:var(--cacao);font-size:11px;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;min-height:297mm;padding:48px 56px;position:relative;page-break-after:always;overflow:hidden}
+.page:last-child{page-break-after:avoid}
+.page-number{position:absolute;bottom:32px;right:56px;font-family:var(--mono);font-size:8px;color:var(--mirror);letter-spacing:1px}
+.page-footer{position:absolute;bottom:32px;left:56px;font-size:8px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:rgba(42,36,32,.2)}
+.page-footer b{font-weight:700;color:rgba(42,36,32,.3)}
+
+/* COVER */
+.cover{background:var(--cacao);color:var(--marfim);display:flex;flex-direction:column;justify-content:center;padding:64px 72px}
+.cover-symbol{font-size:16px;color:var(--ouro);margin-bottom:40px}
+.cover-title{font-family:var(--serif);font-style:italic;font-size:42px;letter-spacing:-1.5px;line-height:1.05;margin-bottom:20px;color:var(--marfim)}
+.cover-title em{color:var(--ouro)}
+.cover-desc{font-size:14px;font-weight:300;color:rgba(249,248,244,.45);line-height:1.65;max-width:420px;margin-bottom:56px}
+.cover-meta{display:flex;gap:20px;align-items:center}
+.cover-meta-item{font-family:var(--mono);font-size:9px;color:rgba(249,248,244,.3);letter-spacing:2px;text-transform:uppercase}
+.cover-meta-divider{width:1px;height:10px;background:rgba(249,248,244,.1)}
+.cover-bg{position:absolute;right:-10px;bottom:60px;font-family:var(--serif);font-style:italic;font-size:180px;color:rgba(249,248,244,.03);letter-spacing:-4px;line-height:1;pointer-events:none}
+
+/* HEADINGS */
+.eyebrow{font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--ouro-deep);margin-bottom:8px;display:block}
+.section-title{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--cacao);letter-spacing:-.5px;line-height:1.1;margin-bottom:6px}
+.section-title em{color:var(--ouro-deep)}
+.section-desc{font-size:11px;font-weight:300;color:rgba(42,36,32,.5);line-height:1.55;max-width:440px;margin-bottom:20px}
+.section-number{position:absolute;top:40px;right:56px;font-family:var(--serif);font-style:italic;font-size:80px;color:rgba(42,36,32,.04);line-height:1}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;margin-bottom:16px;font-size:10px}
+thead th{font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ouro-deep);text-align:left;padding:8px 10px;border-bottom:2px solid var(--ouro-pale)}
+tbody td{padding:7px 10px;border-bottom:1px solid rgba(42,36,32,.06);font-weight:300;vertical-align:top}
+tbody tr:hover{background:rgba(180,166,140,.04)}
+.highlight-row-table{background:rgba(180,166,140,.08)!important;font-weight:500}
+.cost-high{color:#a0522d;font-weight:600}.cost-med{color:var(--ouro-deep);font-weight:500}.cost-low{color:#5a7a5a;font-weight:500}
+
+/* CARDS */
+.card-grid{display:grid;gap:12px;margin-bottom:16px}
+.card-grid-2{grid-template-columns:1fr 1fr}.card-grid-3{grid-template-columns:1fr 1fr 1fr}
+.card{background:rgba(42,36,32,.03);border:1px solid rgba(180,166,140,.2);border-radius:8px;padding:16px 18px}
+.card-label{font-family:var(--mono);font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--ouro-deep);margin-bottom:6px;display:block}
+.card-title{font-family:var(--serif);font-style:italic;font-size:16px;margin-bottom:5px;letter-spacing:-.2px;line-height:1.15}
+.card-desc{font-size:10px;font-weight:300;line-height:1.5;color:rgba(42,36,32,.55)}
+.card-accent{border-left:3px solid var(--ouro);background:rgba(180,166,140,.06)}
+
+/* METRIC BOXES */
+.metric-row{display:flex;gap:12px;margin-bottom:16px}
+.metric-box{flex:1;background:var(--cacao);border-radius:8px;padding:18px 20px;color:var(--marfim)}
+.metric-value{font-family:var(--serif);font-style:italic;font-size:28px;letter-spacing:-1px;color:var(--ouro);line-height:1}
+.metric-label{font-family:var(--mono);font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(249,248,244,.4);margin-top:6px}
+
+/* FLOW */
+.flow-box{background:var(--cacao);border-radius:8px;padding:16px 20px;margin-bottom:16px;color:var(--marfim)}
+.flow-label{font-family:var(--mono);font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--ouro);margin-bottom:8px;display:block}
+.flow-text{font-size:11px;font-weight:300;color:rgba(249,248,244,.6);line-height:1.6}
+.flow-arrow{color:var(--ouro);margin:0 3px;font-size:10px}
+
+/* BAR CHART */
+.bar-chart{margin-bottom:16px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.bar-label{font-family:var(--mono);font-size:8px;width:120px;text-align:right;color:rgba(42,36,32,.5);letter-spacing:.5px}
+.bar-track{flex:1;height:18px;background:rgba(42,36,32,.04);border-radius:4px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px}
+.bar-fill span{font-family:var(--mono);font-size:7px;color:white;letter-spacing:.5px;font-weight:500}
+.bar-opus{background:var(--cacao)}.bar-sonnet{background:var(--ouro-deep)}.bar-haiku{background:var(--ouro)}
+
+/* QUOTE */
+.quote-box{background:var(--cacao);border-radius:8px;padding:20px 24px;margin-bottom:16px}
+.quote-text{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--marfim);line-height:1.4;letter-spacing:-.2px}
+.quote-author{font-family:var(--mono);font-size:7px;color:var(--ouro);letter-spacing:2px;text-transform:uppercase;margin-top:10px;display:block}
+
+/* SEPARATOR */
+.sep{height:1px;background:var(--ouro-pale);margin:20px 0;opacity:.4}
+
+/* STATUS PILLS */
+.pill{display:inline-block;font-family:var(--mono);font-size:8px;padding:3px 10px;border-radius:4px;letter-spacing:.5px;font-weight:500}
+.pill-green{background:rgba(90,122,90,.1);color:#5a7a5a;border:1px solid rgba(90,122,90,.2)}
+.pill-yellow{background:rgba(180,166,140,.12);color:var(--ouro-deep);border:1px solid rgba(180,166,140,.3)}
+.pill-red{background:rgba(160,82,45,.08);color:#a0522d;border:1px solid rgba(160,82,45,.2)}
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page cover">
+<span class="cover-symbol">✦</span>
+<h1 class="cover-title">Sistema financeiro <em>LLM</em></h1>
+<p class="cover-desc">Custos, uso e otimização dos modelos de linguagem do DonaSystem. Referência operacional para decisões de budget e configuração.</p>
+<div class="cover-meta">
+<span class="cover-meta-item">DonaSystem</span><div class="cover-meta-divider"></div>
+<span class="cover-meta-item">Março 2026</span><div class="cover-meta-divider"></div>
+<span class="cover-meta-item">Confidencial</span>
+</div>
+<div class="cover-bg">LLM</div>
+</div>
+
+<!-- PÁGINA 2: MODELOS E PREÇOS -->
+<div class="page">
+<span class="section-number">01</span>
+<span class="eyebrow">Tabela de preços</span>
+<h2 class="section-title">Modelos <em>disponíveis</em></h2>
+<p class="section-desc">Provider: Anthropic (Claude). Preços por 1 milhão de tokens. Março 2026.</p>
+
+<table>
+<thead><tr><th>Modelo</th><th>Input / 1M</th><th>Output / 1M</th><th>Perfil de uso</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Claude 3 Haiku</td><td>US$ 0,25</td><td>US$ 1,25</td><td>Legado</td><td><span class="pill pill-red">DESCONTINUADO</span></td></tr>
+<tr class="highlight-row-table"><td><b>Claude 4.5 Haiku</b></td><td><b>US$ 1,00</b></td><td><b>US$ 5,00</b></td><td>Crons, checagens, tarefas rotineiras</td><td><span class="pill pill-green">ATIVO</span></td></tr>
+<tr><td>Claude 3.5 Sonnet</td><td>US$ 3,00</td><td>US$ 15,00</td><td>Produção intermediária</td><td><span class="pill pill-yellow">DISPONÍVEL</span></td></tr>
+<tr class="highlight-row-table"><td><b>Claude 4.6 Sonnet</b></td><td><b>US$ 3,00</b></td><td><b>US$ 15,00</b></td><td>Conteúdo, análise, código</td><td><span class="pill pill-green">ATIVO</span></td></tr>
+<tr><td>Claude 3 Opus (legado)</td><td>US$ 15,00</td><td>US$ 75,00</td><td>5x mais caro que atual</td><td><span class="pill pill-red">DESCONTINUADO</span></td></tr>
+<tr class="highlight-row-table"><td><b>Claude 4.6 Opus</b></td><td><b>US$ 5,00</b></td><td><b>US$ 25,00</b></td><td>Raciocínio complexo, estratégia</td><td><span class="pill pill-green">PADRÃO</span></td></tr>
+</tbody>
+</table>
+
+<span class="eyebrow">Economia com cache</span>
+<h2 class="section-title" style="font-size:18px;">Prompt <em>caching</em></h2>
+<p class="section-desc">Tokens repetidos (system prompt, AGENTS.md, SOUL.md) são cacheados automaticamente. Economia de 90% no input.</p>
+
+<table>
+<thead><tr><th>Modelo</th><th>Input normal</th><th>Input cacheado</th><th>Economia</th></tr></thead>
+<tbody>
+<tr><td>Haiku 4.5</td><td>US$ 1,00/M</td><td>US$ 0,10/M</td><td class="cost-low">90%</td></tr>
+<tr><td>Sonnet 4.6</td><td>US$ 3,00/M</td><td>US$ 0,30/M</td><td class="cost-low">90%</td></tr>
+<tr><td>Opus 4.6</td><td>US$ 5,00/M</td><td>US$ 0,50/M</td><td class="cost-low">90%</td></tr>
+</tbody>
+</table>
+
+<div class="flow-box">
+<span class="flow-label">Cache hit rate atual</span>
+<p class="flow-text">16% dos tokens de entrada estão sendo cacheados. Há espaço para otimizar prompts de sistema e aumentar essa taxa.</p>
+</div>
+
+<span class="page-footer"><b>DONA</b>SYSTEM</span><span class="page-number">02</span>
+</div>
+
+<!-- PÁGINA 3: CONFIGURAÇÃO ATUAL -->
+<div class="page">
+<span class="section-number">02</span>
+<span class="eyebrow">Setup atual</span>
+<h2 class="section-title">Nossa <em>configuração</em></h2>
+<p class="section-desc">Modelo padrão: Claude Opus 4.6. Usado em todas as conversas e crons que não especificam modelo.</p>
+
+<div class="metric-row">
+<div class="metric-box"><div class="metric-value">Opus 4.6</div><div class="metric-label">Modelo padrão</div></div>
+<div class="metric-box"><div class="metric-value">9</div><div class="metric-label">Crons ativos</div></div>
+<div class="metric-box"><div class="metric-value">10</div><div class="metric-label">Agentes (tópicos)</div></div>
+<div class="metric-box"><div class="metric-value">3</div><div class="metric-label">Perfis de auth</div></div>
+</div>
+
+<span class="eyebrow">Perfis de autenticação</span>
+<table>
+<thead><tr><th>Perfil</th><th>Provider</th><th>Tipo</th><th>Prioridade</th></tr></thead>
+<tbody>
+<tr><td>anthropic:manual</td><td>Anthropic</td><td>Token</td><td>1 (primário)</td></tr>
+<tr><td>anthropic:default</td><td>Anthropic</td><td>API Key</td><td>2</td></tr>
+<tr><td>anthropic:donabot</td><td>Anthropic</td><td>Token</td><td>3 (fallback)</td></tr>
+</tbody>
+</table>
+
+<div class="sep"></div>
+
+<span class="eyebrow">Uso por agente</span>
+<h2 class="section-title" style="font-size:18px;">Tópicos do <em>Equipe</em></h2>
+
+<table>
+<thead><tr><th>Agente</th><th>Tópico</th><th>Modelo</th><th>Tipo de tarefa</th></tr></thead>
+<tbody>
+<tr><td><b>Dona</b></td><td>2</td><td>Opus 4.6</td><td>Coordenação, estratégia, decisões</td></tr>
+<tr><td>Eva</td><td>5</td><td>Opus 4.6</td><td>Arquitetura de agentes</td></tr>
+<tr><td>Aurora</td><td>6</td><td>Opus 4.6</td><td>Design, HTML/CSS, PDFs</td></tr>
+<tr><td>Harpia</td><td>7</td><td>Opus 4.6</td><td>Roteiros, vídeo</td></tr>
+<tr><td>Masterson</td><td>8</td><td>Opus 4.6</td><td>Copy, escrita longa</td></tr>
+<tr><td>Vega</td><td>10</td><td>Opus 4.6</td><td>Social media, pesquisa</td></tr>
+<tr><td>Orion</td><td>11</td><td>Opus 4.6</td><td>Código, automações</td></tr>
+<tr><td>Helios</td><td>12</td><td>Opus 4.6</td><td>Tráfego, Meta Ads</td></tr>
+<tr><td>Nexa</td><td>14</td><td>Opus 4.6</td><td>Imagens, curadoria visual</td></tr>
+<tr><td>Atlas</td><td>15</td><td>Opus 4.6</td><td>Orquestração, planejamento</td></tr>
+</tbody>
+</table>
+
+<span class="page-footer"><b>DONA</b>SYSTEM</span><span class="page-number">03</span>
+</div>
+
+<!-- PÁGINA 4: CRONS -->
+<div class="page">
+<span class="section-number">03</span>
+<span class="eyebrow">Automações</span>
+<h2 class="section-title">Crons <em>ativos</em></h2>
+<p class="section-desc">9 crons automatizados. 4 já usam Haiku (econômico). 5 ainda rodam no Opus sem necessidade.</p>
+
+<table>
+<thead><tr><th>Cron</th><th>Modelo</th><th>Frequência</th><th>Exec/mês</th><th>Custo</th></tr></thead>
+<tbody>
+<tr class="highlight-row-table"><td>health-monitor</td><td>Opus 4.6</td><td>A cada 1h</td><td>720</td><td class="cost-high">~US$ 63</td></tr>
+<tr><td>checagem-proativa-6h</td><td>Haiku 4.5</td><td>4x/dia</td><td>120</td><td class="cost-low">~US$ 2,10</td></tr>
+<tr><td>organizacao-memoria</td><td>Haiku 4.5</td><td>1x/dia</td><td>30</td><td class="cost-low">~US$ 0,90</td></tr>
+<tr class="highlight-row-table"><td>backup-diario</td><td>Opus 4.6</td><td>1x/dia</td><td>30</td><td class="cost-med">~US$ 1,88</td></tr>
+<tr><td>watchdog-monitor</td><td>Haiku 4.5</td><td>1x/dia</td><td>30</td><td class="cost-low">~US$ 0,60</td></tr>
+<tr class="highlight-row-table"><td>stats-collector</td><td>Opus 4.6</td><td>1x/dia</td><td>30</td><td class="cost-med">~US$ 3,75</td></tr>
+<tr class="highlight-row-table"><td>task-reminder</td><td>Opus 4.6</td><td>1x/dia</td><td>30</td><td class="cost-med">~US$ 3,00</td></tr>
+<tr><td>security-audit</td><td>Haiku 4.5</td><td>1x/semana</td><td>4</td><td class="cost-low">~US$ 0,08</td></tr>
+<tr class="highlight-row-table"><td>consolidacao-semanal</td><td>Opus 4.6</td><td>1x/semana</td><td>4</td><td class="cost-med">~US$ 0,90</td></tr>
+<tr style="border-top:2px solid var(--ouro-pale)"><td><b>Total crons</b></td><td></td><td></td><td><b>998</b></td><td><b>~US$ 76/mês</b></td></tr>
+</tbody>
+</table>
+
+<div class="sep"></div>
+
+<span class="eyebrow">Visualização de custos por cron</span>
+
+<div class="bar-chart">
+<div class="bar-row"><span class="bar-label">health-monitor</span><div class="bar-track"><div class="bar-fill bar-opus" style="width:83%"><span>US$ 63 · OPUS</span></div></div></div>
+<div class="bar-row"><span class="bar-label">stats-collector</span><div class="bar-track"><div class="bar-fill bar-opus" style="width:5%"><span>US$ 3,75</span></div></div></div>
+<div class="bar-row"><span class="bar-label">task-reminder</span><div class="bar-track"><div class="bar-fill bar-opus" style="width:4%"><span>US$ 3</span></div></div></div>
+<div class="bar-row"><span class="bar-label">checagem-proativa</span><div class="bar-track"><div class="bar-fill bar-haiku" style="width:3%"><span>US$ 2,10</span></div></div></div>
+<div class="bar-row"><span class="bar-label">backup-diario</span><div class="bar-track"><div class="bar-fill bar-opus" style="width:2.5%"><span>US$ 1,88</span></div></div></div>
+<div class="bar-row"><span class="bar-label">consolidacao</span><div class="bar-track"><div class="bar-fill bar-opus" style="width:1.2%"><span>US$ 0,90</span></div></div></div>
+<div class="bar-row"><span class="bar-label">org-memoria</span><div class="bar-track"><div class="bar-fill bar-haiku" style="width:1.2%"><span>US$ 0,90</span></div></div></div>
+<div class="bar-row"><span class="bar-label">watchdog</span><div class="bar-track"><div class="bar-fill bar-haiku" style="width:0.8%"><span>US$ 0,60</span></div></div></div>
+<div class="bar-row"><span class="bar-label">security-audit</span><div class="bar-track"><div class="bar-fill bar-haiku" style="width:0.1%"><span>US$ 0,08</span></div></div></div>
+</div>
+
+<div class="quote-box">
+<p class="quote-text">O health-monitor sozinho consome 83% do custo de crons. Migrar para Haiku economiza ~US$ 61/mês imediatamente.</p>
+<span class="quote-author">✦ Recomendação prioritária</span>
+</div>
+
+<span class="page-footer"><b>DONA</b>SYSTEM</span><span class="page-number">04</span>
+</div>
+
+<!-- PÁGINA 5: CUSTOS TOTAIS -->
+<div class="page">
+<span class="section-number">04</span>
+<span class="eyebrow">Estimativa mensal</span>
+<h2 class="section-title">Custo total <em>estimado</em></h2>
+<p class="section-desc">Premissas: ~50 conversas/dia, contexto médio ~50k tokens, output médio ~2k tokens, cache hit 16%.</p>
+
+<div class="metric-row">
+<div class="metric-box"><div class="metric-value">US$ 76</div><div class="metric-label">Crons (fixo)</div></div>
+<div class="metric-box"><div class="metric-value">US$ 200-400</div><div class="metric-label">Conversas + subagentes (variável)</div></div>
+<div class="metric-box"><div class="metric-value">US$ 276-476</div><div class="metric-label">Total estimado/mês</div></div>
+</div>
+
+<div class="sep"></div>
+
+<span class="eyebrow">Cenários de otimização</span>
+<h2 class="section-title" style="font-size:18px;">Comparativo de <em>custos</em></h2>
+
+<table>
+<thead><tr><th>Cenário</th><th>Configuração</th><th>Custo/mês</th><th>Economia</th></tr></thead>
+<tbody>
+<tr class="highlight-row-table"><td><b>A (atual)</b></td><td>Tudo no Opus + 4 crons Haiku</td><td><b>US$ 350-500</b></td><td>Baseline</td></tr>
+<tr><td><b>B (recomendado)</b></td><td>Opus para Isis + Sonnet para produção + Haiku para crons</td><td><b>US$ 150-250</b></td><td class="cost-low">~50%</td></tr>
+<tr><td>C</td><td>Sonnet como padrão + Opus só para estratégia</td><td>US$ 100-180</td><td class="cost-low">~65%</td></tr>
+<tr><td>D</td><td>Haiku para tudo (mínimo viável)</td><td>US$ 30-60</td><td class="cost-low">~85%</td></tr>
+</tbody>
+</table>
+
+<div class="card-grid card-grid-2" style="margin-top:16px;">
+<div class="card card-accent">
+<span class="card-label">Ação imediata (5 min)</span>
+<div class="card-title">Migrar 5 crons</div>
+<p class="card-desc">Health-monitor, backup, stats-collector, task-reminder e consolidacao para Haiku/Sonnet. Economia: ~US$ 67/mês sem perda de qualidade.</p>
+</div>
+<div class="card">
+<span class="card-label">Ação média (requer teste)</span>
+<div class="card-title">Sonnet para execução</div>
+<p class="card-desc">Usar Sonnet como padrão para Orion, Nexa e Vega. Manter Opus para Dona, Atlas, Masterson e Aurora. Economia adicional: ~US$ 40-80/mês.</p>
+</div>
+</div>
+
+<div class="sep"></div>
+
+<span class="eyebrow">Perfil de cada modelo</span>
+
+<div class="card-grid card-grid-3">
+<div class="card">
+<span class="card-label">Econômico</span>
+<div class="card-title">Haiku 4.5</div>
+<p class="card-desc">Latência: 1-3s. Bom para checagens, classificação, tarefas com instrução clara. 5x mais barato que Opus.</p>
+</div>
+<div class="card">
+<span class="card-label">Equilibrado</span>
+<div class="card-title">Sonnet 4.6</div>
+<p class="card-desc">Latência: 3-8s. Bom para conteúdo, código moderado, análise. 60% mais barato que Opus.</p>
+</div>
+<div class="card">
+<span class="card-label">Premium</span>
+<div class="card-title">Opus 4.6</div>
+<p class="card-desc">Latência: 5-15s. O melhor em raciocínio complexo, estratégia, copy avançada. O mais caro.</p>
+</div>
+</div>
+
+<span class="page-footer"><b>DONA</b>SYSTEM</span><span class="page-number">05</span>
+</div>
+
+<!-- PÁGINA 6: REGRA + OUTROS CUSTOS -->
+<div class="page">
+<span class="section-number">05</span>
+<span class="eyebrow">Regra de ouro</span>
+<h2 class="section-title">Quando usar <em>cada modelo</em></h2>
+
+<div class="flow-box" style="margin-bottom:20px;">
+<span class="flow-label">Decisão rápida</span>
+<p class="flow-text">
+Tarefa rotineira, checagem ou formatação <span class="flow-arrow">→</span> <b>Haiku</b><br>
+Produção de conteúdo ou código moderado <span class="flow-arrow">→</span> <b>Sonnet</b><br>
+Estratégia, decisão complexa ou copy de alto impacto <span class="flow-arrow">→</span> <b>Opus</b><br>
+Não tem certeza <span class="flow-arrow">→</span> <b>Sonnet</b> (melhor custo-benefício)
+</p>
+</div>
+
+<table>
+<thead><tr><th>Tarefa</th><th>Modelo ideal</th><th>Justificativa</th></tr></thead>
+<tbody>
+<tr><td>Heartbeat, health check</td><td><span class="pill pill-green">HAIKU</span></td><td>Instrução simples, resposta binária</td></tr>
+<tr><td>Backup, organização de memória</td><td><span class="pill pill-green">HAIKU</span></td><td>Comandos de sistema, sem raciocínio</td></tr>
+<tr><td>Watchdog, auditoria</td><td><span class="pill pill-green">HAIKU</span></td><td>Verificação de lista, pouca criatividade</td></tr>
+<tr><td>Posts, legendas, pesquisa</td><td><span class="pill pill-yellow">SONNET</span></td><td>Conteúdo bom, não precisa de Opus</td></tr>
+<tr><td>Código, scripts, automações</td><td><span class="pill pill-yellow">SONNET</span></td><td>Qualidade suficiente para a maioria</td></tr>
+<tr><td>Geração de imagens (prompts)</td><td><span class="pill pill-yellow">SONNET</span></td><td>Prompts não exigem raciocínio profundo</td></tr>
+<tr><td>Copy de vendas, ebooks</td><td><span class="pill pill-red">OPUS</span></td><td>Persuasão requer raciocínio avançado</td></tr>
+<tr><td>Estratégia, decisões de negócio</td><td><span class="pill pill-red">OPUS</span></td><td>Múltiplas variáveis, consequências reais</td></tr>
+<tr><td>Orquestração de cadeias</td><td><span class="pill pill-red">OPUS</span></td><td>Coordenação multi-agente é complexa</td></tr>
+<tr><td>Design system, HTML avançado</td><td><span class="pill pill-red">OPUS</span></td><td>CSS/JS complexo precisa de precisão</td></tr>
+</tbody>
+</table>
+
+<div class="sep"></div>
+
+<span class="eyebrow">Custos complementares</span>
+<h2 class="section-title" style="font-size:18px;">Outras <em>APIs</em></h2>
+
+<table>
+<thead><tr><th>Serviço</th><th>Custo</th><th>Uso</th></tr></thead>
+<tbody>
+<tr><td>OpenAI Whisper API</td><td>~US$ 0,006/min</td><td>Transcrição de áudio (sob demanda)</td></tr>
+<tr><td>Google Gemini (search)</td><td>Free tier</td><td>Buscas web via OpenClaw</td></tr>
+<tr><td>RapidAPI (Instagram, YT...)</td><td>Freemium</td><td>Scraping e APIs diversas</td></tr>
+<tr><td>ElevenLabs TTS</td><td>Variável</td><td>Text-to-speech (sob demanda)</td></tr>
+<tr><td>Meta Ads API</td><td>Gratuito</td><td>Dados de campanhas</td></tr>
+<tr><td>Nano Banana Pro (Gemini)</td><td>Via Gemini key</td><td>Geração de imagens</td></tr>
+</tbody>
+</table>
+
+<div class="sep"></div>
+
+<span class="eyebrow">Monitoramento</span>
+<div class="card-grid card-grid-3">
+<div class="card"><span class="card-label">Dashboard</span><p class="card-desc">console.anthropic.com/settings/billing</p></div>
+<div class="card"><span class="card-label">Sessão atual</span><p class="card-desc">Comando /status mostra tokens e cache hit</p></div>
+<div class="card"><span class="card-label">Logs</span><p class="card-desc">Gateway registra tokens por request</p></div>
+</div>
+
+<span class="page-footer"><b>DONA</b>SYSTEM</span><span class="page-number">06</span>
+</div>
+
+</body>
+</html>
