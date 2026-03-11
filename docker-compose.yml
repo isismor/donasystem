@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  landing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - torre-dona
+    restart: unless-stopped
+
+  torre-dona:
+    build:
+      context: ./hub
+      dockerfile: Dockerfile
+      args:
+        AUTH_USER: ${AUTH_USER:-isisalvesmoreira@gmail.com}
+        AUTH_PASS: ${AUTH_PASS:-hub#2027}
+        API_KEY: ${API_KEY:-generate-a-random-key}
+        AUTH_SECRET: ${AUTH_SECRET:-generate-a-random-secret}
+        MC_ALLOW_ANY_HOST: "true"
+        MC_ALLOWED_HOSTS: ${MC_ALLOWED_HOSTS:-localhost,donasystem.com.br}
+        OPENCLAW_HOME: ${OPENCLAW_HOME:-/home/openclaw/.openclaw}
+        OPENCLAW_GATEWAY_HOST: ${OPENCLAW_GATEWAY_HOST:-127.0.0.1}
+        OPENCLAW_GATEWAY_PORT: ${OPENCLAW_GATEWAY_PORT:-18789}
+        MC_DEFAULT_GATEWAY_NAME: Dona
+        NEXT_PUBLIC_GATEWAY_HOST: ${NEXT_PUBLIC_GATEWAY_HOST:-127.0.0.1}
+        NEXT_PUBLIC_GATEWAY_PORT: ${NEXT_PUBLIC_GATEWAY_PORT:-18789}
+        NEXT_PUBLIC_GATEWAY_CLIENT_ID: torre-dona
+    environment:
+      - AUTH_USER=${AUTH_USER:-isisalvesmoreira@gmail.com}
+      - AUTH_PASS=${AUTH_PASS:-hub#2027}
+      - API_KEY=${API_KEY:-generate-a-random-key}
+      - AUTH_SECRET=${AUTH_SECRET:-generate-a-random-secret}
+      - MC_ALLOW_ANY_HOST=true
+      - MC_ALLOWED_HOSTS=${MC_ALLOWED_HOSTS:-localhost,donasystem.com.br}
+      - OPENCLAW_HOME=/data/openclaw
+      - OPENCLAW_GATEWAY_HOST=${OPENCLAW_GATEWAY_HOST:-host.docker.internal}
+      - OPENCLAW_GATEWAY_PORT=${OPENCLAW_GATEWAY_PORT:-18789}
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN:-}
+      - MC_DEFAULT_GATEWAY_NAME=Dona
+    expose:
+      - "3000"
+    restart: unless-stopped

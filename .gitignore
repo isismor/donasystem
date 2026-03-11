@@ -1,0 +1,6 @@
+.env
+hub/node_modules/
+hub/.next/
+hub/data/
+hub/*.db
+hub/*.db-journal
