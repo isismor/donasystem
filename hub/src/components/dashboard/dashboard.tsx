@@ -243,7 +243,7 @@ export function Dashboard() {
               />
             )}
             {systemStats?.uptime != null && (
-              <HealthRow label="Tempo ativo" value={formatTempo ativo(systemStats.uptime)} status="good" />
+              <HealthRow label="Tempo ativo" value={formatUptime(systemStats.uptime)} status="good" />
             )}
             {dbStats && (
               <HealthRow
@@ -639,7 +639,7 @@ function QuickAction({ label, desc, tab, icon, onNavigate }: {
 
 // --- Utility functions ---
 
-function formatTempo ativo(ms: number): string {
+function formatUptime(ms: number): string {
   const hours = Math.floor(ms / (1000 * 60 * 60))
   const days = Math.floor(hours / 24)
   if (days > 0) return `${days}d ${hours % 24}h`

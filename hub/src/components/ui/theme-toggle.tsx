@@ -1,10 +1,10 @@
 'use client'
 
-import { useTema } from 'next-themes'
+import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
-export function TemaToggle() {
-  const { theme, setTema } = useTema()
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export function TemaToggle() {
 
   return (
     <button
-      onClick={() => setTema(theme === 'dark' ? 'light' : 'dark')}
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       className="w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth flex items-center justify-center"
       title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >

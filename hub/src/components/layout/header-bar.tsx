@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useMissionControl } from '@/store'
 import { useWebSocket } from '@/lib/websocket'
 import { useNavigateToPanel } from '@/lib/navigation'
-import { TemaToggle } from '@/components/ui/theme-toggle'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { DigitalClock } from '@/components/ui/digital-clock'
 import { APP_VERSION } from '@/lib/version'
 
@@ -203,11 +203,11 @@ export function HeaderBar() {
           )}
         </button>
 
-        <TemaToggle />
+        <ThemeToggle />
 
         {/* User menu */}
         {currentUser && (
-          <UserMenu user={currentUser} onSair={() => setCurrentUser(null)} />
+          <UserMenu user={currentUser} onLogout={() => setCurrentUser(null)} />
         )}
       </div>
 
@@ -388,7 +388,7 @@ function ChatIcon() {
   )
 }
 
-function UserMenu({ user, onSair }: { user: { username: string; display_name: string; role: string }; onSair: () => void }) {
+function UserMenu({ user, onLogout }: { user: { username: string; display_name: string; role: string }; onLogout: () => void }) {
   const [open, setOpen] = useState(false)
   const [showPasswordDialog, setShowPasswordDialog] = useState(false)
   const router = useRouter()
@@ -400,9 +400,9 @@ function UserMenu({ user, onSair }: { user: { username: string; display_name: st
     .toUpperCase()
     .slice(0, 2)
 
-  async function handleSair() {
+  async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST' })
-    onSair()
+    onLogout()
     router.push('/login')
   }
 
@@ -431,7 +431,7 @@ function UserMenu({ user, onSair }: { user: { username: string; display_name: st
               Change password
             </button>
             <button
-              onClick={handleSair}
+              onClick={handleLogout}
               className="w-full px-3 py-2 text-sm text-left text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
             >
               Sair

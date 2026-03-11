@@ -1,6 +1,6 @@
 'use client'
 
-import { formatTempo ativo } from '@/lib/utils'
+import { formatUptime } from '@/lib/utils'
 
 interface Stats {
   totalSessions: number
@@ -70,8 +70,8 @@ function StatCard({ title, value, icon, trend, subtitle, color = 'default' }: St
 
 export function StatsGrid({ stats, systemStats }: StatsGridProps) {
   const uptimeFormatted = systemStats?.uptime ? 
-    formatTempo ativo(systemStats.uptime) : 
-    formatTempo ativo(Date.now() - stats.uptime)
+    formatUptime(systemStats.uptime) : 
+    formatUptime(Date.now() - stats.uptime)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">

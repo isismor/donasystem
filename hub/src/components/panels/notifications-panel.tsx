@@ -100,7 +100,7 @@ export function NotificaçõesPanel() {
         {loading ? (
           <div className="flex items-center justify-center h-32">
             <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent" />
-            <span className="ml-2 text-muted-foreground text-sm"<>Carregando...<</span>
+            <span className="ml-2 text-muted-foreground text-sm">Carregando...</span>
           </div>
         ) : notifications.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-32 text-muted-foreground/50">

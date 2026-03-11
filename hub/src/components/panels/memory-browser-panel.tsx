@@ -59,7 +59,7 @@ export function MemóriaBrowserPanel() {
     loadFileTree()
   }, [loadFileTree])
 
-  const getFiltraredFiles = () => {
+  const getFilteredFiles = () => {
     if (activeTab === 'all') return memoryFiles
 
     const tabPrefixes = activeTab === 'daily'
@@ -470,18 +470,18 @@ export function MemóriaBrowserPanel() {
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-              <span className="ml-3 text-muted-foreground"<>Carregando...<</span>
+              <span className="ml-3 text-muted-foreground">Carregando...</span>
             </div>
           ) : (
             <div className="max-h-96 overflow-y-auto text-sm">
-              {getFiltraredFiles().length === 0 ? (
+              {getFilteredFiles().length === 0 ? (
                 <div className="text-center text-muted-foreground py-8">
                   {activeTab === 'all' ? 'No memory files found' : 
                    activeTab === 'daily' ? 'No daily logs found' : 
                    'No knowledge files found'}
                 </div>
               ) : (
-                renderFileTree(getFiltraredFiles())
+                renderFileTree(getFilteredFiles())
               )}
             </div>
           )}
