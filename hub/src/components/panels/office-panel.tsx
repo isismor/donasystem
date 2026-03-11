@@ -127,16 +127,16 @@ interface PersistedOfficePrefs {
 }
 
 const statusGlow: Record<string, string> = {
-  idle: 'shadow-green-500/40 border-green-500/60',
+  idle: 'shadow-[#b4a68c]/40 border-[#b4a68c]/60',
   busy: 'shadow-yellow-500/40 border-yellow-500/60',
-  error: 'shadow-red-500/40 border-red-500/60',
+  error: 'shadow-[#9e5c50]/40 border-[#9e5c50]/60',
   offline: 'shadow-gray-500/20 border-gray-600/40',
 }
 
 const statusDot: Record<string, string> = {
-  idle: 'bg-green-500',
+  idle: 'bg-[#b4a68c]',
   busy: 'bg-yellow-500',
-  error: 'bg-red-500',
+  error: 'bg-[#9e5c50]',
   offline: 'bg-gray-500',
 }
 
@@ -291,7 +291,7 @@ interface WorkerVariant {
 
 const WORKER_VARIANTS: WorkerVariant[] = [
   { id: 'default', filter: 'none', accent: 'border-cyan-300/60' },
-  { id: 'warm', filter: 'hue-rotate(18deg) saturate(1.08)', accent: 'border-amber-300/60' },
+  { id: 'warm', filter: 'hue-rotate(18deg) saturate(1.08)', accent: 'border-[#c49a6c]/60' },
   { id: 'cool', filter: 'hue-rotate(-20deg) saturate(1.1)', accent: 'border-sky-300/60' },
   { id: 'mint', filter: 'hue-rotate(42deg) saturate(1.08)', accent: 'border-emerald-300/60' },
   { id: 'violet', filter: 'hue-rotate(64deg) saturate(1.12)', accent: 'border-violet-300/60' },
@@ -1523,8 +1523,8 @@ export function OfficePanel() {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-3 text-xs text-muted-foreground mr-4">
               {counts.busy > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-500" />{counts.busy} working</span>}
-              {counts.idle > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500" />{counts.idle} idle</span>}
-              {counts.error > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500" />{counts.error} error</span>}
+              {counts.idle > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#b4a68c]" />{counts.idle} idle</span>}
+              {counts.error > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#9e5c50]" />{counts.error} error</span>}
               {counts.offline > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-gray-500" />{counts.offline} away</span>}
             </div>
             <div className="flex rounded-md overflow-hidden border border-border">
@@ -1598,7 +1598,7 @@ export function OfficePanel() {
                   onClick={() => setLocalSessionFilter('not-running')}
                   className={`flex-1 rounded border px-2 py-1 text-[10px] transition-smooth ${
                     localSessionFilter === 'not-running'
-                      ? 'bg-amber-500/15 border-amber-500/60 text-amber-200'
+                      ? 'bg-[#c49a6c]/15 border-[#c49a6c]/60 text-[#c49a6c]'
                       : 'bg-black/20 border-white/10 text-slate-300 hover:bg-black/35'
                   }`}
                 >
@@ -1617,7 +1617,7 @@ export function OfficePanel() {
                   }}
                   className={`w-full flex items-center gap-2 rounded-lg p-2 text-left transition-smooth ${
                     needsAttention
-                      ? 'bg-amber-500/12 border border-amber-400/60 hover:bg-amber-500/20'
+                      ? 'bg-[#c49a6c]/12 border border-[#c49a6c]/60 hover:bg-[#c49a6c]/20'
                       : 'bg-black/20 border border-white/5 hover:bg-black/35'
                   }`}
                 >
@@ -1633,7 +1633,7 @@ export function OfficePanel() {
                   </span>
                   <span className="flex flex-col items-end gap-1">
                     <span className={`w-2 h-2 rounded-full ${statusDot[agent.status]}`} />
-                    <span className={`text-[9px] ${needsAttention ? 'text-amber-300 font-semibold' : 'text-slate-400'}`}>
+                    <span className={`text-[9px] ${needsAttention ? 'text-[#c49a6c] font-semibold' : 'text-slate-400'}`}>
                       {agent.status === 'busy' ? 'active' : `${minutesIdle}m idle`}
                     </span>
                   </span>
@@ -2077,7 +2077,7 @@ export function OfficePanel() {
                           event.severity === 'good'
                             ? 'text-emerald-300'
                             : event.severity === 'warn'
-                              ? 'text-amber-300'
+                              ? 'text-[#c49a6c]'
                               : 'text-sky-300'
                         }`}
                       >
@@ -2231,7 +2231,7 @@ export function OfficePanel() {
                     <div className="text-[10px] text-muted-foreground">Active</div>
                   </div>
                   <div className="text-center bg-secondary rounded-lg p-2">
-                    <div className="text-lg font-bold text-green-400">{selectedAgent.taskStats.completed}</div>
+                    <div className="text-lg font-bold text-[#b4a68c]">{selectedAgent.taskStats.completed}</div>
                     <div className="text-[10px] text-muted-foreground">Done</div>
                   </div>
                 </div>
@@ -2335,10 +2335,10 @@ export function OfficePanel() {
             <span
               className={`mt-1 inline-block h-2.5 w-2.5 rounded-full ${
                 launchToast.kind === 'success'
-                  ? 'bg-green-400'
+                  ? 'bg-[#b4a68c]'
                   : launchToast.kind === 'info'
                     ? 'bg-blue-400'
-                    : 'bg-red-400'
+                    : 'bg-[#9e5c50]'
               }`}
             />
             <div>

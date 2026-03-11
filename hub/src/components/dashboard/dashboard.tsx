@@ -291,12 +291,12 @@ export function Dashboard() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">Estimated cost</span>
                   {subscriptionLabel ? (
-                    <span className="text-xs font-medium font-mono-tight text-green-400">
+                    <span className="text-xs font-medium font-mono-tight text-[#b4a68c]">
                       Included ({subscriptionLabel})
                     </span>
                   ) : (
                     <span className={`text-xs font-medium font-mono-tight ${
-                      (claudeStats?.total_estimated_cost ?? 0) > 10 ? 'text-amber-400' : 'text-green-400'
+                      (claudeStats?.total_estimated_cost ?? 0) > 10 ? 'text-[#c49a6c]' : 'text-[#b4a68c]'
                     }`}>
                       ${(claudeStats?.total_estimated_cost ?? 0).toFixed(2)}
                     </span>
@@ -310,7 +310,7 @@ export function Dashboard() {
             <div className="panel-header">
               <h3 className="text-sm font-semibold text-foreground">Security & Audit</h3>
               {dbStats && dbStats.audit.loginFailures > 0 && (
-                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-2xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-2xs font-medium bg-[#9e5c50]/10 text-[#9e5c50] border border-[#9e5c50]/20">
                   {dbStats.audit.loginFailures} failed login{dbStats.audit.loginFailures > 1 ? 's' : ''}
                 </span>
               )}
@@ -329,7 +329,7 @@ export function Dashboard() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">Unread notifications</span>
                   <span className={`text-xs font-medium font-mono-tight ${
-                    (dbStats?.notifications.unread ?? 0) > 0 ? 'text-amber-400' : 'text-muted-foreground'
+                    (dbStats?.notifications.unread ?? 0) > 0 ? 'text-[#c49a6c]' : 'text-muted-foreground'
                   }`}>
                     {dbStats?.notifications.unread ?? 0}
                   </span>
@@ -395,8 +395,8 @@ export function Dashboard() {
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">Latest backup</span>
                     <span className={`text-xs font-medium font-mono-tight ${
-                      dbStats.backup.age_hours > 48 ? 'text-red-400' :
-                      dbStats.backup.age_hours > 24 ? 'text-amber-400' : 'text-green-400'
+                      dbStats.backup.age_hours > 48 ? 'text-[#9e5c50]' :
+                      dbStats.backup.age_hours > 24 ? 'text-[#c49a6c]' : 'text-[#b4a68c]'
                     }`}>
                       {dbStats.backup.age_hours < 1 ? '<1h ago' : `${dbStats.backup.age_hours}h ago`}
                     </span>
@@ -411,7 +411,7 @@ export function Dashboard() {
               ) : (
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">Latest backup</span>
-                  <span className="text-xs font-medium text-amber-400">None</span>
+                  <span className="text-xs font-medium text-[#c49a6c]">None</span>
                 </div>
               )}
               <div className="pt-1 border-t border-border/50 space-y-2">
@@ -457,7 +457,7 @@ export function Dashboard() {
             ) : (
               sessions.slice(0, 8).map((session) => (
                 <div key={session.id} className="px-4 py-2.5 flex items-center gap-3 hover:bg-secondary/30 transition-smooth">
-                  <div className={`w-2 h-2 rounded-full shrink-0 ${session.active ? 'bg-green-500' : 'bg-muted-foreground/30'}`} />
+                  <div className={`w-2 h-2 rounded-full shrink-0 ${session.active ? 'bg-[#b4a68c]' : 'bg-muted-foreground/30'}`} />
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-medium text-foreground truncate font-mono-tight">
                       {session.key || session.id}
@@ -486,8 +486,8 @@ export function Dashboard() {
               <div key={log.id} className="px-4 py-2 hover:bg-secondary/30 transition-smooth">
                 <div className="flex items-start gap-2">
                   <div className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${
-                    log.level === 'error' ? 'bg-red-500' :
-                    log.level === 'warn' ? 'bg-amber-500' :
+                    log.level === 'error' ? 'bg-[#9e5c50]' :
+                    log.level === 'warn' ? 'bg-[#c49a6c]' :
                     log.level === 'debug' ? 'bg-gray-500' :
                     'bg-blue-500/50'
                   }`} />
@@ -541,9 +541,9 @@ function MetricCard({ label, value, total, subtitle, icon, color }: {
 }) {
   const colorMap = {
     blue: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-    green: 'bg-green-500/10 text-green-400 border-green-500/20',
+    green: 'bg-[#b4a68c]/10 text-[#b4a68c] border-[#b4a68c]/20',
     purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-    red: 'bg-red-500/10 text-red-400 border-red-500/20',
+    red: 'bg-[#9e5c50]/10 text-[#9e5c50] border-[#9e5c50]/20',
   }
 
   return (
@@ -571,7 +571,7 @@ function HealthRow({ label, value, status, bar }: {
   status: 'good' | 'warn' | 'bad'
   bar?: number
 }) {
-  const statusColor = status === 'good' ? 'text-green-400' : status === 'warn' ? 'text-amber-400' : 'text-red-400'
+  const statusColor = status === 'good' ? 'text-[#b4a68c]' : status === 'warn' ? 'text-[#c49a6c]' : 'text-[#9e5c50]'
 
   return (
     <div className="space-y-1">
@@ -583,7 +583,7 @@ function HealthRow({ label, value, status, bar }: {
         <div className="h-1 rounded-full bg-secondary overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-500 ${
-              bar > 90 ? 'bg-red-500' : bar > 70 ? 'bg-amber-500' : 'bg-green-500'
+              bar > 90 ? 'bg-[#9e5c50]' : bar > 70 ? 'bg-[#c49a6c]' : 'bg-[#b4a68c]'
             }`}
             style={{ width: `${Math.min(bar, 100)}%` }}
           />
@@ -598,7 +598,7 @@ function StatRow({ label, value, alert }: { label: string; value: number; alert?
     <div className="flex items-center justify-between">
       <span className="text-xs text-muted-foreground">{label}</span>
       <span className={`text-xs font-medium font-mono-tight ${
-        alert ? 'text-red-400' : 'text-muted-foreground'
+        alert ? 'text-[#9e5c50]' : 'text-muted-foreground'
       }`}>
         {value}
       </span>
@@ -611,7 +611,7 @@ function StatusBadge({ connected }: { connected: boolean }) {
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xs font-medium ${
       connected ? 'badge-success' : 'badge-error'
     }`}>
-      <span className={`w-1.5 h-1.5 rounded-full ${connected ? 'bg-green-400' : 'bg-red-400'}`} />
+      <span className={`w-1.5 h-1.5 rounded-full ${connected ? 'bg-[#b4a68c]' : 'bg-[#9e5c50]'}`} />
       {connected ? 'Online' : 'Offline'}
     </span>
   )
@@ -664,11 +664,11 @@ function langColor(lang: string): string {
   const colors: Record<string, string> = {
     TypeScript: 'bg-blue-500',
     JavaScript: 'bg-yellow-500',
-    Python: 'bg-green-500',
+    Python: 'bg-[#b4a68c]',
     Rust: 'bg-orange-500',
     Go: 'bg-cyan-500',
-    Ruby: 'bg-red-500',
-    Java: 'bg-red-400',
+    Ruby: 'bg-[#9e5c50]',
+    Java: 'bg-[#9e5c50]',
     'C++': 'bg-pink-500',
     C: 'bg-gray-500',
     Shell: 'bg-emerald-500',
@@ -684,10 +684,10 @@ function langColor(lang: string): string {
 
 function taskStatusColor(status: string): string {
   switch (status) {
-    case 'done': return 'bg-green-500'
+    case 'done': return 'bg-[#b4a68c]'
     case 'in_progress': return 'bg-blue-500'
     case 'review': case 'quality_review': return 'bg-purple-500'
-    case 'assigned': return 'bg-amber-500'
+    case 'assigned': return 'bg-[#c49a6c]'
     case 'inbox': return 'bg-muted-foreground/40'
     default: return 'bg-muted-foreground/30'
   }

@@ -154,14 +154,14 @@ export function MessageList() {
             <div key={msg.id} className={msg.pendingStatus === 'sending' ? 'opacity-60' : ''}>
               {/* Failed message wrapper */}
               {msg.pendingStatus === 'failed' && (
-                <div className="border border-red-500/30 rounded-lg p-0.5 mb-1">
+                <div className="border border-[#9e5c50]/30 rounded-lg p-0.5 mb-1">
                   <MessageBubble
                     message={msg}
                     isHuman={msg.from_agent === 'human'}
                     isGrouped={isGroupedWithPrevious(group.messages, idx)}
                   />
                   <div className="flex items-center gap-2 px-3 pb-2">
-                    <span className="text-[10px] text-red-400">Failed to send</span>
+                    <span className="text-[10px] text-[#9e5c50]">Failed to send</span>
                     <button
                       onClick={() => handleRetry(msg)}
                       className="text-[10px] text-primary hover:text-primary/80 font-medium transition-smooth"

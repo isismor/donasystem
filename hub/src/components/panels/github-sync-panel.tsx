@@ -225,11 +225,11 @@ export function GitHubSyncPanel() {
         <div className="flex items-center gap-2">
           <span className={`text-2xs px-2 py-1 rounded flex items-center gap-1.5 ${
             tokenStatus?.connected
-              ? 'bg-green-500/10 text-green-400'
+              ? 'bg-[#b4a68c]/10 text-[#b4a68c]'
               : 'bg-destructive/10 text-destructive'
           }`}>
             <span className={`w-1.5 h-1.5 rounded-full ${
-              tokenStatus?.connected ? 'bg-green-500' : 'bg-destructive'
+              tokenStatus?.connected ? 'bg-[#b4a68c]' : 'bg-destructive'
             }`} />
             {tokenStatus?.connected
               ? `GitHub: ${tokenStatus.user || 'connected'}`
@@ -241,7 +241,7 @@ export function GitHubSyncPanel() {
       {/* Feedback */}
       {feedback && (
         <div className={`rounded-lg p-3 text-xs font-medium ${
-          feedback.ok ? 'bg-green-500/10 text-green-400' : 'bg-destructive/10 text-destructive'
+          feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c]' : 'bg-destructive/10 text-destructive'
         }`}>
           {feedback.text}
         </div>
@@ -405,7 +405,7 @@ export function GitHubSyncPanel() {
                     <td className="px-4 py-2">
                       <span className={`px-1.5 py-0.5 rounded text-2xs ${
                         issue.state === 'open'
-                          ? 'bg-green-500/10 text-green-400'
+                          ? 'bg-[#b4a68c]/10 text-[#b4a68c]'
                           : 'bg-purple-500/10 text-purple-400'
                       }`}>
                         {issue.state}
@@ -446,7 +446,7 @@ export function GitHubSyncPanel() {
                     <td className="px-4 py-2">
                       <span className={`px-1.5 py-0.5 rounded text-2xs ${
                         sync.status === 'success'
-                          ? 'bg-green-500/10 text-green-400'
+                          ? 'bg-[#b4a68c]/10 text-[#b4a68c]'
                           : sync.status === 'partial'
                           ? 'bg-yellow-500/10 text-yellow-400'
                           : 'bg-destructive/10 text-destructive'
@@ -495,7 +495,7 @@ export function GitHubSyncPanel() {
                     </td>
                     <td className="px-4 py-2">
                       <span className={`px-1.5 py-0.5 rounded text-2xs ${
-                        task.priority === 'critical' ? 'bg-red-500/10 text-red-400' :
+                        task.priority === 'critical' ? 'bg-[#9e5c50]/10 text-[#9e5c50]' :
                         task.priority === 'high' ? 'bg-orange-500/10 text-orange-400' :
                         task.priority === 'low' ? 'bg-blue-500/10 text-blue-400' :
                         'bg-secondary text-muted-foreground'

@@ -237,7 +237,7 @@ export function AgentCommsPanel() {
               sourceMode === "live"
                 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                 : sourceMode === "mixed"
-                  ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                  ? "bg-[#c49a6c]/10 text-[#c49a6c] border-[#c49a6c]/30"
                   : sourceMode === "seeded"
                     ? "bg-sky-500/10 text-sky-400 border-sky-500/30"
                     : "bg-muted text-muted-foreground border-border/40"
@@ -292,7 +292,7 @@ export function AgentCommsPanel() {
       </div>
 
       {error && (
-        <div className="mx-4 mt-2 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2 text-xs text-red-400">
+        <div className="mx-4 mt-2 bg-[#9e5c50]/10 border border-[#9e5c50]/20 rounded-lg px-3 py-2 text-xs text-[#9e5c50]">
           {error}
         </div>
       )}
@@ -413,7 +413,7 @@ export function AgentCommsPanel() {
         )}
 
         {sendError && (
-          <div className="mt-2 text-[11px] text-red-400">{sendError}</div>
+          <div className="mt-2 text-[11px] text-[#9e5c50]">{sendError}</div>
         )}
       </div>
     </div>

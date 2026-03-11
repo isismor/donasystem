@@ -506,7 +506,7 @@ export function MemoryBrowserPanel() {
                       </button>
                       <button
                         onClick={() => setShowDeleteConfirm(true)}
-                        className="px-3 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded-md text-sm hover:bg-red-500/30 transition-smooth"
+                        className="px-3 py-1 bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md text-sm hover:bg-[#9e5c50]/30 transition-smooth"
                       >
                         Delete
                       </button>
@@ -516,7 +516,7 @@ export function MemoryBrowserPanel() {
                       <button
                         onClick={saveFile}
                         disabled={isSaving}
-                        className="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/30 rounded-md text-sm hover:bg-green-500/30 disabled:opacity-50 transition-smooth"
+                        className="px-3 py-1 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md text-sm hover:bg-[#b4a68c]/30 disabled:opacity-50 transition-smooth"
                       >
                         {isSaving ? 'Saving...' : 'Save'}
                       </button>
@@ -818,17 +818,17 @@ function DeleteConfirmModal({
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-card border border-border rounded-lg max-w-md w-full p-6 shadow-xl">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-bold text-red-400">Confirm Deletion</h3>
+          <h3 className="text-lg font-bold text-[#9e5c50]">Confirm Deletion</h3>
           <button onClick={onClose} className="text-muted-foreground hover:text-foreground text-xl transition-smooth">×</button>
         </div>
 
         <div className="space-y-4">
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-lg">
+          <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-4 rounded-lg">
             <p className="text-sm">You are about to permanently delete:</p>
             <p className="font-mono text-foreground mt-2 bg-surface-1 p-2 rounded-md text-sm">
               {fileName}
             </p>
-            <p className="text-xs mt-2 text-red-400/70">
+            <p className="text-xs mt-2 text-[#9e5c50]/70">
               This action cannot be undone.
             </p>
           </div>
@@ -836,7 +836,7 @@ function DeleteConfirmModal({
           <div className="flex gap-3 pt-4">
             <button
               onClick={onConfirm}
-              className="flex-1 px-4 py-2 bg-red-500/20 text-red-400 border border-red-500/30 rounded-md hover:bg-red-500/30 transition-smooth"
+              className="flex-1 px-4 py-2 bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md hover:bg-[#9e5c50]/30 transition-smooth"
             >
               Delete Permanently
             </button>

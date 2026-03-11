@@ -254,8 +254,8 @@ export function IntegrationsPanel() {
         <div className="flex items-center gap-2">
           {opAvailable && (
             <>
-              <span className="text-2xs px-2 py-1 rounded bg-green-500/10 text-green-400 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              <span className="text-2xs px-2 py-1 rounded bg-[#b4a68c]/10 text-[#b4a68c] flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#b4a68c]" />
                 1P CLI
               </span>
               <button
@@ -301,7 +301,7 @@ export function IntegrationsPanel() {
       {/* Feedback */}
       {feedback && (
         <div className={`rounded-lg p-3 text-xs font-medium ${
-          feedback.ok ? 'bg-green-500/10 text-green-400' : 'bg-destructive/10 text-destructive'
+          feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c]' : 'bg-destructive/10 text-destructive'
         }`}>
           {feedback.text}
         </div>
@@ -324,7 +324,7 @@ export function IntegrationsPanel() {
             >
               {cat.label}
               {catConnected > 0 && (
-                <span className="ml-1.5 inline-flex items-center justify-center min-w-[16px] h-4 text-2xs rounded-full bg-green-500/15 text-green-400 px-1">
+                <span className="ml-1.5 inline-flex items-center justify-center min-w-[16px] h-4 text-2xs rounded-full bg-[#b4a68c]/15 text-[#b4a68c] px-1">
                   {catConnected}
                 </span>
               )}
@@ -367,7 +367,7 @@ export function IntegrationsPanel() {
       {/* Unsaved changes bar */}
       {hasChanges && (
         <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-card border border-border rounded-lg shadow-lg px-4 py-2.5 flex items-center gap-3 z-40">
-          <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-[#c49a6c] animate-pulse" />
           <span className="text-xs text-foreground">
             {Object.keys(edits).length} unsaved change{Object.keys(edits).length === 1 ? '' : 's'}
           </span>
@@ -455,8 +455,8 @@ function IntegrationCard({
   onRemove: () => void
 }) {
   const statusColors = {
-    connected: 'bg-green-500',
-    partial: 'bg-amber-500',
+    connected: 'bg-[#b4a68c]',
+    partial: 'bg-[#c49a6c]',
     not_configured: 'bg-muted-foreground/30',
   }
 

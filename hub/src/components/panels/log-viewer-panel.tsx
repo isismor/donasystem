@@ -139,7 +139,7 @@ export function LogViewerPanel() {
 
   const getLogLevelColor = (level: string) => {
     switch (level.toLowerCase()) {
-      case 'error': return 'text-red-400'
+      case 'error': return 'text-[#9e5c50]'
       case 'warn': return 'text-yellow-400'
       case 'info': return 'text-blue-400'
       case 'debug': return 'text-muted-foreground'
@@ -149,7 +149,7 @@ export function LogViewerPanel() {
 
   const getLogLevelBg = (level: string) => {
     switch (level.toLowerCase()) {
-      case 'error': return 'bg-red-500/10 border-red-500/20'
+      case 'error': return 'bg-[#9e5c50]/10 border-[#9e5c50]/20'
       case 'warn': return 'bg-yellow-500/10 border-yellow-500/20'
       case 'info': return 'bg-blue-500/10 border-blue-500/20'
       case 'debug': return 'bg-gray-500/10 border-gray-500/20'
@@ -249,7 +249,7 @@ export function LogViewerPanel() {
               onClick={() => setIsAutoScroll(!isAutoScroll)}
               className={`px-3 py-2 text-sm rounded-md font-medium transition-colors ${
                 isAutoScroll
-                  ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                  ? 'bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30'
                   : 'bg-secondary text-muted-foreground border border-border'
               }`}
             >
@@ -267,7 +267,7 @@ export function LogViewerPanel() {
           <div className="flex items-end">
             <button
               onClick={clearLogs}
-              className="px-3 py-2 text-sm bg-red-500/20 text-red-400 border border-red-500/30 rounded-md font-medium hover:bg-red-500/30 transition-colors"
+              className="px-3 py-2 text-sm bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md font-medium hover:bg-[#9e5c50]/30 transition-colors"
             >
               Clear
             </button>

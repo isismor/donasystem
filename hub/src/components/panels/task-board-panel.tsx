@@ -83,14 +83,14 @@ const statusColumns = [
   { key: 'in_progress', title: 'In Progress', color: 'bg-yellow-500/20 text-yellow-400' },
   { key: 'review', title: 'Review', color: 'bg-purple-500/20 text-purple-400' },
   { key: 'quality_review', title: 'Quality Review', color: 'bg-indigo-500/20 text-indigo-400' },
-  { key: 'done', title: 'Done', color: 'bg-green-500/20 text-green-400' },
+  { key: 'done', title: 'Done', color: 'bg-[#b4a68c]/20 text-[#b4a68c]' },
 ]
 
 const priorityColors: Record<string, string> = {
-  low: 'border-green-500',
+  low: 'border-[#b4a68c]',
   medium: 'border-yellow-500',
   high: 'border-orange-500',
-  critical: 'border-red-500',
+  critical: 'border-[#9e5c50]',
 }
 
 function useMentionTargets() {
@@ -488,13 +488,13 @@ export function TaskBoardPanel() {
   const getTagColor = (tag: string) => {
     const lowerTag = tag.toLowerCase()
     if (lowerTag.includes('urgent') || lowerTag.includes('critical')) {
-      return 'bg-red-500/20 text-red-400 border-red-500/30'
+      return 'bg-[#9e5c50]/20 text-[#9e5c50] border-[#9e5c50]/30'
     }
     if (lowerTag.includes('bug') || lowerTag.includes('fix')) {
       return 'bg-orange-500/20 text-orange-400 border-orange-500/30'
     }
     if (lowerTag.includes('feature') || lowerTag.includes('enhancement')) {
-      return 'bg-green-500/20 text-green-400 border-green-500/30'
+      return 'bg-[#b4a68c]/20 text-[#b4a68c] border-[#b4a68c]/30'
     }
     if (lowerTag.includes('research') || lowerTag.includes('analysis')) {
       return 'bg-purple-500/20 text-purple-400 border-purple-500/30'
@@ -563,11 +563,11 @@ export function TaskBoardPanel() {
 
       {/* Error Display */}
       {error && (
-        <div role="alert" className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 m-4 rounded-lg text-sm flex items-center justify-between">
+        <div role="alert" className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
           <span>{error}</span>
           <button
             onClick={() => setError(null)}
-            className="text-red-400/60 hover:text-red-400 ml-2"
+            className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
             aria-label="Dismiss error"
           >
             ×
@@ -637,10 +637,10 @@ export function TaskBoardPanel() {
                         </span>
                       )}
                       <span className={`text-xs px-2 py-1 rounded font-medium ${
-                        task.priority === 'critical' ? 'bg-red-500/20 text-red-400' :
+                        task.priority === 'critical' ? 'bg-[#9e5c50]/20 text-[#9e5c50]' :
                         task.priority === 'high' ? 'bg-orange-500/20 text-orange-400' :
                         task.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                        'bg-green-500/20 text-green-400'
+                        'bg-[#b4a68c]/20 text-[#b4a68c]'
                       }`}>
                         {task.priority}
                       </span>
@@ -699,7 +699,7 @@ export function TaskBoardPanel() {
                   {task.due_date && (
                     <div className="mt-2 text-xs">
                       <span className={`${
-                        task.due_date * 1000 < Date.now() ? 'text-red-400' : 'text-yellow-400'
+                        task.due_date * 1000 < Date.now() ? 'text-[#9e5c50]' : 'text-yellow-400'
                       }`}>
                         Due: {formatTaskTimestamp(task.due_date)}
                       </span>
@@ -1026,7 +1026,7 @@ function TaskDetailModal({
             </div>
 
             {commentError && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-2 rounded-md text-sm mb-3">
+              <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-2 rounded-md text-sm mb-3">
                 {commentError}
               </div>
             )}
@@ -1104,7 +1104,7 @@ function TaskDetailModal({
             <div id="tabpanel-quality" role="tabpanel" aria-label="Quality Review" className="mt-6">
               <h5 className="text-sm font-medium text-foreground mb-2">Aegis Quality Review</h5>
               {reviewError && (
-                <div className="text-xs text-red-400 mb-2">{reviewError}</div>
+                <div className="text-xs text-[#9e5c50] mb-2">{reviewError}</div>
               )}
               {reviews.length > 0 ? (
                 <div className="space-y-2 mb-3">
@@ -1147,7 +1147,7 @@ function TaskDetailModal({
                   />
                   <button
                     type="submit"
-                    className="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/30 rounded-md text-xs"
+                    className="px-3 py-1 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md text-xs"
                   >
                     Submit
                   </button>
@@ -1614,7 +1614,7 @@ function ProjectManagerModal({
             <button onClick={onClose} className="text-muted-foreground hover:text-foreground text-2xl">×</button>
           </div>
 
-          {error && <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded p-2">{error}</div>}
+          {error && <div className="text-sm text-[#9e5c50] bg-[#9e5c50]/10 border border-[#9e5c50]/20 rounded p-2">{error}</div>}
 
           <form onSubmit={createProject} className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <input
@@ -1665,7 +1665,7 @@ function ProjectManagerModal({
                         </button>
                         <button
                           onClick={() => deleteProject(project)}
-                          className="px-3 py-1 text-xs rounded border border-red-500/30 text-red-400 hover:bg-red-500/10"
+                          className="px-3 py-1 text-xs rounded border border-[#9e5c50]/30 text-[#9e5c50] hover:bg-[#9e5c50]/10"
                         >
                           Delete
                         </button>

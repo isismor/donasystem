@@ -28,9 +28,9 @@ interface SessionInfo {
 
 const typeColors: Record<string, string> = {
   agent_status_change: 'text-yellow-400',
-  task_created: 'text-green-400',
+  task_created: 'text-[#b4a68c]',
   task_updated: 'text-blue-400',
-  task_deleted: 'text-red-400',
+  task_deleted: 'text-[#9e5c50]',
   comment_added: 'text-purple-400',
   agent_created: 'text-cyan-400',
   standup_generated: 'text-orange-400',
@@ -153,9 +153,9 @@ export function AgentHistoryPanel() {
             }`}
           >
             <span className={`w-1.5 h-1.5 rounded-full ${
-              a.status === 'busy' ? 'bg-green-500' :
+              a.status === 'busy' ? 'bg-[#b4a68c]' :
               a.status === 'idle' ? 'bg-yellow-500' :
-              a.status === 'error' ? 'bg-red-500' :
+              a.status === 'error' ? 'bg-[#9e5c50]' :
               'bg-muted-foreground/30'
             }`} />
             {a.name}
@@ -185,9 +185,9 @@ export function AgentHistoryPanel() {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Status</span>
                     <span className={`font-medium ${
-                      selectedAgentData.status === 'busy' ? 'text-green-400' :
+                      selectedAgentData.status === 'busy' ? 'text-[#b4a68c]' :
                       selectedAgentData.status === 'idle' ? 'text-yellow-400' :
-                      selectedAgentData.status === 'error' ? 'text-red-400' :
+                      selectedAgentData.status === 'error' ? 'text-[#9e5c50]' :
                       'text-muted-foreground'
                     }`}>{selectedAgentData.status}</span>
                   </div>
@@ -234,7 +234,7 @@ export function AgentHistoryPanel() {
                   {agentSessions.map(s => (
                     <div key={s.id} className="text-xs space-y-0.5">
                       <div className="flex items-center gap-1.5">
-                        <span className={`w-1.5 h-1.5 rounded-full ${s.active ? 'bg-green-500' : 'bg-muted-foreground/30'}`} />
+                        <span className={`w-1.5 h-1.5 rounded-full ${s.active ? 'bg-[#b4a68c]' : 'bg-muted-foreground/30'}`} />
                         <span className="font-mono-tight text-foreground truncate">{s.kind}</span>
                       </div>
                       <div className="flex gap-3 text-muted-foreground pl-3">

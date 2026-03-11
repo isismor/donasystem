@@ -34,7 +34,7 @@ interface AccessRequest {
 }
 
 const roleColors: Record<string, string> = {
-  admin: 'bg-red-500/20 text-red-400',
+  admin: 'bg-[#9e5c50]/20 text-[#9e5c50]',
   operator: 'bg-blue-500/20 text-blue-400',
   viewer: 'bg-gray-500/20 text-gray-400',
 }
@@ -219,7 +219,7 @@ export function UserManagementPanel() {
   }
 
   if (error) {
-    return <div className="p-8 text-center"><div className="text-sm text-red-400">{error}</div></div>
+    return <div className="p-8 text-center"><div className="text-sm text-[#9e5c50]">{error}</div></div>
   }
 
   return (
@@ -238,14 +238,14 @@ export function UserManagementPanel() {
       </div>
 
       {feedback && (
-        <div className={`px-3 py-2 rounded-md text-sm border ${feedback.ok ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>
+        <div className={`px-3 py-2 rounded-md text-sm border ${feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c] border-[#b4a68c]/20' : 'bg-[#9e5c50]/10 text-[#9e5c50] border-[#9e5c50]/20'}`}>
           {feedback.text}
         </div>
       )}
 
       {pendingRequests.length > 0 && (
-        <div className="border border-amber-500/30 rounded-lg overflow-hidden">
-          <div className="px-4 py-3 bg-amber-500/10 border-b border-amber-500/20 text-sm font-medium text-amber-200">Pending Google Access Requests</div>
+        <div className="border border-[#c49a6c]/30 rounded-lg overflow-hidden">
+          <div className="px-4 py-3 bg-[#c49a6c]/10 border-b border-[#c49a6c]/20 text-sm font-medium text-[#c49a6c]">Pending Google Access Requests</div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -277,7 +277,7 @@ export function UserManagementPanel() {
                         <button
                           onClick={() => reviewRequest(req, 'reject')}
                           disabled={processingRequestId === req.id}
-                          className="h-7 px-2 rounded border border-red-500/30 text-red-400 text-xs disabled:opacity-50 hover:bg-red-500/10"
+                          className="h-7 px-2 rounded border border-[#9e5c50]/30 text-[#9e5c50] text-xs disabled:opacity-50 hover:bg-[#9e5c50]/10"
                         >
                           Reject
                         </button>

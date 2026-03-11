@@ -19,9 +19,9 @@ export function ConnectionStatus({
   const displayUrl = connection.url || 'ws://<gateway-host>:<gateway-port>'
 
   const getStatusColor = () => {
-    if (isConnected) return 'bg-green-500 animate-pulse'
+    if (isConnected) return 'bg-[#b4a68c] animate-pulse'
     if (connection.reconnectAttempts > 0) return 'bg-yellow-500'
-    return 'bg-red-500'
+    return 'bg-[#9e5c50]'
   }
 
   const getStatusText = () => {
@@ -52,7 +52,7 @@ export function ConnectionStatus({
         {isConnected ? (
           <button
             onClick={onDisconnect}
-            className="px-3 py-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded-md text-xs font-medium hover:bg-red-500/30 transition-colors"
+            className="px-3 py-1 bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md text-xs font-medium hover:bg-[#9e5c50]/30 transition-colors"
             title="Disconnect from gateway"
           >
             Disconnect
@@ -69,7 +69,7 @@ export function ConnectionStatus({
           <div className="flex space-x-1">
             <button
               onClick={onConnect}
-              className="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/30 rounded-md text-xs font-medium hover:bg-green-500/30 transition-colors"
+              className="px-3 py-1 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md text-xs font-medium hover:bg-[#b4a68c]/30 transition-colors"
               title="Connect to gateway"
             >
               Connect

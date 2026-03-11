@@ -190,7 +190,7 @@ export function NavRail() {
             className={`w-2.5 h-2.5 rounded-full shrink-0 ${
               isLocal
                 ? 'bg-blue-500'
-                : connection.isConnected ? 'bg-green-500 pulse-dot' : 'bg-red-500'
+                : connection.isConnected ? 'bg-[#b4a68c] pulse-dot' : 'bg-[#9e5c50]'
             }`}
             title={isLocal ? 'Modo Local' : connection.isConnected ? 'Gateway conectado' : 'Gateway desconectado'}
           />

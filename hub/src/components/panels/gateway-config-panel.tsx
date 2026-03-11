@@ -132,7 +132,7 @@ export function GatewayConfigPanel() {
       {/* Feedback */}
       {feedback && (
         <div className={`rounded-lg p-3 text-xs font-medium ${
-          feedback.ok ? 'bg-green-500/10 text-green-400' : 'bg-destructive/10 text-destructive'
+          feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c]' : 'bg-destructive/10 text-destructive'
         }`}>
           {feedback.text}
         </div>
@@ -335,7 +335,7 @@ function ConfigLeaf({ label, value, dotPath, editingKey, editValue, onStartEdit,
   const isArray = Array.isArray(value)
   const displayValue = isArray ? JSON.stringify(value) : String(value ?? 'null')
   const typeColor = typeof value === 'boolean'
-    ? value ? 'text-green-400' : 'text-red-400'
+    ? value ? 'text-[#b4a68c]' : 'text-[#9e5c50]'
     : typeof value === 'number' ? 'text-blue-400'
     : isRedacted ? 'text-muted-foreground/50 italic'
     : 'text-foreground'
@@ -366,7 +366,7 @@ function ConfigLeaf({ label, value, dotPath, editingKey, editValue, onStartEdit,
               autoFocus
             />
           )}
-          <button onClick={onSaveEdit} className="text-green-400 hover:text-green-300 text-xs">Save</button>
+          <button onClick={onSaveEdit} className="text-[#b4a68c] hover:text-[#b4a68c] text-xs">Save</button>
           <button onClick={onCancelEdit} className="text-muted-foreground hover:text-foreground text-xs">Cancel</button>
         </div>
       ) : (

@@ -49,9 +49,9 @@ interface SoulTemplate {
 
 const statusColors: Record<string, string> = {
   offline: 'bg-gray-500',
-  idle: 'bg-green-500',
+  idle: 'bg-[#b4a68c]',
   busy: 'bg-yellow-500',
-  error: 'bg-red-500',
+  error: 'bg-[#9e5c50]',
 }
 
 const statusIcons: Record<string, string> = {
@@ -247,8 +247,8 @@ export function OverviewTab({
             <div className="flex items-center gap-2">
               <p className="text-foreground font-mono">{agent.session_key || 'Not set'}</p>
               {agent.session_key && (
-                <div className="flex items-center gap-1 text-xs text-green-400">
-                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                <div className="flex items-center gap-1 text-xs text-[#b4a68c]">
+                  <div className="w-2 h-2 rounded-full bg-[#b4a68c]"></div>
                   <span>Bound</span>
                 </div>
               )}
@@ -274,7 +274,7 @@ export function OverviewTab({
                 <div className="text-xs text-muted-foreground">In Progress</div>
               </div>
               <div className="bg-surface-1/50 rounded p-3 text-center">
-                <div className="text-lg font-semibold text-green-400">{agent.taskStats.completed}</div>
+                <div className="text-lg font-semibold text-[#b4a68c]">{agent.taskStats.completed}</div>
                 <div className="text-xs text-muted-foreground">Done</div>
               </div>
             </div>
@@ -406,7 +406,7 @@ export function SoulTab({
             <button
               onClick={() => selectedTemplate && handleLoadTemplate(selectedTemplate)}
               disabled={!selectedTemplate}
-              className="px-4 py-2 bg-green-500/20 text-green-400 border border-green-500/30 rounded-md hover:bg-green-500/30 disabled:opacity-50 transition-smooth"
+              className="px-4 py-2 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 disabled:opacity-50 transition-smooth"
             >
               Load
             </button>
@@ -517,7 +517,7 @@ export function MemoryTab({
                   setAppendMode(true)
                   setEditing(true)
                 }}
-                className="px-3 py-1 text-sm bg-green-500/20 text-green-400 border border-green-500/30 rounded-md hover:bg-green-500/30 transition-smooth"
+                className="px-3 py-1 text-sm bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 transition-smooth"
               >
                 Add Entry
               </button>
@@ -601,7 +601,7 @@ export function MemoryTab({
           {!appendMode && (
             <button
               onClick={handleClear}
-              className="px-4 py-2 bg-red-500/20 text-red-400 border border-red-500/30 rounded-md hover:bg-red-500/30 transition-smooth"
+              className="px-4 py-2 bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md hover:bg-[#9e5c50]/30 transition-smooth"
             >
               Clear All
             </button>
@@ -680,7 +680,7 @@ export function TasksTab({ agent }: { agent: Agent }) {
                 <div className="flex items-center gap-2">
                   <span className={`px-2 py-1 text-xs rounded-md font-medium ${
                     task.status === 'in_progress' ? 'bg-yellow-500/20 text-yellow-400' :
-                    task.status === 'done' ? 'bg-green-500/20 text-green-400' :
+                    task.status === 'done' ? 'bg-[#b4a68c]/20 text-[#b4a68c]' :
                     task.status === 'review' ? 'bg-blue-500/20 text-blue-400' :
                     task.status === 'quality_review' ? 'bg-indigo-500/20 text-indigo-400' :
                     'bg-secondary text-muted-foreground'
@@ -688,7 +688,7 @@ export function TasksTab({ agent }: { agent: Agent }) {
                     {task.status}
                   </span>
                   <span className={`px-2 py-1 text-xs rounded-md font-medium ${
-                    task.priority === 'urgent' ? 'bg-red-500/20 text-red-400' :
+                    task.priority === 'urgent' ? 'bg-[#9e5c50]/20 text-[#9e5c50]' :
                     task.priority === 'high' ? 'bg-orange-500/20 text-orange-400' :
                     task.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
                     'bg-secondary text-muted-foreground'
@@ -811,7 +811,7 @@ const TEMPLATES = [
 const MODEL_TIER_COLORS: Record<string, string> = {
   opus: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   sonnet: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  haiku: 'bg-green-500/20 text-green-400 border-green-500/30',
+  haiku: 'bg-[#b4a68c]/20 text-[#b4a68c] border-[#b4a68c]/30',
 }
 
 const MODEL_TIER_LABELS: Record<string, string> = {
@@ -959,7 +959,7 @@ export function CreateAgentModal({
                   <div key={s} className="flex items-center gap-1.5">
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                       step === s ? 'bg-primary text-primary-foreground' :
-                      step > s ? 'bg-green-500/20 text-green-400' :
+                      step > s ? 'bg-[#b4a68c]/20 text-[#b4a68c]' :
                       'bg-surface-2 text-muted-foreground'
                     }`}>
                       {step > s ? '\u2713' : s}
@@ -978,7 +978,7 @@ export function CreateAgentModal({
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-6">
           {error && (
-            <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 mb-4 rounded-lg text-sm">
+            <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 mb-4 rounded-lg text-sm">
               {error}
             </div>
           )}
@@ -1421,7 +1421,7 @@ export function ConfigTab({
       </div>
 
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-lg text-sm">
+        <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 rounded-lg text-sm">
           {error}
         </div>
       )}
@@ -1492,7 +1492,7 @@ export function ConfigTab({
                             const next = modelFallbacks.filter((_: string, i: number) => i !== index)
                             updateModelConfig((current) => ({ ...current, fallbacks: next }))
                           }}
-                          className="px-3 py-2 text-xs bg-red-500/10 text-red-400 border border-red-500/30 rounded hover:bg-red-500/20 transition-smooth"
+                          className="px-3 py-2 text-xs bg-[#9e5c50]/10 text-[#9e5c50] border border-[#9e5c50]/30 rounded hover:bg-[#9e5c50]/20 transition-smooth"
                         >
                           Remove
                         </button>
@@ -1652,12 +1652,12 @@ export function ConfigTab({
             {editing ? (
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs text-green-400 font-medium mb-1">Allow list</label>
+                  <label className="block text-xs text-[#b4a68c] font-medium mb-1">Allow list</label>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {toolAllow.map((tool: string, i: number) => (
-                      <span key={`${tool}-${i}`} className="px-2 py-0.5 text-xs bg-green-500/10 text-green-400 rounded border border-green-500/20 flex items-center gap-1">
+                      <span key={`${tool}-${i}`} className="px-2 py-0.5 text-xs bg-[#b4a68c]/10 text-[#b4a68c] rounded border border-[#b4a68c]/20 flex items-center gap-1">
                         {tool}
-                        <button onClick={() => removeTool('allow', i)} className="text-green-400/60 hover:text-green-400 ml-1">&times;</button>
+                        <button onClick={() => removeTool('allow', i)} className="text-[#b4a68c]/60 hover:text-[#b4a68c] ml-1">&times;</button>
                       </span>
                     ))}
                   </div>
@@ -1671,19 +1671,19 @@ export function ConfigTab({
                     />
                     <button
                       onClick={() => { addTool('allow', newAllowTool); setNewAllowTool('') }}
-                      className="px-3 py-2 text-xs bg-green-500/20 text-green-400 border border-green-500/30 rounded hover:bg-green-500/30 transition-smooth"
+                      className="px-3 py-2 text-xs bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded hover:bg-[#b4a68c]/30 transition-smooth"
                     >
                       Add
                     </button>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs text-red-400 font-medium mb-1">Deny list</label>
+                  <label className="block text-xs text-[#9e5c50] font-medium mb-1">Deny list</label>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {toolDeny.map((tool: string, i: number) => (
-                      <span key={`${tool}-${i}`} className="px-2 py-0.5 text-xs bg-red-500/10 text-red-400 rounded border border-red-500/20 flex items-center gap-1">
+                      <span key={`${tool}-${i}`} className="px-2 py-0.5 text-xs bg-[#9e5c50]/10 text-[#9e5c50] rounded border border-[#9e5c50]/20 flex items-center gap-1">
                         {tool}
-                        <button onClick={() => removeTool('deny', i)} className="text-red-400/60 hover:text-red-400 ml-1">&times;</button>
+                        <button onClick={() => removeTool('deny', i)} className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-1">&times;</button>
                       </span>
                     ))}
                   </div>
@@ -1697,7 +1697,7 @@ export function ConfigTab({
                     />
                     <button
                       onClick={() => { addTool('deny', newDenyTool); setNewDenyTool('') }}
-                      className="px-3 py-2 text-xs bg-red-500/20 text-red-400 border border-red-500/30 rounded hover:bg-red-500/30 transition-smooth"
+                      className="px-3 py-2 text-xs bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded hover:bg-[#9e5c50]/30 transition-smooth"
                     >
                       Add
                     </button>
@@ -1708,20 +1708,20 @@ export function ConfigTab({
               <>
                 {toolAllow.length > 0 && (
                   <div className="mb-2">
-                    <span className="text-xs text-green-400 font-medium">Allow ({toolAllow.length}):</span>
+                    <span className="text-xs text-[#b4a68c] font-medium">Allow ({toolAllow.length}):</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {toolAllow.map((tool: string) => (
-                        <span key={tool} className="px-2 py-0.5 text-xs bg-green-500/10 text-green-400 rounded border border-green-500/20">{tool}</span>
+                        <span key={tool} className="px-2 py-0.5 text-xs bg-[#b4a68c]/10 text-[#b4a68c] rounded border border-[#b4a68c]/20">{tool}</span>
                       ))}
                     </div>
                   </div>
                 )}
                 {toolDeny.length > 0 && (
                   <div>
-                    <span className="text-xs text-red-400 font-medium">Deny ({toolDeny.length}):</span>
+                    <span className="text-xs text-[#9e5c50] font-medium">Deny ({toolDeny.length}):</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {toolDeny.map((tool: string) => (
-                        <span key={tool} className="px-2 py-0.5 text-xs bg-red-500/10 text-red-400 rounded border border-red-500/20">{tool}</span>
+                        <span key={tool} className="px-2 py-0.5 text-xs bg-[#9e5c50]/10 text-[#9e5c50] rounded border border-[#9e5c50]/20">{tool}</span>
                       ))}
                     </div>
                   </div>

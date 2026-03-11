@@ -84,9 +84,9 @@ export function SessionDetailsPanel() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'text-green-400'
+      case 'active': return 'text-[#b4a68c]'
       case 'warning': return 'text-yellow-400'
-      case 'critical': return 'text-red-400'
+      case 'critical': return 'text-[#9e5c50]'
       case 'idle': return 'text-muted-foreground'
       default: return 'text-muted-foreground'
     }
@@ -94,9 +94,9 @@ export function SessionDetailsPanel() {
 
   const getStatusBg = (status: string) => {
     switch (status) {
-      case 'active': return 'bg-green-500/20'
+      case 'active': return 'bg-[#b4a68c]/20'
       case 'warning': return 'bg-yellow-500/20'
-      case 'critical': return 'bg-red-500/20'
+      case 'critical': return 'bg-[#9e5c50]/20'
       case 'idle': return 'bg-gray-500/20'
       default: return 'bg-secondary'
     }
@@ -246,7 +246,7 @@ export function SessionDetailsPanel() {
                           </span>
                         ))}
                         <div className={`w-3 h-3 rounded-full ${
-                          session.active ? 'bg-green-500' : 'bg-gray-500'
+                          session.active ? 'bg-[#b4a68c]' : 'bg-gray-500'
                         }`}></div>
                       </div>
                     </div>
@@ -264,8 +264,8 @@ export function SessionDetailsPanel() {
                         <div className="w-full bg-secondary rounded-full h-2 mt-1">
                           <div
                             className={`h-2 rounded-full transition-all ${
-                              tokenUsage.percentage > 95 ? 'bg-red-500' :
-                              tokenUsage.percentage > 80 ? 'bg-yellow-500' : 'bg-green-500'
+                              tokenUsage.percentage > 95 ? 'bg-[#9e5c50]' :
+                              tokenUsage.percentage > 80 ? 'bg-yellow-500' : 'bg-[#b4a68c]'
                             }`}
                             style={{ width: `${Math.min(tokenUsage.percentage, 100)}%` }}
                           ></div>
@@ -378,7 +378,7 @@ export function SessionDetailsPanel() {
                             {controllingSession === `pause-${session.id}` ? 'Working...' : 'Pause'}
                           </button>
                           <button
-                            className="px-3 py-1 text-xs bg-red-500/20 text-red-400 border border-red-500/30 rounded hover:bg-red-500/30 transition-colors disabled:opacity-50"
+                            className="px-3 py-1 text-xs bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded hover:bg-[#9e5c50]/30 transition-colors disabled:opacity-50"
                             disabled={controllingSession !== null}
                             onClick={async (e) => {
                               e.stopPropagation()
@@ -425,7 +425,7 @@ export function SessionDetailsPanel() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Active:</span>
-                <span className="font-medium text-green-400">
+                <span className="font-medium text-[#b4a68c]">
                   {sessions.filter(s => s.active).length}
                 </span>
               </div>

@@ -4,8 +4,8 @@ import { ChatMessage } from '@/store'
 
 const AGENT_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   coordinator: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20' },
-  aegis: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20' },
-  research: { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/20' },
+  aegis: { bg: 'bg-[#9e5c50]/10', text: 'text-[#9e5c50]', border: 'border-[#9e5c50]/20' },
+  research: { bg: 'bg-[#b4a68c]/10', text: 'text-[#b4a68c]', border: 'border-[#b4a68c]/20' },
   design: { bg: 'bg-pink-500/10', text: 'text-pink-400', border: 'border-pink-500/20' },
   quant: { bg: 'bg-yellow-500/10', text: 'text-yellow-400', border: 'border-yellow-500/20' },
   ops: { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/20' },
@@ -16,7 +16,7 @@ const AGENT_COLORS: Record<string, { bg: string; text: string; border: string }>
   ai: { bg: 'bg-violet-500/10', text: 'text-violet-400', border: 'border-violet-500/20' },
   'frontend-dev': { bg: 'bg-sky-500/10', text: 'text-sky-400', border: 'border-sky-500/20' },
   'backend-dev': { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20' },
-  'solana-dev': { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20' },
+  'solana-dev': { bg: 'bg-[#c49a6c]/10', text: 'text-[#c49a6c]', border: 'border-[#c49a6c]/20' },
   system: { bg: 'bg-muted/50', text: 'text-muted-foreground', border: 'border-border' },
   human: { bg: 'bg-primary/10', text: 'text-primary', border: 'border-primary/20' },
 }
@@ -95,7 +95,7 @@ export function MessageBubble({ message, isHuman, isGrouped }: MessageBubbleProp
   if (isHandoff) {
     return (
       <div className="flex justify-center my-3">
-        <div className="flex items-center gap-2 text-[11px] text-amber-400/80 bg-amber-500/5 px-3 py-1.5 rounded-full border border-amber-500/20">
+        <div className="flex items-center gap-2 text-[11px] text-[#c49a6c]/80 bg-[#c49a6c]/5 px-3 py-1.5 rounded-full border border-[#c49a6c]/20">
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             <path d="M5 3l6 5-6 5" />
           </svg>

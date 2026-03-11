@@ -205,7 +205,7 @@ export function PipelineTab() {
     <div className="space-y-3">
       {/* Result message */}
       {result && (
-        <div className={`text-xs px-2 py-1 rounded ${result.ok ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
+        <div className={`text-xs px-2 py-1 rounded ${result.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c]' : 'bg-[#9e5c50]/10 text-[#9e5c50]'}`}>
           {result.text}
         </div>
       )}
@@ -270,7 +270,7 @@ export function PipelineTab() {
                 <button onClick={() => moveStep(i, 1)} className="text-muted-foreground hover:text-foreground" title="Move down">
                   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3"><path d="M8 13V3M4 9l4 4 4-4" /></svg>
                 </button>
-                <button onClick={() => removeStep(i)} className="text-red-400 hover:text-red-300">
+                <button onClick={() => removeStep(i)} className="text-[#9e5c50] hover:text-[#9e5c50]">
                   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3 h-3"><path d="M4 4l8 8M12 4l-8 8" strokeLinecap="round" /></svg>
                 </button>
               </div>
@@ -321,7 +321,7 @@ export function PipelineTab() {
                     <span className="text-2xs text-muted-foreground">{p.steps.length} steps</span>
                     {p.use_count > 0 && <span className="text-2xs text-muted-foreground">{p.use_count}x</span>}
                     {p.runs.running > 0 && (
-                      <span className="text-2xs px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 animate-pulse">running</span>
+                      <span className="text-2xs px-1.5 py-0.5 rounded-full bg-[#c49a6c]/20 text-[#c49a6c] animate-pulse">running</span>
                     )}
                   </div>
                   {/* Mini step visualization */}
@@ -383,10 +383,10 @@ export function PipelineTab() {
                         <RunStepsViz steps={run.steps_snapshot} />
                         {run.status === 'running' && (
                           <div className="flex gap-1 mt-1.5">
-                            <button onClick={() => advanceRun(run.id, true)} className="h-6 px-2 rounded bg-green-500/20 text-green-400 text-2xs hover:bg-green-500/30">
+                            <button onClick={() => advanceRun(run.id, true)} className="h-6 px-2 rounded bg-[#b4a68c]/20 text-[#b4a68c] text-2xs hover:bg-[#b4a68c]/30">
                               Mark Step Done
                             </button>
-                            <button onClick={() => advanceRun(run.id, false)} className="h-6 px-2 rounded bg-red-500/20 text-red-400 text-2xs hover:bg-red-500/30">
+                            <button onClick={() => advanceRun(run.id, false)} className="h-6 px-2 rounded bg-[#9e5c50]/20 text-[#9e5c50] text-2xs hover:bg-[#9e5c50]/30">
                               Mark Step Failed
                             </button>
                             <button onClick={() => cancelRun(run.id)} className="h-6 px-2 rounded bg-secondary text-muted-foreground text-2xs hover:bg-secondary/80">
@@ -418,7 +418,7 @@ function PipelineViz({ steps }: { steps: PipelineStep[] }) {
               {s.template_name || `Step ${i + 1}`}
             </div>
             {s.on_failure === 'continue' && (
-              <span className="text-2xs text-amber-400">continue on fail</span>
+              <span className="text-2xs text-[#c49a6c]">continue on fail</span>
             )}
           </div>
           {i < steps.length - 1 && (
@@ -440,9 +440,9 @@ function RunStepsViz({ steps }: { steps: RunStepState[] }) {
         <div key={i} className="flex items-center gap-1 shrink-0">
           <div className="flex items-center gap-1">
             <span className={`w-2 h-2 rounded-full shrink-0 ${
-              s.status === 'completed' ? 'bg-green-500' :
-              s.status === 'running' ? 'bg-amber-500 animate-pulse' :
-              s.status === 'failed' ? 'bg-red-500' :
+              s.status === 'completed' ? 'bg-[#b4a68c]' :
+              s.status === 'running' ? 'bg-[#c49a6c] animate-pulse' :
+              s.status === 'failed' ? 'bg-[#9e5c50]' :
               s.status === 'skipped' ? 'bg-gray-500' : 'bg-gray-600'
             }`} />
             <span className={`text-2xs whitespace-nowrap ${
@@ -464,9 +464,9 @@ function RunStepsViz({ steps }: { steps: RunStepState[] }) {
 
 function RunStatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    running: 'bg-amber-500/20 text-amber-400',
-    completed: 'bg-green-500/20 text-green-400',
-    failed: 'bg-red-500/20 text-red-400',
+    running: 'bg-[#c49a6c]/20 text-[#c49a6c]',
+    completed: 'bg-[#b4a68c]/20 text-[#b4a68c]',
+    failed: 'bg-[#9e5c50]/20 text-[#9e5c50]',
     cancelled: 'bg-gray-500/20 text-gray-400',
     pending: 'bg-blue-500/20 text-blue-400',
   }
@@ -484,10 +484,10 @@ function ActiveRunCard({ run, onAdvance, onCancel }: {
   onCancel: (id: number) => void
 }) {
   return (
-    <div className="p-2.5 rounded-lg border border-amber-500/30 bg-amber-500/5">
+    <div className="p-2.5 rounded-lg border border-[#c49a6c]/30 bg-[#c49a6c]/5">
       <div className="flex items-center justify-between mb-1.5">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-[#c49a6c] animate-pulse" />
           <span className="text-xs font-medium text-foreground">
             {run.pipeline_name || `Pipeline #${run.pipeline_id}`} — Run #{run.id}
           </span>
@@ -498,10 +498,10 @@ function ActiveRunCard({ run, onAdvance, onCancel }: {
       </div>
       <RunStepsViz steps={run.steps_snapshot} />
       <div className="flex gap-1 mt-2">
-        <button onClick={() => onAdvance(run.id, true)} className="h-6 px-2 rounded bg-green-500/20 text-green-400 text-2xs hover:bg-green-500/30">
+        <button onClick={() => onAdvance(run.id, true)} className="h-6 px-2 rounded bg-[#b4a68c]/20 text-[#b4a68c] text-2xs hover:bg-[#b4a68c]/30">
           Step Done
         </button>
-        <button onClick={() => onAdvance(run.id, false)} className="h-6 px-2 rounded bg-red-500/20 text-red-400 text-2xs hover:bg-red-500/30">
+        <button onClick={() => onAdvance(run.id, false)} className="h-6 px-2 rounded bg-[#9e5c50]/20 text-[#9e5c50] text-2xs hover:bg-[#9e5c50]/30">
           Step Failed
         </button>
         <button onClick={() => onCancel(run.id)} className="h-6 px-2 rounded bg-secondary text-muted-foreground text-2xs hover:bg-secondary/80 ml-auto">

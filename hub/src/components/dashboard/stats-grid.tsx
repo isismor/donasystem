@@ -27,16 +27,16 @@ interface StatCardProps {
 function StatCard({ title, value, icon, trend, subtitle, color = 'default' }: StatCardProps) {
   const colorClasses = {
     default: 'bg-card border-border',
-    success: 'bg-green-500/10 border-green-500/30',
+    success: 'bg-[#b4a68c]/10 border-[#b4a68c]/30',
     warning: 'bg-yellow-500/10 border-yellow-500/30',
-    danger: 'bg-red-500/10 border-red-500/30'
+    danger: 'bg-[#9e5c50]/10 border-[#9e5c50]/30'
   }
 
   const iconColorClasses = {
     default: 'text-primary',
-    success: 'text-green-400',
+    success: 'text-[#b4a68c]',
     warning: 'text-yellow-400',
-    danger: 'text-red-400'
+    danger: 'text-[#9e5c50]'
   }
 
   return (
@@ -48,8 +48,8 @@ function StatCard({ title, value, icon, trend, subtitle, color = 'default' }: St
             <p className="text-2xl font-bold text-foreground">{value}</p>
             {trend && (
               <span className={`text-sm ${
-                trend === 'up' ? 'text-green-400' : 
-                trend === 'down' ? 'text-red-400' : 
+                trend === 'up' ? 'text-[#b4a68c]' : 
+                trend === 'down' ? 'text-[#9e5c50]' : 
                 'text-muted-foreground'
               }`}>
                 {trend === 'up' ? '↗' : trend === 'down' ? '↘' : '→'}

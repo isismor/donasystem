@@ -241,13 +241,13 @@ export function DocumentsPanel() {
           )}
 
           {treeError && (
-            <div className="text-sm text-red-400">{treeError}</div>
+            <div className="text-sm text-[#9e5c50]">{treeError}</div>
           )}
 
           {!loadingTree && !treeError && isShowingSearch && (
             <div className="space-y-1">
               {searching && <div className="text-sm text-muted-foreground">Searching...</div>}
-              {searchError && <div className="text-sm text-red-400">{searchError}</div>}
+              {searchError && <div className="text-sm text-[#9e5c50]">{searchError}</div>}
               {!searching && !searchError && searchResults.length === 0 && (
                 <div className="text-sm text-muted-foreground">No matches.</div>
               )}
@@ -305,7 +305,7 @@ export function DocumentsPanel() {
               </div>
 
               {loadingDoc && <div className="text-sm text-muted-foreground">Loading document...</div>}
-              {docError && <div className="text-sm text-red-400">{docError}</div>}
+              {docError && <div className="text-sm text-[#9e5c50]">{docError}</div>}
 
               {!loadingDoc && !docError && (
                 <div className="rounded-md border border-border bg-background p-4">

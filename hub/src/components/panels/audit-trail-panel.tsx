@@ -31,17 +31,17 @@ const actionLabels: Record<string, string> = {
 }
 
 const actionColors: Record<string, string> = {
-  login: 'text-green-400',
-  login_failed: 'text-red-400',
+  login: 'text-[#b4a68c]',
+  login_failed: 'text-[#9e5c50]',
   logout: 'text-muted-foreground',
-  password_change: 'text-amber-400',
+  password_change: 'text-[#c49a6c]',
   profile_update: 'text-blue-400',
   user_create: 'text-cyan-400',
   user_update: 'text-indigo-400',
-  user_delete: 'text-red-400',
-  role_denied: 'text-red-500',
-  backup_create: 'text-green-400',
-  backup_delete: 'text-amber-400',
+  user_delete: 'text-[#9e5c50]',
+  role_denied: 'text-[#9e5c50]',
+  backup_create: 'text-[#b4a68c]',
+  backup_delete: 'text-[#c49a6c]',
 }
 
 const actionIcons: Record<string, string> = {
@@ -123,7 +123,7 @@ export function AuditTrailPanel() {
   if (error) {
     return (
       <div className="p-6">
-        <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-4 text-sm text-red-400">
+        <div className="rounded-lg bg-[#9e5c50]/10 border border-[#9e5c50]/20 p-4 text-sm text-[#9e5c50]">
           {error}
         </div>
       </div>

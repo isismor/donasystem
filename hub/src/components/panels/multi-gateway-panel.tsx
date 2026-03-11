@@ -175,7 +175,7 @@ export function MultiGatewayPanel() {
       {/* Current connection info */}
       <div className="bg-card border border-border rounded-lg p-4">
         <div className="flex items-center gap-3">
-          <span className={`w-2.5 h-2.5 rounded-full ${connection.isConnected ? 'bg-green-500' : 'bg-red-500 animate-pulse'}`} />
+          <span className={`w-2.5 h-2.5 rounded-full ${connection.isConnected ? 'bg-[#b4a68c]' : 'bg-[#9e5c50] animate-pulse'}`} />
           <div>
             <div className="text-sm font-medium text-foreground">
               {connection.isConnected ? 'Connected' : 'Disconnected'}
@@ -249,15 +249,15 @@ export function MultiGatewayPanel() {
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className={`w-2 h-2 rounded-full ${conn.status === 'connected' ? 'bg-green-500' : 'bg-red-500'}`} />
+                      <span className={`w-2 h-2 rounded-full ${conn.status === 'connected' ? 'bg-[#b4a68c]' : 'bg-[#9e5c50]'}`} />
                       <span className="text-sm font-semibold text-foreground">{conn.agent_name}</span>
                       <span className="text-2xs px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-medium">
                         {conn.tool_name}{conn.tool_version ? ` v${conn.tool_version}` : ''}
                       </span>
                       <span className={`text-2xs px-1.5 py-0.5 rounded font-medium ${
                         conn.status === 'connected'
-                          ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                          : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                          ? 'bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30'
+                          : 'bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30'
                       }`}>
                         {conn.status.toUpperCase()}
                       </span>
@@ -271,7 +271,7 @@ export function MultiGatewayPanel() {
                   {conn.status === 'connected' && (
                     <button
                       onClick={() => disconnectCli(conn.connection_id)}
-                      className="h-7 px-2.5 rounded-md text-2xs font-medium text-red-400 hover:bg-red-500/10 transition-smooth"
+                      className="h-7 px-2.5 rounded-md text-2xs font-medium text-[#9e5c50] hover:bg-[#9e5c50]/10 transition-smooth"
                     >
                       Disconnect
                     </button>
@@ -297,9 +297,9 @@ function GatewayCard({ gateway, health, isProbing, isCurrentlyConnected, onSetPr
   onProbe: () => void
 }) {
   const statusColors: Record<string, string> = {
-    online: 'bg-green-500',
-    offline: 'bg-red-500',
-    timeout: 'bg-amber-500',
+    online: 'bg-[#b4a68c]',
+    offline: 'bg-[#9e5c50]',
+    timeout: 'bg-[#c49a6c]',
     unknown: 'bg-muted-foreground/30',
   }
 
@@ -310,7 +310,7 @@ function GatewayCard({ gateway, health, isProbing, isCurrentlyConnected, onSetPr
 
   return (
     <div className={`bg-card border rounded-lg p-4 transition-smooth ${
-      isCurrentlyConnected ? 'border-green-500/30 bg-green-500/5' : 'border-border'
+      isCurrentlyConnected ? 'border-[#b4a68c]/30 bg-[#b4a68c]/5' : 'border-border'
     }`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
@@ -323,7 +323,7 @@ function GatewayCard({ gateway, health, isProbing, isCurrentlyConnected, onSetPr
               </span>
             ) : null}
             {isCurrentlyConnected && (
-              <span className="text-2xs px-1.5 py-0.5 rounded bg-green-500/20 text-green-400 border border-green-500/30 font-medium">
+              <span className="text-2xs px-1.5 py-0.5 rounded bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 font-medium">
                 CONNECTED
               </span>
             )}
@@ -340,7 +340,7 @@ function GatewayCard({ gateway, health, isProbing, isCurrentlyConnected, onSetPr
             </div>
           )}
           {compatibilityWarning && (
-            <div className="mt-1.5 text-2xs rounded border border-amber-500/30 bg-amber-500/10 text-amber-300 px-2 py-1">
+            <div className="mt-1.5 text-2xs rounded border border-[#c49a6c]/30 bg-[#c49a6c]/10 text-[#c49a6c] px-2 py-1">
               {compatibilityWarning}
             </div>
           )}
@@ -374,7 +374,7 @@ function GatewayCard({ gateway, health, isProbing, isCurrentlyConnected, onSetPr
               </button>
               <button
                 onClick={onDelete}
-                className="w-7 h-7 rounded-md text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-smooth flex items-center justify-center"
+                className="w-7 h-7 rounded-md text-muted-foreground hover:text-[#9e5c50] hover:bg-[#9e5c50]/10 transition-smooth flex items-center justify-center"
                 title="Remove gateway"
               >
                 <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -472,7 +472,7 @@ function AddGatewayForm({ onAdded, onCancel }: { onAdded: () => void; onCancel: 
         </div>
       </div>
 
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {error && <p className="text-xs text-[#9e5c50]">{error}</p>}
 
       <div className="flex gap-2 pt-1">
         <button type="button" onClick={onCancel} className="h-8 px-4 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary border border-border transition-smooth">

@@ -27,9 +27,9 @@ interface Agent {
 
 const statusColors: Record<string, string> = {
   offline: 'bg-gray-500',
-  idle: 'bg-green-500',
+  idle: 'bg-[#b4a68c]',
   busy: 'bg-yellow-500',
-  error: 'bg-red-500',
+  error: 'bg-[#9e5c50]',
 }
 
 const statusIcons: Record<string, string> = {
@@ -167,7 +167,7 @@ export function AgentSquadPanel() {
             onClick={() => setAutoRefresh(!autoRefresh)}
             className={`px-3 py-1 text-sm rounded transition-colors ${
               autoRefresh 
-                ? 'bg-green-600 text-white hover:bg-green-700' 
+                ? 'bg-[#b4a68c] text-white hover:bg-[#7a6e5c]' 
                 : 'bg-gray-600 text-white hover:bg-gray-700'
             }`}
           >
@@ -190,11 +190,11 @@ export function AgentSquadPanel() {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-900/20 border border-red-500 text-red-400 p-3 m-4 rounded">
+        <div className="bg-[#3d2520]/20 border border-[#9e5c50] text-[#9e5c50] p-3 m-4 rounded">
           {error}
           <button
             onClick={() => setError(null)}
-            className="float-right text-red-300 hover:text-red-100"
+            className="float-right text-[#9e5c50] hover:text-[#c9a49c]"
           >
             ×
           </button>
@@ -271,7 +271,7 @@ export function AgentSquadPanel() {
                       updateAgentStatus(agent.name, 'idle', 'Manually activated')
                     }}
                     disabled={agent.status === 'idle'}
-                    className="flex-1 px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="flex-1 px-2 py-1 text-xs bg-[#b4a68c] text-white rounded hover:bg-[#7a6e5c] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     Wake
                   </button>
@@ -461,7 +461,7 @@ function AgentDetailModal({
                     <div className="text-xs text-gray-400">In Progress</div>
                   </div>
                   <div className="bg-gray-700/50 rounded p-3 text-center">
-                    <div className="text-lg font-semibold text-green-400">{agent.taskStats.completed}</div>
+                    <div className="text-lg font-semibold text-[#b4a68c]">{agent.taskStats.completed}</div>
                     <div className="text-xs text-gray-400">Done</div>
                   </div>
                 </div>

@@ -29,9 +29,9 @@ function AgentNode({ data }: { data: any }) {
   
   const getStatusColor = () => {
     switch (status) {
-      case 'active': return 'border-green-500 bg-green-500/20'
+      case 'active': return 'border-[#b4a68c] bg-[#b4a68c]/20'
       case 'idle': return 'border-yellow-500 bg-yellow-500/20'
-      case 'error': return 'border-red-500 bg-red-500/20'
+      case 'error': return 'border-[#9e5c50] bg-[#9e5c50]/20'
       default: return 'border-gray-500 bg-gray-500/20'
     }
   }
@@ -69,7 +69,7 @@ function AgentNode({ data }: { data: any }) {
           {getTypeIcon()}
         </span>
         {isWorking && (
-          <span className="px-1.5 py-0.5 text-xs font-bold bg-green-500/20 text-green-400 border border-green-500/30 rounded-full animate-pulse">
+          <span className="px-1.5 py-0.5 text-xs font-bold bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-full animate-pulse">
             WORKING
           </span>
         )}

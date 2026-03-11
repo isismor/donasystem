@@ -156,7 +156,7 @@ export function AgentCostPanel() {
               {mostExpensive && <div className="text-xs text-muted-foreground mt-1">{formatCost(mostExpensive[1].stats.totalCost)}</div>}
             </div>
             <div className="bg-card border border-border rounded-lg p-6">
-              <div className="text-3xl font-bold text-green-500">{mostEfficient?.[0] || '-'}</div>
+              <div className="text-3xl font-bold text-[#b4a68c]">{mostEfficient?.[0] || '-'}</div>
               <div className="text-sm text-muted-foreground">Most Efficient Agent</div>
               {mostEfficient && (
                 <div className="text-xs text-muted-foreground mt-1">

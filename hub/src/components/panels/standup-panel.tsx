@@ -167,10 +167,10 @@ export function StandupPanel() {
   // Get priority color
   const getPriorityColor = (priority: string) => {
     const colors: Record<string, string> = {
-      low: 'text-green-400',
+      low: 'text-[#b4a68c]',
       medium: 'text-yellow-400',
       high: 'text-orange-400',
-      urgent: 'text-red-400'
+      urgent: 'text-[#9e5c50]'
     }
     return colors[priority] || 'text-muted-foreground'
   }
@@ -301,7 +301,7 @@ export function StandupPanel() {
               {standupReport && (
                 <button
                   onClick={exportStandup}
-                  className="px-3 py-1.5 text-sm bg-green-500/20 text-green-400 border border-green-500/30 rounded-md hover:bg-green-500/30 transition-smooth"
+                  className="px-3 py-1.5 text-sm bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 transition-smooth"
                 >
                   Export
                 </button>
@@ -313,9 +313,9 @@ export function StandupPanel() {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 m-4 rounded-lg text-sm flex items-center justify-between">
+        <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
           <span>{error}</span>
-          <button onClick={() => setError(null)} className="text-red-400/60 hover:text-red-400 ml-2">×</button>
+          <button onClick={() => setError(null)} className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2">×</button>
         </div>
       )}
 
@@ -339,7 +339,7 @@ export function StandupPanel() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-card rounded-lg p-4 border border-border text-center">
                   <div className="text-2xl font-bold text-foreground">{standupReport.summary.totalCompleted}</div>
-                  <div className="text-sm text-green-400">Completed</div>
+                  <div className="text-sm text-[#b4a68c]">Completed</div>
                 </div>
                 <div className="bg-card rounded-lg p-4 border border-border text-center">
                   <div className="text-2xl font-bold text-foreground">{standupReport.summary.totalInProgress}</div>
@@ -347,7 +347,7 @@ export function StandupPanel() {
                 </div>
                 <div className="bg-card rounded-lg p-4 border border-border text-center">
                   <div className="text-2xl font-bold text-foreground">{standupReport.summary.totalBlocked}</div>
-                  <div className="text-sm text-red-400">Blocked</div>
+                  <div className="text-sm text-[#9e5c50]">Blocked</div>
                 </div>
                 <div className="bg-card rounded-lg p-4 border border-border text-center">
                   <div className="text-2xl font-bold text-foreground">{standupReport.summary.overdue}</div>
@@ -361,9 +361,9 @@ export function StandupPanel() {
                   <h4 className="text-lg font-semibold text-foreground mb-3">🎉 Team Accomplishments</h4>
                   <div className="space-y-2">
                     {standupReport.teamAccomplishments.map(task => (
-                      <div key={task.id} className="flex justify-between items-center p-2 bg-green-900/20 rounded border-l-4 border-green-500">
+                      <div key={task.id} className="flex justify-between items-center p-2 bg-green-900/20 rounded border-l-4 border-[#b4a68c]">
                         <span className="text-foreground">{task.title}</span>
-                        <span className="text-green-400 text-sm">{task.agent}</span>
+                        <span className="text-[#b4a68c] text-sm">{task.agent}</span>
                       </div>
                     ))}
                   </div>
@@ -376,14 +376,14 @@ export function StandupPanel() {
                   <h4 className="text-lg font-semibold text-foreground mb-3">🚫 Team Blockers</h4>
                   <div className="space-y-2">
                     {standupReport.teamBlockers.map(task => (
-                      <div key={task.id} className="flex justify-between items-center p-2 bg-red-900/20 rounded border-l-4 border-red-500">
+                      <div key={task.id} className="flex justify-between items-center p-2 bg-[#3d2520]/20 rounded border-l-4 border-[#9e5c50]">
                         <div>
                           <span className="text-foreground">{task.title}</span>
                           <span className={`ml-2 text-sm ${getPriorityColor(task.priority)}`}>
                             [{task.priority.toUpperCase()}]
                           </span>
                         </div>
-                        <span className="text-red-400 text-sm">{task.agent}</span>
+                        <span className="text-[#9e5c50] text-sm">{task.agent}</span>
                       </div>
                     ))}
                   </div>
@@ -431,7 +431,7 @@ export function StandupPanel() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       {/* Completed Today */}
                       <div>
-                        <h6 className="text-green-400 font-medium mb-2">✅ Completed ({report.completedToday.length})</h6>
+                        <h6 className="text-[#b4a68c] font-medium mb-2">✅ Completed ({report.completedToday.length})</h6>
                         <div className="space-y-1">
                           {report.completedToday.map(task => (
                             <div key={task.id} className="text-sm text-foreground/80 truncate" title={task.title}>
@@ -479,7 +479,7 @@ export function StandupPanel() {
 
                       {/* Blocked */}
                       <div>
-                        <h6 className="text-red-400 font-medium mb-2">🚫 Blocked ({report.blocked.length})</h6>
+                        <h6 className="text-[#9e5c50] font-medium mb-2">🚫 Blocked ({report.blocked.length})</h6>
                         <div className="space-y-1">
                           {report.blocked.map(task => (
                             <div key={task.id} className="text-sm text-foreground/80">

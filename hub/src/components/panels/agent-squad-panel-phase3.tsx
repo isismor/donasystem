@@ -60,15 +60,15 @@ interface SoulTemplate {
 
 const statusColors: Record<string, string> = {
   offline: 'bg-gray-500',
-  idle: 'bg-green-500',
+  idle: 'bg-[#b4a68c]',
   busy: 'bg-yellow-500',
-  error: 'bg-red-500',
+  error: 'bg-[#9e5c50]',
 }
 
 const statusBadgeStyles: Record<string, string> = {
   offline: 'bg-slate-500/15 text-slate-300 border-slate-500/30',
   idle: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
-  busy: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+  busy: 'bg-[#c49a6c]/15 text-[#c49a6c] border-[#c49a6c]/30',
   error: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
 }
 
@@ -274,7 +274,7 @@ export function AgentSquadPanelPhase3() {
             onClick={() => setAutoRefresh(!autoRefresh)}
             className={`px-3 py-1.5 text-sm rounded-md transition-smooth ${
               autoRefresh
-                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                ? 'bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30'
                 : 'bg-secondary text-muted-foreground'
             }`}
           >
@@ -304,18 +304,18 @@ export function AgentSquadPanelPhase3() {
 
       {/* Sync Toast */}
       {syncToast && (
-        <div className={`p-3 m-4 rounded-lg text-sm ${syncToast.includes('failed') ? 'bg-red-500/10 border border-red-500/20 text-red-400' : 'bg-green-500/10 border border-green-500/20 text-green-400'}`}>
+        <div className={`p-3 m-4 rounded-lg text-sm ${syncToast.includes('failed') ? 'bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50]' : 'bg-[#b4a68c]/10 border border-[#b4a68c]/20 text-[#b4a68c]'}`}>
           {syncToast}
         </div>
       )}
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 m-4 rounded-lg text-sm flex items-center justify-between">
+        <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
           <span>{error}</span>
           <button
             onClick={() => setError(null)}
-            className="text-red-400/60 hover:text-red-400 ml-2"
+            className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
           >
             ×
           </button>
@@ -373,7 +373,7 @@ export function AgentSquadPanelPhase3() {
                     </span>
                     {agent.session_key && (
                       <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                        <div className="w-2 h-2 rounded-full bg-[#b4a68c]"></div>
                         <span>Active</span>
                       </div>
                     )}
@@ -426,7 +426,7 @@ export function AgentSquadPanelPhase3() {
                         updateAgentStatus(agent.name, 'idle', 'Manually activated')
                       }}
                       disabled={agent.status === 'idle'}
-                      className="flex-1 px-2 py-1 text-xs bg-green-500/20 text-green-400 border border-green-500/30 rounded-md hover:bg-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
+                      className="flex-1 px-2 py-1 text-xs bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
                     >
                       Wake
                     </button>
@@ -830,7 +830,7 @@ function QuickSpawnModal({
 
         {spawnResult ? (
           <div className="space-y-4">
-            <div className="bg-green-500/10 border border-green-500/20 text-green-400 p-3 rounded-lg text-sm">
+            <div className="bg-[#b4a68c]/10 border border-[#b4a68c]/20 text-[#b4a68c] p-3 rounded-lg text-sm">
               Agent spawned successfully!
             </div>
             <div className="text-sm text-foreground/80">

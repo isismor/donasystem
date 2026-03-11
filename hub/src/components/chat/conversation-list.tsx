@@ -16,9 +16,9 @@ function timeAgo(timestamp: number): string {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  busy: 'bg-green-500',
+  busy: 'bg-[#b4a68c]',
   idle: 'bg-yellow-500',
-  error: 'bg-red-500',
+  error: 'bg-[#9e5c50]',
   offline: 'bg-muted-foreground/30',
 }
 

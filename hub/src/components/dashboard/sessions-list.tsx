@@ -26,7 +26,7 @@ function SessionCard({ session }: SessionCardProps) {
   const getModelColor = (model: string) => {
     if (model.includes('opus')) return 'text-purple-400'
     if (model.includes('sonnet')) return 'text-blue-400'
-    if (model.includes('haiku')) return 'text-green-400'
+    if (model.includes('haiku')) return 'text-[#b4a68c]'
     return 'text-gray-400'
   }
 
@@ -101,7 +101,7 @@ function SessionCard({ session }: SessionCardProps) {
           {/* Working/Status Badge */}
           <div className={`px-2 py-1 rounded-full border text-xs font-medium ${
             session.active 
-              ? 'bg-green-500/20 text-green-400 border-green-500/30 animate-pulse'
+              ? 'bg-[#b4a68c]/20 text-[#b4a68c] border-[#b4a68c]/30 animate-pulse'
               : 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
           }`}>
             {session.active ? 'WORKING' : 'IDLE'}
@@ -117,9 +117,9 @@ function SessionCard({ session }: SessionCardProps) {
                 <div className="w-16 h-1 bg-secondary rounded-full mt-1">
                   <div 
                     className={`h-full rounded-full ${
-                      tokenUsage.percentage > 80 ? 'bg-red-400' :
+                      tokenUsage.percentage > 80 ? 'bg-[#9e5c50]' :
                       tokenUsage.percentage > 60 ? 'bg-yellow-400' :
-                      'bg-green-400'
+                      'bg-[#b4a68c]'
                     }`}
                     style={{ width: `${Math.min(tokenUsage.percentage, 100)}%` }}
                   />
@@ -173,7 +173,7 @@ export function SessionsList({ sessions }: SessionsListProps) {
             {activeSessions.length > 0 && (
               <div>
                 <h4 className="text-sm font-medium text-foreground mb-2 flex items-center">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                  <span className="w-2 h-2 bg-[#b4a68c] rounded-full mr-2"></span>
                   Active ({activeSessions.length})
                 </h4>
                 <div className="space-y-2">

@@ -169,7 +169,7 @@ export function NavRail() {
         <div className={`shrink-0 py-3 flex ${sidebarExpanded ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
           <div
             className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-              connection.isConnected ? 'bg-green-500 pulse-dot' : 'bg-red-500'
+              connection.isConnected ? 'bg-[#b4a68c] pulse-dot' : 'bg-[#9e5c50]'
             }`}
             title={connection.isConnected ? 'Gateway connected' : 'Gateway disconnected'}
           />

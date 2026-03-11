@@ -418,7 +418,7 @@ export function TokenDashboardPanel() {
                 <button
                   onClick={() => exportData('json')}
                   disabled={isExporting}
-                  className="px-4 py-2 bg-green-500/20 text-green-400 border border-green-500/30 rounded-md hover:bg-green-500/30 disabled:opacity-50 transition-smooth"
+                  className="px-4 py-2 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 disabled:opacity-50 transition-smooth"
                 >
                   {isExporting ? 'Exporting...' : 'Export JSON'}
                 </button>
@@ -465,7 +465,7 @@ export function TokenDashboardPanel() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div className="bg-secondary rounded-lg p-4">
                   <h3 className="text-sm font-medium text-muted-foreground mb-2">Most Efficient Model</h3>
-                  <div className="text-lg font-bold text-green-600 dark:text-green-400">
+                  <div className="text-lg font-bold text-[#b4a68c] dark:text-[#b4a68c]">
                     {getModelDisplayName(performanceMetrics.mostEfficient.model)}
                   </div>
                   <div className="text-xs text-muted-foreground">
@@ -513,7 +513,7 @@ export function TokenDashboardPanel() {
                           <div className="flex-1 mx-3">
                             <div className="w-full bg-secondary rounded-full h-2">
                               <div
-                                className="bg-green-500 h-2 rounded-full"
+                                className="bg-[#b4a68c] h-2 rounded-full"
                                 style={{ width: `${barWidth}%` }}
                               ></div>
                             </div>

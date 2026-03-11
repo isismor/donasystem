@@ -49,8 +49,8 @@ const OPERATORS = [
 const ENTITY_COLORS: Record<string, string> = {
   agent: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   task: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  session: 'bg-green-500/20 text-green-400 border-green-500/30',
-  activity: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  session: 'bg-[#b4a68c]/20 text-[#b4a68c] border-[#b4a68c]/30',
+  activity: 'bg-[#c49a6c]/20 text-[#c49a6c] border-[#c49a6c]/30',
 }
 
 export function AlertRulesPanel() {
@@ -152,11 +152,11 @@ export function AlertRulesPanel() {
         </div>
         <div className="bg-card border border-border rounded-lg p-3">
           <div className="text-2xs text-muted-foreground">Active</div>
-          <div className="text-xl font-bold text-green-400 mt-0.5">{enabledCount}</div>
+          <div className="text-xl font-bold text-[#b4a68c] mt-0.5">{enabledCount}</div>
         </div>
         <div className="bg-card border border-border rounded-lg p-3">
           <div className="text-2xs text-muted-foreground">Total Triggers</div>
-          <div className="text-xl font-bold text-amber-400 mt-0.5">{totalTriggers}</div>
+          <div className="text-xl font-bold text-[#c49a6c] mt-0.5">{totalTriggers}</div>
         </div>
       </div>
 
@@ -172,10 +172,10 @@ export function AlertRulesPanel() {
           <div className="space-y-1.5">
             {evalResults.map(r => (
               <div key={r.rule_id} className={`flex items-center justify-between py-1.5 px-3 rounded-md text-xs ${
-                r.triggered ? 'bg-red-500/10 border border-red-500/20' : 'bg-secondary/50'
+                r.triggered ? 'bg-[#9e5c50]/10 border border-[#9e5c50]/20' : 'bg-secondary/50'
               }`}>
                 <span className="font-medium text-foreground">{r.rule_name}</span>
-                <span className={r.triggered ? 'text-red-400 font-medium' : 'text-muted-foreground'}>
+                <span className={r.triggered ? 'text-[#9e5c50] font-medium' : 'text-muted-foreground'}>
                   {r.triggered ? 'TRIGGERED' : r.reason}
                 </span>
               </div>
@@ -246,7 +246,7 @@ function RuleCard({ rule, onToggle, onDelete }: { rule: AlertRule; onToggle: () 
           <button
             onClick={onToggle}
             className={`w-10 h-5 rounded-full transition-smooth relative ${
-              rule.enabled ? 'bg-green-500' : 'bg-muted'
+              rule.enabled ? 'bg-[#b4a68c]' : 'bg-muted'
             }`}
           >
             <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${
@@ -255,7 +255,7 @@ function RuleCard({ rule, onToggle, onDelete }: { rule: AlertRule; onToggle: () 
           </button>
           <button
             onClick={onDelete}
-            className="w-7 h-7 rounded-md text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-smooth flex items-center justify-center"
+            className="w-7 h-7 rounded-md text-muted-foreground hover:text-[#9e5c50] hover:bg-[#9e5c50]/10 transition-smooth flex items-center justify-center"
             title="Delete rule"
           >
             <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -416,7 +416,7 @@ function CreateRuleForm({ onCreated, onCancel }: { onCreated: () => void; onCanc
         </div>
       </div>
 
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {error && <p className="text-xs text-[#9e5c50]">{error}</p>}
 
       <div className="flex gap-2 pt-1">
         <button

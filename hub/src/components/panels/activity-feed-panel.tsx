@@ -36,9 +36,9 @@ const activityIcons: Record<string, string> = {
 }
 
 const activityColors: Record<string, string> = {
-  task_created: 'text-green-400',
+  task_created: 'text-[#b4a68c]',
   task_updated: 'text-blue-400',
-  task_deleted: 'text-red-400',
+  task_deleted: 'text-[#9e5c50]',
   comment_added: 'text-purple-400',
   agent_created: 'text-cyan-400',
   agent_status_change: 'text-yellow-400',
@@ -138,7 +138,7 @@ export function ActivityFeedPanel() {
       <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
         <div className="flex items-center gap-3">
           <h2 className="text-xl font-bold text-foreground">Activity Feed</h2>
-          <div className={`w-2.5 h-2.5 rounded-full ${autoRefresh ? 'bg-green-500 animate-pulse' : 'bg-muted-foreground/30'}`} />
+          <div className={`w-2.5 h-2.5 rounded-full ${autoRefresh ? 'bg-[#b4a68c] animate-pulse' : 'bg-muted-foreground/30'}`} />
         </div>
 
         <div className="flex gap-2">
@@ -146,7 +146,7 @@ export function ActivityFeedPanel() {
             onClick={() => setAutoRefresh(!autoRefresh)}
             className={`px-3 py-1.5 text-sm rounded-md transition-smooth ${
               autoRefresh
-                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                ? 'bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30'
                 : 'bg-secondary text-muted-foreground'
             }`}
           >
@@ -212,11 +212,11 @@ export function ActivityFeedPanel() {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 m-4 rounded-lg text-sm flex items-center justify-between">
+        <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
           <span>{error}</span>
           <button
             onClick={() => setError(null)}
-            className="text-red-400/60 hover:text-red-400 ml-2"
+            className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
           >
             ×
           </button>
@@ -297,7 +297,7 @@ export function ActivityFeedPanel() {
                                 <span className="text-muted-foreground">Agent:</span>
                                 <span className="text-foreground ml-1">{activity.entity.name}</span>
                                 {activity.entity.status && (
-                                  <span className="ml-2 px-1.5 py-0.5 bg-green-500/10 text-green-400 rounded text-[10px]">
+                                  <span className="ml-2 px-1.5 py-0.5 bg-[#b4a68c]/10 text-[#b4a68c] rounded text-[10px]">
                                     {activity.entity.status}
                                   </span>
                                 )}

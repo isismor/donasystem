@@ -228,8 +228,8 @@ export function AgentSpawnPanel() {
                         <span className={`px-2 py-1 text-xs rounded-full ${
                           request.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
                           request.status === 'running' ? 'bg-blue-500/20 text-blue-400' :
-                          request.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-                          'bg-red-500/20 text-red-400'
+                          request.status === 'completed' ? 'bg-[#b4a68c]/20 text-[#b4a68c]' :
+                          'bg-[#9e5c50]/20 text-[#9e5c50]'
                         }`}>
                           {request.status}
                         </span>
@@ -241,7 +241,7 @@ export function AgentSpawnPanel() {
                         {request.task}
                       </div>
                       {request.error && (
-                        <div className="text-sm text-red-400 mt-2">
+                        <div className="text-sm text-[#9e5c50] mt-2">
                           Error: {request.error}
                         </div>
                       )}
@@ -274,7 +274,7 @@ export function AgentSpawnPanel() {
                     {new Date(item.timestamp).toLocaleString()}
                   </div>
                 </div>
-                <div className="text-xs text-green-400 ml-4">
+                <div className="text-xs text-[#b4a68c] ml-4">
                   {item.status}
                 </div>
               </div>

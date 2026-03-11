@@ -123,10 +123,10 @@ export function HeaderBar() {
   const typeColors: Record<string, string> = {
     task: 'bg-blue-500/20 text-blue-400',
     agent: 'bg-purple-500/20 text-purple-400',
-    activity: 'bg-green-500/20 text-green-400',
-    audit: 'bg-amber-500/20 text-amber-400',
+    activity: 'bg-[#b4a68c]/20 text-[#b4a68c]',
+    audit: 'bg-[#c49a6c]/20 text-[#c49a6c]',
     message: 'bg-cyan-500/20 text-cyan-400',
-    notification: 'bg-red-500/20 text-red-400',
+    notification: 'bg-[#9e5c50]/20 text-[#9e5c50]',
     webhook: 'bg-orange-500/20 text-orange-400',
     pipeline: 'bg-indigo-500/20 text-indigo-400',
   }
@@ -278,13 +278,13 @@ function MobileConnectionDot({
     dotClass = 'bg-blue-500'
     title = 'Modo Local'
   } else if (connection.isConnected) {
-    dotClass = 'bg-green-500'
+    dotClass = 'bg-[#b4a68c]'
     title = 'Gateway conectado'
   } else if (isReconnecting) {
-    dotClass = 'bg-amber-500 animate-pulse'
+    dotClass = 'bg-[#c49a6c] animate-pulse'
     title = `Reconnecting (${connection.reconnectAttempts})`
   } else {
-    dotClass = 'bg-red-500 animate-pulse'
+    dotClass = 'bg-[#9e5c50] animate-pulse'
     title = 'Gateway desconectado — clique para reconectar'
   }
 
@@ -326,13 +326,13 @@ function ConnectionBadge({
   let label: string
 
   if (connection.isConnected) {
-    dotClass = 'bg-green-500'
+    dotClass = 'bg-[#b4a68c]'
     label = connection.latency != null ? `${connection.latency}ms` : 'Online'
   } else if (isReconnecting) {
-    dotClass = 'bg-amber-500 animate-pulse'
+    dotClass = 'bg-[#c49a6c] animate-pulse'
     label = `Connecting... (${connection.reconnectAttempts})`
   } else {
-    dotClass = 'bg-red-500 animate-pulse'
+    dotClass = 'bg-[#9e5c50] animate-pulse'
     label = 'Disconnected'
   }
 
@@ -349,7 +349,7 @@ function ConnectionBadge({
       <span className="text-muted-foreground">Gateway</span>
       <span className={`w-1.5 h-1.5 rounded-full ${dotClass}`} />
       <span className={`font-medium font-mono-tight ${
-        connection.isConnected ? 'text-green-400' : isReconnecting ? 'text-amber-400' : 'text-red-400'
+        connection.isConnected ? 'text-[#b4a68c]' : isReconnecting ? 'text-[#c49a6c]' : 'text-[#9e5c50]'
       }`}>
         {label}
       </span>
@@ -358,7 +358,7 @@ function ConnectionBadge({
 }
 
 function Stat({ label, value, status }: { label: string; value: string; status?: 'success' | 'error' | 'warning' }) {
-  const statusColor = status === 'success' ? 'text-green-400' : status === 'error' ? 'text-red-400' : status === 'warning' ? 'text-amber-400' : 'text-foreground'
+  const statusColor = status === 'success' ? 'text-[#b4a68c]' : status === 'error' ? 'text-[#9e5c50]' : status === 'warning' ? 'text-[#c49a6c]' : 'text-foreground'
 
   return (
     <div className="flex items-center gap-1.5 text-xs">
@@ -500,7 +500,7 @@ function PasswordDialog({ onClose }: { onClose: () => void }) {
 
           {success ? (
             <div className="px-4 py-6 text-center">
-              <p className="text-sm text-green-400 font-medium">Password changed successfully</p>
+              <p className="text-sm text-[#b4a68c] font-medium">Password changed successfully</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="p-4 space-y-3">
@@ -539,7 +539,7 @@ function PasswordDialog({ onClose }: { onClose: () => void }) {
               </div>
 
               {error && (
-                <p className="text-xs text-red-400">{error}</p>
+                <p className="text-xs text-[#9e5c50]">{error}</p>
               )}
 
               <div className="flex gap-2 pt-1">
