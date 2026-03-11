@@ -3,7 +3,7 @@
 interface AgentAvatarProps {
   name: string
   size?: 'xs' | 'sm' | 'md'
-  classNome?: string
+  className?: string
 }
 
 function getInitials(name: string): string {
@@ -40,13 +40,13 @@ const sizeClasses: Record<NonNullable<AgentAvatarProps['size']>, string> = {
   md: 'w-8 h-8 text-xs',
 }
 
-export function AgentAvatar({ name, size = 'sm', classNome = '' }: AgentAvatarProps) {
+export function AgentAvatar({ name, size = 'sm', className = '' }: AgentAvatarProps) {
   const initials = getInitials(name)
   const colors = getAvatarColors(name)
 
   return (
     <div
-      classNome={`rounded-full flex items-center justify-center font-semibold shrink-0 ${sizeClasses[size]} ${classNome}`}
+      className={`rounded-full flex items-center justify-center font-semibold shrink-0 ${sizeClasses[size]} ${className}`}
       style={colors}
       title={name}
       aria-label={name}

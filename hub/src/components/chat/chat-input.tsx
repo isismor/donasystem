@@ -12,7 +12,7 @@ interface ChatInputProps {
 export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
   const { chatInput, setChatInput, isSendingMessage } = useMissionControl()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const [showMentions, setMostrarMentions] = useState(false)
+  const [showMentions, setShowMentions] = useState(false)
   const [mentionFiltrar, setMentionFiltrar] = useState('')
   const [mentionIndex, setMentionIndex] = useState(0)
 
@@ -59,7 +59,7 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
         return
       }
       if (e.key === 'Escape') {
-        setMostrarMentions(false)
+        setShowMentions(false)
         return
       }
     }
@@ -80,14 +80,14 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
 
     if (atMatch) {
       setMentionFiltrar(atMatch[1])
-      setMostrarMentions(true)
+      setShowMentions(true)
       setMentionIndex(0)
     } else {
-      setMostrarMentions(false)
+      setShowMentions(false)
     }
   }
 
-  const insertMention = (agentNome: string) => {
+  const insertMention = (agentName: string) => {
     const textarea = textareaRef.current
     if (!textarea) return
 
@@ -96,12 +96,12 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
     const textAfterCursor = chatInput.slice(cursorPos)
     const atIndex = textBeforeCursor.lastIndexOf('@')
 
-    const newText = textBeforeCursor.slice(0, atIndex) + `@${agentNome} ` + textAfterCursor
+    const newText = textBeforeCursor.slice(0, atIndex) + `@${agentName} ` + textAfterCursor
     setChatInput(newText)
-    setMostrarMentions(false)
+    setShowMentions(false)
 
     setTimeout(() => {
-      const newPos = atIndex + agentNome.length + 2
+      const newPos = atIndex + agentName.length + 2
       textarea.setSelectionRange(newPos, newPos)
       textarea.focus()
     }, 0)
@@ -118,14 +118,14 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
   }
 
   return (
-    <div classNome="relative border-t border-border bg-card/80 backdrop-blur-sm p-3 flex-shrink-0 safe-area-bottom">
+    <div className="relative border-t border-border bg-card/80 backdrop-blur-sm p-3 flex-shrink-0 safe-area-bottom">
       {/* Mention autocomplete dropdown */}
       {showMentions && filteredAgents.length > 0 && (
-        <div classNome="absolute bottom-full left-3 right-3 mb-1 bg-popover/95 backdrop-blur-lg border border-border rounded-lg shadow-xl overflow-hidden max-h-40 overflow-y-auto z-10">
+        <div className="absolute bottom-full left-3 right-3 mb-1 bg-popover/95 backdrop-blur-lg border border-border rounded-lg shadow-xl overflow-hidden max-h-40 overflow-y-auto z-10">
           {filteredAgents.map((agent, i) => (
             <button
               key={agent.name}
-              classNome={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 transition-colors ${
+              className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 transition-colors ${
                 i === mentionIndex ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50'
               }`}
               onMouseDown={(e) => {
@@ -133,17 +133,17 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
                 insertMention(agent.name)
               }}
             >
-              <div classNome="w-5 h-5 rounded-full bg-surface-2 flex items-center justify-center text-[9px] font-bold text-muted-foreground">
+              <div className="w-5 h-5 rounded-full bg-surface-2 flex items-center justify-center text-[9px] font-bold text-muted-foreground">
                 {agent.name.charAt(0).toUpperCase()}
               </div>
-              <span classNome="font-medium text-foreground">@{agent.name}</span>
-              <span classNome="text-muted-foreground text-xs ml-auto">{agent.role}</span>
+              <span className="font-medium text-foreground">@{agent.name}</span>
+              <span className="text-muted-foreground text-xs ml-auto">{agent.role}</span>
             </button>
           ))}
         </div>
       )}
 
-      <div classNome="flex items-end gap-2">
+      <div className="flex items-end gap-2">
         <textarea
           ref={textareaRef}
           value={chatInput}
@@ -152,16 +152,16 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
           placeholder={disabled ? 'Select a conversation...' : 'Message... (@ to mention, Enter to send)'}
           disabled={disabled || isSendingMessage}
           rows={1}
-          classNome="flex-1 resize-none bg-surface-1 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 disabled:opacity-40 transition-all"
+          className="flex-1 resize-none bg-surface-1 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 disabled:opacity-40 transition-all"
         />
         <button
           onClick={handleSend}
           disabled={!chatInput.trim() || disabled || isSendingMessage}
-          classNome="w-8 h-8 flex items-center justify-center bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-smooth flex-shrink-0"
+          className="w-8 h-8 flex items-center justify-center bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-smooth flex-shrink-0"
           title="Send message"
         >
           {isSendingMessage ? (
-            <span classNome="inline-block w-3.5 h-3.5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+            <span className="inline-block w-3.5 h-3.5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
           ) : (
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 2L7 9" />

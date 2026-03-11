@@ -52,7 +52,7 @@ export function ActivityFeedPanel() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [autoRefresh, setAutoRefresh] = useState(true)
-  const [filter, setFiltrar] = useState({
+  const [filter, setFilter] = useState({
     type: '',
     actor: '',
     limit: 50
@@ -133,18 +133,18 @@ export function ActivityFeedPanel() {
   const actors = Array.from(new Set(activities.map(a => a.actor))).sort()
 
   return (
-    <div classNome="h-full flex flex-col">
+    <div className="h-full flex flex-col">
       {/* Header */}
-      <div classNome="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
-        <div classNome="flex items-center gap-3">
-          <h2 classNome="text-xl font-bold text-foreground">Atividade</h2>
-          <div classNome={`w-2.5 h-2.5 rounded-full ${autoRefresh ? 'bg-[#b4a68c] animate-pulse' : 'bg-muted-foreground/30'}`} />
+      <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
+        <div className="flex items-center gap-3">
+          <h2 className="text-xl font-bold text-foreground">Atividade</h2>
+          <div className={`w-2.5 h-2.5 rounded-full ${autoRefresh ? 'bg-[#b4a68c] animate-pulse' : 'bg-muted-foreground/30'}`} />
         </div>
 
-        <div classNome="flex gap-2">
+        <div className="flex gap-2">
           <button
             onClick={() => setAutoRefresh(!autoRefresh)}
-            classNome={`px-3 py-1.5 text-sm rounded-md transition-smooth ${
+            className={`px-3 py-1.5 text-sm rounded-md transition-smooth ${
               autoRefresh
                 ? 'bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30'
                 : 'bg-secondary text-muted-foreground'
@@ -154,7 +154,7 @@ export function ActivityFeedPanel() {
           </button>
           <button
             onClick={() => fetchActivities()}
-            classNome="px-3 py-1.5 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
+            className="px-3 py-1.5 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
           >
             Refresh
           </button>
@@ -162,14 +162,14 @@ export function ActivityFeedPanel() {
       </div>
 
       {/* Filtrars */}
-      <div classNome="p-4 border-b border-border bg-surface-1 flex-shrink-0">
-        <div classNome="flex gap-4 flex-wrap">
+      <div className="p-4 border-b border-border bg-surface-1 flex-shrink-0">
+        <div className="flex gap-4 flex-wrap">
           <div>
-            <label classNome="block text-xs text-muted-foreground mb-1">Activity Tipo</label>
+            <label className="block text-xs text-muted-foreground mb-1">Activity Tipo</label>
             <select
               value={filter.type}
-              onChange={(e) => setFiltrar(prev => ({ ...prev, type: e.target.value }))}
-              classNome="bg-surface-2 text-foreground text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
+              onChange={(e) => setFilter(prev => ({ ...prev, type: e.target.value }))}
+              className="bg-surface-2 text-foreground text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
             >
               <option value="">All Tipos</option>
               {activityTipos.map(type => (
@@ -181,11 +181,11 @@ export function ActivityFeedPanel() {
           </div>
 
           <div>
-            <label classNome="block text-xs text-muted-foreground mb-1">Actor</label>
+            <label className="block text-xs text-muted-foreground mb-1">Actor</label>
             <select
               value={filter.actor}
-              onChange={(e) => setFiltrar(prev => ({ ...prev, actor: e.target.value }))}
-              classNome="bg-surface-2 text-foreground text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
+              onChange={(e) => setFilter(prev => ({ ...prev, actor: e.target.value }))}
+              className="bg-surface-2 text-foreground text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
             >
               <option value="">All Actors</option>
               {actors.map(actor => (
@@ -195,11 +195,11 @@ export function ActivityFeedPanel() {
           </div>
 
           <div>
-            <label classNome="block text-xs text-muted-foreground mb-1">Limit</label>
+            <label className="block text-xs text-muted-foreground mb-1">Limit</label>
             <select
               value={filter.limit}
-              onChange={(e) => setFiltrar(prev => ({ ...prev, limit: parseInt(e.target.value) }))}
-              classNome="bg-surface-2 text-foreground text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
+              onChange={(e) => setFilter(prev => ({ ...prev, limit: parseInt(e.target.value) }))}
+              className="bg-surface-2 text-foreground text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
             >
               <option value={25}>25 items</option>
               <option value={50}>50 items</option>
@@ -212,11 +212,11 @@ export function ActivityFeedPanel() {
 
       {/* Error Display */}
       {error && (
-        <div classNome="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
+        <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
           <span>{error}</span>
           <button
             onClick={() => setError(null)}
-            classNome="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
+            className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
           >
             ×
           </button>
@@ -224,56 +224,56 @@ export function ActivityFeedPanel() {
       )}
 
       {/* Activity List */}
-      <div classNome="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-4">
         {loading && activities.length === 0 ? (
-          <div classNome="flex items-center justify-center h-32">
-            <div classNome="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent" />
-            <span classNome="ml-2 text-muted-foreground text-sm">Loading activities...</span>
+          <div className="flex items-center justify-center h-32">
+            <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent" />
+            <span className="ml-2 text-muted-foreground text-sm">Loading activities...</span>
           </div>
         ) : activities.length === 0 ? (
-          <div classNome="flex flex-col items-center justify-center h-32 text-muted-foreground/50">
-            <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" classNome="mb-2">
+          <div className="flex flex-col items-center justify-center h-32 text-muted-foreground/50">
+            <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="mb-2">
               <path d="M2 4h12M2 8h8M2 12h10" />
             </svg>
-            <p classNome="text-sm">No activities found</p>
-            <p classNome="text-xs mt-1">Try adjusting your filters</p>
+            <p className="text-sm">No activities found</p>
+            <p className="text-xs mt-1">Try adjusting your filters</p>
           </div>
         ) : (
-          <div classNome="space-y-2">
+          <div className="space-y-2">
             {activities.map((activity, index) => (
               <div
                 key={`${activity.id}-${index}`}
-                classNome="bg-card rounded-lg p-3 border-l-2 border-border hover:bg-surface-1 transition-smooth"
+                className="bg-card rounded-lg p-3 border-l-2 border-border hover:bg-surface-1 transition-smooth"
               >
-                <div classNome="flex items-start gap-3">
+                <div className="flex items-start gap-3">
                   {/* Activity Icon */}
-                  <div classNome={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
+                  <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                     activityColors[activity.type]?.replace('text-', 'bg-').replace('-400', '-500/15') || 'bg-surface-2'
                   } ${activityColors[activity.type] || 'text-muted-foreground'}`}>
                     {activityIcons[activity.type] || '•'}
                   </div>
 
                   {/* Activity Content */}
-                  <div classNome="flex-1 min-w-0">
-                    <div classNome="flex items-start justify-between gap-2">
-                      <div classNome="flex-1">
-                        <p classNome="text-foreground text-sm">
-                          <span classNome="font-medium text-primary">{activity.actor}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <p className="text-foreground text-sm">
+                          <span className="font-medium text-primary">{activity.actor}</span>
                           {' '}
-                          <span classNome={activityColors[activity.type] || 'text-muted-foreground'}>
+                          <span className={activityColors[activity.type] || 'text-muted-foreground'}>
                             {activity.description}
                           </span>
                         </p>
 
                         {/* Entity Detalhes */}
                         {activity.entity && (
-                          <div classNome="mt-2 p-2 bg-surface-1 rounded-md text-xs border border-border/50">
+                          <div className="mt-2 p-2 bg-surface-1 rounded-md text-xs border border-border/50">
                             {activity.entity.type === 'task' && (
                               <div>
-                                <span classNome="text-muted-foreground">Task:</span>
-                                <span classNome="text-foreground ml-1">{activity.entity.title}</span>
+                                <span className="text-muted-foreground">Task:</span>
+                                <span className="text-foreground ml-1">{activity.entity.title}</span>
                                 {activity.entity.status && (
-                                  <span classNome="ml-2 px-1.5 py-0.5 bg-primary/10 text-primary rounded text-[10px]">
+                                  <span className="ml-2 px-1.5 py-0.5 bg-primary/10 text-primary rounded text-[10px]">
                                     {activity.entity.status}
                                   </span>
                                 )}
@@ -282,10 +282,10 @@ export function ActivityFeedPanel() {
 
                             {activity.entity.type === 'comment' && (
                               <div>
-                                <span classNome="text-muted-foreground">Comment on:</span>
-                                <span classNome="text-foreground ml-1">{activity.entity.task_title}</span>
+                                <span className="text-muted-foreground">Comment on:</span>
+                                <span className="text-foreground ml-1">{activity.entity.task_title}</span>
                                 {activity.entity.content_preview && (
-                                  <div classNome="mt-1 text-muted-foreground/70 italic">
+                                  <div className="mt-1 text-muted-foreground/70 italic">
                                     &quot;{activity.entity.content_preview}...&quot;
                                   </div>
                                 )}
@@ -294,10 +294,10 @@ export function ActivityFeedPanel() {
 
                             {activity.entity.type === 'agent' && (
                               <div>
-                                <span classNome="text-muted-foreground">Agent:</span>
-                                <span classNome="text-foreground ml-1">{activity.entity.name}</span>
+                                <span className="text-muted-foreground">Agent:</span>
+                                <span className="text-foreground ml-1">{activity.entity.name}</span>
                                 {activity.entity.status && (
-                                  <span classNome="ml-2 px-1.5 py-0.5 bg-[#b4a68c]/10 text-[#b4a68c] rounded text-[10px]">
+                                  <span className="ml-2 px-1.5 py-0.5 bg-[#b4a68c]/10 text-[#b4a68c] rounded text-[10px]">
                                     {activity.entity.status}
                                   </span>
                                 )}
@@ -308,11 +308,11 @@ export function ActivityFeedPanel() {
 
                         {/* Additional Data */}
                         {activity.data && Object.keys(activity.data).length > 0 && (
-                          <details classNome="mt-2">
-                            <summary classNome="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground">
+                          <details className="mt-2">
+                            <summary className="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground">
                               Mostrar details
                             </summary>
-                            <pre classNome="mt-1 text-xs text-muted-foreground bg-surface-1 p-2 rounded-md overflow-auto max-h-32 border border-border/50">
+                            <pre className="mt-1 text-xs text-muted-foreground bg-surface-1 p-2 rounded-md overflow-auto max-h-32 border border-border/50">
                               {JSON.stringify(activity.data, null, 2)}
                             </pre>
                           </details>
@@ -320,7 +320,7 @@ export function ActivityFeedPanel() {
                       </div>
 
                       {/* Timestamp */}
-                      <div classNome="flex-shrink-0 text-[10px] text-muted-foreground/50">
+                      <div className="flex-shrink-0 text-[10px] text-muted-foreground/50">
                         {formatRelativeTime(activity.created_at)}
                       </div>
                     </div>
@@ -333,8 +333,8 @@ export function ActivityFeedPanel() {
       </div>
 
       {/* Footer Stats */}
-      <div classNome="border-t border-border p-3 bg-surface-1 text-xs text-muted-foreground flex-shrink-0">
-        <div classNome="flex justify-between items-center">
+      <div className="border-t border-border p-3 bg-surface-1 text-xs text-muted-foreground flex-shrink-0">
+        <div className="flex justify-between items-center">
           <span>
             Mostraring {activities.length} activities
             {filter.type || filter.actor ? ' (filtered)' : ''}

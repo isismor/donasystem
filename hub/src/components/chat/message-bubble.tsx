@@ -40,7 +40,7 @@ function renderContent(text: string) {
     if (part.startsWith('```') && part.endsWith('```')) {
       const code = part.slice(3, -3).replace(/^\w+\n/, '') // strip language hint
       return (
-        <pre key={i} classNome="bg-black/30 rounded-md px-3 py-2 my-1 text-xs font-mono overflow-x-auto whitespace-pre-wrap">
+        <pre key={i} className="bg-black/30 rounded-md px-3 py-2 my-1 text-xs font-mono overflow-x-auto whitespace-pre-wrap">
           {code}
         </pre>
       )
@@ -48,7 +48,7 @@ function renderContent(text: string) {
     // Inline code
     if (part.startsWith('`') && part.endsWith('`')) {
       return (
-        <code key={i} classNome="bg-black/20 rounded px-1 py-0.5 text-xs font-mono">
+        <code key={i} className="bg-black/20 rounded px-1 py-0.5 text-xs font-mono">
           {part.slice(1, -1)}
         </code>
       )
@@ -58,7 +58,7 @@ function renderContent(text: string) {
       <span key={i}>
         {part.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).map((segment, j) => {
           if (segment.startsWith('**') && segment.endsWith('**')) {
-            return <strong key={j} classNome="font-semibold">{segment.slice(2, -2)}</strong>
+            return <strong key={j} className="font-semibold">{segment.slice(2, -2)}</strong>
           }
           if (segment.startsWith('*') && segment.endsWith('*')) {
             return <em key={j}>{segment.slice(1, -1)}</em>
@@ -84,8 +84,8 @@ export function MessageBubble({ message, isHuman, isGrouped }: MessageBubbleProp
 
   if (isSystem) {
     return (
-      <div classNome="flex justify-center my-3">
-        <div classNome="text-[11px] text-muted-foreground/70 bg-surface-1 px-3 py-1 rounded-full border border-border/30">
+      <div className="flex justify-center my-3">
+        <div className="text-[11px] text-muted-foreground/70 bg-surface-1 px-3 py-1 rounded-full border border-border/30">
           {message.content}
         </div>
       </div>
@@ -94,8 +94,8 @@ export function MessageBubble({ message, isHuman, isGrouped }: MessageBubbleProp
 
   if (isHandoff) {
     return (
-      <div classNome="flex justify-center my-3">
-        <div classNome="flex items-center gap-2 text-[11px] text-[#c49a6c]/80 bg-[#c49a6c]/5 px-3 py-1.5 rounded-full border border-[#c49a6c]/20">
+      <div className="flex justify-center my-3">
+        <div className="flex items-center gap-2 text-[11px] text-[#c49a6c]/80 bg-[#c49a6c]/5 px-3 py-1.5 rounded-full border border-[#c49a6c]/20">
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             <path d="M5 3l6 5-6 5" />
           </svg>
@@ -106,40 +106,40 @@ export function MessageBubble({ message, isHuman, isGrouped }: MessageBubbleProp
   }
 
   return (
-    <div classNome={`flex gap-2 ${isHuman ? 'flex-row-reverse' : 'flex-row'} ${isGrouped ? 'mt-0.5' : 'mt-3'}`}>
+    <div className={`flex gap-2 ${isHuman ? 'flex-row-reverse' : 'flex-row'} ${isGrouped ? 'mt-0.5' : 'mt-3'}`}>
       {/* Avatar */}
       {!isGrouped ? (
-        <div classNome={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold ${theme.bg} ${theme.text} border ${theme.border}`}>
+        <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold ${theme.bg} ${theme.text} border ${theme.border}`}>
           {message.from_agent.charAt(0).toUpperCase()}
         </div>
       ) : (
-        <div classNome="w-7 flex-shrink-0" />
+        <div className="w-7 flex-shrink-0" />
       )}
 
       {/* Content */}
-      <div classNome={`max-w-[80%] min-w-0 ${isHuman ? 'items-end' : 'items-start'}`}>
+      <div className={`max-w-[80%] min-w-0 ${isHuman ? 'items-end' : 'items-start'}`}>
         {/* Nome + recipient */}
         {!isGrouped && (
-          <div classNome={`flex items-center gap-1.5 mb-0.5 ${isHuman ? 'flex-row-reverse' : 'flex-row'}`}>
-            <span classNome={`text-[11px] font-medium ${theme.text}`}>
+          <div className={`flex items-center gap-1.5 mb-0.5 ${isHuman ? 'flex-row-reverse' : 'flex-row'}`}>
+            <span className={`text-[11px] font-medium ${theme.text}`}>
               {message.from_agent}
             </span>
             {message.to_agent && (
-              <span classNome="text-[10px] text-muted-foreground/50 flex items-center gap-0.5">
+              <span className="text-[10px] text-muted-foreground/50 flex items-center gap-0.5">
                 <svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <path d="M5 3l6 5-6 5" />
                 </svg>
                 {message.to_agent}
               </span>
             )}
-            <span classNome="text-[10px] text-muted-foreground/40">
+            <span className="text-[10px] text-muted-foreground/40">
               {formatTime(message.created_at)}
             </span>
           </div>
         )}
 
         {/* Bubble */}
-        <div classNome={`rounded-xl px-3 py-2 text-sm leading-relaxed ${
+        <div className={`rounded-xl px-3 py-2 text-sm leading-relaxed ${
           isHuman
             ? 'bg-primary text-primary-foreground rounded-tr-sm'
             : isCommand
@@ -147,9 +147,9 @@ export function MessageBubble({ message, isHuman, isGrouped }: MessageBubbleProp
             : `bg-surface-2 text-foreground ${isGrouped ? 'rounded-tl-sm' : 'rounded-tl-sm'}`
         }`}>
           {isCommand ? (
-            <pre classNome="whitespace-pre-wrap">{message.content}</pre>
+            <pre className="whitespace-pre-wrap">{message.content}</pre>
           ) : (
-            <div classNome="whitespace-pre-wrap break-words">{renderContent(message.content)}</div>
+            <div className="whitespace-pre-wrap break-words">{renderContent(message.content)}</div>
           )}
         </div>
       </div>

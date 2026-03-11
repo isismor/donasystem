@@ -5,7 +5,7 @@ import '@scalar/api-reference-react/style.css'
 
 export default function DocsPage() {
   return (
-    <div classNome="h-screen">
+    <div className="h-screen">
       <ApiReferenceReact
         configuration={{
           url: '/api/docs',

@@ -40,14 +40,14 @@ function StatCard({ title, value, icon, trend, subtitle, color = 'default' }: St
   }
 
   return (
-    <div classNome={`p-6 rounded-lg border ${colorClasses[color]}`}>
-      <div classNome="flex items-center justify-between">
+    <div className={`p-6 rounded-lg border ${colorClasses[color]}`}>
+      <div className="flex items-center justify-between">
         <div>
-          <p classNome="text-sm font-medium text-muted-foreground">{title}</p>
-          <div classNome="flex items-baseline space-x-2">
-            <p classNome="text-2xl font-bold text-foreground">{value}</p>
+          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <div className="flex items-baseline space-x-2">
+            <p className="text-2xl font-bold text-foreground">{value}</p>
             {trend && (
-              <span classNome={`text-sm ${
+              <span className={`text-sm ${
                 trend === 'up' ? 'text-[#b4a68c]' : 
                 trend === 'down' ? 'text-[#9e5c50]' : 
                 'text-muted-foreground'
@@ -57,10 +57,10 @@ function StatCard({ title, value, icon, trend, subtitle, color = 'default' }: St
             )}
           </div>
           {subtitle && (
-            <p classNome="text-xs text-muted-foreground mt-1">{subtitle}</p>
+            <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
           )}
         </div>
-        <div classNome={`text-2xl ${iconColorClasses[color]}`}>
+        <div className={`text-2xl ${iconColorClasses[color]}`}>
           {icon}
         </div>
       </div>
@@ -74,7 +74,7 @@ export function StatsGrid({ stats, systemStats }: StatsGridProps) {
     formatTempo ativo(Date.now() - stats.uptime)
 
   return (
-    <div classNome="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
       <StatCard
         title="Total Sessions"
         value={stats.totalSessions}

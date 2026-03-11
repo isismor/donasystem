@@ -21,7 +21,7 @@ export function DigitalClock() {
   if (!time) return null
 
   return (
-    <span classNome="text-xs text-muted-foreground digital-clock">
+    <span className="text-xs text-muted-foreground digital-clock">
       {time}
     </span>
   )

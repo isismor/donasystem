@@ -99,20 +99,20 @@ export function AgentCostPanel() {
   const maxCostPer1k = Math.max(...efficiencyData.map(d => d.costPer1k), 0.0001)
 
   return (
-    <div classNome="p-6 space-y-6">
+    <div className="p-6 space-y-6">
       {/* Header */}
-      <div classNome="border-b border-border pb-4">
-        <div classNome="flex items-center justify-between">
+      <div className="border-b border-border pb-4">
+        <div className="flex items-center justify-between">
           <div>
-            <h1 classNome="text-3xl font-bold text-foreground">Agent Cost Breakdown</h1>
-            <p classNome="text-muted-foreground mt-2">Per-agent token usage and spend analysis</p>
+            <h1 className="text-3xl font-bold text-foreground">Agent Cost Breakdown</h1>
+            <p className="text-muted-foreground mt-2">Per-agent token usage and spend analysis</p>
           </div>
-          <div classNome="flex space-x-2">
+          <div className="flex space-x-2">
             {(['hour', 'day', 'week', 'month'] as const).map((tf) => (
               <button
                 key={tf}
                 onClick={() => setSelectedTimeframe(tf)}
-                classNome={`px-4 py-2 text-sm rounded-md font-medium transition-colors ${
+                className={`px-4 py-2 text-sm rounded-md font-medium transition-colors ${
                   selectedTimeframe === tf
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80'
@@ -126,40 +126,40 @@ export function AgentCostPanel() {
       </div>
 
       {isLoading ? (
-        <div classNome="flex items-center justify-center h-32">
-          <div classNome="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-          <span classNome="ml-3 text-muted-foreground">Loading agent costs...</span>
+        <div className="flex items-center justify-center h-32">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+          <span className="ml-3 text-muted-foreground">Loading agent costs...</span>
         </div>
       ) : !data || agents.length === 0 ? (
-        <div classNome="text-center text-muted-foreground py-12">
-          <div classNome="text-lg mb-2">No agent cost data available</div>
-          <div classNome="text-sm">Cost data will appear once agents start using tokens</div>
-          <button onClick={loadData} classNome="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+        <div className="text-center text-muted-foreground py-12">
+          <div className="text-lg mb-2">No agent cost data available</div>
+          <div className="text-sm">Cost data will appear once agents start using tokens</div>
+          <button onClick={loadData} className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
             Refresh
           </button>
         </div>
       ) : (
-        <div classNome="space-y-6">
+        <div className="space-y-6">
           {/* Summary Cards */}
-          <div classNome="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div classNome="bg-card border border-border rounded-lg p-6">
-              <div classNome="text-3xl font-bold text-foreground">{totalAgents}</div>
-              <div classNome="text-sm text-muted-foreground">Total Agents</div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="text-3xl font-bold text-foreground">{totalAgents}</div>
+              <div className="text-sm text-muted-foreground">Total Agents</div>
             </div>
-            <div classNome="bg-card border border-border rounded-lg p-6">
-              <div classNome="text-3xl font-bold text-foreground">{formatCost(totalCost)}</div>
-              <div classNome="text-sm text-muted-foreground">Custo Total ({selectedTimeframe})</div>
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="text-3xl font-bold text-foreground">{formatCost(totalCost)}</div>
+              <div className="text-sm text-muted-foreground">Custo Total ({selectedTimeframe})</div>
             </div>
-            <div classNome="bg-card border border-border rounded-lg p-6">
-              <div classNome="text-3xl font-bold text-orange-500">{mostExpensive?.[0] || '-'}</div>
-              <div classNome="text-sm text-muted-foreground">Most Expensive Agent</div>
-              {mostExpensive && <div classNome="text-xs text-muted-foreground mt-1">{formatCost(mostExpensive[1].stats.totalCost)}</div>}
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="text-3xl font-bold text-orange-500">{mostExpensive?.[0] || '-'}</div>
+              <div className="text-sm text-muted-foreground">Most Expensive Agent</div>
+              {mostExpensive && <div className="text-xs text-muted-foreground mt-1">{formatCost(mostExpensive[1].stats.totalCost)}</div>}
             </div>
-            <div classNome="bg-card border border-border rounded-lg p-6">
-              <div classNome="text-3xl font-bold text-[#b4a68c]">{mostEfficient?.[0] || '-'}</div>
-              <div classNome="text-sm text-muted-foreground">Most Efficient Agent</div>
+            <div className="bg-card border border-border rounded-lg p-6">
+              <div className="text-3xl font-bold text-[#b4a68c]">{mostEfficient?.[0] || '-'}</div>
+              <div className="text-sm text-muted-foreground">Most Efficient Agent</div>
               {mostEfficient && (
-                <div classNome="text-xs text-muted-foreground mt-1">
+                <div className="text-xs text-muted-foreground mt-1">
                   ${(mostEfficient[1].stats.totalCost / Math.max(1, mostEfficient[1].stats.totalTokens) * 1000).toFixed(4)}/1K tokens
                 </div>
               )}
@@ -167,13 +167,13 @@ export function AgentCostPanel() {
           </div>
 
           {/* Charts */}
-          <div classNome="grid lg:grid-cols-2 gap-6">
+          <div className="grid lg:grid-cols-2 gap-6">
             {/* Cost Distribution Pie */}
-            <div classNome="bg-card border border-border rounded-lg p-6">
-              <h2 classNome="text-xl font-semibold mb-4">Cost Distribution by Agent</h2>
-              <div classNome="h-64">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h2 className="text-xl font-semibold mb-4">Cost Distribution by Agent</h2>
+              <div className="h-64">
                 {pieData.length === 0 ? (
-                  <div classNome="h-full flex items-center justify-center text-muted-foreground text-sm">No cost data</div>
+                  <div className="h-full flex items-center justify-center text-muted-foreground text-sm">No cost data</div>
                 ) : (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -191,11 +191,11 @@ export function AgentCostPanel() {
             </div>
 
             {/* Cost Trend Lines */}
-            <div classNome="bg-card border border-border rounded-lg p-6">
-              <h2 classNome="text-xl font-semibold mb-4">Cost Trends (Top 5 Agents)</h2>
-              <div classNome="h-64">
+            <div className="bg-card border border-border rounded-lg p-6">
+              <h2 className="text-xl font-semibold mb-4">Cost Trends (Top 5 Agents)</h2>
+              <div className="h-64">
                 {trendData.length === 0 ? (
-                  <div classNome="h-full flex items-center justify-center text-muted-foreground text-sm">No trend data</div>
+                  <div className="h-full flex items-center justify-center text-muted-foreground text-sm">No trend data</div>
                 ) : (
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={trendData}>
@@ -215,54 +215,54 @@ export function AgentCostPanel() {
           </div>
 
           {/* Cost Efficiency Comparison */}
-          <div classNome="bg-card border border-border rounded-lg p-6">
-            <h2 classNome="text-xl font-semibold mb-4">Cost Efficiency ($/1K Tokens per Agent)</h2>
-            <div classNome="space-y-2">
+          <div className="bg-card border border-border rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">Cost Efficiency ($/1K Tokens per Agent)</h2>
+            <div className="space-y-2">
               {efficiencyData.map(({ name, costPer1k }) => (
-                <div key={name} classNome="flex items-center text-sm">
-                  <div classNome="w-32 truncate text-muted-foreground font-medium">{name}</div>
-                  <div classNome="flex-1 mx-3">
-                    <div classNome="w-full bg-secondary rounded-full h-2">
+                <div key={name} className="flex items-center text-sm">
+                  <div className="w-32 truncate text-muted-foreground font-medium">{name}</div>
+                  <div className="flex-1 mx-3">
+                    <div className="w-full bg-secondary rounded-full h-2">
                       <div
-                        classNome="bg-blue-500 h-2 rounded-full"
+                        className="bg-blue-500 h-2 rounded-full"
                         style={{ width: `${(costPer1k / maxCostPer1k) * 100}%` }}
                       />
                     </div>
                   </div>
-                  <div classNome="w-24 text-right text-xs text-muted-foreground">${costPer1k.toFixed(4)}/1K</div>
+                  <div className="w-24 text-right text-xs text-muted-foreground">${costPer1k.toFixed(4)}/1K</div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Agent Cost Ranking Table */}
-          <div classNome="bg-card border border-border rounded-lg p-6">
-            <h2 classNome="text-xl font-semibold mb-4">Agent Cost Ranking</h2>
-            <div classNome="space-y-2 max-h-[500px] overflow-y-auto">
+          <div className="bg-card border border-border rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">Agent Cost Ranking</h2>
+            <div className="space-y-2 max-h-[500px] overflow-y-auto">
               {sortedAgents.map(([name, a], index) => (
-                <div key={name} classNome="border border-border rounded-lg overflow-hidden">
+                <div key={name} className="border border-border rounded-lg overflow-hidden">
                   <button
                     onClick={() => setExpandiredAgent(expandedAgent === name ? null : name)}
-                    classNome="w-full p-4 flex items-center justify-between hover:bg-secondary/50 transition-colors text-left"
+                    className="w-full p-4 flex items-center justify-between hover:bg-secondary/50 transition-colors text-left"
                   >
-                    <div classNome="flex items-center gap-3">
-                      <span classNome="text-xs text-muted-foreground w-6">#{index + 1}</span>
-                      <span classNome="font-medium text-foreground">{name}</span>
-                      <span classNome="text-xs px-2 py-0.5 rounded-full bg-secondary text-muted-foreground">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-muted-foreground w-6">#{index + 1}</span>
+                      <span className="font-medium text-foreground">{name}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-secondary text-muted-foreground">
                         {a.sessions.length} session{a.sessions.length !== 1 ? 's' : ''}
                       </span>
                     </div>
-                    <div classNome="flex items-center gap-6 text-sm">
-                      <div classNome="text-right">
-                        <div classNome="font-medium text-foreground">{formatCost(a.stats.totalCost)}</div>
-                        <div classNome="text-xs text-muted-foreground">{formatNumber(a.stats.totalTokens)} tokens</div>
+                    <div className="flex items-center gap-6 text-sm">
+                      <div className="text-right">
+                        <div className="font-medium text-foreground">{formatCost(a.stats.totalCost)}</div>
+                        <div className="text-xs text-muted-foreground">{formatNumber(a.stats.totalTokens)} tokens</div>
                       </div>
-                      <div classNome="text-right">
-                        <div classNome="text-muted-foreground">{a.stats.requestCount} reqs</div>
-                        <div classNome="text-xs text-muted-foreground">{formatCost(a.stats.avgCostPerRequest)} avg</div>
+                      <div className="text-right">
+                        <div className="text-muted-foreground">{a.stats.requestCount} reqs</div>
+                        <div className="text-xs text-muted-foreground">{formatCost(a.stats.avgCostPerRequest)} avg</div>
                       </div>
                       <svg
-                        classNome={`w-4 h-4 text-muted-foreground transition-transform ${expandedAgent === name ? 'rotate-180' : ''}`}
+                        className={`w-4 h-4 text-muted-foreground transition-transform ${expandedAgent === name ? 'rotate-180' : ''}`}
                         viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
                       >
                         <polyline points="4,6 8,10 12,6" />
@@ -271,21 +271,21 @@ export function AgentCostPanel() {
                   </button>
 
                   {expandedAgent === name && (
-                    <div classNome="px-4 pb-4 border-t border-border bg-secondary/30">
-                      <div classNome="pt-3 text-sm">
-                        <h4 classNome="font-medium text-muted-foreground mb-2">Model Breakdown</h4>
-                        <div classNome="space-y-1.5">
+                    <div className="px-4 pb-4 border-t border-border bg-secondary/30">
+                      <div className="pt-3 text-sm">
+                        <h4 className="font-medium text-muted-foreground mb-2">Model Breakdown</h4>
+                        <div className="space-y-1.5">
                           {Object.entries(a.models)
                             .sort(([, x], [, y]) => y.totalCost - x.totalCost)
                             .map(([model, stats]) => {
-                              const displayNome = model.split('/').pop() || model
+                              const displayName = model.split('/').pop() || model
                               return (
-                                <div key={model} classNome="flex items-center justify-between text-xs">
-                                  <span classNome="text-muted-foreground">{displayNome}</span>
-                                  <div classNome="flex gap-4">
+                                <div key={model} className="flex items-center justify-between text-xs">
+                                  <span className="text-muted-foreground">{displayName}</span>
+                                  <div className="flex gap-4">
                                     <span>{formatNumber(stats.totalTokens)} tokens</span>
                                     <span>{stats.requestCount} reqs</span>
-                                    <span classNome="font-medium text-foreground">{formatCost(stats.totalCost)}</span>
+                                    <span className="font-medium text-foreground">{formatCost(stats.totalCost)}</span>
                                   </div>
                                 </div>
                               )

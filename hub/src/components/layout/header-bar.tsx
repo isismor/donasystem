@@ -56,7 +56,7 @@ export function HeaderBar() {
   const [searchLoading, setSearchLoading] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
-  const searchTimeoutRef = useRef<ReturnTipo<typeof setTimeout>>(undefined)
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   // Keyboard shortcut: Cmd/Ctrl+K
   useEffect(() => {
@@ -132,26 +132,26 @@ export function HeaderBar() {
   }
 
   return (
-    <header role="banner" aria-label="Application header" classNome="h-12 bg-card/80 backdrop-blur-sm border-b border-border px-4 flex items-center justify-between shrink-0">
+    <header role="banner" aria-label="Application header" className="h-12 bg-card/80 backdrop-blur-sm border-b border-border px-4 flex items-center justify-between shrink-0">
       {/* Left: Page title + breadcrumb */}
-      <div classNome="flex items-center gap-3">
-        <h1 classNome="text-sm font-semibold text-foreground">
+      <div className="flex items-center gap-3">
+        <h1 className="text-sm font-semibold text-foreground">
           {tabLabels[activeTab] || 'Torre Dona'}
         </h1>
-        <span classNome="text-2xs text-muted-foreground font-mono-tight">
+        <span className="text-2xs text-muted-foreground font-mono-tight">
           v{APP_VERSION}
         </span>
       </div>
 
       {/* Center: Search trigger + Quick stats (desktop only) */}
-      <div classNome="hidden md:flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-4">
         <button
           onClick={() => { setSearchOpen(true); setTimeout(() => searchInputRef.current?.focus(), 50) }}
-          classNome="flex items-center gap-2 h-7 px-3 rounded-md bg-secondary/50 border border-border text-xs text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors"
+          className="flex items-center gap-2 h-7 px-3 rounded-md bg-secondary/50 border border-border text-xs text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors"
         >
           <SearchIcon />
           <span>Search...</span>
-          <kbd classNome="text-2xs px-1 py-0.5 rounded bg-muted border border-border font-mono ml-2">&#8984;K</kbd>
+          <kbd className="text-2xs px-1 py-0.5 rounded bg-muted border border-border font-mono ml-2">&#8984;K</kbd>
         </button>
 
         <Stat label="Sessions" value={`${activeSessions}/${sessions.length}`} />
@@ -163,15 +163,15 @@ export function HeaderBar() {
       <MobileConnectionDot connection={connection} onReconnect={reconnect} />
 
       {/* Right: Ações */}
-      <div classNome="flex items-center gap-2">
-        <div classNome="hidden md:block">
+      <div className="flex items-center gap-2">
+        <div className="hidden md:block">
           <DigitalClock />
         </div>
 
         {/* Mobile search trigger */}
         <button
           onClick={() => { setSearchOpen(true); setTimeout(() => searchInputRef.current?.focus(), 50) }}
-          classNome="md:hidden h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth flex items-center justify-center"
+          className="md:hidden h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth flex items-center justify-center"
           title="Search"
         >
           <SearchIcon />
@@ -180,7 +180,7 @@ export function HeaderBar() {
         {/* Chat toggle */}
         <button
           onClick={() => setChatPanelOpen(!chatPanelOpen)}
-          classNome={`h-8 px-2.5 rounded-md text-xs font-medium transition-smooth flex items-center gap-1.5 ${
+          className={`h-8 px-2.5 rounded-md text-xs font-medium transition-smooth flex items-center gap-1.5 ${
             chatPanelOpen
               ? 'bg-primary text-primary-foreground'
               : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
@@ -193,11 +193,11 @@ export function HeaderBar() {
         {/* Notificações */}
         <button
           onClick={() => navigateToPanel('notifications')}
-          classNome="h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth flex items-center justify-center relative"
+          className="h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth flex items-center justify-center relative"
         >
           <BellIcon />
           {unreadNotificationCount > 0 && (
-            <span classNome="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary text-primary-foreground text-2xs flex items-center justify-center font-medium">
+            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary text-primary-foreground text-2xs flex items-center justify-center font-medium">
               {unreadNotificationCount > 9 ? '9+' : unreadNotificationCount}
             </span>
           )}
@@ -213,44 +213,44 @@ export function HeaderBar() {
 
       {/* Search overlay (renders at fixed position, works on all breakpoints) */}
       {searchOpen && (
-        <div ref={searchRef} classNome="fixed inset-0 z-50">
-          <div classNome="absolute inset-0" onClick={() => setSearchOpen(false)} />
-          <div classNome="absolute top-12 left-1/2 -translate-x-1/2 w-[min(24rem,calc(100vw-2rem))] bg-card border border-border rounded-lg shadow-xl overflow-hidden">
-            <div classNome="p-2 border-b border-border">
+        <div ref={searchRef} className="fixed inset-0 z-50">
+          <div className="absolute inset-0" onClick={() => setSearchOpen(false)} />
+          <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[min(24rem,calc(100vw-2rem))] bg-card border border-border rounded-lg shadow-xl overflow-hidden">
+            <div className="p-2 border-b border-border">
               <input
                 ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={e => handleSearchInput(e.target.value)}
                 placeholder="Search tasks, agents, activity..."
-                classNome="w-full h-8 px-3 rounded-md bg-secondary border-0 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+                className="w-full h-8 px-3 rounded-md bg-secondary border-0 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
                 autoFocus
               />
             </div>
-            <div classNome="max-h-80 overflow-y-auto">
+            <div className="max-h-80 overflow-y-auto">
               {searchLoading ? (
-                <div classNome="p-4 text-center text-xs text-muted-foreground">Searching...</div>
+                <div className="p-4 text-center text-xs text-muted-foreground">Searching...</div>
               ) : searchResults.length > 0 ? (
                 searchResults.map((r, i) => (
                   <button
                     key={`${r.type}-${r.id}-${i}`}
                     onClick={() => handleResultClick(r)}
-                    classNome="w-full text-left px-3 py-2 hover:bg-secondary/50 transition-colors flex items-start gap-2.5"
+                    className="w-full text-left px-3 py-2 hover:bg-secondary/50 transition-colors flex items-start gap-2.5"
                   >
-                    <span classNome={`text-2xs font-medium w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 ${typeColors[r.type] || 'bg-muted text-muted-foreground'}`}>
+                    <span className={`text-2xs font-medium w-5 h-5 rounded flex items-center justify-center shrink-0 mt-0.5 ${typeColors[r.type] || 'bg-muted text-muted-foreground'}`}>
                       {typeIcons[r.type] || '?'}
                     </span>
-                    <div classNome="flex-1 min-w-0">
-                      <div classNome="text-xs font-medium text-foreground truncate">{r.title}</div>
-                      {r.subtitle && <div classNome="text-2xs text-muted-foreground truncate">{r.subtitle}</div>}
-                      {r.excerpt && <div classNome="text-2xs text-muted-foreground/70 truncate mt-0.5">{r.excerpt}</div>}
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-medium text-foreground truncate">{r.title}</div>
+                      {r.subtitle && <div className="text-2xs text-muted-foreground truncate">{r.subtitle}</div>}
+                      {r.excerpt && <div className="text-2xs text-muted-foreground/70 truncate mt-0.5">{r.excerpt}</div>}
                     </div>
                   </button>
                 ))
               ) : searchQuery.length >= 2 ? (
-                <div classNome="p-4 text-center text-xs text-muted-foreground">Nenhum resultado</div>
+                <div className="p-4 text-center text-xs text-muted-foreground">Nenhum resultado</div>
               ) : (
-                <div classNome="p-4 text-center text-xs text-muted-foreground">Tipo to search across all entities</div>
+                <div className="p-4 text-center text-xs text-muted-foreground">Tipo to search across all entities</div>
               )}
             </div>
           </div>
@@ -291,12 +291,12 @@ function MobileConnectionDot({
   return (
     <button
       onClick={!isLocal && !connection.isConnected ? onReconnect : undefined}
-      classNome={`md:hidden flex items-center justify-center h-8 w-8 rounded-md ${
+      className={`md:hidden flex items-center justify-center h-8 w-8 rounded-md ${
         isLocal || connection.isConnected ? 'cursor-default' : 'hover:bg-secondary cursor-pointer'
       } transition-smooth`}
       title={title}
     >
-      <span classNome={`w-2 h-2 rounded-full ${dotClass}`} />
+      <span className={`w-2 h-2 rounded-full ${dotClass}`} />
     </button>
   )
 }
@@ -314,10 +314,10 @@ function ConnectionBadge({
 
   if (isLocal) {
     return (
-      <div classNome="flex items-center gap-1.5 text-xs px-2 py-1 rounded-md cursor-default">
-        <span classNome="text-muted-foreground">Gateway</span>
-        <span classNome="w-1.5 h-1.5 rounded-full bg-blue-500" />
-        <span classNome="font-medium font-mono-tight text-blue-400">Local</span>
+      <div className="flex items-center gap-1.5 text-xs px-2 py-1 rounded-md cursor-default">
+        <span className="text-muted-foreground">Gateway</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+        <span className="font-medium font-mono-tight text-blue-400">Local</span>
       </div>
     )
   }
@@ -339,16 +339,16 @@ function ConnectionBadge({
   return (
     <button
       onClick={!connection.isConnected ? onReconnect : undefined}
-      classNome={`flex items-center gap-1.5 text-xs px-2 py-1 rounded-md transition-smooth ${
+      className={`flex items-center gap-1.5 text-xs px-2 py-1 rounded-md transition-smooth ${
         connection.isConnected
           ? 'cursor-default'
           : 'hover:bg-secondary cursor-pointer'
       }`}
       title={connection.isConnected ? 'Gateway conectado' : 'Click to reconnect'}
     >
-      <span classNome="text-muted-foreground">Gateway</span>
-      <span classNome={`w-1.5 h-1.5 rounded-full ${dotClass}`} />
-      <span classNome={`font-medium font-mono-tight ${
+      <span className="text-muted-foreground">Gateway</span>
+      <span className={`w-1.5 h-1.5 rounded-full ${dotClass}`} />
+      <span className={`font-medium font-mono-tight ${
         connection.isConnected ? 'text-[#b4a68c]' : isReconectando ? 'text-[#c49a6c]' : 'text-[#9e5c50]'
       }`}>
         {label}
@@ -361,19 +361,19 @@ function Stat({ label, value, status }: { label: string; value: string; status?:
   const statusColor = status === 'success' ? 'text-[#b4a68c]' : status === 'error' ? 'text-[#9e5c50]' : status === 'warning' ? 'text-[#c49a6c]' : 'text-foreground'
 
   return (
-    <div classNome="flex items-center gap-1.5 text-xs">
-      <span classNome="text-muted-foreground">{label}</span>
-      <span classNome={`font-medium font-mono-tight ${statusColor}`}>{value}</span>
+    <div className="flex items-center gap-1.5 text-xs">
+      <span className="text-muted-foreground">{label}</span>
+      <span className={`font-medium font-mono-tight ${statusColor}`}>{value}</span>
     </div>
   )
 }
 
 function SseBadge({ connected }: { connected: boolean }) {
   return (
-    <div classNome="flex items-center gap-1.5 text-xs">
-      <span classNome="text-muted-foreground">Events</span>
-      <span classNome={`w-1.5 h-1.5 rounded-full ${connected ? 'bg-blue-500' : 'bg-muted-foreground/30'}`} />
-      <span classNome={`font-medium font-mono-tight ${connected ? 'text-blue-400' : 'text-muted-foreground'}`}>
+    <div className="flex items-center gap-1.5 text-xs">
+      <span className="text-muted-foreground">Events</span>
+      <span className={`w-1.5 h-1.5 rounded-full ${connected ? 'bg-blue-500' : 'bg-muted-foreground/30'}`} />
+      <span className={`font-medium font-mono-tight ${connected ? 'text-blue-400' : 'text-muted-foreground'}`}>
         {connected ? 'Live' : 'Off'}
       </span>
     </div>
@@ -382,7 +382,7 @@ function SseBadge({ connected }: { connected: boolean }) {
 
 function ChatIcon() {
   return (
-    <svg classNome="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M2 3h12v8H6l-3 3v-3H2V3z" />
     </svg>
   )
@@ -390,7 +390,7 @@ function ChatIcon() {
 
 function UserMenu({ user, onSair }: { user: { username: string; display_name: string; role: string }; onSair: () => void }) {
   const [open, setOpen] = useState(false)
-  const [showPasswordDialog, setMostrarPasswordDialog] = useState(false)
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false)
   const router = useRouter()
 
   const initials = user.display_name
@@ -407,10 +407,10 @@ function UserMenu({ user, onSair }: { user: { username: string; display_name: st
   }
 
   return (
-    <div classNome="relative">
+    <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        classNome="h-8 w-8 rounded-full bg-primary/20 text-primary text-xs font-semibold flex items-center justify-center hover:bg-primary/30 transition-smooth"
+        className="h-8 w-8 rounded-full bg-primary/20 text-primary text-xs font-semibold flex items-center justify-center hover:bg-primary/30 transition-smooth"
         title={`${user.display_name} (${user.role})`}
       >
         {initials}
@@ -418,21 +418,21 @@ function UserMenu({ user, onSair }: { user: { username: string; display_name: st
 
       {open && (
         <>
-          <div classNome="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div classNome="absolute right-0 top-full mt-1 w-48 rounded-lg bg-card border border-border shadow-lg z-50 py-1">
-            <div classNome="px-3 py-2 border-b border-border">
-              <p classNome="text-sm font-medium text-foreground">{user.display_name}</p>
-              <p classNome="text-xs text-muted-foreground">{user.role}</p>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="absolute right-0 top-full mt-1 w-48 rounded-lg bg-card border border-border shadow-lg z-50 py-1">
+            <div className="px-3 py-2 border-b border-border">
+              <p className="text-sm font-medium text-foreground">{user.display_name}</p>
+              <p className="text-xs text-muted-foreground">{user.role}</p>
             </div>
             <button
-              onClick={() => { setOpen(false); setMostrarPasswordDialog(true) }}
-              classNome="w-full px-3 py-2 text-sm text-left text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
+              onClick={() => { setOpen(false); setShowPasswordDialog(true) }}
+              className="w-full px-3 py-2 text-sm text-left text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
             >
               Change password
             </button>
             <button
               onClick={handleSair}
-              classNome="w-full px-3 py-2 text-sm text-left text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
+              className="w-full px-3 py-2 text-sm text-left text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
             >
               Sair
             </button>
@@ -441,7 +441,7 @@ function UserMenu({ user, onSair }: { user: { username: string; display_name: st
       )}
 
       {showPasswordDialog && (
-        <PasswordDialog onClose={() => setMostrarPasswordDialog(false)} />
+        <PasswordDialog onClose={() => setShowPasswordDialog(false)} />
       )}
     </div>
   )
@@ -491,69 +491,69 @@ function PasswordDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      <div classNome="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div classNome="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-        <div classNome="bg-card border border-border rounded-lg shadow-xl w-80 pointer-events-auto" onClick={e => e.stopPropagation()}>
-          <div classNome="px-4 py-3 border-b border-border">
-            <h3 classNome="text-sm font-semibold text-foreground">Change Password</h3>
+      <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+      <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+        <div className="bg-card border border-border rounded-lg shadow-xl w-80 pointer-events-auto" onClick={e => e.stopPropagation()}>
+          <div className="px-4 py-3 border-b border-border">
+            <h3 className="text-sm font-semibold text-foreground">Change Password</h3>
           </div>
 
           {success ? (
-            <div classNome="px-4 py-6 text-center">
-              <p classNome="text-sm text-[#b4a68c] font-medium">Password changed successfully</p>
+            <div className="px-4 py-6 text-center">
+              <p className="text-sm text-[#b4a68c] font-medium">Password changed successfully</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} classNome="p-4 space-y-3">
+            <form onSubmit={handleSubmit} className="p-4 space-y-3">
               <div>
-                <label classNome="block text-xs text-muted-foreground mb-1">Current password</label>
+                <label className="block text-xs text-muted-foreground mb-1">Current password</label>
                 <input
                   type="password"
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
-                  classNome="w-full h-8 px-2.5 rounded-md bg-secondary border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full h-8 px-2.5 rounded-md bg-secondary border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
                   required
                   autoFocus
                 />
               </div>
               <div>
-                <label classNome="block text-xs text-muted-foreground mb-1">New password</label>
+                <label className="block text-xs text-muted-foreground mb-1">New password</label>
                 <input
                   type="password"
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
-                  classNome="w-full h-8 px-2.5 rounded-md bg-secondary border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full h-8 px-2.5 rounded-md bg-secondary border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
                   required
                   minLength={8}
                 />
               </div>
               <div>
-                <label classNome="block text-xs text-muted-foreground mb-1">Confirm new password</label>
+                <label className="block text-xs text-muted-foreground mb-1">Confirm new password</label>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
-                  classNome="w-full h-8 px-2.5 rounded-md bg-secondary border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full h-8 px-2.5 rounded-md bg-secondary border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
                   required
                   minLength={8}
                 />
               </div>
 
               {error && (
-                <p classNome="text-xs text-[#9e5c50]">{error}</p>
+                <p className="text-xs text-[#9e5c50]">{error}</p>
               )}
 
-              <div classNome="flex gap-2 pt-1">
+              <div className="flex gap-2 pt-1">
                 <button
                   type="button"
                   onClick={onClose}
-                  classNome="flex-1 h-8 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary border border-border transition-smooth"
+                  className="flex-1 h-8 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary border border-border transition-smooth"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  classNome="flex-1 h-8 rounded-md text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth disabled:opacity-50"
+                  className="flex-1 h-8 rounded-md text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-smooth disabled:opacity-50"
                 >
                   {loading ? 'Saving...' : 'Save'}
                 </button>
@@ -568,7 +568,7 @@ function PasswordDialog({ onClose }: { onClose: () => void }) {
 
 function SearchIcon() {
   return (
-    <svg classNome="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="7" cy="7" r="4.5" />
       <path d="M10.5 10.5L14 14" />
     </svg>
@@ -577,7 +577,7 @@ function SearchIcon() {
 
 function BellIcon() {
   return (
-    <svg classNome="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M6 13h4M3.5 10c0-1-1-2-1-4a5.5 5.5 0 0111 0c0 2-1 3-1 4H3.5z" />
     </svg>
   )

@@ -111,43 +111,43 @@ export function AgentSpawnPanel() {
   const selectedModel = availableModels.find(m => m.alias === formData.model)
 
   return (
-    <div classNome="p-6 space-y-6">
-      <div classNome="border-b border-border pb-4">
-        <h1 classNome="text-3xl font-bold text-foreground">Agent Spawn Control</h1>
-        <p classNome="text-muted-foreground mt-2">
+    <div className="p-6 space-y-6">
+      <div className="border-b border-border pb-4">
+        <h1 className="text-3xl font-bold text-foreground">Agent Spawn Control</h1>
+        <p className="text-muted-foreground mt-2">
           Launch new sub-agents for specific tasks with custom parameters
         </p>
       </div>
 
-      <div classNome="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         {/* Spawn Form */}
-        <div classNome="bg-card border border-border rounded-lg p-6">
-          <h2 classNome="text-xl font-semibold mb-4">Spawn New Agent</h2>
+        <div className="bg-card border border-border rounded-lg p-6">
+          <h2 className="text-xl font-semibold mb-4">Spawn New Agent</h2>
           
-          <div classNome="space-y-4">
+          <div className="space-y-4">
             {/* Task Input */}
             <div>
-              <label classNome="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Task Descrição
               </label>
               <textarea
                 value={formData.task}
                 onChange={(e) => setFormData(prev => ({ ...prev, task: e.target.value }))}
                 placeholder="Describe the task for the agent to execute..."
-                classNome="w-full h-24 px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground resize-none focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full h-24 px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground resize-none focus:outline-none focus:ring-2 focus:ring-primary/50"
                 disabled={isSpawning}
               />
             </div>
 
             {/* Model Selector */}
             <div>
-              <label classNome="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Model
               </label>
               <select
                 value={formData.model}
                 onChange={(e) => setFormData(prev => ({ ...prev, model: e.target.value }))}
-                classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
                 disabled={isSpawning}
               >
                 {availableModels.map((model) => (
@@ -157,7 +157,7 @@ export function AgentSpawnPanel() {
                 ))}
               </select>
               {selectedModel && (
-                <div classNome="mt-2 text-sm text-muted-foreground">
+                <div className="mt-2 text-sm text-muted-foreground">
                   <div>Provider: {selectedModel.provider}</div>
                   <div>Cost: ${selectedModel.costPer1k}/1k tokens</div>
                 </div>
@@ -166,7 +166,7 @@ export function AgentSpawnPanel() {
 
             {/* Label Input */}
             <div>
-              <label classNome="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Agent Label
               </label>
               <input
@@ -174,14 +174,14 @@ export function AgentSpawnPanel() {
                 value={formData.label}
                 onChange={(e) => setFormData(prev => ({ ...prev, label: e.target.value }))}
                 placeholder="e.g., builder, analyzer, researcher"
-                classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
                 disabled={isSpawning}
               />
             </div>
 
             {/* Timeout Setting */}
             <div>
-              <label classNome="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Timeout (seconds)
               </label>
               <input
@@ -190,10 +190,10 @@ export function AgentSpawnPanel() {
                 max="3600"
                 value={formData.timeoutSeconds}
                 onChange={(e) => setFormData(prev => ({ ...prev, timeoutSeconds: parseInt(e.target.value) || 300 }))}
-                classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
                 disabled={isSpawning}
               />
-              <div classNome="mt-1 text-sm text-muted-foreground">
+              <div className="mt-1 text-sm text-muted-foreground">
                 {Math.floor(formData.timeoutSeconds / 60)} minutes, {formData.timeoutSeconds % 60} seconds
               </div>
             </div>
@@ -202,7 +202,7 @@ export function AgentSpawnPanel() {
             <button
               onClick={handleSpawn}
               disabled={isSpawning || !formData.task.trim() || !formData.label.trim()}
-              classNome="w-full px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSpawning ? 'Spawning Agent...' : 'Iniciar Agente'}
             </button>
@@ -210,22 +210,22 @@ export function AgentSpawnPanel() {
         </div>
 
         {/* Active Spawn Requests */}
-        <div classNome="bg-card border border-border rounded-lg p-6">
-          <h2 classNome="text-xl font-semibold mb-4">Active Requests</h2>
+        <div className="bg-card border border-border rounded-lg p-6">
+          <h2 className="text-xl font-semibold mb-4">Active Requests</h2>
           
-          <div classNome="space-y-3 max-h-96 overflow-y-auto">
+          <div className="space-y-3 max-h-96 overflow-y-auto">
             {spawnRequests.length === 0 ? (
-              <div classNome="text-center text-muted-foreground py-8">
+              <div className="text-center text-muted-foreground py-8">
                 No active spawn requests
               </div>
             ) : (
               spawnRequests.slice(0, 10).map((request) => (
-                <div key={request.id} classNome="border border-border rounded-lg p-4">
-                  <div classNome="flex items-start justify-between">
-                    <div classNome="flex-1 min-w-0">
-                      <div classNome="flex items-center space-x-2">
-                        <span classNome="font-medium text-foreground">{request.label}</span>
-                        <span classNome={`px-2 py-1 text-xs rounded-full ${
+                <div key={request.id} className="border border-border rounded-lg p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-2">
+                        <span className="font-medium text-foreground">{request.label}</span>
+                        <span className={`px-2 py-1 text-xs rounded-full ${
                           request.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
                           request.status === 'running' ? 'bg-blue-500/20 text-blue-400' :
                           request.status === 'completed' ? 'bg-[#b4a68c]/20 text-[#b4a68c]' :
@@ -234,19 +234,19 @@ export function AgentSpawnPanel() {
                           {request.status}
                         </span>
                       </div>
-                      <div classNome="text-sm text-muted-foreground mt-1">
+                      <div className="text-sm text-muted-foreground mt-1">
                         Model: {request.model} • Timeout: {request.timeoutSeconds}s
                       </div>
-                      <div classNome="text-sm text-muted-foreground mt-1 truncate">
+                      <div className="text-sm text-muted-foreground mt-1 truncate">
                         {request.task}
                       </div>
                       {request.error && (
-                        <div classNome="text-sm text-[#9e5c50] mt-2">
+                        <div className="text-sm text-[#9e5c50] mt-2">
                           Error: {request.error}
                         </div>
                       )}
                     </div>
-                    <div classNome="text-xs text-muted-foreground ml-4">
+                    <div className="text-xs text-muted-foreground ml-4">
                       {new Date(request.createdAt).toLocaleTimeString()}
                     </div>
                   </div>
@@ -259,22 +259,22 @@ export function AgentSpawnPanel() {
 
       {/* Spawn History */}
       {spawnHistory.length > 0 && (
-        <div classNome="bg-card border border-border rounded-lg p-6">
-          <h2 classNome="text-xl font-semibold mb-4">Recent Spawn History</h2>
+        <div className="bg-card border border-border rounded-lg p-6">
+          <h2 className="text-xl font-semibold mb-4">Recent Spawn History</h2>
           
-          <div classNome="space-y-2 max-h-64 overflow-y-auto">
+          <div className="space-y-2 max-h-64 overflow-y-auto">
             {spawnHistory.map((item, index) => (
-              <div key={index} classNome="flex items-center justify-between p-3 border border-border rounded">
-                <div classNome="flex-1 min-w-0">
-                  <div classNome="text-sm font-medium text-foreground">
+              <div key={index} className="flex items-center justify-between p-3 border border-border rounded">
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-foreground">
                     {item.model} - {item.task.substring(0, 50)}
                     {item.task.length > 50 && '...'}
                   </div>
-                  <div classNome="text-xs text-muted-foreground">
+                  <div className="text-xs text-muted-foreground">
                     {new Date(item.timestamp).toLocaleString()}
                   </div>
                 </div>
-                <div classNome="text-xs text-[#b4a68c] ml-4">
+                <div className="text-xs text-[#b4a68c] ml-4">
                   {item.status}
                 </div>
               </div>

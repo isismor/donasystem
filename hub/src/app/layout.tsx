@@ -29,14 +29,14 @@ export default function RootLayout({
       <head>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
       </head>
-      <body classNome="antialiased font-sans" suppressHydrationWarning>
+      <body className="antialiased font-sans" suppressHydrationWarning>
         <TemaProvider
           attribute="class"
           defaultTema="dark"
           enableSystem={false}
           disableTransitionOnChange
         >
-          <div classNome="h-screen overflow-hidden bg-background text-foreground">
+          <div className="h-screen overflow-hidden bg-background text-foreground">
             {children}
           </div>
         </TemaProvider>

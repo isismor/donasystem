@@ -98,31 +98,31 @@ export default function LoginPage() {
   }, [googleClientId, completeLogin])
 
   return (
-    <div classNome="min-h-screen flex items-center justify-center bg-background p-4">
-      <div classNome="w-full max-w-sm">
-        <div classNome="flex flex-col items-center mb-8">
-          <div classNome="w-12 h-12 rounded-xl flex items-center justify-center mb-3" style={{ background: 'hsl(24 14% 14%)' }}>
-            <span classNome="font-bold text-lg" style={{ color: 'hsl(39 21% 63%)' }}>TD</span>
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <div className="w-full max-w-sm">
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-3" style={{ background: 'hsl(24 14% 14%)' }}>
+            <span className="font-bold text-lg" style={{ color: 'hsl(39 21% 63%)' }}>TD</span>
           </div>
-          <h1 classNome="text-xl font-semibold text-foreground">Torre Dona</h1>
-          <p classNome="text-sm text-muted-foreground mt-1">Acesse para continuar</p>
+          <h1 className="text-xl font-semibold text-foreground">Torre Dona</h1>
+          <p className="text-sm text-muted-foreground mt-1">Acesse para continuar</p>
         </div>
 
-        <form onSubmit={handleSubmit} classNome="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div role="alert" classNome="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm text-destructive">
+            <div role="alert" className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm text-destructive">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="username" classNome="block text-sm font-medium text-foreground mb-1.5">Usuário</label>
+            <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1.5">Usuário</label>
             <input
               id="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              classNome="w-full h-10 px-3 rounded-lg bg-secondary border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-smooth"
+              className="w-full h-10 px-3 rounded-lg bg-secondary border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-smooth"
               placeholder="Digite seu usuário"
               autoComplete="username"
               autoFocus
@@ -132,13 +132,13 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="password" classNome="block text-sm font-medium text-foreground mb-1.5">Senha</label>
+            <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1.5">Senha</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              classNome="w-full h-10 px-3 rounded-lg bg-secondary border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-smooth"
+              className="w-full h-10 px-3 rounded-lg bg-secondary border border-border text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-smooth"
               placeholder="Digite sua senha"
               autoComplete="current-password"
               required
@@ -149,11 +149,11 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading || !username || !password}
-            classNome="w-full h-10 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth flex items-center justify-center gap-2"
+            className="w-full h-10 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
-                <div classNome="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
                 Entrando...
               </>
             ) : (
@@ -162,22 +162,22 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div classNome="my-4 flex items-center gap-2">
-          <div classNome="h-px flex-1 bg-border" />
-          <span classNome="text-xs text-muted-foreground">ou</span>
-          <div classNome="h-px flex-1 bg-border" />
+        <div className="my-4 flex items-center gap-2">
+          <div className="h-px flex-1 bg-border" />
+          <span className="text-xs text-muted-foreground">ou</span>
+          <div className="h-px flex-1 bg-border" />
         </div>
 
-        <div classNome="flex justify-center">
+        <div className="flex justify-center">
           {googleClientId ? (
-            <div classNome="min-h-[44px]" ref={googleBtnRef} />
+            <div className="min-h-[44px]" ref={googleBtnRef} />
           ) : (
-            <div classNome="text-xs text-muted-foreground">Login Google não configurado</div>
+            <div className="text-xs text-muted-foreground">Login Google não configurado</div>
           )}
         </div>
-        {googleClientId && !googleReady && <p classNome="text-center text-xs text-muted-foreground mt-2">Carregando login Google...</p>}
+        {googleClientId && !googleReady && <p className="text-center text-xs text-muted-foreground mt-2">Carregando login Google...</p>}
 
-        <p classNome="text-center text-xs text-muted-foreground mt-6">Torre Dona · Painel de Controle</p>
+        <p className="text-center text-xs text-muted-foreground mt-6">Torre Dona · Painel de Controle</p>
       </div>
     </div>
   )

@@ -169,26 +169,26 @@ export function LogViewerPanel() {
   log.debug(`Store has ${logs.length} logs, filtered to ${filteredLogs.length}`)
 
   return (
-    <div classNome="flex flex-col h-full p-6 space-y-4">
-      <div classNome="border-b border-border pb-4">
-        <h1 classNome="text-3xl font-bold text-foreground">Logs</h1>
-        <p classNome="text-muted-foreground mt-2">
+    <div className="flex flex-col h-full p-6 space-y-4">
+      <div className="border-b border-border pb-4">
+        <h1 className="text-3xl font-bold text-foreground">Logs</h1>
+        <p className="text-muted-foreground mt-2">
           Real-time streaming logs from ClawdBot gateway and system
         </p>
       </div>
 
       {/* Filtrars and Controls */}
-      <div classNome="bg-card border border-border rounded-lg p-4">
-        <div classNome="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+      <div className="bg-card border border-border rounded-lg p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
           {/* Level Filtrar */}
           <div>
-            <label classNome="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Level
             </label>
             <select
               value={logFiltrars.level || ''}
               onChange={(e) => handleFiltrarChange({ level: e.target.value || undefined })}
-              classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <option value="">All levels</option>
               <option value="error">Erro</option>
@@ -200,13 +200,13 @@ export function LogViewerPanel() {
 
           {/* Source Filtrar */}
           <div>
-            <label classNome="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Source
             </label>
             <select
               value={logFiltrars.source || ''}
               onChange={(e) => handleFiltrarChange({ source: e.target.value || undefined })}
-              classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <option value="">All sources</option>
               {availableSources.map((source) => (
@@ -217,7 +217,7 @@ export function LogViewerPanel() {
 
           {/* Session Filtrar */}
           <div>
-            <label classNome="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Session
             </label>
             <input
@@ -225,13 +225,13 @@ export function LogViewerPanel() {
               value={logFiltrars.session || ''}
               onChange={(e) => handleFiltrarChange({ session: e.target.value || undefined })}
               placeholder="Session ID"
-              classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
 
           {/* Search Filtrar */}
           <div>
-            <label classNome="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Search
             </label>
             <input
@@ -239,15 +239,15 @@ export function LogViewerPanel() {
               value={logFiltrars.search || ''}
               onChange={(e) => handleFiltrarChange({ search: e.target.value || undefined })}
               placeholder="Search messages..."
-              classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
 
           {/* Controls */}
-          <div classNome="flex items-end space-x-2">
+          <div className="flex items-end space-x-2">
             <button
               onClick={() => setIsAutoScroll(!isAutoScroll)}
-              classNome={`px-3 py-2 text-sm rounded-md font-medium transition-colors ${
+              className={`px-3 py-2 text-sm rounded-md font-medium transition-colors ${
                 isAutoScroll
                   ? 'bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30'
                   : 'bg-secondary text-muted-foreground border border-border'
@@ -257,17 +257,17 @@ export function LogViewerPanel() {
             </button>
             <button
               onClick={handleScrollToBottom}
-              classNome="px-3 py-2 text-sm bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md font-medium hover:bg-blue-500/30 transition-colors"
+              className="px-3 py-2 text-sm bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md font-medium hover:bg-blue-500/30 transition-colors"
             >
               Bottom
             </button>
           </div>
 
           {/* Clear Logs */}
-          <div classNome="flex items-end">
+          <div className="flex items-end">
             <button
               onClick={clearLogs}
-              classNome="px-3 py-2 text-sm bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md font-medium hover:bg-[#9e5c50]/30 transition-colors"
+              className="px-3 py-2 text-sm bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md font-medium hover:bg-[#9e5c50]/30 transition-colors"
             >
               Clear
             </button>
@@ -276,7 +276,7 @@ export function LogViewerPanel() {
       </div>
 
       {/* Log Stats */}
-      <div classNome="flex items-center justify-between text-sm text-muted-foreground">
+      <div className="flex items-center justify-between text-sm text-muted-foreground">
         <div>
           Mostraring {filteredLogs.length} of {logs.length} logs
         </div>
@@ -287,53 +287,53 @@ export function LogViewerPanel() {
       </div>
 
       {/* Log Display */}
-      <div classNome="flex-1 bg-card border border-border rounded-lg overflow-hidden">
+      <div className="flex-1 bg-card border border-border rounded-lg overflow-hidden">
         <div 
           ref={logContainerRef}
-          classNome="h-full overflow-auto p-4 space-y-2 font-mono text-sm"
+          className="h-full overflow-auto p-4 space-y-2 font-mono text-sm"
         >
           {isLoading ? (
-            <div classNome="flex items-center justify-center h-32">
-              <div classNome="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-              <span classNome="ml-3 text-muted-foreground">Loading logs...</span>
+            <div className="flex items-center justify-center h-32">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+              <span className="ml-3 text-muted-foreground">Loading logs...</span>
             </div>
           ) : filteredLogs.length === 0 ? (
-            <div classNome="flex items-center justify-center h-32 text-muted-foreground">
+            <div className="flex items-center justify-center h-32 text-muted-foreground">
               No logs match the current filters
             </div>
           ) : (
             filteredLogs.map((log) => (
               <div 
                 key={log.id} 
-                classNome={`border-l-4 pl-4 py-2 rounded-r-md ${getLogLevelBg(log.level)}`}
+                className={`border-l-4 pl-4 py-2 rounded-r-md ${getLogLevelBg(log.level)}`}
               >
-                <div classNome="flex items-start justify-between">
-                  <div classNome="flex-1 min-w-0">
-                    <div classNome="flex items-center space-x-2 text-xs">
-                      <span classNome="text-muted-foreground">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center space-x-2 text-xs">
+                      <span className="text-muted-foreground">
                         {new Date(log.timestamp).toLocaleTimeString()}
                       </span>
-                      <span classNome={`font-medium uppercase ${getLogLevelColor(log.level)}`}>
+                      <span className={`font-medium uppercase ${getLogLevelColor(log.level)}`}>
                         {log.level}
                       </span>
-                      <span classNome="text-muted-foreground">
+                      <span className="text-muted-foreground">
                         [{log.source}]
                       </span>
                       {log.session && (
-                        <span classNome="text-muted-foreground">
+                        <span className="text-muted-foreground">
                           session:{log.session}
                         </span>
                       )}
                     </div>
-                    <div classNome="mt-1 text-foreground break-words">
+                    <div className="mt-1 text-foreground break-words">
                       {log.message}
                     </div>
                     {log.data && (
-                      <details classNome="mt-2">
-                        <summary classNome="cursor-pointer text-xs text-muted-foreground hover:text-foreground">
+                      <details className="mt-2">
+                        <summary className="cursor-pointer text-xs text-muted-foreground hover:text-foreground">
                           Additional data
                         </summary>
-                        <pre classNome="mt-1 text-xs text-muted-foreground overflow-auto">
+                        <pre className="mt-1 text-xs text-muted-foreground overflow-auto">
                           {JSON.stringify(log.data, null, 2)}
                         </pre>
                       </details>

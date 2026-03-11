@@ -204,31 +204,31 @@ export function GitHubSyncPanel() {
 
   if (loading) {
     return (
-      <div classNome="p-6 flex items-center gap-2">
-        <div classNome="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        <span classNome="text-sm text-muted-foreground">Loading GitHub sync...</span>
+      <div className="p-6 flex items-center gap-2">
+        <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        <span className="text-sm text-muted-foreground">Loading GitHub sync...</span>
       </div>
     )
   }
 
   return (
-    <div classNome="p-4 md:p-6 max-w-4xl mx-auto space-y-6">
+    <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <div classNome="flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div>
-          <h2 classNome="text-lg font-semibold text-foreground">GitHub Issues Sync</h2>
-          <p classNome="text-xs text-muted-foreground mt-0.5">
+          <h2 className="text-lg font-semibold text-foreground">GitHub Issues Sync</h2>
+          <p className="text-xs text-muted-foreground mt-0.5">
             Import GitHub issues as Mission Control tasks
           </p>
         </div>
         {/* Connection status badge */}
-        <div classNome="flex items-center gap-2">
-          <span classNome={`text-2xs px-2 py-1 rounded flex items-center gap-1.5 ${
+        <div className="flex items-center gap-2">
+          <span className={`text-2xs px-2 py-1 rounded flex items-center gap-1.5 ${
             tokenStatus?.connected
               ? 'bg-[#b4a68c]/10 text-[#b4a68c]'
               : 'bg-destructive/10 text-destructive'
           }`}>
-            <span classNome={`w-1.5 h-1.5 rounded-full ${
+            <span className={`w-1.5 h-1.5 rounded-full ${
               tokenStatus?.connected ? 'bg-[#b4a68c]' : 'bg-destructive'
             }`} />
             {tokenStatus?.connected
@@ -240,7 +240,7 @@ export function GitHubSyncPanel() {
 
       {/* Feedback */}
       {feedback && (
-        <div classNome={`rounded-lg p-3 text-xs font-medium ${
+        <div className={`rounded-lg p-3 text-xs font-medium ${
           feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c]' : 'bg-destructive/10 text-destructive'
         }`}>
           {feedback.text}
@@ -249,51 +249,51 @@ export function GitHubSyncPanel() {
 
       {/* Sync result banner */}
       {syncResult && (
-        <div classNome="rounded-lg p-3 text-xs bg-blue-500/10 text-blue-400 flex items-center gap-4">
+        <div className="rounded-lg p-3 text-xs bg-blue-500/10 text-blue-400 flex items-center gap-4">
           <span>Imported: {syncResult.imported}</span>
           <span>Skipped: {syncResult.skipped}</span>
-          {syncResult.errors > 0 && <span classNome="text-destructive">Errors: {syncResult.errors}</span>}
+          {syncResult.errors > 0 && <span className="text-destructive">Errors: {syncResult.errors}</span>}
         </div>
       )}
 
       {/* Import Issues Form */}
-      <div classNome="rounded-xl border border-border bg-card overflow-hidden">
-        <div classNome="px-4 py-3 border-b border-border">
-          <h3 classNome="text-sm font-medium text-foreground">Import Issues</h3>
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
+        <div className="px-4 py-3 border-b border-border">
+          <h3 className="text-sm font-medium text-foreground">Import Issues</h3>
         </div>
-        <div classNome="p-4 space-y-3">
-          <div classNome="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="p-4 space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* Repo input */}
             <div>
-              <label classNome="text-xs text-muted-foreground mb-1 block">Repository</label>
+              <label className="text-xs text-muted-foreground mb-1 block">Repository</label>
               <input
                 type="text"
                 value={repo}
                 onChange={e => setRepo(e.target.value)}
                 placeholder="owner/repo"
-                classNome="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
 
             {/* Label filter */}
             <div>
-              <label classNome="text-xs text-muted-foreground mb-1 block">Labels (optional)</label>
+              <label className="text-xs text-muted-foreground mb-1 block">Labels (optional)</label>
               <input
                 type="text"
                 value={labelFiltrar}
                 onChange={e => setLabelFiltrar(e.target.value)}
                 placeholder="bug,enhancement"
-                classNome="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
 
             {/* State filter */}
             <div>
-              <label classNome="text-xs text-muted-foreground mb-1 block">State</label>
+              <label className="text-xs text-muted-foreground mb-1 block">State</label>
               <select
                 value={stateFiltrar}
                 onChange={e => setStateFiltrar(e.target.value as any)}
-                classNome="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="open">Open</option>
                 <option value="closed">Closed</option>
@@ -303,11 +303,11 @@ export function GitHubSyncPanel() {
 
             {/* Assign to agent */}
             <div>
-              <label classNome="text-xs text-muted-foreground mb-1 block">Assign to Agent (optional)</label>
+              <label className="text-xs text-muted-foreground mb-1 block">Assign to Agent (optional)</label>
               <select
                 value={assignAgent}
                 onChange={e => setAssignAgent(e.target.value)}
-                classNome="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="">Unassigned</option>
                 {agents.map(a => (
@@ -318,16 +318,16 @@ export function GitHubSyncPanel() {
           </div>
 
           {/* Ações */}
-          <div classNome="flex items-center gap-2 pt-1">
+          <div className="flex items-center gap-2 pt-1">
             <button
               onClick={handlePreview}
               disabled={previewing || !repo}
-              classNome="px-4 py-1.5 text-xs rounded-md border border-border text-foreground hover:bg-secondary transition-colors flex items-center gap-1.5 disabled:opacity-50"
+              className="px-4 py-1.5 text-xs rounded-md border border-border text-foreground hover:bg-secondary transition-colors flex items-center gap-1.5 disabled:opacity-50"
             >
               {previewing ? (
-                <div classNome="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
               ) : (
-                <svg classNome="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="7" cy="7" r="5" />
                   <path d="M11 11l3 3" />
                 </svg>
@@ -337,16 +337,16 @@ export function GitHubSyncPanel() {
             <button
               onClick={handleImport}
               disabled={syncing || !repo}
-              classNome={`px-4 py-1.5 text-xs rounded-md font-medium transition-colors flex items-center gap-1.5 ${
+              className={`px-4 py-1.5 text-xs rounded-md font-medium transition-colors flex items-center gap-1.5 ${
                 repo
                   ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                   : 'bg-muted text-muted-foreground cursor-not-allowed'
               }`}
             >
               {syncing ? (
-                <div classNome="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
               ) : (
-                <svg classNome="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 2v8M5 7l3 3 3-3" />
                   <path d="M3 12v2h10v-2" />
                 </svg>
@@ -359,51 +359,51 @@ export function GitHubSyncPanel() {
 
       {/* Issue Preview Table */}
       {previewIssues.length > 0 && (
-        <div classNome="rounded-xl border border-border bg-card overflow-hidden">
-          <div classNome="px-4 py-3 border-b border-border flex items-center justify-between">
-            <h3 classNome="text-sm font-medium text-foreground">
+        <div className="rounded-xl border border-border bg-card overflow-hidden">
+          <div className="px-4 py-3 border-b border-border flex items-center justify-between">
+            <h3 className="text-sm font-medium text-foreground">
               Preview ({previewIssues.length} issues)
             </h3>
           </div>
-          <div classNome="overflow-x-auto">
-            <table classNome="w-full text-xs">
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
               <thead>
-                <tr classNome="border-b border-border text-muted-foreground">
-                  <th classNome="text-left px-4 py-2 font-medium">#</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Title</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Labels</th>
-                  <th classNome="text-left px-4 py-2 font-medium">State</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Criado</th>
+                <tr className="border-b border-border text-muted-foreground">
+                  <th className="text-left px-4 py-2 font-medium">#</th>
+                  <th className="text-left px-4 py-2 font-medium">Title</th>
+                  <th className="text-left px-4 py-2 font-medium">Labels</th>
+                  <th className="text-left px-4 py-2 font-medium">State</th>
+                  <th className="text-left px-4 py-2 font-medium">Criado</th>
                 </tr>
               </thead>
               <tbody>
                 {previewIssues.map(issue => (
-                  <tr key={issue.number} classNome="border-b border-border/50 hover:bg-secondary/50">
-                    <td classNome="px-4 py-2 text-muted-foreground">{issue.number}</td>
-                    <td classNome="px-4 py-2 text-foreground max-w-[300px] truncate">
+                  <tr key={issue.number} className="border-b border-border/50 hover:bg-secondary/50">
+                    <td className="px-4 py-2 text-muted-foreground">{issue.number}</td>
+                    <td className="px-4 py-2 text-foreground max-w-[300px] truncate">
                       <a
                         href={issue.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        classNome="hover:text-primary transition-colors"
+                        className="hover:text-primary transition-colors"
                       >
                         {issue.title}
                       </a>
                     </td>
-                    <td classNome="px-4 py-2">
-                      <div classNome="flex flex-wrap gap-1">
+                    <td className="px-4 py-2">
+                      <div className="flex flex-wrap gap-1">
                         {issue.labels.map(l => (
                           <span
                             key={l.name}
-                            classNome="px-1.5 py-0.5 rounded text-2xs bg-secondary text-muted-foreground"
+                            className="px-1.5 py-0.5 rounded text-2xs bg-secondary text-muted-foreground"
                           >
                             {l.name}
                           </span>
                         ))}
                       </div>
                     </td>
-                    <td classNome="px-4 py-2">
-                      <span classNome={`px-1.5 py-0.5 rounded text-2xs ${
+                    <td className="px-4 py-2">
+                      <span className={`px-1.5 py-0.5 rounded text-2xs ${
                         issue.state === 'open'
                           ? 'bg-[#b4a68c]/10 text-[#b4a68c]'
                           : 'bg-purple-500/10 text-purple-400'
@@ -411,7 +411,7 @@ export function GitHubSyncPanel() {
                         {issue.state}
                       </span>
                     </td>
-                    <td classNome="px-4 py-2 text-muted-foreground">
+                    <td className="px-4 py-2 text-muted-foreground">
                       {new Date(issue.created_at).toLocaleDateString()}
                     </td>
                   </tr>
@@ -424,27 +424,27 @@ export function GitHubSyncPanel() {
 
       {/* Sync History */}
       {syncHistory.length > 0 && (
-        <div classNome="rounded-xl border border-border bg-card overflow-hidden">
-          <div classNome="px-4 py-3 border-b border-border">
-            <h3 classNome="text-sm font-medium text-foreground">Sync History</h3>
+        <div className="rounded-xl border border-border bg-card overflow-hidden">
+          <div className="px-4 py-3 border-b border-border">
+            <h3 className="text-sm font-medium text-foreground">Sync History</h3>
           </div>
-          <div classNome="overflow-x-auto">
-            <table classNome="w-full text-xs">
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
               <thead>
-                <tr classNome="border-b border-border text-muted-foreground">
-                  <th classNome="text-left px-4 py-2 font-medium">Repo</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Issues</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Status</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Synced At</th>
+                <tr className="border-b border-border text-muted-foreground">
+                  <th className="text-left px-4 py-2 font-medium">Repo</th>
+                  <th className="text-left px-4 py-2 font-medium">Issues</th>
+                  <th className="text-left px-4 py-2 font-medium">Status</th>
+                  <th className="text-left px-4 py-2 font-medium">Synced At</th>
                 </tr>
               </thead>
               <tbody>
                 {syncHistory.map(sync => (
-                  <tr key={sync.id} classNome="border-b border-border/50 hover:bg-secondary/50">
-                    <td classNome="px-4 py-2 font-mono text-foreground">{sync.repo}</td>
-                    <td classNome="px-4 py-2 text-muted-foreground">{sync.issue_count}</td>
-                    <td classNome="px-4 py-2">
-                      <span classNome={`px-1.5 py-0.5 rounded text-2xs ${
+                  <tr key={sync.id} className="border-b border-border/50 hover:bg-secondary/50">
+                    <td className="px-4 py-2 font-mono text-foreground">{sync.repo}</td>
+                    <td className="px-4 py-2 text-muted-foreground">{sync.issue_count}</td>
+                    <td className="px-4 py-2">
+                      <span className={`px-1.5 py-0.5 rounded text-2xs ${
                         sync.status === 'success'
                           ? 'bg-[#b4a68c]/10 text-[#b4a68c]'
                           : sync.status === 'partial'
@@ -454,7 +454,7 @@ export function GitHubSyncPanel() {
                         {sync.status}
                       </span>
                     </td>
-                    <td classNome="px-4 py-2 text-muted-foreground">
+                    <td className="px-4 py-2 text-muted-foreground">
                       {new Date(sync.created_at * 1000).toLocaleString()}
                     </td>
                   </tr>
@@ -467,34 +467,34 @@ export function GitHubSyncPanel() {
 
       {/* Linked Tasks */}
       {linkedTasks.length > 0 && (
-        <div classNome="rounded-xl border border-border bg-card overflow-hidden">
-          <div classNome="px-4 py-3 border-b border-border">
-            <h3 classNome="text-sm font-medium text-foreground">
+        <div className="rounded-xl border border-border bg-card overflow-hidden">
+          <div className="px-4 py-3 border-b border-border">
+            <h3 className="text-sm font-medium text-foreground">
               Linked Tasks ({linkedTasks.length})
             </h3>
           </div>
-          <div classNome="overflow-x-auto">
-            <table classNome="w-full text-xs">
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
               <thead>
-                <tr classNome="border-b border-border text-muted-foreground">
-                  <th classNome="text-left px-4 py-2 font-medium">Task</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Status</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Priority</th>
-                  <th classNome="text-left px-4 py-2 font-medium">GitHub</th>
-                  <th classNome="text-left px-4 py-2 font-medium">Synced</th>
+                <tr className="border-b border-border text-muted-foreground">
+                  <th className="text-left px-4 py-2 font-medium">Task</th>
+                  <th className="text-left px-4 py-2 font-medium">Status</th>
+                  <th className="text-left px-4 py-2 font-medium">Priority</th>
+                  <th className="text-left px-4 py-2 font-medium">GitHub</th>
+                  <th className="text-left px-4 py-2 font-medium">Synced</th>
                 </tr>
               </thead>
               <tbody>
                 {linkedTasks.map(task => (
-                  <tr key={task.id} classNome="border-b border-border/50 hover:bg-secondary/50">
-                    <td classNome="px-4 py-2 text-foreground max-w-[250px] truncate">{task.title}</td>
-                    <td classNome="px-4 py-2">
-                      <span classNome="px-1.5 py-0.5 rounded text-2xs bg-secondary text-muted-foreground">
+                  <tr key={task.id} className="border-b border-border/50 hover:bg-secondary/50">
+                    <td className="px-4 py-2 text-foreground max-w-[250px] truncate">{task.title}</td>
+                    <td className="px-4 py-2">
+                      <span className="px-1.5 py-0.5 rounded text-2xs bg-secondary text-muted-foreground">
                         {task.status}
                       </span>
                     </td>
-                    <td classNome="px-4 py-2">
-                      <span classNome={`px-1.5 py-0.5 rounded text-2xs ${
+                    <td className="px-4 py-2">
+                      <span className={`px-1.5 py-0.5 rounded text-2xs ${
                         task.priority === 'critical' ? 'bg-[#9e5c50]/10 text-[#9e5c50]' :
                         task.priority === 'high' ? 'bg-orange-500/10 text-orange-400' :
                         task.priority === 'low' ? 'bg-blue-500/10 text-blue-400' :
@@ -503,21 +503,21 @@ export function GitHubSyncPanel() {
                         {task.priority}
                       </span>
                     </td>
-                    <td classNome="px-4 py-2">
+                    <td className="px-4 py-2">
                       {task.metadata.github_issue_url ? (
                         <a
                           href={task.metadata.github_issue_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          classNome="text-primary hover:underline font-mono"
+                          className="text-primary hover:underline font-mono"
                         >
                           {task.metadata.github_repo}#{task.metadata.github_issue_number}
                         </a>
                       ) : (
-                        <span classNome="text-muted-foreground">—</span>
+                        <span className="text-muted-foreground">—</span>
                       )}
                     </td>
-                    <td classNome="px-4 py-2 text-muted-foreground">
+                    <td className="px-4 py-2 text-muted-foreground">
                       {task.metadata.github_synced_at
                         ? new Date(task.metadata.github_synced_at).toLocaleDateString()
                         : '—'}

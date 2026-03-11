@@ -132,14 +132,14 @@ export default function Home() {
 
   if (!isClient) {
     return (
-      <div classNome="flex items-center justify-center min-h-screen">
-        <div classNome="flex flex-col items-center gap-3">
-          <div classNome="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-            <span classNome="text-primary-foreground font-bold text-sm">MC</span>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm">MC</span>
           </div>
-          <div classNome="flex items-center gap-2">
-            <div classNome="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span classNome="text-sm text-muted-foreground">Carregando Torre Dona...</span>
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <span className="text-sm text-muted-foreground">Carregando Torre Dona...</span>
           </div>
         </div>
       </div>
@@ -147,20 +147,20 @@ export default function Home() {
   }
 
   return (
-    <div classNome="flex h-screen bg-background overflow-hidden">
-      <a href="#main-content" classNome="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:text-sm focus:font-medium">
+    <div className="flex h-screen bg-background overflow-hidden">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:text-sm focus:font-medium">
         Skip to main content
       </a>
       {/* Left: Icon rail navigation (hidden on mobile, shown as bottom bar instead) */}
       <NavRail />
 
       {/* Center: Header + Content */}
-      <div classNome="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0">
         <HeaderBar />
         <LocalModeBanner />
         <UpdateBanner />
         {/* Banner removido */}
-        <main id="main-content" classNome="flex-1 overflow-auto pb-16 md:pb-0" role="main">
+        <main id="main-content" className="flex-1 overflow-auto pb-16 md:pb-0" role="main">
           <div aria-live="polite">
             <ErrorBoundary key={activeTab}>
               <ContentRouter tab={activeTab} />
@@ -171,7 +171,7 @@ export default function Home() {
 
       {/* Right: Live feed (hidden on mobile) */}
       {liveFeedOpen && (
-        <div classNome="hidden lg:flex h-full">
+        <div className="hidden lg:flex h-full">
           <LiveFeed />
         </div>
       )}
@@ -180,10 +180,10 @@ export default function Home() {
       {!liveFeedOpen && (
         <button
           onClick={toggleLiveFeed}
-          classNome="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 z-30 w-6 h-12 items-center justify-center bg-card border border-r-0 border-border rounded-l-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200"
+          className="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 z-30 w-6 h-12 items-center justify-center bg-card border border-r-0 border-border rounded-l-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200"
           title="Mostrar live feed"
         >
-          <svg classNome="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M10 3l-5 5 5 5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
@@ -205,7 +205,7 @@ function ContentRouter({ tab }: { tab: string }) {
         <>
           <Dashboard />
           {!isLocal && (
-            <div classNome="mt-4 mx-4 mb-4 rounded-xl border border-border bg-card overflow-hidden">
+            <div className="mt-4 mx-4 mb-4 rounded-xl border border-border bg-card overflow-hidden">
               <AgentCommsPanel />
             </div>
           )}
@@ -219,7 +219,7 @@ function ContentRouter({ tab }: { tab: string }) {
           <OrchestrationBar />
           <AgentSquadPanelPhase3 />
           {!isLocal && (
-            <div classNome="mt-4 mx-4 mb-4 rounded-xl border border-border bg-card overflow-hidden">
+            <div className="mt-4 mx-4 mb-4 rounded-xl border border-border bg-card overflow-hidden">
               <AgentCommsPanel />
             </div>
           )}
