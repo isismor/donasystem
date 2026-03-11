@@ -2,6 +2,28 @@
 
 > Decisões que o agente deve respeitar SEMPRE.
 
+### Framework de Distribuição de Tráfego aprovado (10/03/2026)
+- Ciclo: Teste (R$10/1 dia) → Série A (<R$0,50/seguidor, R$30/dia) → Série B (R$0,50-0,70, R$10/dia) → Cortado (>R$0,70)
+- Report diário obrigatório: gasto, séries ativas, custo/seguidor
+- Todo post novo entra em teste antes de receber verba contínua
+- Documento: knowledge/helios/framework-distribuicao.md
+
+### Torre Dona — painel operacional (11/03/2026)
+- URL: hub.donasystem.com.br
+- Base: Mission Control (Next.js + SQLite)
+- Deploy: Coolify (72.61.63.82), tipo Application, Dockerfile, base dir `/hub`
+- Gateway: OpenClaw (72.60.241.247:18789), bind "lan", allowedOrigins configurados
+- Visual: Design System ISIS v7 (paleta aplicada), UI ainda em inglês (tradução PT-BR pendente)
+- Env vars no Coolify: NEXT_PUBLIC_GATEWAY_HOST, NEXT_PUBLIC_GATEWAY_PORT, NEXT_PUBLIC_GATEWAY_PROTOCOL
+- Pendente: HTTPS, remover flags dangerously*, token do gateway, tradução da UI (só strings)
+
+### Pipeline de PDF unificado para todos os agentes (11/03/2026)
+- Documento canônico: `knowledge/pdf-pipeline.md`
+- TODO agente que gerar PDF deve seguir o mesmo pipeline: Template C + Puppeteer local + Design System ISIS v7
+- Método principal: `scripts/html-to-pdf.js` (Puppeteer). Fallback: YakPDF via RapidAPI.
+- Referência adicionada em AGENTS.md para Atlas, Aurora, Masterson, Harpia, Vega + guardrail global
+- Decisão de Isis: padronizar para que qualquer tópico/agente produza PDF com o mesmo método e qualidade
+
 ### Credenciais no 1Password (08/03/2026)
 Toda credencial vive no 1Password. Sem exceções. Nunca hardcodar chaves em código, .env ou markdown.
 

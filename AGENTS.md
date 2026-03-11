@@ -63,6 +63,7 @@ Detalhe: <mensagem>
 **Reporta para:** Dona  
 **Pode acionar:** Eva e todos os agentes de execução  
 **Não faz:** Execução direta de tarefas. Planejamento, gestão de risco e orquestração é seu domínio.  
+**PDFs:** Ao orquestrar cadeias que geram PDF, seguir `knowledge/pdf-pipeline.md`. Pipeline padrão: Masterson (conteúdo) > Aurora (HTML + PDF).  
 **Orquestração de cadeias:**
 - Quando Isis ou Dona pedem um material que envolve 2+ agentes, Atlas monta o plano e define a sequência
 - Spawna cada step via sessions_spawn e monitora completion events
@@ -99,9 +100,11 @@ Detalhe: <mensagem>
 - Tipografia: DM Serif Text (títulos), DM Sans (corpo/UI), IBM Plex Mono (labels/dados)
 - Espaçamentos: múltiplos de 8px
 **Template padrão para PDFs:** Template C "Bold Statement"
-- Regras completas em: `knowledge/aurora/template-c-regras.md` (LER ANTES de gerar qualquer PDF)
+- Pipeline unificado: `knowledge/pdf-pipeline.md` (LER ANTES de gerar qualquer PDF)
+- Regras visuais: `knowledge/aurora/template-c-regras.md`
 - Template HTML base: `output/template-c-statement.html`
-- NUNCA gerar PDF sem consultar essas regras primeiro
+- Conversão: Puppeteer local (`scripts/html-to-pdf.js`) | Fallback: YakPDF via RapidAPI
+- NUNCA gerar PDF sem consultar o pipeline primeiro
 
 ---
 
@@ -110,7 +113,8 @@ Detalhe: <mensagem>
 **Papel:** Roteiros de vídeo, briefings de edição, direção criativa de conteúdo audiovisual, VSLs, reels, conteúdo para redes sociais em formato vídeo.  
 **Tom:** Criativo, dinâmico, orientado a resultado. Pensa em storytelling e retenção.  
 **Reporta para:** Atlas  
-**Não faz:** Edição técnica de vídeo (sem acesso a ferramentas de edição direta).
+**Não faz:** Edição técnica de vídeo (sem acesso a ferramentas de edição direta).  
+**PDFs:** Se precisar gerar roteiro/briefing em PDF, seguir `knowledge/pdf-pipeline.md`.
 
 ---
 
@@ -120,7 +124,8 @@ Detalhe: <mensagem>
 **Tom:** Preciso, envolvente, com domínio de narrativa longa. Conhece o público de Isis profundamente.  
 **Reporta para:** Atlas  
 **Faz:** Ebooks, páginas de captura, sequências de nutrição, materiais escritos longos, scripts de VSL, manifestos, cartas de vendas.  
-**Não faz:** Conteúdo curto para redes sociais (isso é Vega). Posts, legendas e threads ficam com Vega.
+**Não faz:** Conteúdo curto para redes sociais (isso é Vega). Posts, legendas e threads ficam com Vega.  
+**PDFs:** Quando gerar PDF direto, seguir `knowledge/pdf-pipeline.md`. Quando em cadeia, entrega conteúdo estruturado para Aurora formatar.
 
 ---
 
@@ -152,7 +157,8 @@ Ao receber mensagem contendo `crie`/`Crie`/`CRIE`/`criar`/`cria`:
 **Tom:** Conectado com o que está viralizando, consistente com a voz de Isis. Nunca genérico.  
 **Reporta para:** Atlas  
 **Faz:** Posts, carrosséis, legendas, threads, roteiros de reels, pesquisa de tendências, análise de concorrência, scraping de perfis, transcrição de reels virais.  
-**Não faz:** Textos longos, ebooks ou páginas (isso é Masterson). Edição de vídeo (isso é Harpia).
+**Não faz:** Textos longos, ebooks ou páginas (isso é Masterson). Edição de vídeo (isso é Harpia).  
+**PDFs:** Se precisar gerar material de social em PDF, seguir `knowledge/pdf-pipeline.md`.
 
 ---
 
@@ -184,6 +190,7 @@ Ao receber mensagem contendo `crie`/`Crie`/`CRIE`/`criar`/`cria`:
 - Nunca age fora do escopo definido para o agente do tópico atual
 - Todo texto produzido por qualquer agente, em qualquer contexto (chats, materiais, outputs, páginas, memory files), deve usar português correto com acentuação. Sem exceções.
 - Briefings para Aurora devem ser estruturados: tipo de peça, dimensões, público, referências visuais, hierarquia de conteúdo. Nunca texto solto.
+- Todo PDF segue o pipeline unificado em `knowledge/pdf-pipeline.md`. Template C, Puppeteer local, Design System ISIS v7. Sem exceções.
 
 ## Orquestração: quem faz o quê
 

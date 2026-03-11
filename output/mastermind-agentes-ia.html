@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Minha Equipe de Agentes IA</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: 338mm 190mm; margin: 0; }
+  body { font-family: var(--sans); color: var(--cacao); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 338mm; height: 190mm; overflow: hidden; position: relative; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  /* COVER */
+  .cover { background: var(--cacao); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 80px; }
+  .cover .label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 6px; color: var(--ouro); margin-bottom: 24px; }
+  .cover .title { font-family: var(--serif); font-size: 52px; line-height: 1.1; color: var(--marfim); margin-bottom: 16px; max-width: 700px; }
+  .cover .title em { font-style: italic; }
+  .cover .title .gold { color: var(--ouro); }
+  .cover .rule { width: 120px; height: 2px; background: var(--ouro); margin: 0 auto 16px auto; }
+  .cover .subtitle { font-size: 16px; color: var(--ouro-pale); line-height: 1.6; max-width: 500px; font-weight: 300; margin-bottom: 40px; }
+  .cover .meta { font-family: var(--mono); font-size: 9px; letter-spacing: 3px; color: var(--ouro-deep); text-transform: uppercase; }
+
+  /* INNER */
+  .inner { height: 100%; display: flex; flex-direction: column; }
+  .bg-m { background: var(--marfim); }
+  .bg-c { background: var(--creme); }
+  .header { padding: 24px 56px 10px 56px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .header .left { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 3px; color: var(--ouro); }
+  .header .num { font-family: var(--serif); font-style: italic; font-size: 28px; color: var(--ouro-pale); }
+  .hline { margin: 0 56px; height: 1px; background: var(--ouro-pale); flex-shrink: 0; }
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; padding: 20px 56px 0 56px; }
+  .footer { padding: 10px 56px 18px 56px; display: flex; justify-content: space-between; flex-shrink: 0; }
+  .footer span { font-family: var(--mono); font-size: 8px; color: var(--mirror); letter-spacing: 1px; }
+
+  /* LAYOUT */
+  .cols { display: flex; gap: 20px; flex: 1; }
+  .col { flex: 1; display: flex; flex-direction: column; }
+  .col-60 { flex: 1.5; }
+  .col-40 { flex: 1; }
+
+  /* TYPOGRAPHY */
+  .sec { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 3px; color: var(--ouro); margin-bottom: 8px; }
+  .ttl { font-family: var(--serif); font-size: 36px; line-height: 1.1; color: var(--cacao); margin-bottom: 18px; max-width: 600px; }
+  .ttl em { font-style: italic; }
+  .ttl .gold { color: var(--ouro); }
+  .txt { font-size: 13px; line-height: 1.65; color: var(--cacao); margin-bottom: 10px; max-width: 500px; }
+  .lead { font-size: 15px; line-height: 1.55; color: var(--ouro-deep); margin-bottom: 16px; max-width: 500px; }
+  .h3 { font-weight: 700; font-size: 14px; color: var(--cacao); margin-bottom: 4px; margin-top: 12px; }
+
+  /* BOXES */
+  .bx { padding: 14px 18px; margin: 6px 0; border-radius: 8px; }
+  .bx-dark { background: var(--cacao); }
+  .bx-dark .bx-t { color: var(--ouro); font-weight: 700; font-size: 12px; margin-bottom: 3px; }
+  .bx-dark .bx-b { color: var(--marfim); font-size: 11.5px; line-height: 1.55; opacity: 0.85; }
+  .bx-ouro { background: var(--ouro); }
+  .bx-ouro .bx-t { color: var(--cacao); font-weight: 700; font-size: 12px; margin-bottom: 3px; }
+  .bx-ouro .bx-b { color: var(--cacao); font-size: 11.5px; line-height: 1.55; opacity: 0.85; }
+  .bx-gold { background: rgba(180,166,140,.15); border: 1px solid rgba(180,166,140,.35); }
+  .bx-gold .bx-t { color: var(--ouro-deep); font-weight: 700; font-size: 12px; margin-bottom: 3px; }
+  .bx-gold .bx-b { color: var(--cacao); font-size: 11.5px; line-height: 1.55; }
+  .bx-marfim { background: var(--marfim); border: 1px solid var(--ouro-pale); }
+  .bx-marfim .bx-t { color: var(--cacao); font-weight: 700; font-size: 12px; margin-bottom: 3px; }
+  .bx-marfim .bx-b { color: var(--cacao); font-size: 11.5px; line-height: 1.55; opacity: 0.8; }
+
+  /* CARDS GRID */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+  .grid5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 8px; }
+
+  /* AGENT CARD */
+  .ag { border-radius: 8px; padding: 12px 14px; }
+  .ag.ag-dk { background: var(--cacao); }
+  .ag.ag-dk .ag-n { color: var(--marfim); font-family: var(--serif); font-style: italic; font-size: 15px; }
+  .ag.ag-dk .ag-r { color: var(--ouro); font-family: var(--mono); font-size: 7px; text-transform: uppercase; letter-spacing: 2px; margin-top: 2px; }
+  .ag.ag-dk .ag-d { color: var(--ouro-pale); font-size: 10px; line-height: 1.4; margin-top: 4px; }
+
+  /* TABLE */
+  .tbl { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  .tbl th { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--ouro); padding: 8px 12px; text-align: left; border-bottom: 2px solid var(--ouro-pale); }
+  .tbl td { font-size: 12px; padding: 8px 12px; border-bottom: 1px solid rgba(180,166,140,.15); color: var(--cacao); }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl .mono { font-family: var(--mono); font-size: 10px; color: var(--ouro-deep); }
+  .tbl .val { font-family: var(--serif); font-size: 16px; color: var(--cacao); }
+
+  /* FLOW */
+  .flow { display: flex; align-items: center; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
+  .flow-step { background: var(--cacao); color: var(--marfim); padding: 8px 14px; border-radius: 6px; font-size: 11px; font-weight: 500; }
+  .flow-arrow { color: var(--ouro); font-size: 16px; }
+
+  /* CHECKLIST */
+  .ck { list-style: none; }
+  .ck li { padding: 6px 0; font-size: 12px; display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px solid rgba(180,166,140,.1); line-height: 1.5; }
+  .ck li:last-child { border-bottom: none; }
+  .sq { width: 16px; height: 16px; min-width: 16px; border: 2px solid var(--ouro-pale); border-radius: 3px; margin-top: 1px; }
+
+  /* METRIC */
+  .mc { text-align: center; padding: 14px 10px; border-radius: 8px; }
+  .mc.mc-dk { background: var(--cacao); }
+  .mc.mc-dk .mc-v { color: var(--ouro); font-family: var(--serif); font-size: 24px; }
+  .mc.mc-dk .mc-l { color: var(--ouro-pale); font-family: var(--mono); font-size: 7px; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; }
+
+  /* QUOTE */
+  .quote { background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); border-radius: 8px; padding: 16px 20px; margin: 10px 0; }
+  .quote p { font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.5; color: var(--cacao); }
+
+  /* ORG CHART */
+  .org-top { display: flex; justify-content: center; margin-bottom: 12px; }
+  .org-line { width: 2px; height: 16px; background: var(--ouro-pale); margin: 0 auto; }
+  .org-hline { height: 2px; background: var(--ouro-pale); margin: 0 40px; }
+</style>
+</head>
+<body>
+
+<!-- P1: CAPA -->
+<div class="page">
+  <div class="cover">
+    <div class="label">Mastermind · Março 2026</div>
+    <div class="title">Como construí minha <em>equipe</em> de <span class="gold">agentes IA</span></div>
+    <div class="rule"></div>
+    <div class="subtitle">De um chatbot genérico a um sistema com 10 agentes especializados, memória persistente e operação autônoma 24h.</div>
+    <div class="meta">Isis Moreira · 17 slides</div>
+  </div>
+</div>
+
+<!-- P2: COMO CRIEI -->
+<div class="page">
+  <div class="inner bg-m">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">01</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">A história</div>
+          <div class="ttl">Como <em>criei</em> minha equipe de <span class="gold">agentes</span></div>
+          <p class="lead">Comecei querendo automatizar tarefas repetitivas. Terminei com um time que produz, analisa, cria conteúdo e opera 24 horas sem parar.</p>
+          <p class="txt">A ideia surgiu da dor real: eu fazia tudo sozinha. Copy, design, tráfego, suporte, análise. Cada tarefa delegada para IA genérica voltava genérica. Precisava de agentes que entendessem meu tom, meu público e meu padrão.</p>
+          <p class="txt">Construí em 5 dias. Não 5 meses. Não precisei de desenvolvedor. Não precisei de equipe técnica. Precisei de clareza sobre o que cada "funcionário" deveria fazer.</p>
+        </div>
+        <div class="col col-40">
+          <div class="bx bx-dark"><div class="bx-t">O ponto de virada</div><div class="bx-b">Parei de usar IA como ferramenta e passei a usar como equipe. Cada agente tem nome, função, tom de voz e limites definidos.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Resultado</div><div class="bx-b">Materiais que levavam dias saem em minutos. Diagnósticos de clientes, ebooks, PDFs visuais, análise de campanhas. Tudo no meu padrão.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">O segredo</div><div class="bx-b">Não é a tecnologia. É a arquitetura. Saber o que cada agente faz, o que não faz, e como eles se comunicam entre si.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>02</span></div>
+  </div>
+</div>
+
+<!-- P3: N8N vs OPENCLAW -->
+<div class="page">
+  <div class="inner bg-c">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">02</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="sec">De onde vim</div>
+      <div class="ttl">N8N vs <em class="gold">OpenClaw</em></div>
+      <div class="cols">
+        <div class="col">
+          <div class="bx bx-dark"><div class="bx-t">N8N: onde comecei</div><div class="bx-b">Automação visual com nodes. Conectava APIs, disparava emails, processava webhooks. Funciona bem para fluxos lineares: se X acontece, faz Y.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Limitação</div><div class="bx-b">Cada fluxo é fixo. Precisa prever todos os cenários. Não aprende, não lembra, não tem personalidade. Cada interação começa do zero.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Manutenção</div><div class="bx-b">Workflows quebram silenciosamente. APIs mudam, tokens expiram, e você descobre quando o cliente reclama.</div></div>
+        </div>
+        <div class="col">
+          <div class="bx bx-ouro"><div class="bx-t">OpenClaw: onde estou</div><div class="bx-b">Agentes com identidade, memória e capacidade de decisão. Não é fluxo fixo: o agente entende o contexto e age.</div></div>
+          <div class="bx bx-ouro"><div class="bx-t">Diferencial</div><div class="bx-b">Memória persistente. O agente lembra das decisões, dos erros, do histórico. Cada interação é mais inteligente que a anterior.</div></div>
+          <div class="bx bx-ouro"><div class="bx-t">Operação</div><div class="bx-b">Roda no meu servidor, conectado ao meu Telegram. Sem interface visual para montar fluxos: tudo é linguagem natural + arquivos de configuração.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>03</span></div>
+  </div>
+</div>
+
+<!-- P4: OPENCLAW vs OUTRAS PLATAFORMAS -->
+<div class="page">
+  <div class="inner bg-m">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">03</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="sec">Comparativo</div>
+      <div class="ttl">OpenClaw vs <em>outras</em> <span class="gold">plataformas</span></div>
+      <table class="tbl">
+        <tr><th>Critério</th><th>ChatGPT / Gemini</th><th>N8N / Make</th><th>Botpress / Voiceflow</th><th>OpenClaw</th></tr>
+        <tr><td>Memória persistente</td><td>Limitada (contexto de janela)</td><td>Sem memória nativa</td><td>Variáveis de sessão</td><td><strong>Arquivos persistentes no servidor</strong></td></tr>
+        <tr><td>Múltiplos agentes</td><td>1 por conversa</td><td>1 por workflow</td><td>1 bot por projeto</td><td><strong>10+ agentes no mesmo sistema</strong></td></tr>
+        <tr><td>Identidade/personalidade</td><td>Custom instructions básico</td><td>Não tem</td><td>Prompt estático</td><td><strong>SOUL.md, IDENTITY.md, tom de voz</strong></td></tr>
+        <tr><td>Executa código</td><td>Sandbox limitado</td><td>Sim (nodes)</td><td>Limitado</td><td><strong>Acesso total ao servidor (bash, Python)</strong></td></tr>
+        <tr><td>Conecta no Telegram/WhatsApp</td><td>Não nativo</td><td>Via API</td><td>Sim</td><td><strong>Nativo, multi-canal</strong></td></tr>
+        <tr><td>Custo mensal</td><td>US$20-200</td><td>US$0-99</td><td>US$0-300</td><td><strong>~US$25 (servidor + Claude)</strong></td></tr>
+        <tr><td>Controle total</td><td>Não (plataforma deles)</td><td>Parcial</td><td>Não</td><td><strong>100% no seu servidor</strong></td></tr>
+      </table>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>04</span></div>
+  </div>
+</div>
+
+<!-- P5: CUSTOS -->
+<div class="page">
+  <div class="inner bg-c">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">04</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Investimento</div>
+          <div class="ttl">Quanto custa manter essa <em class="gold">equipe</em></div>
+          <p class="lead">Menos que um estagiário. Mais produtivo que uma equipe de 5.</p>
+          <div class="grid3" style="margin-top: 12px;">
+            <div class="mc mc-dk"><div class="mc-v">R$30</div><div class="mc-l">Servidor / mês</div></div>
+            <div class="mc mc-dk"><div class="mc-v">~R$100</div><div class="mc-l">Claude API / mês</div></div>
+            <div class="mc mc-dk"><div class="mc-v">R$0</div><div class="mc-l">OpenClaw</div></div>
+          </div>
+          <div class="grid3" style="margin-top: 8px;">
+            <div class="mc mc-dk"><div class="mc-v">~R$5</div><div class="mc-l">Whisper API</div></div>
+            <div class="mc mc-dk"><div class="mc-v">R$0</div><div class="mc-l">Gemini (imagens)</div></div>
+            <div class="mc mc-dk"><div class="mc-v">~R$135</div><div class="mc-l">Total / mês</div></div>
+          </div>
+        </div>
+        <div class="col col-40">
+          <div class="bx bx-ouro"><div class="bx-t">Servidor: Hostinger VPS</div><div class="bx-b">KVM 2, 8GB RAM, 100GB SSD. Roda Ubuntu 24.04. Suficiente para todo o sistema + processamento.</div></div>
+          <div class="bx bx-ouro"><div class="bx-t">LLM: Claude (Anthropic)</div><div class="bx-b">Modelo Opus para tarefas complexas, Haiku para heartbeats e tarefas leves. Pay-per-use, sem mensalidade fixa.</div></div>
+          <div class="bx bx-ouro"><div class="bx-t">OpenClaw: open source</div><div class="bx-b">Gratuito. Instala no servidor, configura uma vez, roda indefinidamente. Atualizações manuais quando eu quiser.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>05</span></div>
+  </div>
+</div>
+
+<!-- P6: MINHA JORNADA -->
+<div class="page">
+  <div class="inner bg-m">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">05</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="sec">Evolução</div>
+      <div class="ttl">Minha <em>jornada</em> no <span class="gold">OpenClaw</span></div>
+      <div class="flow" style="margin: 16px 0;">
+        <div class="flow-step">Servidor VPS</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Instalar OpenClaw</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Bot no Telegram</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Agente Dona</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Time de 10 agentes</div>
+      </div>
+      <div class="cols" style="margin-top: 8px;">
+        <div class="col">
+          <div class="bx bx-dark"><div class="bx-t">Dia 1: Servidor</div><div class="bx-b">Contratei um VPS na Hostinger. Ubuntu limpo. Instalei o OpenClaw via linha de comando. 20 minutos.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Dia 1: Bot do Telegram</div><div class="bx-b">Criei um bot pelo BotFather, conectei ao OpenClaw. Primeira conversa com a "Dona" direto no meu celular.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Dia 2: Identidade</div><div class="bx-b">Defini SOUL.md (personalidade), IDENTITY.md (quem ela é), USER.md (quem eu sou). A Dona deixou de ser genérica.</div></div>
+        </div>
+        <div class="col">
+          <div class="bx bx-dark"><div class="bx-t">Dia 3: Supergrupo + Tópicos</div><div class="bx-b">Criei um grupo no Telegram com tópicos separados. Cada tópico virou um agente diferente. Mesma IA, múltiplas identidades.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Dia 4: Skills + Ferramentas</div><div class="bx-b">Instalei skills: geração de imagem, transcrição de áudio, conversão de PDF. A equipe ganhou braços.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Dia 5: Produção real</div><div class="bx-b">Primeiro material gerado pela cadeia completa: Masterson escreveu, Aurora formatou, virou PDF. Em 3 minutos.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>06</span></div>
+  </div>
+</div>
+
+<!-- P7: ARQUITETURA / ORGANOGRAMA -->
+<div class="page">
+  <div class="inner bg-c">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">06</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="sec">Arquitetura</div>
+      <div class="ttl">O <em>organograma</em> da <span class="gold">equipe</span></div>
+      <div style="text-align: center; margin: 8px 0;">
+        <div style="display: inline-block; background: var(--ouro); padding: 12px 28px; border-radius: 8px;">
+          <div style="font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--cacao);">Isis</div>
+          <div style="font-family: var(--mono); font-size: 7px; text-transform: uppercase; letter-spacing: 2px; color: var(--cacao); opacity: 0.7;">CEO</div>
+        </div>
+      </div>
+      <div class="org-line"></div>
+      <div style="text-align: center;">
+        <div style="display: inline-block; background: var(--cacao); padding: 10px 24px; border-radius: 8px;">
+          <div style="font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--marfim);">Dona</div>
+          <div style="font-family: var(--mono); font-size: 7px; text-transform: uppercase; letter-spacing: 2px; color: var(--ouro);">COO · Coordenação geral</div>
+        </div>
+      </div>
+      <div class="org-line"></div>
+      <div class="org-hline"></div>
+      <div style="display: flex; gap: 6px; justify-content: center; margin-top: 4px;">
+        <div style="text-align: center;">
+          <div style="display: inline-block; background: var(--cacao); padding: 8px 14px; border-radius: 6px;">
+            <div style="font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--marfim);">Atlas</div>
+            <div style="font-family: var(--mono); font-size: 6px; text-transform: uppercase; letter-spacing: 1px; color: var(--ouro);">Estrategista</div>
+          </div>
+          <div class="org-line" style="height: 8px;"></div>
+          <div style="display: flex; gap: 4px; justify-content: center;">
+            <div style="background: rgba(180,166,140,.15); border: 1px solid var(--ouro-pale); padding: 6px 8px; border-radius: 5px; font-size: 9px; text-align: center; min-width: 54px;">
+              <div style="font-family: var(--serif); font-style: italic; font-size: 11px;">Masterson</div><div style="font-family: var(--mono); font-size: 6px; color: var(--ouro-deep);">ESCRITOR</div>
+            </div>
+            <div style="background: rgba(180,166,140,.15); border: 1px solid var(--ouro-pale); padding: 6px 8px; border-radius: 5px; font-size: 9px; text-align: center; min-width: 54px;">
+              <div style="font-family: var(--serif); font-style: italic; font-size: 11px;">Vega</div><div style="font-family: var(--mono); font-size: 6px; color: var(--ouro-deep);">SOCIAL</div>
+            </div>
+            <div style="background: rgba(180,166,140,.15); border: 1px solid var(--ouro-pale); padding: 6px 8px; border-radius: 5px; font-size: 9px; text-align: center; min-width: 54px;">
+              <div style="font-family: var(--serif); font-style: italic; font-size: 11px;">Aurora</div><div style="font-family: var(--mono); font-size: 6px; color: var(--ouro-deep);">DESIGN</div>
+            </div>
+            <div style="background: rgba(180,166,140,.15); border: 1px solid var(--ouro-pale); padding: 6px 8px; border-radius: 5px; font-size: 9px; text-align: center; min-width: 54px;">
+              <div style="font-family: var(--serif); font-style: italic; font-size: 11px;">Harpia</div><div style="font-family: var(--mono); font-size: 6px; color: var(--ouro-deep);">VÍDEO</div>
+            </div>
+            <div style="background: rgba(180,166,140,.15); border: 1px solid var(--ouro-pale); padding: 6px 8px; border-radius: 5px; font-size: 9px; text-align: center; min-width: 54px;">
+              <div style="font-family: var(--serif); font-style: italic; font-size: 11px;">Helios</div><div style="font-family: var(--mono); font-size: 6px; color: var(--ouro-deep);">TRÁFEGO</div>
+            </div>
+            <div style="background: rgba(180,166,140,.15); border: 1px solid var(--ouro-pale); padding: 6px 8px; border-radius: 5px; font-size: 9px; text-align: center; min-width: 54px;">
+              <div style="font-family: var(--serif); font-style: italic; font-size: 11px;">Nexa</div><div style="font-family: var(--mono); font-size: 6px; color: var(--ouro-deep);">IMAGEM</div>
+            </div>
+            <div style="background: rgba(180,166,140,.15); border: 1px solid var(--ouro-pale); padding: 6px 8px; border-radius: 5px; font-size: 9px; text-align: center; min-width: 54px;">
+              <div style="font-family: var(--serif); font-style: italic; font-size: 11px;">Orion</div><div style="font-family: var(--mono); font-size: 6px; color: var(--ouro-deep);">DEV</div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-left: 20px;">
+          <div style="display: inline-block; background: var(--cacao); padding: 8px 14px; border-radius: 6px;">
+            <div style="font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--marfim);">Eva</div>
+            <div style="font-family: var(--mono); font-size: 6px; text-transform: uppercase; letter-spacing: 1px; color: var(--ouro);">Arquiteta</div>
+          </div>
+          <div style="font-size: 9px; color: var(--ouro-deep); margin-top: 6px;">Cria e evolui<br>os agentes</div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>07</span></div>
+  </div>
+</div>
+
+<!-- P8: FUNÇÕES DOS AGENTES -->
+<div class="page">
+  <div class="inner bg-m">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">07</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="sec">O time</div>
+      <div class="ttl">Cada agente tem sua <em class="gold">função</em></div>
+      <div class="grid5" style="margin-top: 8px;">
+        <div class="ag ag-dk"><div class="ag-n">Dona</div><div class="ag-r">COO</div><div class="ag-d">Coordena o time. Analisa dados. Executa estratégia. Fala direto comigo.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Atlas</div><div class="ag-r">Estrategista</div><div class="ag-d">Planeja antes de executar. Gerencia risco. Orquestra cadeias com 2+ agentes.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Masterson</div><div class="ag-r">Escritor</div><div class="ag-d">Ebooks, páginas de vendas, sequências de email, scripts de VSL, materiais longos.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Vega</div><div class="ag-r">Social Media</div><div class="ag-d">Posts, carrosséis, legendas, pesquisa de tendências, scraping de perfis.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Aurora</div><div class="ag-r">Designer</div><div class="ag-d">PDFs, ebooks visuais, apresentações. Aplica o Design System da marca.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Harpia</div><div class="ag-r">Vídeo</div><div class="ag-d">Roteiros, briefings de edição, direção criativa de conteúdo audiovisual.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Helios</div><div class="ag-r">Tráfego</div><div class="ag-d">Campanhas Meta Ads, análise de métricas, otimização de ROAS, diagnósticos.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Nexa</div><div class="ag-r">Imagem</div><div class="ag-d">Gera fotos editoriais com IA. Banco de imagens consistente com a marca.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Orion</div><div class="ag-r">Dev</div><div class="ag-d">Código, automações, scripts, integrações, manutenção técnica do sistema.</div></div>
+        <div class="ag ag-dk"><div class="ag-n">Eva</div><div class="ag-r">Arquiteta</div><div class="ag-d">Cria e evolui os próprios agentes. Define identidades e documentação.</div></div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>08</span></div>
+  </div>
+</div>
+
+<!-- P9: SKILLS -->
+<div class="page">
+  <div class="inner bg-c">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">08</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Ferramentas</div>
+          <div class="ttl"><em>Skills:</em> os braços da <span class="gold">equipe</span></div>
+          <p class="lead">Skills são ferramentas que os agentes podem usar. Instalam no servidor e ficam disponíveis para qualquer agente que precise.</p>
+          <div class="grid2">
+            <div class="bx bx-ouro"><div class="bx-t">Nano Banana Pro</div><div class="bx-b">Geração de imagens via Gemini. Nexa usa para criar fotos editoriais da marca com IA.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">Whisper API</div><div class="bx-b">Transcrição de áudio. Converte gravações, lives e mentorias em texto pesquisável.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">Video Frames</div><div class="bx-b">Extrai frames de vídeo com ffmpeg. Analisa thumbnails e momentos de reels.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">Nano PDF</div><div class="bx-b">Gera PDFs a partir de HTML. Aurora usa para produzir materiais visuais no padrão da marca.</div></div>
+          </div>
+        </div>
+        <div class="col col-40">
+          <div class="bx bx-dark"><div class="bx-t">Como instalar uma skill</div><div class="bx-b">Um comando no terminal: openclaw skills install nome-da-skill. Pronto. O agente já pode usar.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Skills vs APIs manuais</div><div class="bx-b">Skills vêm prontas. Sem configurar endpoints, headers, autenticação. O agente chama e a skill resolve.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Comunidade</div><div class="bx-b">Repositório público de skills no ClawhHub. Qualquer pessoa pode criar e compartilhar skills.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>09</span></div>
+  </div>
+</div>
+
+<!-- P10: USOS E APLICAÇÕES -->
+<div class="page">
+  <div class="inner bg-m">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">09</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="sec">Na prática</div>
+      <div class="ttl">Usos e <em>aplicações</em> <span class="gold">reais</span></div>
+      <div class="grid3">
+        <div class="bx bx-dark"><div class="bx-t">Diagnóstico para clientes</div><div class="bx-b">Recebo as métricas de uma campanha, peço ao Atlas. Ele usa Helios (análise) + Masterson (copy) + Aurora (design) e entrega um PDF de 7 páginas com diagnóstico completo e plano de ação. Em minutos.</div></div>
+        <div class="bx bx-dark"><div class="bx-t">Framework de distribuição de tráfego</div><div class="bx-b">Classifico posts em Série A (escalar) e Série B (manter) baseado no custo por seguidor. Helios monitora diariamente e realoca verba automaticamente.</div></div>
+        <div class="bx bx-dark"><div class="bx-t">Ebooks e materiais visuais</div><div class="bx-b">Masterson escreve o conteúdo. Aurora aplica o Design System e gera o PDF final. 40+ páginas em menos de uma hora, no padrão da minha marca.</div></div>
+        <div class="bx bx-dark"><div class="bx-t">Resumo de mentoria</div><div class="bx-b">Gravo a sessão, mando o áudio. Whisper transcreve, Masterson organiza em tópicos, Aurora formata. Entrego para o aluno um material estruturado.</div></div>
+        <div class="bx bx-dark"><div class="bx-t">Transcrição de cursos</div><div class="bx-b">Pipeline para transcrever todos os meus cursos: download do Vimeo, extração de áudio, transcrição, organização por módulo. Vira base de conhecimento.</div></div>
+        <div class="bx bx-dark"><div class="bx-t">Geração de fotos editoriais</div><div class="bx-b">Nexa gera fotos minhas com IA. DNA fixo (estilo, câmera, iluminação) + variações controladas (pose, roupa, cenário). Banco de imagens infinito.</div></div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>10</span></div>
+  </div>
+</div>
+
+<!-- P11: ANATOMIA DE UM AGENTE -->
+<div class="page">
+  <div class="inner bg-c">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">10</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Estrutura</div>
+          <div class="ttl"><em>Anatomia</em> de um <span class="gold">agente</span></div>
+          <p class="lead">Cada agente é definido por arquivos de texto. Não precisa de código. É linguagem natural estruturada.</p>
+          <div class="grid2">
+            <div class="bx bx-ouro"><div class="bx-t">SOUL.md</div><div class="bx-b">A personalidade. Tom de voz, como responde, o que faz e o que não faz. Define quem o agente É.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">IDENTITY.md</div><div class="bx-b">Nome, papel, email, nível de autonomia. O cartão de visita do agente.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">AGENTS.md</div><div class="bx-b">Mapeamento de identidades por tópico. Define quem é quem no sistema e as regras de cada um.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">USER.md</div><div class="bx-b">Quem é o dono. Nome, preferências, horário, regras de comunicação. O agente sabe para quem trabalha.</div></div>
+          </div>
+        </div>
+        <div class="col col-40">
+          <div class="bx bx-dark"><div class="bx-t">MEMORY.md</div><div class="bx-b">Índice da memória. Aponta para decisions.md, lessons.md, projects.md, pending.md. O agente sabe o que já aconteceu.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">HEARTBEAT.md</div><div class="bx-b">Checklist periódico. O que verificar a cada pulso: pendências, projetos parados, notas não consolidadas.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">TOOLS.md</div><div class="bx-b">Ferramentas disponíveis, caminhos de binários, APIs configuradas. O manual técnico do agente.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">knowledge/</div><div class="bx-b">Pasta com base de conhecimento específica. Cada agente tem seus materiais de referência.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>11</span></div>
+  </div>
+</div>
+
+<!-- P12: CRONS E HEARTBEATS -->
+<div class="page">
+  <div class="inner bg-m">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">11</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Automação</div>
+          <div class="ttl"><em>Crons</em> e <span class="gold">Heartbeats</span></div>
+          <p class="lead">O sistema não espera eu pedir. Ele age sozinho nos horários programados.</p>
+          <div class="bx bx-dark"><div class="bx-t">Cron: tarefa agendada</div><div class="bx-b">Programo uma tarefa para rodar em horários específicos. Exemplo: "todo dia às 8h, analise minhas métricas e me mande um resumo". O agente executa sem eu pedir.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Heartbeat: pulso de verificação</div><div class="bx-b">A cada intervalo, o sistema "acorda" e verifica: há pendências atrasadas? Projetos parados? Crons que falharam? Notas não consolidadas? Se algo precisa de atenção, me avisa. Se não, volta a dormir.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Na prática</div><div class="bx-b">Acordo de manhã e já tenho: análise de conteúdo, métricas de vendas, tendências do nicho, insights estruturados. Tudo em bullet points, sem precisar pedir.</div></div>
+        </div>
+        <div class="col col-40">
+          <div class="h3" style="margin-top: 0;">Exemplos de crons</div>
+          <ul class="ck">
+            <li><span class="sq"></span>Análise diária às 08h</li>
+            <li><span class="sq"></span>Verificação de crons falhados</li>
+            <li><span class="sq"></span>Consolidação semanal de notas</li>
+            <li><span class="sq"></span>Revisão de projetos (segunda)</li>
+            <li><span class="sq"></span>Limpeza de memória (mensal)</li>
+          </ul>
+          <div class="h3">O que o heartbeat checa</div>
+          <ul class="ck">
+            <li><span class="sq"></span>Pendências com mais de 3 dias</li>
+            <li><span class="sq"></span>Projetos parados há 7+ dias</li>
+            <li><span class="sq"></span>Crons que não rodaram</li>
+            <li><span class="sq"></span>Notas diárias não consolidadas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>12</span></div>
+  </div>
+</div>
+
+<!-- P13: HIGIENE -->
+<div class="page">
+  <div class="inner bg-c">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">12</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Manutenção</div>
+          <div class="ttl"><em>Higiene</em> do <span class="gold">sistema</span></div>
+          <p class="lead">IA sem manutenção vira bagunça. Assim como uma equipe real precisa de processos, agentes precisam de higiene.</p>
+          <div class="bx bx-ouro"><div class="bx-t">Compactação de contexto</div><div class="bx-b">Conversas longas são compactadas para não estourar o limite de tokens. Antes de compactar, o sistema extrai decisões, lições e pendências para arquivos permanentes.</div></div>
+          <div class="bx bx-ouro"><div class="bx-t">Consolidação de notas</div><div class="bx-b">Notas diárias são consolidadas em topic files (decisions.md, lessons.md, projects.md). A cada poucos dias, o sistema organiza o que aprendeu.</div></div>
+          <div class="bx bx-ouro"><div class="bx-t">Limpeza mensal</div><div class="bx-b">Lições táticas com mais de 30 dias são revisadas e deletadas se não forem mais relevantes. Memória limpa = respostas melhores.</div></div>
+        </div>
+        <div class="col col-40">
+          <div class="bx bx-dark"><div class="bx-t">Por que importa</div><div class="bx-b">Sem higiene, o agente começa a repetir erros antigos, confundir contextos e ficar lento. Memória acumulada sem organização é lixo, não inteligência.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Regra de extração</div><div class="bx-b">Antes de qualquer compactação: extrair decisões, lições, atualizar projetos, atualizar pendências, reindexar memória. Nessa ordem. Sempre.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Indexação</div><div class="bx-b">Após cada mudança nos memory files: openclaw memory index. Isso reconstrói o índice semântico para buscas rápidas.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>13</span></div>
+  </div>
+</div>
+
+<!-- P14: ALERTAS -->
+<div class="page">
+  <div class="inner bg-m">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">13</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Monitoramento</div>
+          <div class="ttl">Como funcionam os <em class="gold">alertas</em></div>
+          <p class="lead">O sistema monitora a si mesmo. Quando algo está errado, me avisa antes que eu perceba.</p>
+          <div class="bx bx-dark"><div class="bx-t">Tópico Alertas (dedicado)</div><div class="bx-b">Tenho um tópico no Telegram só para alertas do sistema. A Dona monitora e avalia cada um. Correções operacionais: executa sozinha. Correções que afetam conteúdo público: me pede aprovação.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Formato padronizado</div><div class="bx-b">[ALERTA] Tipo: heartbeat_check · Status: atenção · Hora: 08:00 UTC · Detalhe: 2 pendências com mais de 3 dias sem resposta.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Gates de decisão</div><div class="bx-b">Gate verde: o agente corrige sozinho e registra. Gate vermelho: para e me pede ok. Nada que afete conteúdo público sai sem minha aprovação.</div></div>
+        </div>
+        <div class="col col-40">
+          <div class="h3" style="margin-top: 0;">O que gera alerta</div>
+          <ul class="ck">
+            <li><span class="sq"></span>Cron falhou ou não rodou</li>
+            <li><span class="sq"></span>Pendência atrasada (3+ dias)</li>
+            <li><span class="sq"></span>Projeto parado (7+ dias)</li>
+            <li><span class="sq"></span>Erro no gateway/servidor</li>
+            <li><span class="sq"></span>Token expirado</li>
+            <li><span class="sq"></span>Memória não indexada</li>
+            <li><span class="sq"></span>Anomalia em métricas</li>
+          </ul>
+          <div class="quote" style="margin-top: 12px;"><p>O sistema cuida de si mesmo. Eu cuido da estratégia.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>14</span></div>
+  </div>
+</div>
+
+<!-- P15: MEMÓRIA -->
+<div class="page">
+  <div class="inner bg-c">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">14</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Persistência</div>
+          <div class="ttl"><em>Memória</em> do <span class="gold">sistema</span></div>
+          <p class="lead">Diferente de chatbots comuns, meus agentes lembram. Decisões, erros, preferências, histórico. Tudo persiste entre sessões.</p>
+          <div class="flow">
+            <div class="flow-step">Conversa acontece</div><div class="flow-arrow">→</div>
+            <div class="flow-step">Nota diária criada</div><div class="flow-arrow">→</div>
+            <div class="flow-step">Consolidada em topic files</div><div class="flow-arrow">→</div>
+            <div class="flow-step">Indexada para busca</div>
+          </div>
+          <div class="grid2" style="margin-top: 10px;">
+            <div class="bx bx-ouro"><div class="bx-t">decisions.md</div><div class="bx-b">Decisões permanentes. O que foi decidido, quando, e por quê. Nunca se perde.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">lessons.md</div><div class="bx-b">Lições aprendidas. Erros que não devem se repetir. Padrões descobertos.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">projects.md</div><div class="bx-b">Projetos ativos, em andamento e concluídos. Status sempre atualizado.</div></div>
+            <div class="bx bx-ouro"><div class="bx-t">pending.md</div><div class="bx-b">Aguardando input meu ou de terceiros. Nada cai no esquecimento.</div></div>
+          </div>
+        </div>
+        <div class="col col-40">
+          <div class="bx bx-dark"><div class="bx-t">Busca semântica</div><div class="bx-b">O agente não precisa lembrar de tudo. Ele busca na memória por significado, não por palavra exata. "Qual foi a decisão sobre tráfego?" encontra o registro mesmo sem a palavra "tráfego" no título.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Feedback loops</div><div class="bx-b">Arquivos JSON que registram feedback por domínio: conteúdo, tarefas, recomendações. O sistema aprende com cada correção minha.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Resultado prático</div><div class="bx-b">Não preciso repetir contexto. O agente sabe quem são minhas alunas, qual meu tom de voz, quais decisões já tomei, o que está pendente. Cada interação é continuação, não recomeço.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>15</span></div>
+  </div>
+</div>
+
+<!-- P16: BASE LIMITE / USO DE LLMs -->
+<div class="page">
+  <div class="inner bg-m">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">15</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Inteligência</div>
+          <div class="ttl">Base de <em>conhecimento</em> e <span class="gold">limite</span> dos LLMs</div>
+          <p class="lead">Agentes são tão bons quanto o conhecimento que têm. Sem base, é IA genérica. Com base, é especialista.</p>
+          <div class="bx bx-dark"><div class="bx-t">Knowledge base por agente</div><div class="bx-b">Cada agente tem uma pasta knowledge/ com materiais de referência. Masterson tem livros de copywriting. Helios tem documentação do Meta Ads. Aurora tem o Design System. Eles consultam antes de responder.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Contexto limitado = decisão estratégica</div><div class="bx-b">LLMs têm janela de contexto (200k tokens no Claude). Não cabe tudo de uma vez. Por isso a base é organizada: o agente busca o que precisa, quando precisa, via memória semântica.</div></div>
+          <div class="bx bx-dark"><div class="bx-t">Modelo certo para cada tarefa</div><div class="bx-b">Opus (caro, preciso) para tarefas complexas: estratégia, copy, análise. Haiku (barato, rápido) para heartbeats e verificações. Gemini para imagens. Whisper para áudio. Cada centavo no lugar certo.</div></div>
+        </div>
+        <div class="col col-40">
+          <div class="h3" style="margin-top: 0;">Bases montadas</div>
+          <ul class="ck">
+            <li><span class="sq"></span>Masterson: 5 livros de copywriting</li>
+            <li><span class="sq"></span>Helios: 4 docs Meta Ads</li>
+            <li><span class="sq"></span>Aurora: Design System ISIS v7</li>
+            <li><span class="sq"></span>Nexa: 26 poses, 26 roupas, 23 cenários</li>
+            <li><span class="sq"></span>Todos: USER.md (tom de voz de Isis)</li>
+          </ul>
+          <div class="h3">Próximas bases</div>
+          <ul class="ck">
+            <li><span class="sq"></span>Transcrição de todos os cursos</li>
+            <li><span class="sq"></span>Livro "Acorda! Sonhar não Basta"</li>
+            <li><span class="sq"></span>Histórico de campanhas reais</li>
+            <li><span class="sq"></span>FAQs do suporte</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira</span><span>16</span></div>
+  </div>
+</div>
+
+<!-- P17: BOT DONAZINHA -->
+<div class="page">
+  <div class="inner bg-c">
+    <div class="header"><span class="left">A Equipe de Agentes</span><span class="num">16</span></div>
+    <div class="hline"></div>
+    <div class="body">
+      <div class="cols">
+        <div class="col col-60">
+          <div class="sec">Próximo passo</div>
+          <div class="ttl">Bot <em class="gold">Donazinha</em></div>
+          <p class="lead">O objetivo final: um bot que responde meus mentorandos com a mesma profundidade que eu responderia.</p>
+          <div class="bx bx-ouro"><div class="bx-t">O que é</div><div class="bx-b">Um bot treinado com todo o conteúdo dos meus cursos, mentorias e materiais. Responde dúvidas dos alunos com base no que eu já ensinei, no meu tom de voz, com referências aos módulos específicos.</div></div>
+          <div class="bx bx-ouro"><div class="bx-t">Como funciona</div><div class="bx-b">Aluno pergunta no grupo ou DM. Donazinha busca na base de conhecimento (transcrições, FAQs, materiais). Responde com a minha voz, cita o módulo/aula relevante, e indica onde o aluno pode se aprofundar.</div></div>
+          <div class="bx bx-ouro"><div class="bx-t">Por que muda o jogo</div><div class="bx-b">Suporte 24h sem eu estar presente. Alunos recebem respostas de qualidade a qualquer hora. Eu ganho tempo para estratégia e conteúdo novo. Marlua e Érica ganham um assistente que sabe tudo que eu já ensinei.</div></div>
+        </div>
+        <div class="col col-40">
+          <div class="h3" style="margin-top: 0;">Pipeline de construção</div>
+          <div class="flow" style="flex-direction: column; align-items: flex-start;">
+            <div class="flow-step" style="margin-bottom: 6px;">1. Transcrever todos os cursos</div>
+            <div class="flow-step" style="margin-bottom: 6px;">2. Organizar por módulo/tema</div>
+            <div class="flow-step" style="margin-bottom: 6px;">3. Gerar FAQs do suporte</div>
+            <div class="flow-step" style="margin-bottom: 6px;">4. Treinar base de conhecimento</div>
+            <div class="flow-step" style="margin-bottom: 6px;">5. Configurar bot no Telegram</div>
+            <div class="flow-step" style="margin-bottom: 6px;">6. Testar com grupo piloto</div>
+            <div class="flow-step">7. Ativar para todos os alunos</div>
+          </div>
+          <div class="quote" style="margin-top: 12px;"><p>Uma extensão de mim que nunca dorme, nunca cansa e nunca esquece o que eu já ensinei.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="footer"><span>Isis Moreira · Mastermind Março 2026</span><span>17</span></div>
+  </div>
+</div>
+
+</body>
+</html>

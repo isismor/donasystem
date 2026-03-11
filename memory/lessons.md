@@ -3,6 +3,32 @@
 > Erros, padrões e aprendizados do dia a dia com o agente.
 > Estratégicas = permanentes | Táticas = expiram em 30 dias
 
+### 2026-03-11 — Deploy Torre Dona via Coolify (tática)
+- Coolify Service Stack NÃO clona repo Git. Para build de Dockerfile do repo, usar tipo **Application**
+- Servidor OpenClaw (72.60.241.247) não tem Docker. Coolify está em VPS separado (72.61.63.82)
+- `pnpm.onlyBuiltDependencies` bloqueia compilação de nativos. Incluir na lista cada dependência nativa
+- Next.js standalone não copia node_modules nativos. Copiar explicitamente do stage deps
+- basePath só faz sentido em subpath. Em subdomínio próprio, remover
+
+### 2026-03-11 — Tradução de UI NUNCA deve tocar nomes de código (ESTRATÉGICA)
+- Find/replace de "Theme" para "Tema" converte `className`, `useTheme`, nomes de funções, tipos e interfaces
+- Nomes de código em inglês são parte da sintaxe (React props, imports de libs externas, APIs). Traduzir quebra o build
+- A tradução correta toca APENAS strings literais entre aspas/crases: labels, placeholders, títulos, mensagens de erro visíveis ao usuário
+- Nunca traduzir: nomes de variáveis, funções, tipos, interfaces, props, imports, exports
+- Antes de commitar tradução: rodar `pnpm build` localmente para validar que compila
+- Se o build quebra em dezenas de arquivos, é mais seguro reverter tudo e refazer do que corrigir um a um
+
+### 2026-03-11 — NEXT_PUBLIC_ são variáveis de build time (tática)
+- Variáveis `NEXT_PUBLIC_*` do Next.js são injetadas no build, não em runtime
+- Adicionar/alterar essas variáveis exige redeploy (rebuild) no Coolify
+- Se o hub tenta WebSocket via `wss://` mas o gateway não tem SSL, a conexão falha silenciosamente e a UI fica vazia
+- Solução: `NEXT_PUBLIC_GATEWAY_PROTOCOL=ws` quando gateway não tem SSL
+
+### 2026-03-11 — Perda de contexto no restart (ESTRATÉGICA)
+- Dona fez restart durante sessão ativa do Atlas. Toda a conversa anterior foi perdida
+- Sessões de trabalho técnico devem ter checkpoints frequentes em memory/ (a cada milestone, não só no final)
+- Lição: consolidar memória DURANTE o trabalho, não só quando pedido
+
 ## Estratégicas
 
 ### Crons

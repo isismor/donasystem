@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sistema de Agentes — Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body { font-family: var(--sans); color: var(--cacao); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 210mm; height: 297mm; overflow: hidden; position: relative; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  .cover-c { background: var(--cacao); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 64px; }
+  .cover-c .label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 5px; color: var(--ouro); margin-bottom: 28px; }
+  .cover-c .title { font-family: var(--serif); font-size: 48px; line-height: 1.08; color: var(--marfim); margin-bottom: 20px; max-width: 560px; }
+  .cover-c .title em { font-style: italic; }
+  .cover-c .title .gold { color: var(--ouro); }
+  .cover-c .rule { width: 120px; height: 2px; background: var(--ouro); margin: 0 auto 20px auto; }
+  .cover-c .subtitle { font-size: 16px; color: var(--ouro-pale); line-height: 1.6; max-width: 420px; font-weight: 300; margin-bottom: 48px; }
+  .cover-c .meta { font-family: var(--mono); font-size: 9px; letter-spacing: 3px; color: var(--ouro-deep); text-transform: uppercase; }
+
+  .inner-c { height: 100%; display: flex; flex-direction: column; }
+  .inner-c.bg-marfim { background: var(--marfim); }
+  .inner-c.bg-creme { background: var(--creme); }
+  .header-c { padding: 36px 72px 14px 72px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+  .header-c .left { font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--ouro); }
+  .header-c .num { font-family: var(--serif); font-style: italic; font-size: 32px; color: var(--ouro-pale); }
+  .header-c-line { margin: 0 72px; height: 1px; background: var(--ouro-pale); flex-shrink: 0; }
+  .body-c { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; padding: 32px 72px 0 72px; }
+  .footer-c { padding: 14px 72px 28px 72px; display: flex; justify-content: space-between; flex-shrink: 0; }
+  .footer-c-line { margin: 0 72px; height: 1px; background: var(--ouro-pale); flex-shrink: 0; }
+  .footer-c span { font-family: var(--mono); font-size: 9px; color: var(--mirror); letter-spacing: 1px; }
+
+  .sec-c { font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--ouro); margin-bottom: 12px; }
+  .title-c { font-family: var(--serif); font-size: 44px; line-height: 1.08; color: var(--cacao); margin-bottom: 20px; max-width: 520px; }
+  .title-c em { font-style: italic; }
+  .title-c .gold { color: var(--ouro); }
+  .text-c { font-size: 15px; line-height: 1.75; color: var(--cacao); margin-bottom: 14px; max-width: 480px; }
+  .lead-c { font-size: 17px; line-height: 1.65; color: var(--ouro-deep); margin-bottom: 20px; max-width: 460px; font-weight: 400; }
+
+  .info-box { padding: 18px 24px; margin: 8px auto; border-radius: 10px; max-width: 480px; width: 100%; }
+  .info-box .info-title { font-family: var(--sans); font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .info-box .info-text { font-size: 13px; line-height: 1.55; margin: 0; }
+  .box-ouro { background: var(--ouro); }
+  .box-ouro .info-title { color: var(--cacao); }
+  .box-ouro .info-text { color: var(--cacao); opacity: 0.85; }
+  .box-dark { background: var(--cacao); }
+  .box-dark .info-title { color: var(--ouro); }
+  .box-dark .info-text { color: var(--marfim); opacity: 0.85; }
+
+  .callout-c { padding: 16px 24px; margin: 8px auto; border-radius: 10px; max-width: 480px; width: 100%; }
+  .callout-c p { font-size: 14px; line-height: 1.6; margin: 0; }
+  .callout-ouro { background: var(--ouro); color: var(--cacao); }
+  .callout-ouro p { color: var(--cacao); }
+  .callout-ouro strong { color: var(--cacao); font-weight: 700; }
+  .callout-dark { background: var(--cacao); color: var(--marfim); }
+  .callout-dark p { color: var(--marfim); }
+  .callout-dark strong { color: var(--ouro); }
+
+  .agents-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 480px; margin: 0 auto; width: 100%; }
+  .ag-card { border-radius: 10px; padding: 14px 18px; }
+  .ag-card .name { font-family: var(--serif); font-style: italic; font-size: 16px; margin-bottom: 2px; }
+  .ag-card .role { font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+  .ag-card .desc { font-size: 11px; line-height: 1.4; }
+
+  .flow-box { background: var(--cacao); border-radius: 10px; padding: 20px 24px; max-width: 480px; margin: 10px auto; width: 100%; }
+  .flow-label { font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--ouro); margin-bottom: 8px; }
+  .flow-steps { font-size: 14px; line-height: 1.8; color: var(--marfim); }
+  .flow-steps .arrow { color: var(--ouro); font-weight: 700; }
+
+  .cost-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(180,166,140,.15); max-width: 480px; margin: 0 auto; width: 100%; }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-name { font-size: 15px; font-weight: 500; }
+  .cost-desc { font-size: 12px; color: var(--mirror); margin-top: 2px; }
+  .cost-price { font-family: var(--mono); font-size: 15px; color: var(--ouro-deep); font-weight: 500; text-align: right; }
+  .cost-free { color: var(--ouro); }
+
+  .skill-tag { display: inline-block; background: var(--ouro); color: var(--cacao); font-family: var(--mono); font-size: 10px; padding: 6px 12px; border-radius: 6px; margin: 3px; letter-spacing: 1px; }
+
+  .stmt-quote { padding: 20px 24px; margin: 16px auto; max-width: 480px; width: 100%; border-radius: 10px; background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.25); }
+  .stmt-quote p { font-family: var(--serif); font-style: italic; font-size: 17px; line-height: 1.5; color: var(--cacao); margin: 0; }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page">
+  <div class="cover-c">
+    <div class="label">Guia Completo</div>
+    <div class="title">Como eu uso <em>Inteligência Artificial</em> pra rodar meu <span class="gold">negócio</span></div>
+    <div class="rule"></div>
+    <div class="subtitle">O sistema de agentes que automatiza conteúdo, tráfego, design, copy e suporte. Tudo por menos de R$150/mês.</div>
+    <div class="meta">Isis Moreira · Março 2026 · 11 páginas</div>
+  </div>
+</div>
+
+<!-- PÁG 2: Framework — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">01</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Framework</div>
+      <div class="title-c">Meu <em>framework</em> de <span class="gold">agentes</span></div>
+
+      <p class="lead-c">Um time de IA que trabalha 24 horas, entende minha marca, meu tom de voz e meu público. Não é ChatGPT. É um sistema construído sob medida.</p>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">O que é</div>
+        <div class="info-text">Um servidor na nuvem rodando OpenClaw, uma plataforma open-source que conecta modelos de IA a canais de comunicação (Telegram, WhatsApp). Cada agente tem identidade, função e regras próprias.</div>
+      </div>
+      <div class="info-box box-ouro">
+        <div class="info-title">Como funciona</div>
+        <div class="info-text">Eu mando mensagem pelo Telegram para o agente que preciso. Ele executa, consulta a base de conhecimento da marca, aplica o design system e entrega. Sem abrir outra ferramenta.</div>
+      </div>
+      <div class="info-box box-ouro">
+        <div class="info-title">Por que não é ChatGPT</div>
+        <div class="info-text">O ChatGPT esquece tudo a cada conversa. Meus agentes têm memória permanente, conhecem meu negócio, minha história, minhas cores, minhas fontes. Eles aprendem comigo.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>02</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 3: Custos — bg creme, containers cacau -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">02</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Investimento</div>
+      <div class="title-c">Quanto <em>custa</em> manter esse <span class="gold">time</span></div>
+
+      <p class="lead-c">Menos de R$150/mês pra ter 10 agentes funcionando 24 horas.</p>
+
+      <div style="background: var(--cacao); border-radius: 10px; padding: 28px 32px; max-width: 480px; margin: 12px auto; width: 100%;">
+        <div class="cost-row" style="border-color: rgba(180,166,140,.2);">
+          <div>
+            <div class="cost-name" style="color: var(--marfim);">Hostinger KVM4</div>
+            <div class="cost-desc" style="color: var(--ouro-pale);">Servidor VPS · 4 vCPU · 16GB RAM · 200GB NVMe</div>
+          </div>
+          <div class="cost-price" style="color: var(--ouro);">~R$50/mês</div>
+        </div>
+        <div class="cost-row" style="border-color: rgba(180,166,140,.2);">
+          <div>
+            <div class="cost-name" style="color: var(--marfim);">OpenClaw</div>
+            <div class="cost-desc" style="color: var(--ouro-pale);">Plataforma de agentes · Open Source</div>
+          </div>
+          <div class="cost-price cost-free">Gratuito</div>
+        </div>
+        <div class="cost-row" style="border-color: rgba(180,166,140,.2);">
+          <div>
+            <div class="cost-name" style="color: var(--marfim);">Claude Pro</div>
+            <div class="cost-desc" style="color: var(--ouro-pale);">API Anthropic · Modelo Claude Opus</div>
+          </div>
+          <div class="cost-price" style="color: var(--ouro);">US$20/mês</div>
+        </div>
+        <div class="cost-row" style="border-bottom: none;">
+          <div>
+            <div class="cost-name" style="color: var(--ouro); font-weight: 700;">Total estimado</div>
+          </div>
+          <div class="cost-price" style="color: var(--ouro); font-size: 18px; font-weight: 700;">~R$150/mês</div>
+        </div>
+      </div>
+
+      <div class="stmt-quote" style="margin-top: 16px;">
+        <p>"Um time inteiro de especialistas por menos do que o custo de um almoço executivo por semana."</p>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>03</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 4: Agentes — bg marfim, cards cacau -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">03</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">O Time</div>
+      <div class="title-c">Meus <em>10 agentes</em> e suas <span class="gold">funções</span></div>
+
+      <div class="agents-grid">
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Dona</div>
+          <div class="role" style="color: var(--ouro);">COO</div>
+          <div class="desc" style="color: var(--ouro-pale);">Coordena o time, analisa dados, executa estratégia. Meu braço direito.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Atlas</div>
+          <div class="role" style="color: var(--ouro);">Estrategista</div>
+          <div class="desc" style="color: var(--ouro-pale);">Planeja sequências, gerencia riscos, orquestra cadeias de produção.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Vega</div>
+          <div class="role" style="color: var(--ouro);">Social Media</div>
+          <div class="desc" style="color: var(--ouro-pale);">Conteúdo omnichannel, trending topics, scraping de reels virais.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Masterson</div>
+          <div class="role" style="color: var(--ouro);">Escritor</div>
+          <div class="desc" style="color: var(--ouro-pale);">Ebooks, páginas de vendas, sequências de email, scripts.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Aurora</div>
+          <div class="role" style="color: var(--ouro);">Designer</div>
+          <div class="desc" style="color: var(--ouro-pale);">PDFs, ebooks visuais, materiais alinhados à marca.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Harpia</div>
+          <div class="role" style="color: var(--ouro);">Vídeo</div>
+          <div class="desc" style="color: var(--ouro-pale);">Roteiros, briefings de edição, direção criativa audiovisual.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Helios</div>
+          <div class="role" style="color: var(--ouro);">Tráfego</div>
+          <div class="desc" style="color: var(--ouro-pale);">Análise de campanhas, métricas, otimização de ROI.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Nexa</div>
+          <div class="role" style="color: var(--ouro);">Imagem</div>
+          <div class="desc" style="color: var(--ouro-pale);">Geração de fotos, curadoria visual, ensaios de imagem.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Orion</div>
+          <div class="role" style="color: var(--ouro);">Dev</div>
+          <div class="desc" style="color: var(--ouro-pale);">Código, automações, integrações, scripts, deploys.</div>
+        </div>
+        <div class="ag-card" style="background: var(--cacao);">
+          <div class="name" style="color: var(--marfim);">Eva</div>
+          <div class="role" style="color: var(--ouro);">Arquiteta</div>
+          <div class="desc" style="color: var(--ouro-pale);">Cria e evolui os próprios agentes do sistema.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>04</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 5: Skills — bg creme, tags ouro -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">04</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Ferramentas</div>
+      <div class="title-c">As <em>skills</em> que eu <span class="gold">uso</span></div>
+
+      <p class="text-c">Skills são ferramentas que os agentes usam pra executar tarefas específicas. Funcionam como plugins.</p>
+
+      <div style="max-width: 480px; margin: 16px auto; width: 100;">
+        <p style="font-weight: 700; font-size: 13px; margin-bottom: 10px; color: var(--ouro-deep);">PRODUÇÃO DE CONTEÚDO</p>
+        <span class="skill-tag">Whisper API</span>
+        <span class="skill-tag">Video Frames</span>
+        <span class="skill-tag">Nano Banana Pro</span>
+        <span class="skill-tag">Nano PDF</span>
+        <span class="skill-tag">Web Search</span>
+        <span class="skill-tag">Web Fetch</span>
+      </div>
+
+      <div style="max-width: 480px; margin: 12px auto; width: 100;">
+        <p style="font-weight: 700; font-size: 13px; margin-bottom: 10px; color: var(--ouro-deep);">INTEGRAÇÕES</p>
+        <span class="skill-tag">1Password</span>
+        <span class="skill-tag">Canva Connect</span>
+        <span class="skill-tag">Meta Ads API</span>
+        <span class="skill-tag">Instagram API</span>
+        <span class="skill-tag">RapidAPI</span>
+      </div>
+
+      <div style="max-width: 480px; margin: 12px auto; width: 100;">
+        <p style="font-weight: 700; font-size: 13px; margin-bottom: 10px; color: var(--ouro-deep);">AUTOMAÇÃO</p>
+        <span class="skill-tag">Cron Jobs</span>
+        <span class="skill-tag">Health Monitor</span>
+        <span class="skill-tag">Memory Index</span>
+        <span class="skill-tag">Git Backup</span>
+        <span class="skill-tag">Watchdog</span>
+      </div>
+
+      <div style="max-width: 480px; margin: 12px auto; width: 100;">
+        <p style="font-weight: 700; font-size: 13px; margin-bottom: 10px; color: var(--ouro-deep);">DESENVOLVIMENTO</p>
+        <span class="skill-tag">Coding Agent</span>
+        <span class="skill-tag">Tmux</span>
+        <span class="skill-tag">Healthcheck</span>
+        <span class="skill-tag">Skill Creator</span>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>05</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 6: Usos e Aplicações (overview) — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">05</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Aplicações</div>
+      <div class="title-c"><em>Usos</em> e <span class="gold">aplicações</span> reais</div>
+
+      <p class="lead-c">Cada agente resolve um problema real do meu dia a dia. Aqui estão os fluxos que mais uso.</p>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Mentoria para Material</div>
+        <div class="info-text">Gravo mentoria, transcrevo automaticamente, agente gera resumo em PDF com design da marca. Entrego pras alunas no mesmo dia.</div>
+      </div>
+      <div class="info-box box-ouro">
+        <div class="info-title">Tráfego Inteligente</div>
+        <div class="info-text">Helios conecta direto na conta do Meta Ads. Analisa campanhas, identifica o que funciona, sugere realocação de orçamento.</div>
+      </div>
+      <div class="info-box box-ouro">
+        <div class="info-title">Conteúdo Viral</div>
+        <div class="info-text">Vega pesquisa trending topics, transcreve reels virais, sugere hooks. Eu gravo com minha personalidade.</div>
+      </div>
+      <div class="info-box box-ouro">
+        <div class="info-title">Ensaio de Fotos com IA</div>
+        <div class="info-text">Nexa gera fotos profissionais com minha identidade visual: poses, roupas e fundos alinhados à marca.</div>
+      </div>
+      <div class="info-box box-ouro">
+        <div class="info-title">Suporte Automatizado</div>
+        <div class="info-text">Doninha vai atender as alunas no grupo da mentoria. FAQ, acolhimento e direcionamento. 24 horas.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>06</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 7: Mentoria → Transcrição → Resumo — bg creme, containers cacau -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">06</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Fluxo 1</div>
+      <div class="title-c"><em>Mentoria</em> vira material em <span class="gold">minutos</span></div>
+
+      <p class="text-c">Toda mentoria que eu faço vira material de estudo pras alunas. Automaticamente.</p>
+
+      <div class="flow-box">
+        <div class="flow-label">Fluxo de produção</div>
+        <div class="flow-steps">
+          Gravar mentoria <span class="arrow">→</span> Coconote transcreve <span class="arrow">→</span> Mando o PDF da transcrição pelo Telegram <span class="arrow">→</span> Dona processa e extrai frameworks <span class="arrow">→</span> Aurora transforma em PDF com design da marca <span class="arrow">→</span> Entrego pras alunas
+        </div>
+      </div>
+
+      <div class="info-box box-dark" style="margin-top: 16px;">
+        <div class="info-title">O que sai disso</div>
+        <div class="info-text">PDF com resumo estruturado: frameworks, passo a passo, frases marcantes, casos práticos. Tudo no padrão visual da marca. As alunas recebem no mesmo dia da mentoria.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Tempo real</div>
+        <div class="info-text">Mentoria de 2 horas gera PDF de 8 páginas em menos de 5 minutos. Sem edição manual.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>07</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 8: Meta + Tráfego — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">07</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Fluxo 2</div>
+      <div class="title-c">Base de <em>conhecimento</em> + <span class="gold">tráfego</span></div>
+
+      <p class="text-c">O Helios não é um robô genérico de ads. Ele conhece meu negócio, minhas margens, meu público. Toda decisão é contextualizada.</p>
+
+      <div class="flow-box" style="background: var(--ouro);">
+        <div class="flow-label" style="color: var(--cacao);">Framework de distribuição</div>
+        <div class="flow-steps" style="color: var(--cacao);">
+          Conectar Meta Ads API <span class="arrow" style="color: var(--ouro-deep);">→</span> Helios puxa métricas reais <span class="arrow" style="color: var(--ouro-deep);">→</span> Cruza com base de conhecimento <span class="arrow" style="color: var(--ouro-deep);">→</span> Identifica o que funciona <span class="arrow" style="color: var(--ouro-deep);">→</span> Sugere redistribuição
+        </div>
+      </div>
+
+      <div class="info-box box-ouro" style="margin-top: 16px;">
+        <div class="info-title">O que o Helios analisa</div>
+        <div class="info-text">ROAS por campanha, CPA por criativo, CTR por público, tendências de custo. Tudo em tempo real via API.</div>
+      </div>
+      <div class="info-box box-ouro">
+        <div class="info-title">Decisão baseada em dados</div>
+        <div class="info-text">Em vez de olhar o Gerenciador e tentar interpretar, o Helios me diz: "Essa campanha está queimando dinheiro. Realoca pra essa outra que está com ROAS de 4."</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>08</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 9: Transcrição de Curso → Doninha — bg creme, containers cacau -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">08</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Fluxo 3</div>
+      <div class="title-c"><em>Curso</em> inteiro vira base da <span class="gold">Doninha</span></div>
+
+      <p class="text-c">Transcrevo meus cursos e alimento a base de conhecimento do bot de suporte. As alunas perguntam e a Doninha responde com o conteúdo do curso.</p>
+
+      <div class="flow-box">
+        <div class="flow-label">Fluxo de conhecimento</div>
+        <div class="flow-steps">
+          Curso gravado <span class="arrow">→</span> Whisper transcreve cada aula <span class="arrow">→</span> Dona processa e organiza em markdown <span class="arrow">→</span> Salva na base de conhecimento <span class="arrow">→</span> Doninha usa pra responder alunas
+        </div>
+      </div>
+
+      <div class="info-box box-dark" style="margin-top: 16px;">
+        <div class="info-title">Doninha: suporte 24h</div>
+        <div class="info-text">Bot de suporte no grupo da mentoria. Responde dúvidas com base no conteúdo real dos cursos. Não inventa. Não alucina. Fala com o tom da marca.</div>
+      </div>
+
+      <div class="info-box box-dark">
+        <div class="info-title">Resultado</div>
+        <div class="info-text">Alunas com suporte imediato. Eu com mais tempo pra criar, gravar e estrategiar. Sem ficar respondendo as mesmas perguntas.</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>09</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 10: Imagem + Conteúdo — bg marfim, containers ouro -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">09</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Fluxos 4 e 5</div>
+      <div class="title-c"><em>Imagem</em> e <span class="gold">conteúdo</span> na velocidade certa</div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Ensaio de Fotos com IA</div>
+        <div class="info-text">Mando "crie" pra Nexa e ela gera 4 fotos profissionais com minha foto de referência. Poses, roupas e cenários variados. Tudo dentro da paleta da marca. Em segundos.</div>
+      </div>
+
+      <div class="flow-box" style="background: var(--ouro); margin-top: 8px;">
+        <div class="flow-label" style="color: var(--cacao);">Fluxo de imagem</div>
+        <div class="flow-steps" style="color: var(--cacao);">
+          Comando "crie 4" <span class="arrow" style="color: var(--ouro-deep);">→</span> Nexa seleciona pose, roupa, fundo <span class="arrow" style="color: var(--ouro-deep);">→</span> Gera via IA <span class="arrow" style="color: var(--ouro-deep);">→</span> Entrega no Telegram
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;"></div>
+
+      <div class="info-box box-ouro">
+        <div class="info-title">Conteúdo com Deep Search</div>
+        <div class="info-text">Vega pesquisa trending topics em tempo real, transcreve reels com mais de 1 milhão de views, extrai hooks. Eu recebo tudo mastigado e gravo com minha personalidade.</div>
+      </div>
+
+      <div class="flow-box" style="background: var(--ouro); margin-top: 8px;">
+        <div class="flow-label" style="color: var(--cacao);">Fluxo de conteúdo</div>
+        <div class="flow-steps" style="color: var(--cacao);">
+          Vega pesquisa tendências <span class="arrow" style="color: var(--ouro-deep);">→</span> Scraping de reels virais <span class="arrow" style="color: var(--ouro-deep);">→</span> Transcrição automática <span class="arrow" style="color: var(--ouro-deep);">→</span> Hooks prontos pra eu gravar
+        </div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>10</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁG 11: Fechamento — bg creme -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Sistema de Agentes</span>
+      <span class="num">10</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Conclusão</div>
+      <div class="title-c">O futuro do <em>negócio</em> é <span class="gold">agêntico</span></div>
+
+      <p class="lead-c">Não é sobre substituir pessoas. É sobre multiplicar você.</p>
+
+      <div class="callout-dark">
+        <p><strong>10 agentes</strong> trabalhando em paralelo. Conteúdo, design, copy, tráfego, suporte. Tudo no padrão da marca. Tudo conectado.</p>
+      </div>
+
+      <div class="callout-dark" style="margin-top: 8px;">
+        <p><strong>Menos de R$150/mês.</strong> Sem equipe CLT. Sem freelancer. Sem depender de agenda de ninguém. Disponível 24 horas.</p>
+      </div>
+
+      <div class="callout-dark" style="margin-top: 8px;">
+        <p><strong>Memória permanente.</strong> Os agentes aprendem com cada interação. Conhecem meu negócio, meu público, meu tom. Ficam melhores com o tempo.</p>
+      </div>
+
+      <div class="stmt-quote" style="margin-top: 20px;">
+        <p>"Eu não uso IA pra fazer o que eu não sei. Eu uso pra multiplicar o que eu já sei fazer."</p>
+      </div>
+
+      <div style="margin-top: 32px;">
+        <div style="width: 120px; height: 2px; background: var(--ouro); margin-bottom: 14px;"></div>
+        <div style="font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--cacao);">Isis Moreira</div>
+        <div style="font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--mirror); margin-top: 6px;">@moreira.isis · Março 2026</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>11</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

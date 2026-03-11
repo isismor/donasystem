@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: 1280px 720px; margin: 0; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+  }
+  .slide:last-child { page-break-after: auto; }
+
+  /* COVER */
+  .cover {
+    background: var(--cacao);
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 120px;
+  }
+  .cover .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ouro);
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-family: 'DM Serif Text', serif;
+    font-size: 54px;
+    font-weight: 400;
+    line-height: 1.12;
+    color: var(--marfim);
+    margin-bottom: 20px;
+  }
+  .cover h1 em { font-style: italic; }
+  .cover h1 .gold { color: var(--ouro); }
+  .cover .line {
+    width: 100px;
+    height: 2px;
+    background: var(--ouro);
+    margin: 0 auto 20px auto;
+  }
+  .cover .sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    color: var(--ouro-pale);
+    line-height: 1.6;
+    max-width: 540px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .cover .foot {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--ouro-deep);
+    text-transform: uppercase;
+  }
+
+  /* INNER SLIDE */
+  .inner {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px 32px 64px;
+  }
+  .inner.bg-m { background: var(--marfim); }
+  .inner.bg-c { background: var(--creme); }
+
+  .slide-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .slide-head .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+  .slide-head .pg {
+    font-family: 'DM Serif Text', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ouro-pale);
+  }
+  .slide-rule {
+    height: 1px;
+    background: var(--ouro-pale);
+    margin-bottom: 28px;
+  }
+
+  .content { flex: 1; }
+
+  .sec {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-family: 'DM Serif Text', serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--cacao);
+    margin-bottom: 24px;
+  }
+  h2 em { font-style: italic; }
+  h2 .gold { color: var(--ouro); }
+
+  .lead {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ouro-deep);
+    margin-bottom: 20px;
+    max-width: 700px;
+  }
+  p.body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--cacao);
+    margin-bottom: 12px;
+    max-width: 700px;
+  }
+
+  /* BOXES */
+  .box {
+    padding: 20px 24px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+  .box-dark { background: var(--cacao); }
+  .box-dark .box-title { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 14px; color: var(--ouro); margin-bottom: 6px; }
+  .box-dark .box-text { font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.6; color: var(--marfim); opacity: 0.9; }
+  .box-ouro { background: var(--ouro); }
+  .box-ouro .box-title { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 14px; color: var(--cacao); margin-bottom: 6px; }
+  .box-ouro .box-text { font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.6; color: var(--cacao); opacity: 0.9; }
+  .box-gold { background: rgba(180,166,140,.12); border: 1px solid rgba(180,166,140,.3); }
+  .box-gold .box-title { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 14px; color: var(--ouro-deep); margin-bottom: 6px; }
+  .box-gold .box-text { font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.6; color: var(--cacao); }
+
+  /* GRID */
+  .row { display: flex; gap: 20px; }
+  .col-6 { flex: 1; }
+  .col-7 { flex: 1.4; }
+  .col-5 { flex: 0.8; }
+
+  /* FOOTER */
+  .slide-foot {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--ouro-pale);
+    display: flex;
+    justify-content: space-between;
+  }
+  .slide-foot span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="slide">
+  <div class="cover">
+    <div class="tag">Mastermind · Março 2026</div>
+    <h1>Como construí minha <em>equipe</em> de <span class="gold">agentes IA</span></h1>
+    <div class="line"></div>
+    <div class="sub">De um chatbot genérico a um sistema com 10 agentes especializados, memória persistente e operação autônoma 24h.</div>
+    <div class="foot">Isis Moreira</div>
+  </div>
+</div>
+
+<!-- SLIDE 2: COMO CRIEI -->
+<div class="slide">
+  <div class="inner bg-m">
+    <div class="slide-head"><span class="label">A Equipe de Agentes</span><span class="pg">01</span></div>
+    <div class="slide-rule"></div>
+    <div class="content">
+      <div class="sec">A história</div>
+      <h2>Como <em>criei</em> minha equipe de <span class="gold">agentes</span></h2>
+      <div class="row">
+        <div class="col-7">
+          <p class="lead">Comecei querendo automatizar tarefas repetitivas. Terminei com um time que produz, analisa, cria conteúdo e opera 24 horas sem parar.</p>
+          <p class="body">A ideia surgiu da dor real: eu fazia tudo sozinha. Copy, design, tráfego, suporte, análise. Cada tarefa delegada para IA genérica voltava genérica. Precisava de agentes que entendessem meu tom, meu público e meu padrão.</p>
+          <p class="body">Construí em 5 dias. Sem desenvolvedor. Sem equipe técnica. Só clareza sobre o que cada "funcionário" deveria fazer.</p>
+        </div>
+        <div class="col-5">
+          <div class="box box-dark">
+            <div class="box-title">O ponto de virada</div>
+            <div class="box-text">Parei de usar IA como ferramenta e passei a usar como equipe. Cada agente tem nome, função, tom de voz e limites.</div>
+          </div>
+          <div class="box box-dark">
+            <div class="box-title">Resultado</div>
+            <div class="box-text">Materiais que levavam dias saem em minutos. Diagnósticos, ebooks, PDFs visuais. Tudo no meu padrão.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-foot"><span>Isis Moreira</span><span>02</span></div>
+  </div>
+</div>
+
+</body>
+</html>

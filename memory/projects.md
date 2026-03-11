@@ -45,6 +45,27 @@
 - **Aprovado em:** 10/03/2026
 - **Próximo passo:** Vega inicia redação dos 6 blocos
 
+### Torre Dona (hub.donasystem.com.br)
+**Status:** Online e conectada ao gateway
+**Repo:** isismor/donasystem (branch main, dir /hub)
+**Infra:** Coolify (72.61.63.82) → Application Dockerfile → porta 3000
+**Base:** Mission Control (Next.js + SQLite)
+**Login:** isisalvesmoreira@gmail.com / hub#2027
+**Gateway:** Conectado via controlUi (allowedOrigins: hub.donasystem.com.br, dangerouslyDisableDeviceAuth: true)
+**Visual:** Design System ISIS v7 aplicado (cores e fontes), menu em inglês, conteúdo em português
+**Painéis:** 28 (Tasks, Agents, Crons, Memory, Health, Tokens, Sessions, Activity, etc.)
+**Concluído em:** 11/03/2026
+**Pendente:** Ativar HTTPS, remover flags dangerously*, mover token do Dockerfile para build args
+
+### Framework de Distribuição de Tráfego (Helios)
+**Status:** Estruturado, aguardando token Meta funcional
+**Conta:** act_777100762498033
+**Estratégia:** Teste R$10/dia → Série A (R$30/dia, <R$0,50/seguidor) → Série B (R$10/dia, R$0,50-0,70) → Cortado (>R$0,70)
+**Report:** Diário para Isis (gasto, séries ativas, custo/seguidor)
+**Documento:** knowledge/helios/framework-distribuicao.md
+**Pendente:** App Meta em modo Live, novo token via Marketing Essencial, conta desbloqueada
+**Criado em:** 10/03/2026
+
 ## Backlog
 
 - Configurar análise diária automática (08h SP) após ter acesso a dados do Instagram

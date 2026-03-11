@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>DonaSystem — Mastermind</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --marfim: #f9f8f4;
+  --creme: #efede6;
+  --cacao: #2a2420;
+  --ouro: #b4a68c;
+  --ouro-deep: #7a6e5c;
+  --ouro-pale: #d4cec4;
+  --mirror: #9ba1a8;
+  --terracota: #9e5c50;
+  --sans: 'DM Sans', sans-serif;
+  --serif: 'DM Serif Text', serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+@page { size: 210mm 297mm; margin: 0; }
+body {
+  font-family: var(--sans);
+  color: var(--cacao);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.slide {
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  position: relative;
+  page-break-after: always;
+}
+.slide:last-child { page-break-after: auto; }
+
+/* COVER */
+.cover {
+  background: var(--cacao);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 48px;
+}
+.cover .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  color: var(--ouro);
+  margin-bottom: 24px;
+}
+.cover .title {
+  font-family: var(--serif);
+  font-size: 52px;
+  line-height: 1.1;
+  color: var(--marfim);
+  margin-bottom: 16px;
+}
+.cover .title em { font-style: italic; }
+.cover .title .gold { color: var(--ouro); }
+.cover .rule {
+  width: 100px;
+  height: 2px;
+  background: var(--ouro);
+  margin: 0 auto 16px auto;
+}
+.cover .subtitle {
+  font-size: 16px;
+  color: var(--ouro-pale);
+  line-height: 1.6;
+  max-width: 500px;
+  font-weight: 300;
+}
+.cover .meta {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--ouro-deep);
+  text-transform: uppercase;
+  margin-top: 32px;
+}
+
+/* INNER */
+.inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 40px 24px 40px;
+}
+.bg-marfim { background: var(--marfim); }
+.bg-creme { background: var(--creme); }
+.bg-cacao { background: var(--cacao); color: var(--marfim); }
+
+.slide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+.slide-header .sec {
+  font-family: var(--mono);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--ouro);
+}
+.slide-header .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 24px;
+  color: var(--ouro-pale);
+}
+.slide-line {
+  height: 1px;
+  background: var(--ouro-pale);
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+.bg-cacao .slide-line { background: rgba(180,166,140,.3); }
+
+.slide-title {
+  font-family: var(--serif);
+  font-size: 38px;
+  line-height: 1.1;
+  color: var(--cacao);
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+.slide-title em { font-style: italic; }
+.slide-title .gold { color: var(--ouro); }
+.bg-cacao .slide-title { color: var(--marfim); }
+
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.slide-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 8px;
+  flex-shrink: 0;
+}
+.slide-footer span {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--mirror);
+  letter-spacing: 1px;
+}
+.bg-cacao .slide-footer span { color: var(--ouro-deep); }
+
+/* COMPONENTS */
+.row { display: flex; gap: 14px; }
+.col { display: flex; flex-direction: column; gap: 10px; }
+.flex-1 { flex: 1; }
+
+.card {
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+.card-dark {
+  background: var(--cacao);
+  color: var(--marfim);
+}
+.card-dark strong { color: var(--ouro); }
+.card-dark .card-title { color: var(--ouro); }
+.card-dark p, .card-dark li { color: var(--ouro-pale); }
+
+.card-ouro {
+  background: rgba(180,166,140,.15);
+  border: 1px solid rgba(180,166,140,.3);
+}
+.card-ouro .card-title { color: var(--ouro-deep); }
+
+.card-solid-ouro {
+  background: var(--ouro);
+  color: var(--cacao);
+}
+.card-solid-ouro .card-title { color: var(--cacao); font-weight: 700; }
+
+.card-marfim {
+  background: var(--marfim);
+  border: 1px solid rgba(180,166,140,.25);
+}
+
+.card-creme {
+  background: var(--creme);
+  border: 1px solid rgba(180,166,140,.2);
+}
+
+.card-outline {
+  background: transparent;
+  border: 1px solid var(--ouro-pale);
+}
+
+.card-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.card p, .card li {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+.card ul li {
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.card ul li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
+  background: var(--ouro);
+  border-radius: 2px;
+  margin-top: 5px;
+}
+.card-dark ul li::before { background: var(--ouro); }
+
+/* Checklist */
+.check-list {
+  list-style: none;
+  padding: 0;
+}
+.check-list li {
+  padding: 5px 0;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(180,166,140,.1);
+}
+.check-list li:last-child { border-bottom: none; }
+.check-box {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  background: var(--ouro);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* Grid */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+/* Diagram elements */
+.arrow-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--ouro);
+  min-width: 30px;
+}
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flow-box {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+}
+.flow-dark { background: var(--cacao); color: var(--marfim); }
+.flow-ouro { background: var(--ouro); color: var(--cacao); }
+.flow-outline { border: 2px solid var(--ouro); color: var(--cacao); }
+.flow-creme { background: var(--creme); color: var(--cacao); border: 1px solid var(--ouro-pale); }
+
+/* Org chart */
+.org-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.org-line-v {
+  width: 2px;
+  height: 16px;
+  background: var(--ouro);
+}
+.org-line-h {
+  height: 2px;
+  background: var(--ouro);
+  width: 100%;
+}
+.org-node {
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+.org-node-dark { background: var(--cacao); color: var(--ouro); }
+.org-node-ouro { background: var(--ouro); color: var(--cacao); }
+.org-node-outline { border: 2px solid var(--ouro); color: var(--cacao); }
+.org-node small { display: block; font-weight: 400; font-size: 9px; margin-top: 2px; opacity: .7; }
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.badge-ouro { background: var(--ouro); color: var(--cacao); }
+.badge-dark { background: var(--cacao); color: var(--ouro); }
+.badge-outline { border: 1px solid var(--ouro); color: var(--ouro-deep); }
+
+/* Table */
+.slide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.slide-table th {
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--ouro);
+  text-align: left;
+  padding: 6px 10px;
+  border-bottom: 2px solid var(--ouro-pale);
+}
+.slide-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(180,166,140,.12);
+}
+.bg-cacao .slide-table th { color: var(--ouro); border-color: rgba(180,166,140,.3); }
+.bg-cacao .slide-table td { color: var(--ouro-pale); border-color: rgba(180,166,140,.1); }
+
+/* Comparison */
+.vs-box {
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+}
+.vs-box .vs-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.vs-box .vs-desc {
+  font-size: 10px;
+  line-height: 1.4;
+  opacity: .8;
+}
+
+/* Stat box */
+.stat-box {
+  text-align: center;
+  padding: 12px 8px;
+  border-radius: 10px;
+}
+.stat-box .stat-num {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-style: italic;
+  color: var(--ouro);
+}
+.stat-box .stat-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--mirror);
+  margin-top: 4px;
+}
+
+.text-sm { font-size: 12px; line-height: 1.6; }
+.text-xs { font-size: 11px; line-height: 1.5; }
+.text-2xs { font-size: 10px; line-height: 1.5; }
+.text-ouro { color: var(--ouro); }
+.text-ouro-deep { color: var(--ouro-deep); }
+.text-mirror { color: var(--mirror); }
+.fw-700 { font-weight: 700; }
+.mono { font-family: var(--mono); }
+.serif { font-family: var(--serif); }
+.italic { font-style: italic; }
+.mb-8 { margin-bottom: 8px; }
+.mb-4 { margin-bottom: 4px; }
+.mt-auto { margin-top: auto; }
+.gap-8 { gap: 8px; }
+.gap-6 { gap: 6px; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 0: CAPA -->
+<div class="slide">
+  <div class="cover">
+    <div class="label">Mastermind Isis Moreira</div>
+    <div class="title"><em>Dona</em>System: do zero à <span class="gold">orquestração</span> de agentes</div>
+    <div class="rule"></div>
+    <div class="subtitle">Como construí um time de agentes de IA que produz, analisa e executa 24 horas por dia.</div>
+    <div class="meta">Isis Moreira · Março 2026</div>
+  </div>
+</div>
+
+<!-- SLIDE 1: DonaSystem do zero -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">DonaSystem</span><span class="num">01</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Do zero à <em class="gold">orquestração</em></div>
+    <div class="slide-body">
+      <div class="row">
+        <div class="flex-1 col">
+          <div class="card card-dark">
+            <div class="card-title">O problema</div>
+            <ul>
+              <li>Equipe enxuta, demanda gigante</li>
+              <li>Produção de conteúdo manual e lenta</li>
+              <li>Entregas atrasadas, gargalo na execução</li>
+              <li>100k/mês orgânico, meta de 1M/mês</li>
+            </ul>
+          </div>
+          <div class="card card-ouro">
+            <div class="card-title">A decisão</div>
+            <p>Parar tudo por 2 semanas. Construir uma infraestrutura de IA sob medida para a operação.</p>
+          </div>
+        </div>
+        <div class="flex-1 col">
+          <div class="card card-dark">
+            <div class="card-title">O resultado</div>
+            <ul>
+              <li>10 agentes especializados operando 24h</li>
+              <li>PDFs em minutos (antes: dias)</li>
+              <li>Tom de voz consistente em tudo</li>
+              <li>Framework de tráfego automatizado</li>
+              <li>Dashboard de controle (Torre Dona)</li>
+            </ul>
+          </div>
+          <div class="flow-row" style="justify-content: center; margin-top: 4px;">
+            <div class="flow-box flow-dark">Problema</div>
+            <div class="arrow-right">→</div>
+            <div class="flow-box flow-ouro">Decisão</div>
+            <div class="arrow-right">→</div>
+            <div class="flow-box flow-dark">Sistema</div>
+            <div class="arrow-right">→</div>
+            <div class="flow-box flow-ouro">Escala</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>01</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 2: ChatGPT vs Claude vs Gemini vs OpenClaw -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Comparativo</span><span class="num">02</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">ChatGPT, Claude, Gemini vs <em class="gold">OpenClaw</em></div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="vs-box card-dark">
+          <div class="vs-name">ChatGPT</div>
+          <div class="vs-desc" style="color: var(--ouro-pale);">Chat genérico. Sem memória persistente. Sem automação. Sem identidade. Responde perguntas.</div>
+          <div style="margin-top: 8px;"><span class="badge badge-outline" style="color: var(--ouro-pale); border-color: var(--ouro-pale);">Chat</span></div>
+        </div>
+        <div class="vs-box card-dark">
+          <div class="vs-name">Claude</div>
+          <div class="vs-desc" style="color: var(--ouro-pale);">Melhor raciocínio. Projetos. Mas sem integração com canais, sem crons, sem agentes.</div>
+          <div style="margin-top: 8px;"><span class="badge badge-outline" style="color: var(--ouro-pale); border-color: var(--ouro-pale);">Chat+</span></div>
+        </div>
+        <div class="vs-box card-dark">
+          <div class="vs-name">Gemini</div>
+          <div class="vs-desc" style="color: var(--ouro-pale);">Integração Google. Bom para pesquisa. Sem server, sem autonomia, sem sistema.</div>
+          <div style="margin-top: 8px;"><span class="badge badge-outline" style="color: var(--ouro-pale); border-color: var(--ouro-pale);">Chat+</span></div>
+        </div>
+        <div class="vs-box card-solid-ouro">
+          <div class="vs-name" style="color: var(--cacao);">OpenClaw</div>
+          <div class="vs-desc" style="color: var(--cacao);">Sistema completo. Servidor próprio. Memória. Crons. Skills. Multi-agente. Canais. Autonomia real.</div>
+          <div style="margin-top: 8px;"><span class="badge badge-dark">Sistema</span></div>
+        </div>
+      </div>
+      <div class="card card-ouro" style="margin-top: 8px;">
+        <p style="text-align: center; font-size: 13px;"><strong>A diferença:</strong> ChatGPT/Claude/Gemini são ferramentas que você usa. OpenClaw é um sistema que trabalha para você.</p>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>02</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Benefícios do OpenClaw -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">Open Claw</span><span class="num">03</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Benefícios do <em class="gold">OpenClaw</em></div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card card-dark">
+          <div class="card-title">Infraestrutura</div>
+          <ul>
+            <li>Servidor próprio (seus dados)</li>
+            <li>Roda 24/7 sem intervenção</li>
+            <li>Multi-canal (Telegram, WhatsApp, Discord)</li>
+            <li>Gateway seguro com autenticação</li>
+          </ul>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Inteligência</div>
+          <ul>
+            <li>Memória persistente entre sessões</li>
+            <li>Identidade e tom de voz customizados</li>
+            <li>Multi-agente com orquestração</li>
+            <li>Escolha de modelo (Claude, GPT, Gemini)</li>
+          </ul>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Automação</div>
+          <ul>
+            <li>Crons (tarefas agendadas)</li>
+            <li>Heartbeats (monitoramento)</li>
+            <li>Skills (ferramentas plugáveis)</li>
+            <li>Sub-agentes em paralelo</li>
+          </ul>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Produção</div>
+          <ul>
+            <li>Geração de PDFs automatizada</li>
+            <li>Transcrição de áudio/vídeo</li>
+            <li>Geração de imagens por IA</li>
+            <li>Edição de PDFs por linguagem natural</li>
+          </ul>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Controle</div>
+          <ul>
+            <li>Dashboard visual (Torre Dona)</li>
+            <li>Alertas em tempo real</li>
+            <li>Auditoria de ações</li>
+            <li>Logs de todas as sessões</li>
+          </ul>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Segurança</div>
+          <ul>
+            <li>Allowlist de usuários</li>
+            <li>1Password integrado</li>
+            <li>Zero credenciais em texto claro</li>
+            <li>Permissões por ação</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>03</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 4: VPS vs Computador -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Instalação</span><span class="num">04</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">VPS vs <em class="gold">Computador</em></div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card card-dark">
+          <div class="card-title" style="font-size: 16px;">VPS (Servidor na Nuvem)</div>
+          <ul>
+            <li>Roda 24/7 sem depender do seu computador</li>
+            <li>IP fixo, acesso de qualquer lugar</li>
+            <li>Ideal para produção e agentes autônomos</li>
+            <li>Custo: ~R$25/mês (Hostinger, Hetzner)</li>
+            <li>Setup: 30 minutos</li>
+          </ul>
+          <div style="margin-top: 10px;"><span class="badge badge-ouro">Recomendado</span></div>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title" style="font-size: 16px;">Computador Local</div>
+          <ul>
+            <li>Grátis (usa o que você já tem)</li>
+            <li>Funciona offline</li>
+            <li>Agente desliga quando o PC desliga</li>
+            <li>Sem IP fixo (complica integrações)</li>
+            <li>Ideal para testes e desenvolvimento</li>
+          </ul>
+          <div style="margin-top: 10px;"><span class="badge badge-outline">Para testes</span></div>
+        </div>
+      </div>
+      <div class="flow-row" style="justify-content: center; margin-top: 12px;">
+        <div class="flow-box flow-outline">Instalar Node.js</div>
+        <div class="arrow-right">→</div>
+        <div class="flow-box flow-outline">npm i -g openclaw</div>
+        <div class="arrow-right">→</div>
+        <div class="flow-box flow-outline">openclaw onboard</div>
+        <div class="arrow-right">→</div>
+        <div class="flow-box flow-ouro">Agente Online</div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>04</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Anatomia de um Agente -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">Anatomia</span><span class="num">05</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Anatomia de um <em class="gold">agente</em></div>
+    <div class="slide-body">
+      <div class="row">
+        <div class="flex-1">
+          <div class="grid-2 gap-8">
+            <div class="card card-dark">
+              <div class="card-title">SOUL.md</div>
+              <p>Personalidade, tom de voz, comportamento. Quem o agente é.</p>
+            </div>
+            <div class="card card-dark">
+              <div class="card-title">IDENTITY.md</div>
+              <p>Nome, papel, email, nível de autonomia.</p>
+            </div>
+            <div class="card card-dark">
+              <div class="card-title">USER.md</div>
+              <p>Quem é o dono. Preferências, horários, regras.</p>
+            </div>
+            <div class="card card-dark">
+              <div class="card-title">AGENTS.md</div>
+              <p>Sistema multi-agente. Quem faz o quê em cada contexto.</p>
+            </div>
+            <div class="card card-dark">
+              <div class="card-title">TOOLS.md</div>
+              <p>Ferramentas disponíveis, APIs configuradas, paths.</p>
+            </div>
+            <div class="card card-dark">
+              <div class="card-title">MEMORY.md</div>
+              <p>Índice de memória. Decisões, lições, projetos, pendências.</p>
+            </div>
+          </div>
+        </div>
+        <div style="width: 220px;">
+          <div class="card card-solid-ouro" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+            <div class="card-title" style="font-size: 14px; text-align: center;">O agente lê esses arquivos a cada sessão</div>
+            <p style="text-align: center; margin-top: 8px;">Editar = mudar comportamento. Sem código. Sem deploy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>05</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Skills -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Skills</span><span class="num">06</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Skills que <em class="gold">usamos</em></div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card card-dark">
+          <div class="card-title">Nano Banana Pro</div>
+          <p>Geração de fotos via Gemini 3 Pro Image. Fotos da Isis com DNA visual fixo.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Nano PDF</div>
+          <p>Editar PDFs com linguagem natural. Sem Photoshop, sem InDesign.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">OpenAI Whisper API</div>
+          <p>Transcrever áudio em texto. Mentorias, reuniões, aulas.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">OpenAI Whisper Local</div>
+          <p>Transcrição offline no servidor. Sem custo de API.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Video Frames</div>
+          <p>Extrair frames de vídeos com ffmpeg. Thumbnails, análise de reels.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">OpenAI Image Gen</div>
+          <p>Geração de imagens em lote via DALL-E. Galeria automática.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Weather</div>
+          <p>Previsão do tempo. Contextualiza conteúdo com dados reais.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Skill Creator</div>
+          <p>Criar novas skills customizadas. O sistema se expande sozinho.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">1Password</div>
+          <p>Gestão segura de credenciais. Zero senha em texto claro.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Tmux</div>
+          <p>Controle remoto de terminais interativos.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Coding Agent</div>
+          <p>Delegar tarefas de código para sub-agentes especializados.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Healthcheck</div>
+          <p>Auditoria de segurança e hardening do servidor.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>06</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 7: Memória -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">Memória</span><span class="num">07</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Memória do <em class="gold">agente</em></div>
+    <div class="slide-body">
+      <div class="row">
+        <div class="flex-1">
+          <div class="col gap-8">
+            <div class="card card-dark">
+              <div class="card-title">decisions.md</div>
+              <p>Decisões permanentes. O agente nunca esquece o que foi decidido.</p>
+            </div>
+            <div class="card card-dark">
+              <div class="card-title">lessons.md</div>
+              <p>Lições aprendidas. Erros que não se repetem. Padrões identificados.</p>
+            </div>
+            <div class="card card-dark">
+              <div class="card-title">projects.md</div>
+              <p>Projetos ativos, status, próximos passos. Nada se perde.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="col gap-8">
+            <div class="card card-dark">
+              <div class="card-title">pending.md</div>
+              <p>Aguardando input. O agente cobra quando passa do prazo.</p>
+            </div>
+            <div class="card card-dark">
+              <div class="card-title">people.md</div>
+              <p>Equipe, parceiros, contatos. Contexto sobre cada pessoa.</p>
+            </div>
+            <div class="card card-solid-ouro">
+              <div class="card-title">Ciclo de memória</div>
+              <p>Sessão → Nota diária → Consolidação → Topic files → Revisão mensal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-row" style="justify-content: center; margin-top: 8px;">
+        <div class="flow-box flow-dark">Conversa</div>
+        <div class="arrow-right">→</div>
+        <div class="flow-box flow-creme">Nota diária</div>
+        <div class="arrow-right">→</div>
+        <div class="flow-box flow-creme">Consolidação</div>
+        <div class="arrow-right">→</div>
+        <div class="flow-box flow-ouro">Memória permanente</div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>07</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Higiene do Sistema -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Higiene</span><span class="num">08</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Higiene do <em class="gold">sistema</em></div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="col gap-6">
+          <div class="card card-dark">
+            <div class="card-title">Consolidação de memória</div>
+            <p>Notas diárias são consolidadas nos topic files periodicamente. Informação não se acumula sem organização.</p>
+          </div>
+          <div class="card card-dark">
+            <div class="card-title">Limpeza de lições táticas</div>
+            <p>Lições com mais de 30 dias são revisadas e deletadas se não forem mais relevantes.</p>
+          </div>
+          <div class="card card-dark">
+            <div class="card-title">Git workspace</div>
+            <p>Mudanças comitadas regularmente. Workspace limpo = sistema previsível.</p>
+          </div>
+        </div>
+        <div class="col gap-6">
+          <div class="card card-dark">
+            <div class="card-title">Indexação de memória</div>
+            <p>Comando <span style="font-family: var(--mono); font-size: 11px;">openclaw memory index</span> atualiza o índice semântico para buscas rápidas.</p>
+          </div>
+          <div class="card card-dark">
+            <div class="card-title">Revisão semanal</div>
+            <p>Toda segunda: revisar projetos, consolidar notas, atualizar status.</p>
+          </div>
+          <div class="card card-solid-ouro">
+            <div class="card-title">Regra inviolável</div>
+            <p>Antes de qualquer compactação de contexto: extrair decisões e lições primeiro. Nunca perder informação.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>08</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Segurança -->
+<div class="slide">
+  <div class="inner bg-cacao">
+    <div class="slide-header"><span class="sec">Segurança</span><span class="num">09</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title" style="color: var(--marfim);">Nosso sistema de <em><span class="gold">segurança</span></em></div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card card-ouro">
+          <div class="card-title">Acesso controlado</div>
+          <ul>
+            <li>dmPolicy: allowlist</li>
+            <li>Só Isis comanda</li>
+            <li>Qualquer outro usuário é bloqueado</li>
+          </ul>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title">Credenciais</div>
+          <ul>
+            <li>1Password vault "Dona"</li>
+            <li>Zero hardcode de senhas</li>
+            <li>Rotação trimestral de keys</li>
+          </ul>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title">Permissões</div>
+          <ul>
+            <li>Menor privilégio possível</li>
+            <li>Ações sensíveis pedem aprovação</li>
+            <li>Nunca posta sem autorização</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-top: 10px;">
+        <div class="card card-ouro">
+          <div class="card-title">Gates de aprovação</div>
+          <ul>
+            <li>Verde: executa automaticamente</li>
+            <li>Vermelho: espera ok de Isis</li>
+          </ul>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title">Monitoramento</div>
+          <ul>
+            <li>Audit semanal automatizado</li>
+            <li>Boot check a cada restart</li>
+            <li>Alertas em tempo real</li>
+          </ul>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title">Updates</div>
+          <ul>
+            <li>Nunca atualiza sem supervisão</li>
+            <li>Zero automação de updates</li>
+            <li>Rollback documentado</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>09</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Crons e Heartbeats -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">Automação</span><span class="num">10</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Crons e <em class="gold">Heartbeats</em></div>
+    <div class="slide-body">
+      <div class="row">
+        <div class="flex-1">
+          <div class="card card-dark" style="margin-bottom: 8px;">
+            <div class="card-title">O que são?</div>
+            <p><strong>Crons:</strong> tarefas agendadas que rodam automaticamente. O agente trabalha mesmo enquanto você dorme.</p>
+            <p style="margin-top: 4px;"><strong>Heartbeats:</strong> pulso periódico que verifica a saúde do sistema. Se algo está errado, alerta imediatamente.</p>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="card card-ouro" style="margin-bottom: 8px;">
+            <div class="card-title">Heartbeat checklist</div>
+            <ul class="check-list">
+              <li><span class="check-box">✓</span> Pendências com mais de 3 dias?</li>
+              <li><span class="check-box">✓</span> Projetos parados há 7+ dias?</li>
+              <li><span class="check-box">✓</span> Crons falharam?</li>
+              <li><span class="check-box">✓</span> Nota diária criada?</li>
+              <li><span class="check-box">✓</span> Notas para consolidar?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-table" style="font-size: 10px; margin-top: 4px;">
+        <table class="slide-table">
+          <tr><th>Cron</th><th>Frequência</th><th>O que faz</th></tr>
+          <tr><td>health-monitor</td><td>A cada 1 hora</td><td>Verifica saúde do gateway, APIs, integrações</td></tr>
+          <tr><td>checagem-proativa</td><td>4x ao dia</td><td>Analisa pendências, projetos parados, anomalias</td></tr>
+          <tr><td>backup-diario</td><td>3h da manhã</td><td>Backup automático de memória e configurações</td></tr>
+          <tr><td>watchdog-crons</td><td>9h da manhã</td><td>Verifica se todos os crons estão rodando</td></tr>
+          <tr><td>organizacao-memoria</td><td>23h</td><td>Consolida notas diárias nos topic files</td></tr>
+          <tr><td>security-audit</td><td>Semanal (dom)</td><td>Auditoria de segurança completa</td></tr>
+          <tr><td>consolidacao-memoria</td><td>Semanal (seg)</td><td>Revisão e limpeza de memória</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>10</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 11: Arquitetura de Agentes -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Arquitetura</span><span class="num">11</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Arquitetura de <em class="gold">agentes</em></div>
+    <div class="slide-body">
+      <div class="row">
+        <div class="flex-1">
+          <div class="card card-dark" style="margin-bottom: 8px;">
+            <div class="card-title">Hub central + tópicos</div>
+            <p>Uma única instância do OpenClaw assume identidades diferentes conforme o tópico do Telegram. Cada agente tem seu espaço, sua personalidade e seu papel.</p>
+          </div>
+          <div class="card card-ouro">
+            <div class="card-title">Como funciona</div>
+            <ul>
+              <li>1 gateway, 1 modelo, N identidades</li>
+              <li>Tópico determina qual agente responde</li>
+              <li>Cada agente tem soul, identity, knowledge</li>
+              <li>Orquestração via sessions_spawn</li>
+              <li>Handoffs via completion events</li>
+            </ul>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="card card-dark" style="text-align: center;">
+            <div class="card-title" style="text-align: center;">Fluxo de uma tarefa complexa</div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 8px;">
+              <div class="flow-box flow-ouro" style="width: 200px;">Isis pede no chat</div>
+              <div style="font-size: 16px; color: var(--ouro);">↓</div>
+              <div class="flow-box flow-dark" style="width: 200px; background: var(--ouro-deep); color: var(--marfim);">Dona recebe e delega</div>
+              <div style="font-size: 16px; color: var(--ouro);">↓</div>
+              <div class="flow-box flow-dark" style="width: 200px; background: var(--ouro-deep); color: var(--marfim);">Atlas monta o plano</div>
+              <div style="font-size: 16px; color: var(--ouro);">↓</div>
+              <div style="display: flex; gap: 8px;">
+                <div class="flow-box" style="background: rgba(180,166,140,.2); border: 1px solid var(--ouro); font-size: 10px;">Masterson escreve</div>
+                <div style="font-size: 14px; color: var(--ouro); align-self: center;">→</div>
+                <div class="flow-box" style="background: rgba(180,166,140,.2); border: 1px solid var(--ouro); font-size: 10px;">Aurora formata</div>
+              </div>
+              <div style="font-size: 16px; color: var(--ouro);">↓</div>
+              <div class="flow-box flow-ouro" style="width: 200px;">PDF entregue para Isis</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>11</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 12: Organograma -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">Organograma</span><span class="num">12</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Nosso <em class="gold">time</em></div>
+    <div class="slide-body">
+      <!-- Isis at top -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+        <div class="org-node org-node-ouro" style="font-size: 14px; padding: 10px 28px;">Isis Moreira<small>CEO</small></div>
+        <div class="org-line-v"></div>
+        <!-- Dona -->
+        <div class="org-node org-node-dark" style="font-size: 13px; padding: 8px 24px;">Dona<small>COO</small></div>
+        <div class="org-line-v"></div>
+        <!-- Atlas + Eva -->
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <div class="org-node org-node-dark">Atlas<small>Estrategista</small></div>
+            <div class="org-line-v"></div>
+            <!-- Team grid -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+              <div class="org-node org-node-outline" style="font-size: 10px; padding: 6px 10px;">Masterson<small>Escritor</small></div>
+              <div class="org-node org-node-outline" style="font-size: 10px; padding: 6px 10px;">Aurora<small>Designer</small></div>
+              <div class="org-node org-node-outline" style="font-size: 10px; padding: 6px 10px;">Vega<small>Social</small></div>
+              <div class="org-node org-node-outline" style="font-size: 10px; padding: 6px 10px;">Harpia<small>Vídeo</small></div>
+              <div class="org-node org-node-outline" style="font-size: 10px; padding: 6px 10px;">Helios<small>Tráfego</small></div>
+              <div class="org-node org-node-outline" style="font-size: 10px; padding: 6px 10px;">Orion<small>Dev</small></div>
+              <div class="org-node org-node-outline" style="font-size: 10px; padding: 6px 10px;">Nexa<small>Imagem</small></div>
+              <div class="org-node org-node-outline" style="font-size: 10px; padding: 6px 10px;">Doninha<small>Bot</small></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <div class="org-node org-node-dark">Eva<small>Arquiteta</small></div>
+            <div class="org-line-v" style="height: 8px;"></div>
+            <div style="font-size: 9px; color: var(--mirror); text-align: center; max-width: 100px;">Cria e evolui agentes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>12</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 13: Framework de Distribuição de Tráfego -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Tráfego</span><span class="num">13</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Framework de <em class="gold">distribuição</em></div>
+    <div class="slide-body">
+      <div class="row">
+        <div class="flex-1 col">
+          <div class="card card-dark">
+            <div class="card-title">Como funciona</div>
+            <p>Todo post/reel novo passa por um ciclo de teste e classificação automática baseada em custo por seguidor.</p>
+          </div>
+          <div class="flow-row" style="flex-wrap: wrap; justify-content: center;">
+            <div class="flow-box flow-ouro">Novo post</div>
+            <div class="arrow-right">→</div>
+            <div class="flow-box flow-dark">Teste R$10/1dia</div>
+            <div class="arrow-right">→</div>
+            <div class="flow-box flow-creme">Classificar</div>
+          </div>
+        </div>
+        <div class="flex-1 col">
+          <div class="card card-solid-ouro" style="text-align: center;">
+            <div class="card-title" style="font-size: 14px;">Série A</div>
+            <p>Custo/seguidor &lt; R$0,50</p>
+            <p style="font-weight: 700; font-size: 16px; margin-top: 4px;">R$30/dia</p>
+          </div>
+          <div class="card card-ouro" style="text-align: center;">
+            <div class="card-title" style="font-size: 14px;">Série B</div>
+            <p>Custo/seguidor R$0,50 a R$0,70</p>
+            <p style="font-weight: 700; font-size: 16px; margin-top: 4px;">R$10/dia</p>
+          </div>
+          <div class="card card-outline" style="text-align: center;">
+            <div class="card-title" style="font-size: 14px; color: var(--terracota);">Cortado</div>
+            <p>Custo/seguidor &gt; R$0,70</p>
+            <p style="font-weight: 700; font-size: 16px; margin-top: 4px; color: var(--terracota);">R$0/dia</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-dark" style="margin-top: 8px;">
+        <p style="text-align: center;"><strong>Report diário:</strong> gasto total, séries ativas, custo por seguidor, novos seguidores</p>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>13</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 14: Framework de PDF -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">PDF Pipeline</span><span class="num">14</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Framework de geração de <em class="gold">PDF</em></div>
+    <div class="slide-body">
+      <div class="row" style="align-items: flex-start;">
+        <div class="flex-1 col">
+          <div class="card card-dark">
+            <div class="card-title">Pipeline unificado</div>
+            <p>Todos os agentes seguem o mesmo processo para gerar qualquer PDF.</p>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="flow-box flow-dark" style="width: 250px;">1. Conteúdo (Masterson ou agente)</div>
+            <div style="font-size: 16px; color: var(--ouro);">↓</div>
+            <div class="flow-box flow-ouro" style="width: 250px;">2. HTML (Template C + Design System)</div>
+            <div style="font-size: 16px; color: var(--ouro);">↓</div>
+            <div class="flow-box flow-dark" style="width: 250px;">3. PDF (Puppeteer no servidor)</div>
+            <div style="font-size: 16px; color: var(--ouro);">↓</div>
+            <div class="flow-box flow-ouro" style="width: 250px;">4. Entrega para Isis</div>
+          </div>
+        </div>
+        <div class="flex-1 col">
+          <div class="card card-ouro">
+            <div class="card-title">Design System ISIS v7</div>
+            <ul>
+              <li>Paleta: Marfim, Creme, Cacau, Ouro</li>
+              <li>Fontes: DM Serif Text, DM Sans, IBM Plex Mono</li>
+              <li>Template C "Bold Statement"</li>
+              <li>Containers com regra de cor unificada</li>
+            </ul>
+          </div>
+          <div class="card card-ouro">
+            <div class="card-title">Regras invioláveis</div>
+            <ul>
+              <li>height: 297mm fixo por página</li>
+              <li>Conteúdo distribuído manualmente</li>
+              <li>Google Fonts no head</li>
+              <li>Puppeteer local (fallback: YakPDF)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>14</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 15: Framework da Doninha -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Bot</span><span class="num">15</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Framework da <em class="gold">Doninha</em></div>
+    <div class="slide-body">
+      <div class="row">
+        <div class="flex-1 col">
+          <div class="card card-dark">
+            <div class="card-title">O que é</div>
+            <p>Bot de atendimento para mentorandos. Responde dúvidas com base na transcrição completa dos cursos da Isis.</p>
+          </div>
+          <div class="card card-dark">
+            <div class="card-title">Pipeline de alimentação</div>
+            <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 6px;">
+              <div class="flow-row">
+                <div class="flow-box flow-ouro" style="font-size: 10px; flex: 1;">Cademi (vídeos)</div>
+                <div class="arrow-right" style="font-size: 14px;">→</div>
+                <div class="flow-box flow-dark" style="font-size: 10px; flex: 1;">FFmpeg (áudio)</div>
+              </div>
+              <div class="flow-row">
+                <div class="flow-box flow-dark" style="font-size: 10px; flex: 1;">Whisper (texto)</div>
+                <div class="arrow-right" style="font-size: 14px;">→</div>
+                <div class="flow-box flow-ouro" style="font-size: 10px; flex: 1;">Base indexada</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1 col">
+          <div class="card card-ouro">
+            <div class="card-title">3 outputs do mesmo material</div>
+            <ul>
+              <li>Base de conhecimento completa (todo o time)</li>
+              <li>Bot Doninha (responde mentorandos)</li>
+              <li>FAQs estruturados (suporte humano)</li>
+            </ul>
+          </div>
+          <div class="card card-solid-ouro">
+            <div class="card-title">Custo estimado</div>
+            <p>Whisper API: US$0,006/min. 100h de conteúdo ≈ US$36. Custo quase zero para um bot que atende 24/7.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>15</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 16: Base de conhecimento do Masterson -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">Knowledge Base</span><span class="num">16</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Base de conhecimento do <em class="gold">Masterson</em></div>
+    <div class="slide-body">
+      <div class="grid-3" style="height: 100%;">
+        <div class="card card-dark">
+          <div class="card-title">Big Black Book</div>
+          <p>Agora Publishing. Filosofia de vendas, 10 regras do Halbert, headlines, lift notes, estrutura de franquias editoriais.</p>
+          <div style="margin-top: 8px;"><span class="badge badge-ouro">Fundamento</span></div>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Architecture of Persuasion</div>
+          <p>5 elementos da carta de vendas. Complexo Emocional Central. Fio Dourado. Fechamento falso. A metáfora do romance.</p>
+          <div style="margin-top: 8px;"><span class="badge badge-ouro">Estrutura</span></div>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Copy Logic</div>
+          <p>Peer Review + Crítica CUB (confuso, inverossímil, tedioso) + Teste do Banco de 4 Pés. Substitui a crítica destrutiva.</p>
+          <div style="margin-top: 8px;"><span class="badge badge-ouro">Método</span></div>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">How I Built My Wealth</div>
+          <p>7 requisitos para construir riqueza. Habilidades financeiramente valiosas. Copywriting como skill de alto valor.</p>
+          <div style="margin-top: 8px;"><span class="badge badge-ouro">Mentalidade</span></div>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Ideias que Colam</div>
+          <p>Framework SUCESSOS: simplicidade, surpresa, concretude, credibilidade, emoções, histórias. Maldição do conhecimento.</p>
+          <div style="margin-top: 8px;"><span class="badge badge-ouro">Comunicação</span></div>
+        </div>
+        <div class="card card-solid-ouro">
+          <div class="card-title">Resultado</div>
+          <p>Masterson e Vega compartilham a mesma base. Todo output de copy passa por esses frameworks antes de sair.</p>
+          <div style="margin-top: 8px;"><span class="badge badge-dark">5 livros indexados</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>16</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 17: A importância do Atlas -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Atlas</span><span class="num">17</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">A importância do <em class="gold">Atlas</em></div>
+    <div class="slide-body">
+      <div class="row">
+        <div class="flex-1 col">
+          <div class="card card-dark">
+            <div class="card-title">Estrategista e Orquestrador</div>
+            <p>Atlas não executa. Atlas planeja, mapeia riscos e coordena cadeias de produção com 2 ou mais agentes em sequência.</p>
+          </div>
+          <div class="card card-dark">
+            <div class="card-title">Por que ele existe?</div>
+            <ul>
+              <li>Sem Atlas: cada agente trabalha isolado</li>
+              <li>Com Atlas: cadeias coordenadas com gates de aprovação</li>
+              <li>Resultado: output final passa por múltiplos especialistas</li>
+            </ul>
+          </div>
+        </div>
+        <div class="flex-1 col">
+          <div class="card card-ouro">
+            <div class="card-title">O que ele faz</div>
+            <ul>
+              <li>Lê documentações antes de agir</li>
+              <li>Mapeia riscos antes de executar</li>
+              <li>Propõe planos estruturados</li>
+              <li>Spawna cada step via sessions_spawn</li>
+              <li>Monitora completion events</li>
+              <li>Atualiza projects.md a cada step</li>
+            </ul>
+          </div>
+          <div class="card card-solid-ouro">
+            <div class="card-title">Regra de ouro</div>
+            <p>Gates verdes: segue automático. Gates vermelhos (output público): para e espera aprovação de Isis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>17</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 18: A importância da Dona -->
+<div class="slide">
+  <div class="inner bg-cacao">
+    <div class="slide-header"><span class="sec">Dona</span><span class="num">18</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title" style="color: var(--marfim);">A importância da <em><span class="gold">Dona</span></em></div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card card-ouro">
+          <div class="card-title">COO do sistema</div>
+          <ul>
+            <li>Coordenação geral de todos os agentes</li>
+            <li>Análise de dados e métricas</li>
+            <li>Estratégia e execução direta</li>
+            <li>Braço direito operacional de Isis</li>
+          </ul>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title">O que a diferencia</div>
+          <ul>
+            <li>Tem opinião. Pode discordar.</li>
+            <li>Questiona decisões erradas (discretamente)</li>
+            <li>Proativa: sugere antes de ser pedida</li>
+            <li>Cofundadora operacional, não secretária</li>
+          </ul>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title">Análise diária (08h)</div>
+          <ul>
+            <li>Performance do conteúdo do dia anterior</li>
+            <li>Métricas de vendas e anomalias</li>
+            <li>Tendências do nicho</li>
+            <li>Insights estruturados</li>
+          </ul>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title">Segurança e limites</div>
+          <ul>
+            <li>Nunca usa voz/nome de Isis sem aprovação</li>
+            <li>Nunca posta sozinha no Instagram</li>
+            <li>Nunca toma decisões estratégicas maiores</li>
+            <li>Menor privilégio possível, sempre</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>18</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 19: Outros usos -->
+<div class="slide">
+  <div class="inner bg-marfim">
+    <div class="slide-header"><span class="sec">Aplicações</span><span class="num">19</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Outros usos e <em class="gold">aplicações</em></div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card card-dark">
+          <div class="card-title">PDFs para clientes</div>
+          <p>Diagnósticos, planos de ação, relatórios personalizados em minutos.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Social media omnichannel</div>
+          <p>Posts, carrosséis, legendas, threads. Pesquisa de tendências e scraping.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Roteiros de vídeo</div>
+          <p>VSLs, reels, briefings de edição. Storytelling orientado a retenção.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Resumo pós-mentoria</div>
+          <p>Transcrição automática + resumo estruturado + action items.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Geração de fotos</div>
+          <p>Fotos ultrarrealistas com DNA visual fixo. Consistência de marca.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Geração de imagens</div>
+          <p>DALL-E e Gemini em lote. Galeria automática para seleção.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Carrossel em massa</div>
+          <p>Gerar dezenas de carrosséis com conteúdo educativo automaticamente.</p>
+        </div>
+        <div class="card card-dark">
+          <div class="card-title">Funis automáticos</div>
+          <p>Páginas de captura, sequências de email, checkout. Pipeline completo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>19</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 20: Próximos passos -->
+<div class="slide">
+  <div class="inner bg-creme">
+    <div class="slide-header"><span class="sec">Próximos passos</span><span class="num">20</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title">Próximos 7 <em class="gold">dias</em></div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card card-solid-ouro" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="font-family: var(--serif); font-size: 40px; font-style: italic; margin-bottom: 6px;">01</div>
+          <div class="card-title" style="font-size: 15px;">Escala de tráfego</div>
+          <p>Ativar framework de distribuição. Testar 10 posts. Classificar em Série A e B. Escalar os vencedores.</p>
+        </div>
+        <div class="card card-solid-ouro" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="font-family: var(--serif); font-size: 40px; font-style: italic; margin-bottom: 6px;">02</div>
+          <div class="card-title" style="font-size: 15px;">Nota 10/10 nos agentes</div>
+          <p>Calibrar cada agente com feedback real. Base de conhecimento completa. Output consistente em tudo.</p>
+        </div>
+        <div class="card card-solid-ouro" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="font-family: var(--serif); font-size: 40px; font-style: italic; margin-bottom: 6px;">03</div>
+          <div class="card-title" style="font-size: 15px;">Finalização da Torre Dona</div>
+          <p>HTTPS ativo. Painéis conectados. Dashboard completo operacional. Monitoramento visual 24/7.</p>
+        </div>
+      </div>
+      <div class="card card-dark" style="margin-top: 12px;">
+        <ul class="check-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px;">
+          <li style="color: var(--ouro-pale);"><span class="check-box">✓</span> App Meta em modo Live</li>
+          <li style="color: var(--ouro-pale);"><span class="check-box">✓</span> Token via Marketing Essencial</li>
+          <li style="color: var(--ouro-pale);"><span class="check-box">✓</span> Livro "Acorda" na base</li>
+          <li style="color: var(--ouro-pale);"><span class="check-box">✓</span> Pipeline Cademi ativo</li>
+          <li style="color: var(--ouro-pale);"><span class="check-box">✓</span> HTTPS na Torre Dona</li>
+          <li style="color: var(--ouro-pale);"><span class="check-box">✓</span> Bot Doninha MVP</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>20</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 21: Lições -->
+<div class="slide">
+  <div class="inner bg-cacao">
+    <div class="slide-header"><span class="sec">Lições</span><span class="num">21</span></div>
+    <div class="slide-line"></div>
+    <div class="slide-title" style="color: var(--marfim);">Principais <em><span class="gold">lições</span></em></div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card card-ouro">
+          <div class="card-title" style="font-size: 15px;">Pare para construir</div>
+          <p>2 semanas sem entregar para construir infraestrutura. O retorno já começou.</p>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title" style="font-size: 15px;">IA não é chat, é sistema</div>
+          <p>A diferença entre usar ChatGPT e ter um sistema é a diferença entre perguntar e delegar.</p>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title" style="font-size: 15px;">Identidade importa</div>
+          <p>Um agente sem soul, sem tom, sem regras é genérico. Com identidade, ele vira parte do time.</p>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title" style="font-size: 15px;">Memória é poder</div>
+          <p>O agente que lembra das suas decisões, lições e projetos é infinitamente mais útil que um que começa do zero.</p>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title" style="font-size: 15px;">Segurança desde o dia 1</div>
+          <p>Allowlist, 1Password, gates de aprovação. Não é paranoia, é profissionalismo.</p>
+        </div>
+        <div class="card card-ouro">
+          <div class="card-title" style="font-size: 15px;">O agente é seu sócio operacional</div>
+          <p>Não é secretária. É cofundador que trabalha 24h, não erra tom de voz e entrega em minutos.</p>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 16px;">
+        <div style="width: 80px; height: 2px; background: var(--ouro); margin: 0 auto 10px auto;"></div>
+        <div style="font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--marfim);">Isis Moreira</div>
+        <div style="font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 3px; color: var(--ouro-deep); margin-top: 4px;">Março 2026</div>
+      </div>
+    </div>
+    <div class="slide-footer"><span>DonaSystem</span><span>21</span></div>
+  </div>
+</div>
+
+</body>
+</html>

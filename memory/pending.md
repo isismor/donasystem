@@ -9,6 +9,14 @@
 - [ ] Confirmar se usa Twitter/X ativamente (para priorizar ou nao essa integracao)
 - [ ] Confirmar se usa Notion ativamente
 
+## Torre Dona — Hub (11/03/2026)
+
+- [ ] Confirmar que hub.donasystem.com.br conecta ao gateway após redeploy com `NEXT_PUBLIC_GATEWAY_PROTOCOL=ws`
+- [ ] Configurar HTTPS/SSL no Coolify para o hub
+- [ ] Remover flags `dangerouslyDisableDeviceAuth` e `allowInsecureAuth` do gateway após SSL
+- [ ] Refazer tradução da UI para português (só strings visíveis, sem tocar nomes de código)
+- [ ] Configurar token de autenticação no gateway (atualmente NOT SET)
+
 ## Pendencias do Sistema (10/03/2026)
 
 - [ ] Mission Control via Google Sheets (aguarda Google OAuth)
