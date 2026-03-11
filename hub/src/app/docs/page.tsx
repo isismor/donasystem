@@ -12,7 +12,7 @@ export default function DocsPage() {
           theme: 'kepler',
           darkMode: true,
           hideModels: false,
-          hideBaixarButton: false,
+          hideDownloadButton: false,
           defaultHttpClient: {
             targetKey: 'shell',
             clientKey: 'curl',

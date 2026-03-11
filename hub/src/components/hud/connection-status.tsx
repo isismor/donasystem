@@ -26,12 +26,12 @@ export function ConnectionStatus({
 
   const getStatusText = () => {
     if (isConnected) {
-      return 'Conectado'
+      return 'Connected'
     }
     if (connection.reconnectAttempts > 0) {
-      return `Reconectando... (${connection.reconnectAttempts}/10)`
+      return `Reconnecting... (${connection.reconnectAttempts}/10)`
     }
-    return 'Desconectado'
+    return 'Disconnected'
   }
 
   return (

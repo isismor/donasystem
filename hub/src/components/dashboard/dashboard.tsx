@@ -127,7 +127,7 @@ export function Dashboard() {
           <>
             <div className="cursor-pointer" onClick={() => navigateToPanel('sessions')}>
               <MetricCard
-                label="Sessões Ativas"
+                label="Active Sessions"
                 value={claudeStats?.active_sessions ?? activeSessions}
                 total={claudeStats?.total_sessions ?? sessions.length}
                 icon={<SessionIcon />}
@@ -165,7 +165,7 @@ export function Dashboard() {
           <>
             <div className="cursor-pointer" onClick={() => navigateToPanel('history')}>
               <MetricCard
-                label="Sessões Ativas"
+                label="Active Sessions"
                 value={activeSessions}
                 total={sessions.length}
                 icon={<SessionIcon />}
@@ -204,10 +204,10 @@ export function Dashboard() {
 
       {/* Three-column layout */}
       <div className="grid lg:grid-cols-3 gap-4">
-        {/* Saúde do Sistema */}
+        {/* System Health */}
         <div className="panel">
           <div className="panel-header">
-            <h3 className="text-sm font-semibold text-foreground">Saúde do Sistema</h3>
+            <h3 className="text-sm font-semibold text-foreground">System Health</h3>
             {isLocal ? (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
@@ -223,13 +223,13 @@ export function Dashboard() {
             ) : (
               <HealthRow
                 label="Gateway"
-                value={connection.isConnected ? 'Conectado' : 'Desconectado'}
+                value={connection.isConnected ? 'Connected' : 'Disconnected'}
                 status={connection.isConnected ? 'good' : 'bad'}
               />
             )}
             {memPct != null && (
               <HealthRow
-                label="Memória"
+                label="Memory"
                 value={`${memPct}%`}
                 status={memPct > 90 ? 'bad' : memPct > 70 ? 'warn' : 'good'}
                 bar={memPct}
@@ -243,7 +243,7 @@ export function Dashboard() {
               />
             )}
             {systemStats?.uptime != null && (
-              <HealthRow label="Tempo ativo" value={formatUptime(systemStats.uptime)} status="good" />
+              <HealthRow label="Uptime" value={formatUptime(systemStats.uptime)} status="good" />
             )}
             {dbStats && (
               <HealthRow
@@ -398,7 +398,7 @@ export function Dashboard() {
                       dbStats.backup.age_hours > 48 ? 'text-[#9e5c50]' :
                       dbStats.backup.age_hours > 24 ? 'text-[#c49a6c]' : 'text-[#b4a68c]'
                     }`}>
-                      {dbStats.backup.age_hours < 1 ? '<1h atrás' : `${dbStats.backup.age_hours}h atrás`}
+                      {dbStats.backup.age_hours < 1 ? '<1h ago' : `${dbStats.backup.age_hours}h ago`}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
@@ -511,14 +511,14 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* Ações Rápidas */}
+      {/* Quick Actions */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
         {!isLocal && (
-          <QuickAction label="Iniciar Agente" desc="Launch sub-agent" tab="spawn" icon={<SpawnActionIcon />} onNavigate={navigateToPanel} />
+          <QuickAction label="Spawn Agent" desc="Launch sub-agent" tab="spawn" icon={<SpawnActionIcon />} onNavigate={navigateToPanel} />
         )}
         <QuickAction label="View Logs" desc="Real-time viewer" tab="logs" icon={<LogActionIcon />} onNavigate={navigateToPanel} />
-        <QuickAction label="Tarefas" desc="Kanban view" tab="tasks" icon={<TaskActionIcon />} onNavigate={navigateToPanel} />
-        <QuickAction label="Memória" desc="Knowledge base" tab="memory" icon={<MemóriaActionIcon />} onNavigate={navigateToPanel} />
+        <QuickAction label="Task Board" desc="Kanban view" tab="tasks" icon={<TaskActionIcon />} onNavigate={navigateToPanel} />
+        <QuickAction label="Memory" desc="Knowledge base" tab="memory" icon={<MemoryActionIcon />} onNavigate={navigateToPanel} />
         {isLocal ? (
           <QuickAction label="Sessions" desc="Claude Code sessions" tab="sessions" icon={<SessionIcon />} onNavigate={navigateToPanel} />
         ) : (
@@ -662,7 +662,7 @@ function formatBytes(bytes: number): string {
 
 function langColor(lang: string): string {
   const colors: Record<string, string> = {
-    TipoScript: 'bg-blue-500',
+    TypeScript: 'bg-blue-500',
     JavaScript: 'bg-yellow-500',
     Python: 'bg-[#b4a68c]',
     Rust: 'bg-orange-500',
@@ -749,7 +749,7 @@ function TaskActionIcon() {
     </svg>
   )
 }
-function MemóriaActionIcon() {
+function MemoryActionIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
       <ellipse cx="8" cy="8" rx="6" ry="3" />

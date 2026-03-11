@@ -8,7 +8,7 @@ interface NavItem {
   id: string
   label: string
   icon: React.ReactNode
-  priority: boolean // Mostrar in mobile bottom bar
+  priority: boolean // Show in mobile bottom bar
   requiresGateway?: boolean
 }
 
@@ -27,7 +27,7 @@ const navGroups: NavGroup[] = [
       { id: 'tasks', label: 'Tasks', icon: <TasksIcon />, priority: true },
       { id: 'sessions', label: 'Sessions', icon: <SessionsIcon />, priority: false },
       { id: 'office', label: 'Office', icon: <OfficeIcon />, priority: false },
-      { id: 'documents', label: 'Documentos', icon: <DocumentosIcon />, priority: false },
+      { id: 'documents', label: 'Documents', icon: <DocumentsIcon />, priority: false },
     ],
   },
   {
@@ -38,7 +38,7 @@ const navGroups: NavGroup[] = [
       { id: 'logs', label: 'Logs', icon: <LogsIcon />, priority: false },
       { id: 'tokens', label: 'Tokens', icon: <TokensIcon />, priority: false },
       { id: 'agent-costs', label: 'Agent Costs', icon: <AgentCostsIcon />, priority: false },
-      { id: 'memory', label: 'Memória', icon: <MemóriaIcon />, priority: false },
+      { id: 'memory', label: 'Memory', icon: <MemoryIcon />, priority: false },
     ],
   },
   {
@@ -56,7 +56,7 @@ const navGroups: NavGroup[] = [
     id: 'admin',
     label: 'ADMINISTRAR',
     items: [
-      { id: 'users', label: 'Usuários', icon: <UsuáriosIcon />, priority: false },
+      { id: 'users', label: 'Users', icon: <UsersIcon />, priority: false },
       { id: 'audit', label: 'Audit', icon: <AuditIcon />, priority: false },
       { id: 'history', label: 'History', icon: <HistoryIcon />, priority: false },
       { id: 'gateways', label: 'Gateways', icon: <GatewaysIcon />, priority: false },
@@ -64,7 +64,7 @@ const navGroups: NavGroup[] = [
       { id: 'integrations', label: 'Integrations', icon: <IntegrationsIcon />, priority: false },
       { id: 'workspaces', label: 'Workspaces', icon: <SuperAdminIcon />, priority: false },
       { id: 'super-admin', label: 'Super Admin', icon: <SuperAdminIcon />, priority: false },
-      { id: 'settings', label: 'Configurações', icon: <ConfiguraçõesIcon />, priority: false },
+      { id: 'settings', label: 'Settings', icon: <SettingsIcon />, priority: false },
     ],
   },
 ]
@@ -73,7 +73,7 @@ const navGroups: NavGroup[] = [
 const allNavItems = navGroups.flatMap(g => g.items)
 
 export function NavRail() {
-  const { activeTab, connection, dashboardMode, sidebarExpandired, collapsedGroups, toggleSidebar, toggleGroup } = useMissionControl()
+  const { activeTab, connection, dashboardMode, sidebarExpanded, collapsedGroups, toggleSidebar, toggleGroup } = useMissionControl()
   const navigateToPanel = useNavigateToPanel()
   const isLocal = dashboardMode === 'local'
 
@@ -97,25 +97,25 @@ export function NavRail() {
         aria-label="Main navigation"
         style={{ background: 'hsl(var(--sidebar))', borderRight: '1px solid hsl(var(--sidebar-border))' }}
         className={`hidden md:flex flex-col shrink-0 transition-all duration-200 ease-in-out ${
-          sidebarExpandired ? 'w-[220px]' : 'w-14'
+          sidebarExpanded ? 'w-[220px]' : 'w-14'
         }`}
       >
         {/* Header: Logo + toggle */}
-        <div className={`flex items-center shrink-0 ${sidebarExpandired ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
+        <div className={`flex items-center shrink-0 ${sidebarExpanded ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
           <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'hsl(var(--sidebar-active))' }}>
             <span className="font-bold text-xs" style={{ color: 'hsl(var(--sidebar))' }}>TD</span>
           </div>
-          {sidebarExpandired && (
+          {sidebarExpanded && (
             <span className="text-sm font-semibold truncate flex-1" style={{ color: 'hsl(var(--sidebar-foreground))' }}>Torre Dona</span>
           )}
           <button
             onClick={toggleSidebar}
-            title={sidebarExpandired ? 'Recolher sidebar' : 'Expandir sidebar'}
+            title={sidebarExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
             className="w-7 h-7 rounded-md flex items-center justify-center transition-smooth shrink-0"
             style={{ color: 'hsl(var(--sidebar-muted))' }}
           >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-              {sidebarExpandired ? (
+              {sidebarExpanded ? (
                 <polyline points="10,3 5,8 10,13" />
               ) : (
                 <polyline points="6,3 11,8 6,13" />
@@ -130,11 +130,11 @@ export function NavRail() {
             <div key={group.id}>
               {/* Divider between groups (not before first) */}
               {groupIndex > 0 && (
-                <div className={`my-1.5 ${sidebarExpandired ? 'mx-3' : 'mx-2'}`} style={{ borderTop: '1px solid hsl(var(--sidebar-border))' }} />
+                <div className={`my-1.5 ${sidebarExpanded ? 'mx-3' : 'mx-2'}`} style={{ borderTop: '1px solid hsl(var(--sidebar-border))' }} />
               )}
 
               {/* Group header (expanded mode, only for groups with labels) */}
-              {sidebarExpandired && group.label && (
+              {sidebarExpanded && group.label && (
                 <button
                   onClick={() => toggleGroup(group.id)}
                   className="w-full flex items-center justify-between px-3 mt-3 mb-1 group/header"
@@ -161,10 +161,10 @@ export function NavRail() {
               {/* Group items */}
               <div
                 className={`overflow-hidden transition-all duration-150 ease-in-out ${
-                  sidebarExpandired && collapsedGroups.includes(group.id) ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
+                  sidebarExpanded && collapsedGroups.includes(group.id) ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
                 }`}
               >
-                <div className={`flex flex-col ${sidebarExpandired ? 'gap-0.5 px-2' : 'items-center gap-1'}`}>
+                <div className={`flex flex-col ${sidebarExpanded ? 'gap-0.5 px-2' : 'items-center gap-1'}`}>
                   {group.items.map((item) => {
                     const disabled = isLocal && item.requiresGateway
                     return (
@@ -172,7 +172,7 @@ export function NavRail() {
                         key={item.id}
                         item={item}
                         active={activeTab === item.id}
-                        expanded={sidebarExpandired}
+                        expanded={sidebarExpanded}
                         disabled={disabled}
                         onClick={() => { if (!disabled) navigateToPanel(item.id) }}
                       />
@@ -185,7 +185,7 @@ export function NavRail() {
         </div>
 
         {/* Connection indicator */}
-        <div className={`shrink-0 py-3 flex ${sidebarExpandired ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
+        <div className={`shrink-0 py-3 flex ${sidebarExpanded ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
           <div
             className={`w-2.5 h-2.5 rounded-full shrink-0 ${
               isLocal
@@ -194,7 +194,7 @@ export function NavRail() {
             }`}
             title={isLocal ? 'Modo Local' : connection.isConnected ? 'Gateway conectado' : 'Gateway desconectado'}
           />
-          {sidebarExpandired && (
+          {sidebarExpanded && (
             <span className="text-xs truncate" style={{ color: 'hsl(var(--sidebar-muted))' }}>
               {isLocal ? 'Modo Local' : connection.isConnected ? 'Conectado' : 'Desconectado'}
             </span>
@@ -487,7 +487,7 @@ function CronIcon() {
   )
 }
 
-function MemóriaIcon() {
+function MemoryIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <ellipse cx="8" cy="8" rx="6" ry="3" />
@@ -506,7 +506,7 @@ function TokensIcon() {
   )
 }
 
-function UsuáriosIcon() {
+function UsersIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="6" cy="5" r="2.5" />
@@ -620,7 +620,7 @@ function GitHubIcon() {
   )
 }
 
-function ConfiguraçõesIcon() {
+function SettingsIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="8" cy="8" r="2" />
@@ -641,7 +641,7 @@ function OfficeIcon() {
   )
 }
 
-function DocumentosIcon() {
+function DocumentsIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 1.5h7l3 3V14a1 1 0 01-1 1H3a1 1 0 01-1-1V2.5a1 1 0 011-1z" />

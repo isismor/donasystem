@@ -64,7 +64,7 @@ export function AgentSpawnPanel() {
       const response = await fetch('/api/spawn', {
         method: 'POST',
         headers: {
-          'Content-Tipo': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       })
@@ -128,7 +128,7 @@ export function AgentSpawnPanel() {
             {/* Task Input */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Task Descrição
+                Task Description
               </label>
               <textarea
                 value={formData.task}
@@ -204,7 +204,7 @@ export function AgentSpawnPanel() {
               disabled={isSpawning || !formData.task.trim() || !formData.label.trim()}
               className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {isSpawning ? 'Spawning Agent...' : 'Iniciar Agente'}
+              {isSpawning ? 'Spawning Agent...' : 'Spawn Agent'}
             </button>
           </div>
         </div>

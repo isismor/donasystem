@@ -162,7 +162,7 @@ export function HeaderBar() {
       {/* Mobile connection dot (visible below md only) */}
       <MobileConnectionDot connection={connection} onReconnect={reconnect} />
 
-      {/* Right: Ações */}
+      {/* Right: Actions */}
       <div className="flex items-center gap-2">
         <div className="hidden md:block">
           <DigitalClock />
@@ -190,7 +190,7 @@ export function HeaderBar() {
           Chat
         </button>
 
-        {/* Notificações */}
+        {/* Notifications */}
         <button
           onClick={() => navigateToPanel('notifications')}
           className="h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth flex items-center justify-center relative"
@@ -248,9 +248,9 @@ export function HeaderBar() {
                   </button>
                 ))
               ) : searchQuery.length >= 2 ? (
-                <div className="p-4 text-center text-xs text-muted-foreground">Nenhum resultado</div>
+                <div className="p-4 text-center text-xs text-muted-foreground">No results found</div>
               ) : (
-                <div className="p-4 text-center text-xs text-muted-foreground">Tipo to search across all entities</div>
+                <div className="p-4 text-center text-xs text-muted-foreground">Type to search across all entities</div>
               )}
             </div>
           </div>
@@ -269,7 +269,7 @@ function MobileConnectionDot({
 }) {
   const { dashboardMode } = useMissionControl()
   const isLocal = dashboardMode === 'local'
-  const isReconectando = !connection.isConnected && connection.reconnectAttempts > 0
+  const isReconnecting = !connection.isConnected && connection.reconnectAttempts > 0
 
   let dotClass: string
   let title: string
@@ -280,9 +280,9 @@ function MobileConnectionDot({
   } else if (connection.isConnected) {
     dotClass = 'bg-[#b4a68c]'
     title = 'Gateway conectado'
-  } else if (isReconectando) {
+  } else if (isReconnecting) {
     dotClass = 'bg-[#c49a6c] animate-pulse'
-    title = `Reconectando (${connection.reconnectAttempts})`
+    title = `Reconnecting (${connection.reconnectAttempts})`
   } else {
     dotClass = 'bg-[#9e5c50] animate-pulse'
     title = 'Gateway desconectado — clique para reconectar'
@@ -310,7 +310,7 @@ function ConnectionBadge({
 }) {
   const { dashboardMode } = useMissionControl()
   const isLocal = dashboardMode === 'local'
-  const isReconectando = !connection.isConnected && connection.reconnectAttempts > 0
+  const isReconnecting = !connection.isConnected && connection.reconnectAttempts > 0
 
   if (isLocal) {
     return (
@@ -328,12 +328,12 @@ function ConnectionBadge({
   if (connection.isConnected) {
     dotClass = 'bg-[#b4a68c]'
     label = connection.latency != null ? `${connection.latency}ms` : 'Online'
-  } else if (isReconectando) {
+  } else if (isReconnecting) {
     dotClass = 'bg-[#c49a6c] animate-pulse'
     label = `Connecting... (${connection.reconnectAttempts})`
   } else {
     dotClass = 'bg-[#9e5c50] animate-pulse'
-    label = 'Desconectado'
+    label = 'Disconnected'
   }
 
   return (
@@ -344,12 +344,12 @@ function ConnectionBadge({
           ? 'cursor-default'
           : 'hover:bg-secondary cursor-pointer'
       }`}
-      title={connection.isConnected ? 'Gateway conectado' : 'Click to reconnect'}
+      title={connection.isConnected ? 'Gateway connected' : 'Click to reconnect'}
     >
       <span className="text-muted-foreground">Gateway</span>
       <span className={`w-1.5 h-1.5 rounded-full ${dotClass}`} />
       <span className={`font-medium font-mono-tight ${
-        connection.isConnected ? 'text-[#b4a68c]' : isReconectando ? 'text-[#c49a6c]' : 'text-[#9e5c50]'
+        connection.isConnected ? 'text-[#b4a68c]' : isReconnecting ? 'text-[#c49a6c]' : 'text-[#9e5c50]'
       }`}>
         {label}
       </span>
@@ -434,7 +434,7 @@ function UserMenu({ user, onLogout }: { user: { username: string; display_name: 
               onClick={handleLogout}
               className="w-full px-3 py-2 text-sm text-left text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
             >
-              Sair
+              Sign out
             </button>
           </div>
         </>
@@ -472,7 +472,7 @@ function PasswordDialog({ onClose }: { onClose: () => void }) {
     try {
       const res = await fetch('/api/auth/me', {
         method: 'PATCH',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ current_password: currentPassword, new_password: newPassword }),
       })
       const data = await res.json()

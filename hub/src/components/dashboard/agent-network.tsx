@@ -36,7 +36,7 @@ function AgentNode({ data }: { data: any }) {
     }
   }
 
-  const getTipoIcon = () => {
+  const getTypeIcon = () => {
     switch (agent.type) {
       case 'main': return '👑'
       case 'subagent': return '🤖'
@@ -66,7 +66,7 @@ function AgentNode({ data }: { data: any }) {
     <div className={`px-3 py-3 shadow-lg rounded-lg border-2 ${getStatusColor()} bg-background min-w-[140px]`}>
       <div className="flex items-start justify-between">
         <span className={`text-lg ${isWorking ? 'working-indicator' : ''}`}>
-          {getTipoIcon()}
+          {getTypeIcon()}
         </span>
         {isWorking && (
           <span className="px-1.5 py-0.5 text-xs font-bold bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-full animate-pulse">
@@ -99,7 +99,7 @@ function AgentNode({ data }: { data: any }) {
   )
 }
 
-const nodeTipos = {
+const nodeTypes = {
   agent: AgentNode,
 }
 
@@ -206,7 +206,7 @@ export function AgentNetwork({ agents, sessions }: AgentNetworkProps) {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          nodeTipos={nodeTipos}
+          nodeTypes={nodeTypes}
           fitView
           className="bg-secondary/10"
         >

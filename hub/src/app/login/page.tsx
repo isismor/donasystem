@@ -23,13 +23,13 @@ export default function LoginPage() {
   const completeLogin = useCallback(async (path: string, body: any) => {
     const res = await fetch(path, {
       method: 'POST',
-      headers: { 'Content-Tipo': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
 
     if (!res.ok) {
       const data = await res.json().catch(() => ({}))
-      setError(data.error || 'Falha no login')
+      setError(data.error || 'Login failed')
       setLoading(false)
       return false
     }

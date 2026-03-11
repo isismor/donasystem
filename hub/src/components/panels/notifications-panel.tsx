@@ -16,16 +16,16 @@ interface Notification {
   created_at: number
 }
 
-export function NotificaçõesPanel() {
+export function NotificationsPanel() {
   const [recipient, setRecipient] = useState<string>(() => {
     if (typeof window === 'undefined') return ''
     return window.localStorage.getItem('mc.notifications.recipient') || ''
   })
-  const [notifications, setNotificações] = useState<Notification[]>([])
+  const [notifications, setNotifications] = useState<Notification[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchNotificações = useCallback(async () => {
+  const fetchNotifications = useCallback(async () => {
     if (!recipient) return
     try {
       setLoading(true)
@@ -33,7 +33,7 @@ export function NotificaçõesPanel() {
       const response = await fetch(`/api/notifications?recipient=${encodeURIComponent(recipient)}`)
       if (!response.ok) throw new Error('Failed to fetch notifications')
       const data = await response.json()
-      setNotificações(data.notifications || [])
+      setNotifications(data.notifications || [])
     } catch (err) {
       setError('Failed to fetch notifications')
     } finally {
@@ -47,31 +47,31 @@ export function NotificaçõesPanel() {
     }
   }, [recipient])
 
-  useSmartPoll(fetchNotificações, 30000, { enabled: !!recipient, pauseWhenSseConnected: true })
+  useSmartPoll(fetchNotifications, 30000, { enabled: !!recipient, pauseWhenSseConnected: true })
 
   const markAllRead = async () => {
     if (!recipient) return
     await fetch('/api/notifications', {
       method: 'PUT',
-      headers: { 'Content-Tipo': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ recipient, markAllRead: true })
     })
-    fetchNotificações()
+    fetchNotifications()
   }
 
   const markRead = async (id: number) => {
     await fetch('/api/notifications', {
       method: 'PUT',
-      headers: { 'Content-Tipo': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ids: [id] })
     })
-    fetchNotificações()
+    fetchNotifications()
   }
 
   return (
     <div className="h-full flex flex-col">
       <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
-        <h2 className="text-xl font-bold text-foreground">Notificações</h2>
+        <h2 className="text-xl font-bold text-foreground">Notifications</h2>
         <button
           onClick={markAllRead}
           className="px-3 py-1.5 bg-secondary text-foreground rounded-md text-sm hover:bg-secondary/80 transition-smooth"
@@ -100,7 +100,7 @@ export function NotificaçõesPanel() {
         {loading ? (
           <div className="flex items-center justify-center h-32">
             <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent" />
-            <span className="ml-2 text-muted-foreground text-sm">Carregando...</span>
+            <span className="ml-2 text-muted-foreground text-sm">Loading...</span>
           </div>
         ) : notifications.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-32 text-muted-foreground/50">

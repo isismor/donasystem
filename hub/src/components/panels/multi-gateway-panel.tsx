@@ -78,7 +78,7 @@ export function MultiGatewayPanel() {
   const setPrimary = async (gw: Gateway) => {
     await fetch('/api/gateways', {
       method: 'PUT',
-      headers: { 'Content-Tipo': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: gw.id, is_primary: 1 }),
     })
     fetchGateways()
@@ -87,7 +87,7 @@ export function MultiGatewayPanel() {
   const deleteGateway = async (id: number) => {
     await fetch('/api/gateways', {
       method: 'DELETE',
-      headers: { 'Content-Tipo': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     })
     fetchGateways()
@@ -97,7 +97,7 @@ export function MultiGatewayPanel() {
     try {
       const res = await fetch('/api/gateways/connect', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: gw.id }),
       })
       if (!res.ok) return
@@ -139,7 +139,7 @@ export function MultiGatewayPanel() {
     try {
       await fetch('/api/connect', {
         method: 'DELETE',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ connection_id: connectionId }),
       })
       fetchDirectConnections()
@@ -151,7 +151,7 @@ export function MultiGatewayPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Gerenciar Gateways</h2>
+          <h2 className="text-lg font-semibold text-foreground">Gateway Manager</h2>
           <p className="text-xs text-muted-foreground mt-0.5">
             Manage multiple OpenClaw gateway connections
           </p>
@@ -178,7 +178,7 @@ export function MultiGatewayPanel() {
           <span className={`w-2.5 h-2.5 rounded-full ${connection.isConnected ? 'bg-[#b4a68c]' : 'bg-[#9e5c50] animate-pulse'}`} />
           <div>
             <div className="text-sm font-medium text-foreground">
-              {connection.isConnected ? 'Conectado' : 'Desconectado'}
+              {connection.isConnected ? 'Connected' : 'Disconnected'}
             </div>
             <div className="text-xs text-muted-foreground">
               {connection.url || 'No active connection'}
@@ -402,7 +402,7 @@ function AddGatewayForm({ onAdded, onCancel }: { onAdded: () => void; onCancel: 
     try {
       const res = await fetch('/api/gateways', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.name,
           host: form.host,
@@ -430,7 +430,7 @@ function AddGatewayForm({ onAdded, onCancel }: { onAdded: () => void; onCancel: 
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
         <div>
-          <label className="block text-2xs text-muted-foreground mb-1">Nome</label>
+          <label className="block text-2xs text-muted-foreground mb-1">Name</label>
           <input
             type="text"
             value={form.name}

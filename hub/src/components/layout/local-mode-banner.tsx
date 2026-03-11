@@ -14,7 +14,7 @@ export function LocalModeBanner() {
       <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
       <p className="flex-1 text-xs text-blue-300">
         <span className="font-medium text-blue-200">No OpenClaw gateway detected</span>
-        {' — running in Modo Local. Monitoring Claude Code sessions, tasks, and local data.'}
+        {' — running in Local Mode. Monitoring Claude Code sessions, tasks, and local data.'}
       </p>
       <button
         onClick={() => navigateToPanel('gateways')}

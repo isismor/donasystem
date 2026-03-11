@@ -112,10 +112,10 @@ export function AgentHistoryPanel() {
 
   function formatRelative(ts: number) {
     const diff = Math.floor(Date.now() / 1000) - ts
-    if (diff < 60) return 'atrásra'
-    if (diff < 3600) return `${Math.floor(diff / 60)}m atrás`
-    if (diff < 86400) return `${Math.floor(diff / 3600)}h atrás`
-    return `${Math.floor(diff / 86400)}d atrás`
+    if (diff < 60) return 'just now'
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
+    return `${Math.floor(diff / 86400)}d ago`
   }
 
   // Group activities by day
@@ -133,7 +133,7 @@ export function AgentHistoryPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-base font-semibold text-foreground">Histórico</h2>
+          <h2 className="text-base font-semibold text-foreground">Agent History</h2>
           <p className="text-xs text-muted-foreground mt-0.5">
             {total} event{total !== 1 ? 's' : ''} for {selectedAgent || 'no agent selected'}
           </p>
@@ -217,7 +217,7 @@ export function AgentHistoryPanel() {
                         <span className="text-foreground">{selectedAgentData.taskStats.in_progress}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Concluído</span>
+                        <span className="text-muted-foreground">Completed</span>
                         <span className="text-foreground">{selectedAgentData.taskStats.completed}</span>
                       </div>
                     </>
@@ -229,7 +229,7 @@ export function AgentHistoryPanel() {
             {/* Active sessions for this agent */}
             {agentSessions.length > 0 && (
               <div className="rounded-lg border border-border p-4">
-                <h4 className="text-xs font-semibold text-foreground mb-2">Sessões Ativas</h4>
+                <h4 className="text-xs font-semibold text-foreground mb-2">Active Sessions</h4>
                 <div className="space-y-2">
                   {agentSessions.map(s => (
                     <div key={s.id} className="text-xs space-y-0.5">

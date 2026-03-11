@@ -10,7 +10,7 @@ function formatDateGroup(timestamp: number): string {
   const yesterday = new Date(today)
   yesterday.setDate(yesterday.getDate() - 1)
 
-  if (date.toDateString() === today.toDateString()) return 'Hoje'
+  if (date.toDateString() === today.toDateString()) return 'Today'
   if (date.toDateString() === yesterday.toDateString()) return 'Yesterday'
   return date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })
 }
@@ -73,7 +73,7 @@ export function MessageList() {
     try {
       const res = await fetch('/api/chat/messages', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           from: msg.from_agent,
           to: msg.to_agent,

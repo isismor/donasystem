@@ -41,7 +41,7 @@ const roleColors: Record<string, string> = {
 
 export function UserManagementPanel() {
   const { currentUser } = useMissionControl()
-  const [users, setUsuários] = useState<UserRecord[]>([])
+  const [users, setUsers] = useState<UserRecord[]>([])
   const [requests, setRequests] = useState<AccessRequest[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -77,7 +77,7 @@ export function UserManagementPanel() {
       const uJson = await uRes.json().catch(() => ({}))
       const rJson = await rRes.json().catch(() => ({}))
 
-      setUsuários(Array.isArray(uJson?.users) ? uJson.users : [])
+      setUsers(Array.isArray(uJson?.users) ? uJson.users : [])
       setRequests(Array.isArray(rJson?.requests) ? rJson.requests : [])
       setError(null)
     } catch {
@@ -102,12 +102,12 @@ export function UserManagementPanel() {
     try {
       const res = await fetch('/api/auth/users', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(createForm),
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok) {
-        showFeedback(true, `Criado user "${createForm.username}"`)
+        showFeedback(true, `Created user "${createForm.username}"`)
         setShowCreate(false)
         setCreateForm({ username: '', password: '', display_name: '', role: 'operator' })
         fetchAll()
@@ -137,7 +137,7 @@ export function UserManagementPanel() {
 
       const res = await fetch('/api/auth/users', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
       const data = await res.json().catch(() => ({}))
@@ -186,7 +186,7 @@ export function UserManagementPanel() {
     try {
       const res = await fetch('/api/auth/access-requests', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ request_id: req.id, action, role, note: note || undefined }),
       })
       const data = await res.json().catch(() => ({}))
@@ -226,7 +226,7 @@ export function UserManagementPanel() {
     <div className="p-6 max-w-5xl mx-auto space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Usuários</h2>
+          <h2 className="text-lg font-semibold text-foreground">Users</h2>
           <p className="text-sm text-muted-foreground">{users.length} registered users · {pendingRequests.length} pending approvals</p>
         </div>
         <button
@@ -320,7 +320,7 @@ export function UserManagementPanel() {
               <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">Provider</th>
               <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">Role</th>
               <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground hidden md:table-cell">Last Login</th>
-              <th className="text-right px-4 py-2.5 text-xs font-medium text-muted-foreground">Ações</th>
+              <th className="text-right px-4 py-2.5 text-xs font-medium text-muted-foreground">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -343,8 +343,8 @@ export function UserManagementPanel() {
                       <input type="password" value={editForm.password} onChange={(e) => setEditForm((f) => ({ ...f, password: e.target.value }))} placeholder="New password (optional)" className="h-8 px-2 rounded bg-secondary border border-border text-sm text-foreground w-full" disabled={(u.provider || 'local') !== 'local'} />
                     </td>
                     <td className="px-4 py-2.5 text-right space-x-2">
-                      <button onClick={handleEdit} disabled={saving} className="h-7 px-2 rounded bg-primary text-primary-foreground text-xs">Salvar</button>
-                      <button onClick={() => setEditingId(null)} className="h-7 px-2 rounded border border-border text-xs">Cancelar</button>
+                      <button onClick={handleEdit} disabled={saving} className="h-7 px-2 rounded bg-primary text-primary-foreground text-xs">Save</button>
+                      <button onClick={() => setEditingId(null)} className="h-7 px-2 rounded border border-border text-xs">Cancel</button>
                     </td>
                   </>
                 ) : (
@@ -369,9 +369,9 @@ export function UserManagementPanel() {
                     </td>
                     <td className="px-4 py-2.5 text-xs text-muted-foreground hidden md:table-cell">{formatDate(u.last_login_at)}</td>
                     <td className="px-4 py-2.5 text-right space-x-2">
-                      <button onClick={() => startEdit(u)} className="h-7 px-2 rounded border border-border text-xs">Editar</button>
+                      <button onClick={() => startEdit(u)} className="h-7 px-2 rounded border border-border text-xs">Edit</button>
                       {u.id !== currentUser?.id && (
-                        <button onClick={() => handleDelete(u)} className="h-7 px-2 rounded-md bg-destructive/20 text-destructive text-xs hover:bg-destructive/30">Excluir</button>
+                        <button onClick={() => handleDelete(u)} className="h-7 px-2 rounded-md bg-destructive/20 text-destructive text-xs hover:bg-destructive/30">Delete</button>
                       )}
                     </td>
                   </>

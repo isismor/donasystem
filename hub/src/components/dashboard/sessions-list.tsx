@@ -107,7 +107,7 @@ function SessionCard({ session }: SessionCardProps) {
             {session.active ? 'WORKING' : 'IDLE'}
           </div>
 
-          {/* Uso de Tokens */}
+          {/* Token Usage */}
           {session.tokens !== '-' && (
             <div className="text-right">
               <div className="text-xs text-muted-foreground">
@@ -154,7 +154,7 @@ export function SessionsList({ sessions }: SessionsListProps) {
   return (
     <div className="bg-card rounded-lg border border-border">
       <div className="p-4 border-b border-border">
-        <h3 className="font-semibold text-foreground">Sessões Ativas</h3>
+        <h3 className="font-semibold text-foreground">Active Sessions</h3>
         <p className="text-sm text-muted-foreground">
           {sessions.length} total • {activeSessions.length} active
         </p>
@@ -169,7 +169,7 @@ export function SessionsList({ sessions }: SessionsListProps) {
           </div>
         ) : (
           <div className="space-y-3">
-            {/* Sessões Ativas */}
+            {/* Active Sessions */}
             {activeSessions.length > 0 && (
               <div>
                 <h4 className="text-sm font-medium text-foreground mb-2 flex items-center">

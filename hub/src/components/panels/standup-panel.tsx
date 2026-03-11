@@ -26,7 +26,7 @@ interface StandupReport {
       last_seen?: number
       last_activity?: string
     }
-    completedHoje: Array<{
+    completedToday: Array<{
       id: number
       title: string
       status: string
@@ -112,7 +112,7 @@ export function StandupPanel() {
 
       const response = await fetch('/api/standup', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ date: date || selectedDate })
       })
 
@@ -180,12 +180,12 @@ export function StandupPanel() {
     if (!standupReport) return
 
     const lines = [
-      `# Standup Diário - ${formatDate(standupReport.date)}`,
+      `# Daily Standup - ${formatDate(standupReport.date)}`,
       `Generated: ${new Date(standupReport.generatedAt).toLocaleString()}`,
       '',
       '## Summary',
       `- **Agents Active:** ${standupReport.summary.totalAgents}`,
-      `- **Completed Hoje:** ${standupReport.summary.totalCompleted}`,
+      `- **Completed Today:** ${standupReport.summary.totalCompleted}`,
       `- **In Progress:** ${standupReport.summary.totalInProgress}`,
       `- **Assigned:** ${standupReport.summary.totalAssigned}`,
       `- **In Review:** ${standupReport.summary.totalReview}`,
@@ -217,9 +217,9 @@ export function StandupPanel() {
     standupReport.agentReports.forEach(report => {
       lines.push(`### ${report.agent.name} (${report.agent.role})`)
       
-      if (report.completedHoje.length > 0) {
-        lines.push('**Completed Hoje:**')
-        report.completedHoje.forEach(task => {
+      if (report.completedToday.length > 0) {
+        lines.push('**Completed Today:**')
+        report.completedToday.forEach(task => {
           lines.push(`- ${task.title}`)
         })
       }
@@ -257,7 +257,7 @@ export function StandupPanel() {
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
-        <h2 className="text-xl font-bold text-foreground">Standup Diário</h2>
+        <h2 className="text-xl font-bold text-foreground">Daily Standup</h2>
 
         <div className="flex items-center gap-3">
           {/* View Toggle */}
@@ -339,7 +339,7 @@ export function StandupPanel() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-card rounded-lg p-4 border border-border text-center">
                   <div className="text-2xl font-bold text-foreground">{standupReport.summary.totalCompleted}</div>
-                  <div className="text-sm text-[#b4a68c]">Concluído</div>
+                  <div className="text-sm text-[#b4a68c]">Completed</div>
                 </div>
                 <div className="bg-card rounded-lg p-4 border border-border text-center">
                   <div className="text-2xl font-bold text-foreground">{standupReport.summary.totalInProgress}</div>
@@ -429,16 +429,16 @@ export function StandupPanel() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {/* Completed Hoje */}
+                      {/* Completed Today */}
                       <div>
-                        <h6 className="text-[#b4a68c] font-medium mb-2">✅ Completed ({report.completedHoje.length})</h6>
+                        <h6 className="text-[#b4a68c] font-medium mb-2">✅ Completed ({report.completedToday.length})</h6>
                         <div className="space-y-1">
-                          {report.completedHoje.map(task => (
+                          {report.completedToday.map(task => (
                             <div key={task.id} className="text-sm text-foreground/80 truncate" title={task.title}>
                               {task.title}
                             </div>
                           ))}
-                          {report.completedHoje.length === 0 && (
+                          {report.completedToday.length === 0 && (
                             <div className="text-sm text-muted-foreground/50 italic">None</div>
                           )}
                         </div>
@@ -515,7 +515,7 @@ export function StandupPanel() {
                 disabled={loading}
                 className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
               >
-                Generate Hoje&apos;s Standup
+                Generate Today&apos;s Standup
               </button>
             </div>
           )

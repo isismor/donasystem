@@ -28,7 +28,7 @@ export function AgentCostPanel() {
   const [selectedTimeframe, setSelectedTimeframe] = useState<'hour' | 'day' | 'week' | 'month'>('day')
   const [data, setData] = useState<AgentCostsResponse | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [expandedAgent, setExpandiredAgent] = useState<string | null>(null)
+  const [expandedAgent, setExpandedAgent] = useState<string | null>(null)
 
   const loadData = useCallback(async () => {
     setIsLoading(true)
@@ -148,7 +148,7 @@ export function AgentCostPanel() {
             </div>
             <div className="bg-card border border-border rounded-lg p-6">
               <div className="text-3xl font-bold text-foreground">{formatCost(totalCost)}</div>
-              <div className="text-sm text-muted-foreground">Custo Total ({selectedTimeframe})</div>
+              <div className="text-sm text-muted-foreground">Total Cost ({selectedTimeframe})</div>
             </div>
             <div className="bg-card border border-border rounded-lg p-6">
               <div className="text-3xl font-bold text-orange-500">{mostExpensive?.[0] || '-'}</div>
@@ -242,7 +242,7 @@ export function AgentCostPanel() {
               {sortedAgents.map(([name, a], index) => (
                 <div key={name} className="border border-border rounded-lg overflow-hidden">
                   <button
-                    onClick={() => setExpandiredAgent(expandedAgent === name ? null : name)}
+                    onClick={() => setExpandedAgent(expandedAgent === name ? null : name)}
                     className="w-full p-4 flex items-center justify-between hover:bg-secondary/50 transition-colors text-left"
                   >
                     <div className="flex items-center gap-3">

@@ -34,7 +34,7 @@ interface Delivery {
   created_at: number
 }
 
-interface AgendarTask {
+interface SchedulerTask {
   id: string
   name: string
   enabled: boolean
@@ -48,7 +48,7 @@ const AVAILABLE_EVENTS = [
   { value: '*', label: 'All events', description: 'Receive all event types' },
   { value: 'agent.error', label: 'Agent error', description: 'Agent enters error state' },
   { value: 'agent.status_change', label: 'Agent status change', description: 'Any agent status transition' },
-  { value: 'security.login_failed', label: 'Falha no login', description: 'Failed login attempt' },
+  { value: 'security.login_failed', label: 'Login failed', description: 'Failed login attempt' },
   { value: 'security.user_created', label: 'User created', description: 'New user account created' },
   { value: 'security.user_deleted', label: 'User deleted', description: 'User account deleted' },
   { value: 'security.password_change', label: 'Password changed', description: 'User password modified' },
@@ -62,7 +62,7 @@ export function WebhookPanel() {
   const { dashboardMode } = useMissionControl()
   const isLocalMode = dashboardMode === 'local'
   const [webhooks, setWebhooks] = useState<Webhook[]>([])
-  const [webhookAutomations, setWebhookAutomations] = useState<AgendarTask[]>([])
+  const [webhookAutomations, setWebhookAutomations] = useState<SchedulerTask[]>([])
   const [deliveries, setDeliveries] = useState<Delivery[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -113,7 +113,7 @@ export function WebhookPanel() {
       if (!res.ok) return
       const data = await res.json()
       const tasks = Array.isArray(data.tasks) ? data.tasks : []
-      const webhookTasks = tasks.filter((task: AgendarTask) =>
+      const webhookTasks = tasks.filter((task: SchedulerTask) =>
         typeof task.id === 'string' && task.id.includes('webhook')
       )
       setWebhookAutomations(webhookTasks)
@@ -132,7 +132,7 @@ export function WebhookPanel() {
     try {
       const res = await fetch('/api/webhooks', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, generate_secret: true }),
       })
       const data = await res.json()
@@ -146,7 +146,7 @@ export function WebhookPanel() {
   async function handleToggle(id: number, enabled: boolean) {
     await fetch('/api/webhooks', {
       method: 'PUT',
-      headers: { 'Content-Tipo': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, enabled }),
     })
     fetchWebhooks()
@@ -164,7 +164,7 @@ export function WebhookPanel() {
     try {
       const res = await fetch('/api/webhooks/test', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),
       })
       const data = await res.json()
@@ -183,7 +183,7 @@ export function WebhookPanel() {
     try {
       const res = await fetch('/api/scheduler', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task_id: taskId }),
       })
       const data = await res.json()
@@ -299,7 +299,7 @@ export function WebhookPanel() {
                         <span className="px-1.5 py-0.5 text-[10px] rounded bg-cyan-500/15 text-cyan-300 font-mono">{task.id}</span>
                       </div>
                       <div className="text-2xs text-muted-foreground mt-1">
-                        {task.nextRun ? `Próxima execução ${formatTime(task.nextRun / 1000)}` : 'No next run scheduled'}
+                        {task.nextRun ? `Next run ${formatTime(task.nextRun / 1000)}` : 'No next run scheduled'}
                         {task.lastResult?.message ? ` · ${task.lastResult.message}` : ''}
                       </div>
                     </div>
@@ -471,7 +471,7 @@ function CreateWebhookForm({
       <h3 className="text-sm font-semibold text-foreground">New Webhook</h3>
 
       <div>
-        <label className="block text-xs text-muted-foreground mb-1">Nome</label>
+        <label className="block text-xs text-muted-foreground mb-1">Name</label>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}

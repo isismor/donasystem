@@ -121,15 +121,15 @@ export function ActivityFeedPanel() {
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
     if (diffMinutes < 1) return 'Just now'
-    if (diffMinutes < 60) return `${diffMinutes}m atrás`
-    if (diffHours < 24) return `${diffHours}h atrás`
-    if (diffDays < 7) return `${diffDays}d atrás`
+    if (diffMinutes < 60) return `${diffMinutes}m ago`
+    if (diffHours < 24) return `${diffHours}h ago`
+    if (diffDays < 7) return `${diffDays}d ago`
     
     return new Date(timestamp * 1000).toLocaleDateString()
   }
 
   // Get unique activity types for filter
-  const activityTipos = Array.from(new Set(activities.map(a => a.type))).sort()
+  const activityTypes = Array.from(new Set(activities.map(a => a.type))).sort()
   const actors = Array.from(new Set(activities.map(a => a.actor))).sort()
 
   return (
@@ -137,7 +137,7 @@ export function ActivityFeedPanel() {
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
         <div className="flex items-center gap-3">
-          <h2 className="text-xl font-bold text-foreground">Atividade</h2>
+          <h2 className="text-xl font-bold text-foreground">Activity Feed</h2>
           <div className={`w-2.5 h-2.5 rounded-full ${autoRefresh ? 'bg-[#b4a68c] animate-pulse' : 'bg-muted-foreground/30'}`} />
         </div>
 
@@ -161,18 +161,18 @@ export function ActivityFeedPanel() {
         </div>
       </div>
 
-      {/* Filtrars */}
+      {/* Filters */}
       <div className="p-4 border-b border-border bg-surface-1 flex-shrink-0">
         <div className="flex gap-4 flex-wrap">
           <div>
-            <label className="block text-xs text-muted-foreground mb-1">Activity Tipo</label>
+            <label className="block text-xs text-muted-foreground mb-1">Activity Type</label>
             <select
               value={filter.type}
               onChange={(e) => setFilter(prev => ({ ...prev, type: e.target.value }))}
               className="bg-surface-2 text-foreground text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
             >
-              <option value="">All Tipos</option>
-              {activityTipos.map(type => (
+              <option value="">All Types</option>
+              {activityTypes.map(type => (
                 <option key={type} value={type}>
                   {activityIcons[type] || '•'} {type.replace('_', ' ')}
                 </option>
@@ -265,7 +265,7 @@ export function ActivityFeedPanel() {
                           </span>
                         </p>
 
-                        {/* Entity Detalhes */}
+                        {/* Entity Details */}
                         {activity.entity && (
                           <div className="mt-2 p-2 bg-surface-1 rounded-md text-xs border border-border/50">
                             {activity.entity.type === 'task' && (
@@ -310,7 +310,7 @@ export function ActivityFeedPanel() {
                         {activity.data && Object.keys(activity.data).length > 0 && (
                           <details className="mt-2">
                             <summary className="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground">
-                              Mostrar details
+                              Show details
                             </summary>
                             <pre className="mt-1 text-xs text-muted-foreground bg-surface-1 p-2 rounded-md overflow-auto max-h-32 border border-border/50">
                               {JSON.stringify(activity.data, null, 2)}
@@ -336,11 +336,11 @@ export function ActivityFeedPanel() {
       <div className="border-t border-border p-3 bg-surface-1 text-xs text-muted-foreground flex-shrink-0">
         <div className="flex justify-between items-center">
           <span>
-            Mostraring {activities.length} activities
+            Showing {activities.length} activities
             {filter.type || filter.actor ? ' (filtered)' : ''}
           </span>
           <span>
-            Última atualização: {new Date(lastRefresh).toLocaleTimeString()}
+            Last updated: {new Date(lastRefresh).toLocaleTimeString()}
           </span>
         </div>
       </div>

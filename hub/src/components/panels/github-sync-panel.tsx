@@ -50,8 +50,8 @@ export function GitHubSyncPanel() {
 
   // Import form
   const [repo, setRepo] = useState('')
-  const [labelFiltrar, setLabelFiltrar] = useState('')
-  const [stateFiltrar, setStateFiltrar] = useState<'open' | 'closed' | 'all'>('open')
+  const [labelFilter, setLabelFilter] = useState('')
+  const [stateFilter, setStateFilter] = useState<'open' | 'closed' | 'all'>('open')
   const [assignAgent, setAssignAgent] = useState('')
   const [agents, setAgents] = useState<{ name: string }[]>([])
 
@@ -83,7 +83,7 @@ export function GitHubSyncPanel() {
     try {
       const res = await fetch('/api/integrations', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'test', integrationId: 'github' }),
       })
       const data = await res.json()
@@ -101,7 +101,7 @@ export function GitHubSyncPanel() {
     try {
       const res = await fetch('/api/github', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'status' }),
       })
       if (res.ok) {
@@ -151,8 +151,8 @@ export function GitHubSyncPanel() {
     setPreviewIssues([])
     setSyncResult(null)
     try {
-      const params = new URLSearchParams({ action: 'issues', repo, state: stateFiltrar })
-      if (labelFiltrar) params.set('labels', labelFiltrar)
+      const params = new URLSearchParams({ action: 'issues', repo, state: stateFilter })
+      if (labelFilter) params.set('labels', labelFilter)
       const res = await fetch(`/api/github?${params}`)
       const data = await res.json()
       if (res.ok) {
@@ -176,12 +176,12 @@ export function GitHubSyncPanel() {
     try {
       const res = await fetch('/api/github', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'sync',
           repo,
-          labels: labelFiltrar || undefined,
-          state: stateFiltrar,
+          labels: labelFilter || undefined,
+          state: stateFilter,
           assignAgent: assignAgent || undefined,
         }),
       })
@@ -280,8 +280,8 @@ export function GitHubSyncPanel() {
               <label className="text-xs text-muted-foreground mb-1 block">Labels (optional)</label>
               <input
                 type="text"
-                value={labelFiltrar}
-                onChange={e => setLabelFiltrar(e.target.value)}
+                value={labelFilter}
+                onChange={e => setLabelFilter(e.target.value)}
                 placeholder="bug,enhancement"
                 className="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary"
               />
@@ -291,8 +291,8 @@ export function GitHubSyncPanel() {
             <div>
               <label className="text-xs text-muted-foreground mb-1 block">State</label>
               <select
-                value={stateFiltrar}
-                onChange={e => setStateFiltrar(e.target.value as any)}
+                value={stateFilter}
+                onChange={e => setStateFilter(e.target.value as any)}
                 className="w-full px-3 py-1.5 text-sm rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="open">Open</option>
@@ -317,7 +317,7 @@ export function GitHubSyncPanel() {
             </div>
           </div>
 
-          {/* Ações */}
+          {/* Actions */}
           <div className="flex items-center gap-2 pt-1">
             <button
               onClick={handlePreview}
@@ -373,7 +373,7 @@ export function GitHubSyncPanel() {
                   <th className="text-left px-4 py-2 font-medium">Title</th>
                   <th className="text-left px-4 py-2 font-medium">Labels</th>
                   <th className="text-left px-4 py-2 font-medium">State</th>
-                  <th className="text-left px-4 py-2 font-medium">Criado</th>
+                  <th className="text-left px-4 py-2 font-medium">Created</th>
                 </tr>
               </thead>
               <tbody>

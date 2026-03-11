@@ -62,8 +62,8 @@ export function CronManagementPanel() {
   const [calendarDate, setCalendarDate] = useState<Date>(startOfDay(new Date()))
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<Date>(startOfDay(new Date()))
   const [searchQuery, setSearchQuery] = useState('')
-  const [agentFiltrar, setAgentFilter] = useState('all')
-  const [stateFiltrar, setStateFiltrar] = useState<'all' | 'enabled' | 'disabled'>('all')
+  const [agentFilter, setAgentFilter] = useState('all')
+  const [stateFilter, setStateFilter] = useState<'all' | 'enabled' | 'disabled'>('all')
   const [newJob, setNewJob] = useState<NewJobForm>({
     name: '',
     schedule: '0 * * * *', // Every hour
@@ -82,10 +82,10 @@ export function CronManagementPanel() {
     const hours = Math.floor(minutes / 60)
     const days = Math.floor(hours / 24)
     
-    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ${future ? 'from now' : 'atrás'}`
-    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ${future ? 'from now' : 'atrás'}`
-    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ${future ? 'from now' : 'atrás'}`
-    return future ? 'soon' : 'atrásra'
+    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ${future ? 'from now' : 'ago'}`
+    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ${future ? 'from now' : 'ago'}`
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ${future ? 'from now' : 'ago'}`
+    return future ? 'soon' : 'just now'
   }
 
   const loadCronJobs = useCallback(async () => {
@@ -103,7 +103,7 @@ export function CronManagementPanel() {
       const schedulerResponse = await fetch('/api/scheduler')
       const schedulerData = await schedulerResponse.json()
       const schedulerTasks = Array.isArray(schedulerData.tasks) ? schedulerData.tasks : []
-      const mappedAgendarJobs: CronJob[] = schedulerTasks.map((task: any) => ({
+      const mappedSchedulerJobs: CronJob[] = schedulerTasks.map((task: any) => ({
         id: task.id,
         name: task.name || task.id || 'scheduler-task',
         schedule: 'system-managed automation',
@@ -118,7 +118,7 @@ export function CronManagementPanel() {
           : (task.lastResult?.ok === false ? 'error' : (task.lastResult?.ok === true ? 'success' : undefined)),
       }))
 
-      setCronJobs([...cronList, ...mappedAgendarJobs])
+      setCronJobs([...cronList, ...mappedSchedulerJobs])
     } catch (error) {
       log.error('Failed to load cron jobs:', error)
     } finally {
@@ -155,7 +155,7 @@ export function CronManagementPanel() {
       if (job.lastRun) {
         logs.push({
           timestamp: job.lastRun,
-          message: `Última execução recorded for ${job.name}`,
+          message: `Last run recorded for ${job.name}`,
           level: job.lastStatus === 'error' ? 'error' : 'info',
         })
       }
@@ -198,7 +198,7 @@ export function CronManagementPanel() {
     try {
       const response = await fetch('/api/cron', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'toggle',
           jobName: job.name,
@@ -224,7 +224,7 @@ export function CronManagementPanel() {
       if (isLocalAutomation) {
         const response = await fetch('/api/scheduler', {
           method: 'POST',
-          headers: { 'Content-Tipo': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ task_id: job.id }),
         })
         const result = await response.json()
@@ -239,7 +239,7 @@ export function CronManagementPanel() {
 
       const response = await fetch('/api/cron', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'trigger',
           jobId: job.id,
@@ -269,7 +269,7 @@ export function CronManagementPanel() {
     try {
       const response = await fetch('/api/cron', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'add',
           jobName: newJob.name,
@@ -307,7 +307,7 @@ export function CronManagementPanel() {
     try {
       const response = await fetch('/api/cron', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'remove',
           jobName: job.name
@@ -352,7 +352,7 @@ export function CronManagementPanel() {
     }
   }
 
-  const predefinedAgendas = [
+  const predefinedSchedules = [
     { label: 'Every minute', value: '* * * * *' },
     { label: 'Every 5 minutes', value: '*/5 * * * *' },
     { label: 'Every hour', value: '0 * * * *' },
@@ -380,11 +380,11 @@ export function CronManagementPanel() {
       (job.agentId || '').toLowerCase().includes(query) ||
       (job.model || '').toLowerCase().includes(query)
 
-    const matchesAgent = agentFiltrar === 'all' || (job.agentId || '') === agentFiltrar
+    const matchesAgent = agentFilter === 'all' || (job.agentId || '') === agentFilter
     const matchesState =
-      stateFiltrar === 'all' ||
-      (stateFiltrar === 'enabled' && job.enabled) ||
-      (stateFiltrar === 'disabled' && !job.enabled)
+      stateFilter === 'all' ||
+      (stateFilter === 'enabled' && job.enabled) ||
+      (stateFilter === 'disabled' && !job.enabled)
 
     return matchesQuery && matchesAgent && matchesState
   })
@@ -521,7 +521,7 @@ export function CronManagementPanel() {
                   onClick={() => setCalendarDate(startOfDay(new Date()))}
                   className="px-3 py-1.5 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors text-sm"
                 >
-                  Hoje
+                  Today
                 </button>
                 <button
                   onClick={() => moveCalendar(1)}
@@ -557,7 +557,7 @@ export function CronManagementPanel() {
                 className="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
               />
               <select
-                value={agentFiltrar}
+                value={agentFilter}
                 onChange={(e) => setAgentFilter(e.target.value)}
                 className="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
               >
@@ -569,13 +569,13 @@ export function CronManagementPanel() {
                 ))}
               </select>
               <select
-                value={stateFiltrar}
-                onChange={(e) => setStateFiltrar(e.target.value as 'all' | 'enabled' | 'disabled')}
+                value={stateFilter}
+                onChange={(e) => setStateFilter(e.target.value as 'all' | 'enabled' | 'disabled')}
                 className="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
               >
                 <option value="all">All States</option>
-                <option value="enabled">Ativado</option>
-                <option value="disabled">Desativado</option>
+                <option value="enabled">Enabled</option>
+                <option value="disabled">Disabled</option>
               </select>
             </div>
 
@@ -716,7 +716,7 @@ export function CronManagementPanel() {
 
         {/* Job List */}
         <div className="bg-card border border-border rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Agendad Jobs</h2>
+          <h2 className="text-xl font-semibold mb-4">Scheduled Jobs</h2>
           
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
@@ -747,7 +747,7 @@ export function CronManagementPanel() {
                         <span className="font-medium text-foreground">{job.name}</span>
                         <div className={`w-2 h-2 rounded-full ${job.enabled ? 'bg-[#b4a68c]' : 'bg-gray-500'}`}></div>
                         
-                        {/* Job Tipo Tag */}
+                        {/* Job Type Tag */}
                         <span className={`px-2 py-0.5 text-xs font-medium rounded-full border ${
                           isLocalAutomation ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' :
                           job.name.includes('backup') ? 'bg-[#b4a68c]/20 text-[#b4a68c] border-[#b4a68c]/30' :
@@ -783,7 +783,7 @@ export function CronManagementPanel() {
                       )}
                       {job.lastRun && (
                         <div className="text-xs text-muted-foreground mt-2">
-                          Última execução: {formatRelativeTime(job.lastRun)}
+                          Last run: {formatRelativeTime(job.lastRun)}
                         </div>
                       )}
                       {job.nextRun && (
@@ -834,18 +834,18 @@ export function CronManagementPanel() {
           )}
         </div>
 
-        {/* Job Detalhes & Logs */}
+        {/* Job Details & Logs */}
         <div className="bg-card border border-border rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">
-            {selectedJob ? `Job Detalhes: ${selectedJob.name}` : 'Job Detalhes'}
+            {selectedJob ? `Job Details: ${selectedJob.name}` : 'Job Details'}
           </h2>
           
           {selectedJob ? (
             <div className="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Configuração</h3>
+                <h3 className="font-medium text-foreground mb-2">Configuration</h3>
                 <div className="bg-secondary rounded p-3 space-y-2 text-sm">
-                  <div><span className="text-muted-foreground">Agenda:</span> <code className="font-mono">{selectedJob.schedule}</code></div>
+                  <div><span className="text-muted-foreground">Schedule:</span> <code className="font-mono">{selectedJob.schedule}</code></div>
                   <div><span className="text-muted-foreground">Command:</span> <code className="font-mono text-xs">{selectedJob.command}</code></div>
                   {selectedJob.model && (
                     <div><span className="text-muted-foreground">Model:</span> <code className="font-mono text-xs">{selectedJob.model}</code></div>
@@ -855,7 +855,7 @@ export function CronManagementPanel() {
                     <div><span className="text-muted-foreground">Source:</span> Local scheduler automation</div>
                   )}
                   {selectedJob.nextRun && (
-                    <div><span className="text-muted-foreground">Próxima execução:</span> {new Date(selectedJob.nextRun).toLocaleString()}</div>
+                    <div><span className="text-muted-foreground">Next run:</span> {new Date(selectedJob.nextRun).toLocaleString()}</div>
                   )}
                 </div>
               </div>
@@ -893,7 +893,7 @@ export function CronManagementPanel() {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Job Nome</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Job Name</label>
                 <input
                   type="text"
                   value={newJob.name}
@@ -904,7 +904,7 @@ export function CronManagementPanel() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Agenda (Cron Format)</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Schedule (Cron Format)</label>
                 <div className="flex space-x-2">
                   <input
                     type="text"
@@ -919,7 +919,7 @@ export function CronManagementPanel() {
                     className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
                   >
                     <option value="">Quick select...</option>
-                    {predefinedAgendas.map((sched) => (
+                    {predefinedSchedules.map((sched) => (
                       <option key={sched.value} value={sched.value}>{sched.label}</option>
                     ))}
                   </select>
@@ -960,7 +960,7 @@ export function CronManagementPanel() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Descrição (Optional)</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Description (Optional)</label>
                 <input
                   type="text"
                   value={newJob.description}

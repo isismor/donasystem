@@ -21,7 +21,7 @@ const AGENT_COLORS: Record<string, { bg: string; text: string; border: string }>
   human: { bg: 'bg-primary/10', text: 'text-primary', border: 'border-primary/20' },
 }
 
-function getAgentTema(name: string) {
+function getAgentTheme(name: string) {
   return AGENT_COLORS[name.toLowerCase()] || { bg: 'bg-muted/50', text: 'text-muted-foreground', border: 'border-border' }
 }
 
@@ -80,7 +80,7 @@ export function MessageBubble({ message, isHuman, isGrouped }: MessageBubbleProp
   const isSystem = message.message_type === 'system'
   const isHandoff = message.message_type === 'handoff'
   const isCommand = message.message_type === 'command'
-  const theme = getAgentTema(message.from_agent)
+  const theme = getAgentTheme(message.from_agent)
 
   if (isSystem) {
     return (
@@ -118,7 +118,7 @@ export function MessageBubble({ message, isHuman, isGrouped }: MessageBubbleProp
 
       {/* Content */}
       <div className={`max-w-[80%] min-w-0 ${isHuman ? 'items-end' : 'items-start'}`}>
-        {/* Nome + recipient */}
+        {/* Name + recipient */}
         {!isGrouped && (
           <div className={`flex items-center gap-1.5 mb-0.5 ${isHuman ? 'flex-row-reverse' : 'flex-row'}`}>
             <span className={`text-[11px] font-medium ${theme.text}`}>

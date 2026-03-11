@@ -82,12 +82,12 @@ export function GatewayConfigPanel() {
     try {
       const res = await fetch('/api/gateway-config', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ updates: { [editingKey]: parsedValue } }),
       })
       const data = await res.json()
       if (res.ok) {
-        showFeedback(true, `Atualizado ${editingKey}`)
+        showFeedback(true, `Updated ${editingKey}`)
         setEditingKey(null)
         setEditValue('')
         fetchConfig()
@@ -123,7 +123,7 @@ export function GatewayConfigPanel() {
     <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-4">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-foreground">Config do Gatewayuration</h2>
+        <h2 className="text-lg font-semibold text-foreground">Gateway Configuration</h2>
         <p className="text-xs text-muted-foreground mt-0.5">
           View and edit openclaw.json — <span className="font-mono">{configPath}</span>
         </p>
@@ -366,8 +366,8 @@ function ConfigLeaf({ label, value, dotPath, editingKey, editValue, onStartEdit,
               autoFocus
             />
           )}
-          <button onClick={onSaveEdit} className="text-[#b4a68c] hover:text-[#b4a68c] text-xs">Salvar</button>
-          <button onClick={onCancelEdit} className="text-muted-foreground hover:text-foreground text-xs">Cancelar</button>
+          <button onClick={onSaveEdit} className="text-[#b4a68c] hover:text-[#b4a68c] text-xs">Save</button>
+          <button onClick={onCancelEdit} className="text-muted-foreground hover:text-foreground text-xs">Cancel</button>
         </div>
       ) : (
         <>

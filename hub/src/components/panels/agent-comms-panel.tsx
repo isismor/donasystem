@@ -83,7 +83,7 @@ function formatTime(ts: number): string {
 function formatDate(ts: number): string {
   const d = new Date(ts * 1000)
   const today = new Date()
-  if (d.toDateString() === today.toDateString()) return 'Hoje'
+  if (d.toDateString() === today.toDateString()) return 'Today'
   const yesterday = new Date(today)
   yesterday.setDate(yesterday.getDate() - 1)
   if (d.toDateString() === yesterday.toDateString()) return 'Yesterday'
@@ -92,10 +92,10 @@ function formatDate(ts: number): string {
 
 function timeAgo(ts: number): string {
   const diff = Math.floor(Date.now() / 1000) - ts
-  if (diff < 60) return 'atrásra'
-  if (diff < 3600) return `${Math.floor(diff / 60)}m atrás`
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h atrás`
-  return `${Math.floor(diff / 86400)}d atrás`
+  if (diff < 60) return 'just now'
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
+  return `${Math.floor(diff / 86400)}d ago`
 }
 
 export function AgentCommsPanel() {
@@ -179,7 +179,7 @@ export function AgentCommsPanel() {
 
       const res = await fetch('/api/chat/messages', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           from,
           to,
@@ -389,7 +389,7 @@ export function AgentCommsPanel() {
             }}
             placeholder={composerMode === 'coordinator'
               ? 'Write to the coordinator. It will coordinate downstream agents...'
-              : 'Tipo agent-to-agent message... (Enter to send, Shift+Enter newline)'}
+              : 'Type agent-to-agent message... (Enter to send, Shift+Enter newline)'}
             className="flex-1 resize-none bg-card border border-border/50 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
             rows={2}
           />

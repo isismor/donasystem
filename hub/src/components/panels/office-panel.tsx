@@ -44,7 +44,7 @@ interface MovingWorker {
   destinationTile: string
 }
 
-type SidebarFiltrar = 'all' | 'working' | 'idle' | 'attention'
+type SidebarFilter = 'all' | 'working' | 'idle' | 'attention'
 
 interface MapRoom {
   id: string
@@ -73,7 +73,7 @@ interface LaunchToast {
 }
 
 type OfficeAction = 'focus' | 'pair' | 'break'
-type TimeTema = 'dawn' | 'day' | 'dusk' | 'night'
+type TimeTheme = 'dawn' | 'day' | 'dusk' | 'night'
 
 type HotspotKind = 'room' | 'desk'
 
@@ -94,7 +94,7 @@ interface OfficeEvent {
   severity: 'info' | 'warn' | 'good'
 }
 
-interface TemaPalette {
+interface ThemePalette {
   shell: string
   gridLine: string
   haze: string
@@ -103,8 +103,8 @@ interface TemaPalette {
   corridorStripe: string
   atmosphere: string
   shadowVeil: string
-  floorFiltrar: string
-  spriteFiltrar: string
+  floorFilter: string
+  spriteFilter: string
   roomTone: string
   floorOpacityA: number
   floorOpacityB: number
@@ -114,11 +114,11 @@ interface TemaPalette {
 interface PersistedOfficePrefs {
   version: 1
   viewMode: ViewMode
-  sidebarFiltrar: SidebarFiltrar
-  localSessionFiltrar?: 'running' | 'not-running'
+  sidebarFilter: SidebarFilter
+  localSessionFilter?: 'running' | 'not-running'
   mapZoom: number
   mapPan: { x: number; y: number }
-  timeTema: TimeTema
+  timeTheme: TimeTheme
   showSidebar: boolean
   showMinimap: boolean
   showEvents: boolean
@@ -188,10 +188,10 @@ function formatLastSeen(ts?: number): string {
   const diff = Date.now() - ts * 1000
   const m = Math.floor(diff / 60000)
   if (m < 1) return 'Just now'
-  if (m < 60) return `${m}m atrás`
+  if (m < 60) return `${m}m ago`
   const h = Math.floor(m / 60)
-  if (h < 24) return `${h}h atrás`
-  return `${Math.floor(h / 24)}d atrás`
+  if (h < 24) return `${h}h ago`
+  return `${Math.floor(h / 24)}d ago`
 }
 
 function easeInOut(progress: number): number {
@@ -473,7 +473,7 @@ export function OfficePanel() {
   const [orgSegmentMode, setOrgSegmentMode] = useState<OrgSegmentMode>('category')
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null)
   const [showFlightDeckModal, setShowFlightDeckModal] = useState(false)
-  const [flightDeckBaixarUrl, setFlightDeckBaixarUrl] = useState('https://flightdeck.example.com/download')
+  const [flightDeckDownloadUrl, setFlightDeckDownloadUrl] = useState('https://flightdeck.example.com/download')
   const [flightDeckLaunching, setFlightDeckLaunching] = useState(false)
   const [launchToast, setLaunchToast] = useState<LaunchToast | null>(null)
   const [selectedHotspot, setSelectedHotspot] = useState<OfficeHotspot | null>(null)
@@ -484,12 +484,12 @@ export function OfficePanel() {
   const [showSidebar, setShowSidebar] = useState(true)
   const [showMinimap, setShowMinimap] = useState(true)
   const [showEvents, setShowEvents] = useState(true)
-  const [localSessionFiltrar, setLocalSessionFilter] = useState<'running' | 'not-running'>('running')
+  const [localSessionFilter, setLocalSessionFilter] = useState<'running' | 'not-running'>('running')
   const [loading, setLoading] = useState(true)
   const [localBootstrapping, setLocalBootstrapping] = useState(isLocalMode)
-  const [sidebarFiltrar, setSidebarFilter] = useState<SidebarFiltrar>('all')
+  const [sidebarFilter, setSidebarFilter] = useState<SidebarFilter>('all')
   const [spriteFrame, setSpriteFrame] = useState(0)
-  const [timeTema, setTimeTema] = useState<TimeTema>('night')
+  const [timeTheme, setTimeTheme] = useState<TimeTheme>('night')
   const [mapZoom, setMapZoom] = useState(1)
   const [mapPan, setMapPan] = useState({ x: 0, y: 0 })
   const mapViewportRef = useRef<HTMLDivElement | null>(null)
@@ -644,11 +644,11 @@ export function OfficePanel() {
 
   const visibleDisplayAgents = useMemo(() => {
     if (!isLocalMode) return displayAgents
-    if (localSessionFiltrar === 'not-running') {
+    if (localSessionFilter === 'not-running') {
       return displayAgents.filter((agent) => isInactiveLocalSession(agent))
     }
     return displayAgents.filter((agent) => !isInactiveLocalSession(agent))
-  }, [displayAgents, isLocalMode, localSessionFiltrar])
+  }, [displayAgents, isLocalMode, localSessionFilter])
 
   const counts = useMemo(() => {
     const c = { idle: 0, busy: 0, error: 0, offline: 0 }
@@ -811,16 +811,16 @@ export function OfficePanel() {
       const prefs = JSON.parse(raw) as PersistedOfficePrefs
       if (!prefs || prefs.version !== 1) return
       setViewMode(prefs.viewMode || 'office')
-      setSidebarFilter(prefs.sidebarFiltrar || 'all')
+      setSidebarFilter(prefs.sidebarFilter || 'all')
       setLocalSessionFilter(
-        prefs.localSessionFiltrar === 'not-running' ? 'not-running' : 'running',
+        prefs.localSessionFilter === 'not-running' ? 'not-running' : 'running',
       )
       setMapZoom(Number.isFinite(prefs.mapZoom) ? clamp(prefs.mapZoom, 0.8, 2.2) : 1)
       setMapPan({
         x: Number.isFinite(prefs.mapPan?.x) ? prefs.mapPan.x : 0,
         y: Number.isFinite(prefs.mapPan?.y) ? prefs.mapPan.y : 0,
       })
-      setTimeTema(prefs.timeTema || 'night')
+      setTimeTheme(prefs.timeTheme || 'night')
       setShowSidebar(prefs.showSidebar !== false)
       setShowMinimap(prefs.showMinimap !== false)
       setShowEvents(prefs.showEvents !== false)
@@ -840,11 +840,11 @@ export function OfficePanel() {
     const payload: PersistedOfficePrefs = {
       version: 1,
       viewMode,
-      sidebarFiltrar,
-      localSessionFiltrar,
+      sidebarFilter,
+      localSessionFilter,
       mapZoom,
       mapPan,
-      timeTema,
+      timeTheme,
       showSidebar,
       showMinimap,
       showEvents,
@@ -861,31 +861,31 @@ export function OfficePanel() {
     mapPan,
     mapPropsState,
     mapZoom,
-    localSessionFiltrar,
+    localSessionFilter,
     roomLayoutState,
     showEvents,
     showMinimap,
     showSidebar,
-    sidebarFiltrar,
-    timeTema,
+    sidebarFilter,
+    timeTheme,
     viewMode,
   ])
 
   useEffect(() => {
-    const updateTemaFromClock = () => {
+    const updateThemeFromClock = () => {
       const hour = new Date().getHours()
-      if (hour >= 6 && hour < 11) setTimeTema('dawn')
-      else if (hour >= 11 && hour < 17) setTimeTema('day')
-      else if (hour >= 17 && hour < 20) setTimeTema('dusk')
-      else setTimeTema('night')
+      if (hour >= 6 && hour < 11) setTimeTheme('dawn')
+      else if (hour >= 11 && hour < 17) setTimeTheme('day')
+      else if (hour >= 17 && hour < 20) setTimeTheme('dusk')
+      else setTimeTheme('night')
     }
-    updateTemaFromClock()
-    const interval = setInterval(updateTemaFromClock, 60_000)
+    updateThemeFromClock()
+    const interval = setInterval(updateThemeFromClock, 60_000)
     return () => clearInterval(interval)
   }, [])
 
-  const themePalette = useMemo<TemaPalette>(() => {
-    if (timeTema === 'dawn') {
+  const themePalette = useMemo<ThemePalette>(() => {
+    if (timeTheme === 'dawn') {
       return {
         shell: 'radial-gradient(circle at 20% 10%, rgba(255,177,108,0.52) 0, rgba(78,82,132,0.9) 48%, rgba(19,24,41,1) 100%)',
         gridLine: 'rgba(255,212,166,0.2)',
@@ -895,15 +895,15 @@ export function OfficePanel() {
         corridorStripe: '#ffca95',
         atmosphere: 'radial-gradient(circle at 15% 8%, rgba(255,191,122,0.34), transparent 46%), radial-gradient(circle at 82% 18%, rgba(255,224,184,0.18), transparent 40%)',
         shadowVeil: 'linear-gradient(to bottom, rgba(27,22,35,0.15), rgba(13,17,33,0.38))',
-        floorFiltrar: 'hue-rotate(-8deg) saturate(1.02) brightness(1.1) contrast(1.03)',
-        spriteFiltrar: 'hue-rotate(-4deg) saturate(1.04) brightness(1.05)',
+        floorFilter: 'hue-rotate(-8deg) saturate(1.02) brightness(1.1) contrast(1.03)',
+        spriteFilter: 'hue-rotate(-4deg) saturate(1.04) brightness(1.05)',
         roomTone: 'linear-gradient(to bottom right, rgba(255,219,167,0.2), rgba(82,67,96,0.12))',
         floorOpacityA: 0.95,
         floorOpacityB: 0.8,
         accentGlow: 'rgba(255,183,120,0.32)',
       }
     }
-    if (timeTema === 'day') {
+    if (timeTheme === 'day') {
       return {
         shell: 'radial-gradient(circle at 20% 12%, rgba(164,203,255,0.48) 0, rgba(41,76,128,0.88) 46%, rgba(16,26,46,1) 100%)',
         gridLine: 'rgba(183,218,255,0.24)',
@@ -913,15 +913,15 @@ export function OfficePanel() {
         corridorStripe: '#b8d5ff',
         atmosphere: 'radial-gradient(circle at 18% 5%, rgba(183,230,255,0.3), transparent 45%), radial-gradient(circle at 84% 16%, rgba(216,241,255,0.2), transparent 42%)',
         shadowVeil: 'linear-gradient(to bottom, rgba(16,30,49,0.08), rgba(9,18,35,0.24))',
-        floorFiltrar: 'hue-rotate(6deg) saturate(1.08) brightness(1.2) contrast(1.04)',
-        spriteFiltrar: 'hue-rotate(4deg) saturate(1.08) brightness(1.08)',
+        floorFilter: 'hue-rotate(6deg) saturate(1.08) brightness(1.2) contrast(1.04)',
+        spriteFilter: 'hue-rotate(4deg) saturate(1.08) brightness(1.08)',
         roomTone: 'linear-gradient(to bottom right, rgba(196,236,255,0.18), rgba(81,116,171,0.08))',
         floorOpacityA: 0.98,
         floorOpacityB: 0.86,
         accentGlow: 'rgba(176,232,255,0.3)',
       }
     }
-    if (timeTema === 'dusk') {
+    if (timeTheme === 'dusk') {
       return {
         shell: 'radial-gradient(circle at 20% 10%, rgba(222,129,187,0.44) 0, rgba(45,44,91,0.92) 47%, rgba(12,14,30,1) 100%)',
         gridLine: 'rgba(224,169,255,0.2)',
@@ -931,8 +931,8 @@ export function OfficePanel() {
         corridorStripe: '#d7b0ff',
         atmosphere: 'radial-gradient(circle at 14% 10%, rgba(255,160,198,0.27), transparent 44%), radial-gradient(circle at 85% 18%, rgba(198,150,255,0.18), transparent 40%)',
         shadowVeil: 'linear-gradient(to bottom, rgba(29,20,46,0.18), rgba(9,9,24,0.42))',
-        floorFiltrar: 'hue-rotate(20deg) saturate(1.05) brightness(0.95) contrast(1.05)',
-        spriteFiltrar: 'hue-rotate(18deg) saturate(1.08) brightness(0.98)',
+        floorFilter: 'hue-rotate(20deg) saturate(1.05) brightness(0.95) contrast(1.05)',
+        spriteFilter: 'hue-rotate(18deg) saturate(1.08) brightness(0.98)',
         roomTone: 'linear-gradient(to bottom right, rgba(244,164,209,0.17), rgba(88,62,126,0.16))',
         floorOpacityA: 0.9,
         floorOpacityB: 0.75,
@@ -948,14 +948,14 @@ export function OfficePanel() {
       corridorStripe: '#9cc2ff',
       atmosphere: 'radial-gradient(circle at 16% 7%, rgba(93,141,255,0.26), transparent 45%), radial-gradient(circle at 82% 15%, rgba(133,169,255,0.16), transparent 42%)',
       shadowVeil: 'linear-gradient(to bottom, rgba(8,13,25,0.34), rgba(5,8,18,0.56))',
-      floorFiltrar: 'hue-rotate(26deg) saturate(0.9) brightness(0.72) contrast(1.1)',
-      spriteFiltrar: 'hue-rotate(18deg) saturate(0.94) brightness(0.84)',
+      floorFilter: 'hue-rotate(26deg) saturate(0.9) brightness(0.72) contrast(1.1)',
+      spriteFilter: 'hue-rotate(18deg) saturate(0.94) brightness(0.84)',
       roomTone: 'linear-gradient(to bottom right, rgba(94,133,207,0.17), rgba(19,27,52,0.24))',
       floorOpacityA: 0.84,
       floorOpacityB: 0.66,
       accentGlow: 'rgba(116,152,255,0.26)',
     }
-  }, [timeTema])
+  }, [timeTheme])
 
   const nightSparkles = useMemo(
     () =>
@@ -1004,11 +1004,11 @@ export function OfficePanel() {
   }, [gameWorkers, isLocalMode])
 
   const filteredRosterRows = useMemo(() => {
-    if (sidebarFiltrar === 'all') return rosterRows
-    if (sidebarFiltrar === 'working') return rosterRows.filter((row) => row.agent.status === 'busy')
-    if (sidebarFiltrar === 'idle') return rosterRows.filter((row) => row.agent.status === 'idle')
+    if (sidebarFilter === 'all') return rosterRows
+    if (sidebarFilter === 'working') return rosterRows.filter((row) => row.agent.status === 'busy')
+    if (sidebarFilter === 'idle') return rosterRows.filter((row) => row.agent.status === 'idle')
     return rosterRows.filter((row) => row.needsAttention)
-  }, [rosterRows, sidebarFiltrar])
+  }, [rosterRows, sidebarFilter])
 
   const pathEdges = useMemo(() => {
     const edges: Array<{ x1: number; y1: number; x2: number; y2: number }> = []
@@ -1283,7 +1283,7 @@ export function OfficePanel() {
     try {
       const res = await fetch('/api/local/flight-deck', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           agent: agent.name,
           session: agent.session_key || '',
@@ -1292,7 +1292,7 @@ export function OfficePanel() {
       const json = await res.json().catch(() => ({}))
       if (!res.ok || json?.installed === false) {
         if (typeof json?.downloadUrl === 'string' && json.downloadUrl) {
-          setFlightDeckBaixarUrl(json.downloadUrl)
+          setFlightDeckDownloadUrl(json.downloadUrl)
         }
         setShowFlightDeckModal(true)
         showLaunchToast({
@@ -1568,12 +1568,12 @@ export function OfficePanel() {
                 { key: 'working', label: 'Working' },
                 { key: 'idle', label: 'Idle' },
                 { key: 'attention', label: 'Needs Attention' },
-              ] as Array<{ key: SidebarFiltrar; label: string }>).map((item) => (
+              ] as Array<{ key: SidebarFilter; label: string }>).map((item) => (
                 <button
                   key={item.key}
                   onClick={() => setSidebarFilter(item.key)}
                   className={`px-2 py-1 rounded text-[10px] border transition-smooth ${
-                    sidebarFiltrar === item.key
+                    sidebarFilter === item.key
                       ? 'bg-primary/25 border-primary/40 text-primary-foreground'
                       : 'bg-black/20 border-white/10 text-slate-300 hover:bg-black/35'
                   }`}
@@ -1587,7 +1587,7 @@ export function OfficePanel() {
                 <button
                   onClick={() => setLocalSessionFilter('running')}
                   className={`flex-1 rounded border px-2 py-1 text-[10px] transition-smooth ${
-                    localSessionFiltrar === 'running'
+                    localSessionFilter === 'running'
                       ? 'bg-primary/25 border-primary/40 text-primary-foreground'
                       : 'bg-black/20 border-white/10 text-slate-300 hover:bg-black/35'
                   }`}
@@ -1597,7 +1597,7 @@ export function OfficePanel() {
                 <button
                   onClick={() => setLocalSessionFilter('not-running')}
                   className={`flex-1 rounded border px-2 py-1 text-[10px] transition-smooth ${
-                    localSessionFiltrar === 'not-running'
+                    localSessionFilter === 'not-running'
                       ? 'bg-[#c49a6c]/15 border-[#c49a6c]/60 text-[#c49a6c]'
                       : 'bg-black/20 border-white/10 text-slate-300 hover:bg-black/35'
                   }`}
@@ -1664,7 +1664,7 @@ export function OfficePanel() {
             <div className="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.glow }} />
             <div className="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.atmosphere, mixBlendMode: 'screen', opacity: 0.9 }} />
             <div className="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.shadowVeil }} />
-            {timeTema === 'dawn' && (
+            {timeTheme === 'dawn' && (
               <div
                 className="absolute inset-0 pointer-events-none z-[2]"
                 style={{
@@ -1674,7 +1674,7 @@ export function OfficePanel() {
                 }}
               />
             )}
-            {timeTema === 'day' && (
+            {timeTheme === 'day' && (
               <>
                 <div
                   className="absolute inset-0 pointer-events-none z-[2]"
@@ -1694,7 +1694,7 @@ export function OfficePanel() {
                 />
               </>
             )}
-            {timeTema === 'dusk' && (
+            {timeTheme === 'dusk' && (
               <div
                 className="absolute inset-0 pointer-events-none z-[2]"
                 style={{
@@ -1704,7 +1704,7 @@ export function OfficePanel() {
                 }}
               />
             )}
-            {timeTema === 'night' && (
+            {timeTheme === 'night' && (
               <>
                 <div
                   className="absolute inset-0 pointer-events-none z-[2]"
@@ -1741,20 +1741,20 @@ export function OfficePanel() {
               <button onClick={resetMapView} className="text-[11px] px-1.5 py-0.5 hover:bg-white/10 rounded">Reset</button>
             </div>
             <div className="absolute right-3 top-12 z-30 flex items-center gap-1 rounded-md bg-black/50 border border-white/10 text-white/90 px-2 py-1">
-              {(['dawn', 'day', 'dusk', 'night'] as TimeTema[]).map((item) => (
+              {(['dawn', 'day', 'dusk', 'night'] as TimeTheme[]).map((item) => (
                 <button
                   key={item}
-                  onClick={() => setTimeTema(item)}
-                  className={`text-[10px] px-1.5 py-0.5 rounded uppercase ${timeTema === item ? 'bg-white/20 text-white' : 'hover:bg-white/10 text-slate-300'}`}
+                  onClick={() => setTimeTheme(item)}
+                  className={`text-[10px] px-1.5 py-0.5 rounded uppercase ${timeTheme === item ? 'bg-white/20 text-white' : 'hover:bg-white/10 text-slate-300'}`}
                 >
                   {item}
                 </button>
               ))}
             </div>
             <div className="absolute left-3 top-3 z-30 flex items-center gap-1 rounded-md bg-black/50 border border-white/10 text-white/90 px-2 py-1">
-              <button onClick={() => setShowSidebar((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showSidebar ? 'Ocultar Sidebar' : 'Mostrar Sidebar'}</button>
-              <button onClick={() => setShowMinimap((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showMinimap ? 'Ocultar Minimap' : 'Mostrar Minimap'}</button>
-              <button onClick={() => setShowEvents((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showEvents ? 'Ocultar Events' : 'Mostrar Events'}</button>
+              <button onClick={() => setShowSidebar((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showSidebar ? 'Hide Sidebar' : 'Show Sidebar'}</button>
+              <button onClick={() => setShowMinimap((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showMinimap ? 'Hide Minimap' : 'Show Minimap'}</button>
+              <button onClick={() => setShowEvents((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showEvents ? 'Hide Events' : 'Show Events'}</button>
               <button onClick={resetOfficeLayout} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">Reset Layout</button>
             </div>
 
@@ -1775,7 +1775,7 @@ export function OfficePanel() {
                       backgroundImage: `url('/office-sprites/kenney/floorFull.png')`,
                       backgroundSize: '100% 100%',
                       opacity: tile.sprite ? themePalette.floorOpacityA : themePalette.floorOpacityB,
-                      filter: themePalette.floorFiltrar,
+                      filter: themePalette.floorFilter,
                     }}
                   />
                 ))}
@@ -1813,7 +1813,7 @@ export function OfficePanel() {
                     height: `${room.h}%`,
                     backgroundImage: `linear-gradient(to bottom right, rgba(255,255,255,0.04), rgba(0,0,0,0.1)), url('/office-sprites/kenney/floorFull.png')`,
                     backgroundSize: 'auto, 22% 22%',
-                    filter: themePalette.floorFiltrar,
+                    filter: themePalette.floorFilter,
                   }}
                   onClick={(event) => {
                     event.stopPropagation()
@@ -1881,7 +1881,7 @@ export function OfficePanel() {
                     fill
                     unoptimized
                     className="object-contain opacity-95"
-                    style={{ imageRendering: 'pixelated', filter: themePalette.spriteFiltrar }}
+                    style={{ imageRendering: 'pixelated', filter: themePalette.spriteFilter }}
                     draggable={false}
                   />
                 </div>
@@ -1933,7 +1933,7 @@ export function OfficePanel() {
                         height={32}
                         unoptimized
                         className="w-16 h-9 object-contain opacity-95"
-                        style={{ imageRendering: 'pixelated', filter: themePalette.spriteFiltrar }}
+                        style={{ imageRendering: 'pixelated', filter: themePalette.spriteFilter }}
                         draggable={false}
                       />
                       <Image
@@ -1944,7 +1944,7 @@ export function OfficePanel() {
                         height={6}
                         unoptimized
                         className="absolute left-1/2 -translate-x-1/2 top-[6px] w-7 h-2 object-contain opacity-95"
-                        style={{ imageRendering: 'pixelated', filter: themePalette.spriteFiltrar }}
+                        style={{ imageRendering: 'pixelated', filter: themePalette.spriteFilter }}
                         draggable={false}
                       />
                     </div>
@@ -1976,7 +1976,7 @@ export function OfficePanel() {
                             return `${xPct}% ${yPct}%`
                           })(),
                           imageRendering: 'pixelated',
-                          filter: themePalette.spriteFiltrar,
+                          filter: themePalette.spriteFilter,
                           transform: isMoving && Math.abs(direction.dx) > Math.abs(direction.dy) && direction.dx < 0 ? 'scaleX(-1)' : undefined,
                           transformOrigin: 'center',
                         }}
@@ -2228,7 +2228,7 @@ export function OfficePanel() {
                   </div>
                   <div className="text-center bg-secondary rounded-lg p-2">
                     <div className="text-lg font-bold text-yellow-400">{selectedAgent.taskStats.in_progress}</div>
-                    <div className="text-[10px] text-muted-foreground">Ativo</div>
+                    <div className="text-[10px] text-muted-foreground">Active</div>
                   </div>
                   <div className="text-center bg-secondary rounded-lg p-2">
                     <div className="text-lg font-bold text-[#b4a68c]">{selectedAgent.taskStats.completed}</div>
@@ -2244,7 +2244,7 @@ export function OfficePanel() {
               )}
 
               <div className="pt-1">
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Ações Rápidas</div>
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Quick Actions</div>
                 <div className="grid grid-cols-3 gap-1.5">
                   <button
                     onClick={() => executeAgentAction(selectedAgent, 'focus')}
@@ -2317,12 +2317,12 @@ export function OfficePanel() {
                 Maybe Later
               </button>
               <a
-                href={flightDeckBaixarUrl}
+                href={flightDeckDownloadUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="h-9 px-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth inline-flex items-center"
               >
-                Baixar Flight Deck
+                Download Flight Deck
               </a>
             </div>
           </div>

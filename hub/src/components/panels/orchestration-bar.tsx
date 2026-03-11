@@ -73,7 +73,7 @@ export function OrchestrationBar() {
   // All unique tags across templates
   const allTags = [...new Set(templates.flatMap(t => t.tags || []))].sort()
 
-  // Filtrared templates
+  // Filtered templates
   const filteredTemplates = filterTag
     ? templates.filter(t => t.tags?.includes(filterTag))
     : templates
@@ -87,7 +87,7 @@ export function OrchestrationBar() {
     try {
       const res = await fetch('/api/agents/message', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ to: selectedAgent, content: message, from: 'operator' })
       })
       const data = await res.json()
@@ -110,7 +110,7 @@ export function OrchestrationBar() {
     try {
       const res = await fetch('/api/spawn', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           task: template.task_prompt,
           model: template.model,
@@ -122,7 +122,7 @@ export function OrchestrationBar() {
       if (res.ok) {
         await fetch('/api/workflows', {
           method: 'PUT',
-          headers: { 'Content-Tipo': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: template.id })
         })
         setCommandResult({ ok: true, text: `Spawned "${template.name}"` })
@@ -145,7 +145,7 @@ export function OrchestrationBar() {
       const isEdit = formMode === 'edit' && editingId !== null
       const res = await fetch('/api/workflows', {
         method: isEdit ? 'PUT' : 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(isEdit ? { id: editingId, ...templateForm } : templateForm)
       })
       if (res.ok) {
@@ -369,7 +369,7 @@ export function OrchestrationBar() {
                   <input
                     value={templateForm.description}
                     onChange={(e) => setTemplateForm(f => ({ ...f, description: e.target.value }))}
-                    placeholder="Descrição (optional)"
+                    placeholder="Description (optional)"
                     className="w-full h-8 px-2 rounded-md bg-secondary border border-border text-sm text-foreground"
                   />
                   <textarea
@@ -486,7 +486,7 @@ export function OrchestrationBar() {
                       </div>
                     </div>
 
-                    {/* Expandired detail */}
+                    {/* Expanded detail */}
                     {expandedId === t.id && (
                       <div className="px-3 pb-3 border-t border-border/50 mt-1 pt-2">
                         <pre className="text-xs text-foreground/80 whitespace-pre-wrap font-mono bg-secondary/50 rounded p-2 max-h-32 overflow-y-auto">
@@ -496,7 +496,7 @@ export function OrchestrationBar() {
                           <span>Timeout: {t.timeout_seconds < 60 ? `${t.timeout_seconds}s` : `${Math.round(t.timeout_seconds / 60)}m`}</span>
                           {t.agent_role && <span>Role: {t.agent_role}</span>}
                           {t.last_used_at && (
-                            <span>Última execução: {new Date(t.last_used_at * 1000).toLocaleDateString()}</span>
+                            <span>Last run: {new Date(t.last_used_at * 1000).toLocaleDateString()}</span>
                           )}
                         </div>
                       </div>

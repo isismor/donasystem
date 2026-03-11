@@ -17,15 +17,15 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { id: 'overview', label: 'Overview', icon: '📊', description: 'System dashboard' },
   { id: 'sessions', label: 'Sessions', icon: '💬', description: 'Active agent sessions' },
-  { id: 'tasks', label: 'Tarefas', icon: '📋', description: 'Kanban task management' },
-  { id: 'agents', label: 'Agentes', icon: '🤖', description: 'Agent management & status' },
-  { id: 'activity', label: 'Atividade', icon: '📣', description: 'Real-time activity stream' },
-  { id: 'notifications', label: 'Notificações', icon: '🔔', description: 'Mentions & alerts' },
-  { id: 'standup', label: 'Standup Diário', icon: '📈', description: 'Generate standup reports' },
-  { id: 'spawn', label: 'Iniciar Agente', icon: '🚀', description: 'Launch new sub-agents' },
+  { id: 'tasks', label: 'Task Board', icon: '📋', description: 'Kanban task management' },
+  { id: 'agents', label: 'Agent Squad', icon: '🤖', description: 'Agent management & status' },
+  { id: 'activity', label: 'Activity Feed', icon: '📣', description: 'Real-time activity stream' },
+  { id: 'notifications', label: 'Notifications', icon: '🔔', description: 'Mentions & alerts' },
+  { id: 'standup', label: 'Daily Standup', icon: '📈', description: 'Generate standup reports' },
+  { id: 'spawn', label: 'Spawn Agent', icon: '🚀', description: 'Launch new sub-agents' },
   { id: 'logs', label: 'Logs', icon: '📝', description: 'Real-time log viewer' },
   { id: 'cron', label: 'Cron Jobs', icon: '⏰', description: 'Automated tasks' },
-  { id: 'memory', label: 'Memória', icon: '🧠', description: 'Knowledge browser' },
+  { id: 'memory', label: 'Memory', icon: '🧠', description: 'Knowledge browser' },
   { id: 'tokens', label: 'Tokens', icon: '💰', description: 'Usage & cost tracking' },
 ]
 
@@ -104,7 +104,7 @@ export function Sidebar() {
                   : 'bg-[#9e5c50]'
               }`}></div>
               <span className="text-xs text-muted-foreground">
-                {connection.isConnected ? 'Conectado' : 'Desconectado'}
+                {connection.isConnected ? 'Connected' : 'Disconnected'}
               </span>
             </div>
           </div>
@@ -139,7 +139,7 @@ export function Sidebar() {
             <div className="text-sm font-medium text-foreground mb-2">System</div>
             <div className="space-y-1 text-xs text-muted-foreground">
               <div className="flex justify-between">
-                <span>Memória:</span>
+                <span>Memory:</span>
                 <span>{systemStats.memory ? Math.round((systemStats.memory.used / systemStats.memory.total) * 100) : 0}%</span>
               </div>
               <div className="flex justify-between">

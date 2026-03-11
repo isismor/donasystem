@@ -83,7 +83,7 @@ export function AgentSquadPanel() {
     try {
       const response = await fetch('/api/agents', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: agentName,
           status,
@@ -122,9 +122,9 @@ export function AgentSquadPanel() {
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
     if (diffMinutes < 1) return 'Just now'
-    if (diffMinutes < 60) return `${diffMinutes}m atrás`
-    if (diffHours < 24) return `${diffHours}h atrás`
-    if (diffDays < 7) return `${diffDays}d atrás`
+    if (diffMinutes < 60) return `${diffMinutes}m ago`
+    if (diffHours < 24) return `${diffHours}h ago`
+    if (diffDays < 7) return `${diffDays}d ago`
     
     return new Date(timestamp * 1000).toLocaleDateString()
   }
@@ -149,7 +149,7 @@ export function AgentSquadPanel() {
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-gray-700">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-bold text-white">Agentes</h2>
+          <h2 className="text-xl font-bold text-white">Agent Squad</h2>
           
           {/* Status Summary */}
           <div className="flex gap-2 text-sm">
@@ -206,7 +206,7 @@ export function AgentSquadPanel() {
         {agents.length === 0 ? (
           <div className="text-center text-gray-500 py-8">
             <div className="text-4xl mb-2">🤖</div>
-            <p>Nenhum agente</p>
+            <p>No agents found</p>
             <p className="text-sm">Add your first agent to get started</p>
           </div>
         ) : (
@@ -263,7 +263,7 @@ export function AgentSquadPanel() {
                   )}
                 </div>
 
-                {/* Ações Rápidas */}
+                {/* Quick Actions */}
                 <div className="flex gap-1">
                   <button
                     onClick={(e) => {
@@ -316,7 +316,7 @@ export function AgentSquadPanel() {
       {showCreateModal && (
         <CreateAgentModal
           onClose={() => setShowCreateModal(false)}
-          onCriado={fetchAgents}
+          onCreated={fetchAgents}
         />
       )}
     </div>
@@ -346,7 +346,7 @@ function AgentDetailModal({
     try {
       const response = await fetch('/api/agents', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: agent.name,
           ...formData
@@ -398,7 +398,7 @@ function AgentDetailModal({
             </div>
           </div>
 
-          {/* Agent Detalhes */}
+          {/* Agent Details */}
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-1">Role</label>
@@ -471,17 +471,17 @@ function AgentDetailModal({
             {/* Timestamps */}
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-gray-400">Criado:</span>
+                <span className="text-gray-400">Created:</span>
                 <span className="text-white ml-2">{new Date(agent.created_at * 1000).toLocaleDateString()}</span>
               </div>
               <div>
-                <span className="text-gray-400">Last Atualizado:</span>
+                <span className="text-gray-400">Last Updated:</span>
                 <span className="text-white ml-2">{new Date(agent.updated_at * 1000).toLocaleDateString()}</span>
               </div>
             </div>
           </div>
 
-          {/* Ações */}
+          {/* Actions */}
           <div className="flex gap-3 mt-6">
             {editing ? (
               <>
@@ -516,10 +516,10 @@ function AgentDetailModal({
 // Create Agent Modal
 function CreateAgentModal({
   onClose,
-  onCriado
+  onCreated
 }: {
   onClose: () => void
-  onCriado: () => void
+  onCreated: () => void
 }) {
   const [formData, setFormData] = useState({
     name: '',
@@ -534,13 +534,13 @@ function CreateAgentModal({
     try {
       const response = await fetch('/api/agents', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       })
 
       if (!response.ok) throw new Error('Failed to create agent')
       
-      onCriado()
+      onCreated()
       onClose()
     } catch (error) {
       log.error('Error creating agent:', error)
@@ -555,7 +555,7 @@ function CreateAgentModal({
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-gray-400 mb-1">Nome</label>
+              <label className="block text-sm text-gray-400 mb-1">Name</label>
               <input
                 type="text"
                 value={formData.name}

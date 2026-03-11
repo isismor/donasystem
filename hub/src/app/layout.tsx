@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { TemaProvider } from 'next-themes'
+import { ThemeProvider } from 'next-themes'
 import './globals.css'
 
 export const viewport: Viewport = {
@@ -30,16 +30,16 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased font-sans" suppressHydrationWarning>
-        <TemaProvider
+        <ThemeProvider
           attribute="class"
-          defaultTema="dark"
+          defaultTheme="dark"
           enableSystem={false}
           disableTransitionOnChange
         >
           <div className="h-screen overflow-hidden bg-background text-foreground">
             {children}
           </div>
-        </TemaProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

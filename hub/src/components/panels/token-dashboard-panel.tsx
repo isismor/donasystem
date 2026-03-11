@@ -287,7 +287,7 @@ export function TokenDashboardPanel() {
                 {formatCost(usageStats.summary.totalCost)}
               </div>
               <div className="text-sm text-muted-foreground">
-                Custo Total ({selectedTimeframe})
+                Total Cost ({selectedTimeframe})
               </div>
             </div>
 
@@ -348,7 +348,7 @@ export function TokenDashboardPanel() {
 
             {/* Model Usage Bar Chart */}
             <div className="bg-card border border-border rounded-lg p-6">
-              <h2 className="text-xl font-semibold mb-4">Uso de Tokens by Model</h2>
+              <h2 className="text-xl font-semibold mb-4">Token Usage by Model</h2>
               <div className="h-64">
                 {prepareModelChartData().length === 0 ? (
                   <div className="h-full flex items-center justify-center text-muted-foreground text-sm">No model usage data yet</div>

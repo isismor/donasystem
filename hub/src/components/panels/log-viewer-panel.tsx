@@ -7,7 +7,7 @@ import { createClientLogger } from '@/lib/client-logger'
 
 const log = createClientLogger('LogViewer')
 
-interface LogFiltrars {
+interface LogFilters {
   level?: string
   source?: string
   search?: string
@@ -15,44 +15,44 @@ interface LogFiltrars {
 }
 
 export function LogViewerPanel() {
-  const { logs, logFiltrars, setLogFiltrars, clearLogs, addLog } = useMissionControl()
+  const { logs, logFilters, setLogFilters, clearLogs, addLog } = useMissionControl()
   const [isAutoScroll, setIsAutoScroll] = useState(true)
   const [availableSources, setAvailableSources] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const logContainerRef = useRef<HTMLDivElement>(null)
   const autoScrollRef = useRef<boolean>(true)
   const logsRef = useRef(logs)
-  const logFiltrarsRef = useRef(logFiltrars)
+  const logFiltersRef = useRef(logFilters)
 
   // Update ref when autoScroll state changes
   useEffect(() => {
     autoScrollRef.current = isAutoScroll
   }, [isAutoScroll])
 
-  // Keep refs in sync so callbacks don't need `logs` / `logFiltrars` deps.
+  // Keep refs in sync so callbacks don't need `logs` / `logFilters` deps.
   useEffect(() => {
     logsRef.current = logs
   }, [logs])
 
   useEffect(() => {
-    logFiltrarsRef.current = logFiltrars
-  }, [logFiltrars])
+    logFiltersRef.current = logFilters
+  }, [logFilters])
 
   const loadLogs = useCallback(async (tail = false) => {
     log.debug(`Loading logs (tail=${tail})`)
     setIsLoading(!tail) // Only show loading for initial load, not for tailing
 
     try {
-      const currentFiltrars = logFiltrarsRef.current
+      const currentFilters = logFiltersRef.current
       const currentLogs = logsRef.current
 
       const params = new URLSearchParams({
         action: tail ? 'tail' : 'recent',
         limit: '200',
-        ...(currentFiltrars.level && { level: currentFiltrars.level }),
-        ...(currentFiltrars.source && { source: currentFiltrars.source }),
-        ...(currentFiltrars.search && { search: currentFiltrars.search }),
-        ...(currentFiltrars.session && { session: currentFiltrars.session }),
+        ...(currentFilters.level && { level: currentFilters.level }),
+        ...(currentFilters.source && { source: currentFilters.source }),
+        ...(currentFilters.search && { search: currentFilters.search }),
+        ...(currentFilters.session && { session: currentFilters.session }),
         ...(tail && currentLogs.length > 0 && { since: currentLogs[0]?.timestamp.toString() })
       })
 
@@ -125,8 +125,8 @@ export function LogViewerPanel() {
     }
   }, [logs, isAutoScroll])
 
-  const handleFiltrarChange = (newFiltrars: Partial<LogFiltrars>) => {
-    setLogFiltrars(newFiltrars)
+  const handleFilterChange = (newFilters: Partial<LogFilters>) => {
+    setLogFilters(newFilters)
     // Reload logs with new filters
     setTimeout(() => loadLogs(), 100)
   }
@@ -158,10 +158,10 @@ export function LogViewerPanel() {
   }
 
   const filteredLogs = logs.filter(entry => {
-    if (logFiltrars.level && entry.level !== logFiltrars.level) return false
-    if (logFiltrars.source && entry.source !== logFiltrars.source) return false
-    if (logFiltrars.search && !entry.message.toLowerCase().includes(logFiltrars.search.toLowerCase())) return false
-    if (logFiltrars.session && (!entry.session || !entry.session.includes(logFiltrars.session))) return false
+    if (logFilters.level && entry.level !== logFilters.level) return false
+    if (logFilters.source && entry.source !== logFilters.source) return false
+    if (logFilters.search && !entry.message.toLowerCase().includes(logFilters.search.toLowerCase())) return false
+    if (logFilters.session && (!entry.session || !entry.session.includes(logFilters.session))) return false
     return true
   })
 
@@ -171,41 +171,41 @@ export function LogViewerPanel() {
   return (
     <div className="flex flex-col h-full p-6 space-y-4">
       <div className="border-b border-border pb-4">
-        <h1 className="text-3xl font-bold text-foreground">Logs</h1>
+        <h1 className="text-3xl font-bold text-foreground">Log Viewer</h1>
         <p className="text-muted-foreground mt-2">
           Real-time streaming logs from ClawdBot gateway and system
         </p>
       </div>
 
-      {/* Filtrars and Controls */}
+      {/* Filters and Controls */}
       <div className="bg-card border border-border rounded-lg p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-          {/* Level Filtrar */}
+          {/* Level Filter */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Level
             </label>
             <select
-              value={logFiltrars.level || ''}
-              onChange={(e) => handleFiltrarChange({ level: e.target.value || undefined })}
+              value={logFilters.level || ''}
+              onChange={(e) => handleFilterChange({ level: e.target.value || undefined })}
               className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <option value="">All levels</option>
-              <option value="error">Erro</option>
-              <option value="warn">Aviso</option>
+              <option value="error">Error</option>
+              <option value="warn">Warning</option>
               <option value="info">Info</option>
               <option value="debug">Debug</option>
             </select>
           </div>
 
-          {/* Source Filtrar */}
+          {/* Source Filter */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Source
             </label>
             <select
-              value={logFiltrars.source || ''}
-              onChange={(e) => handleFiltrarChange({ source: e.target.value || undefined })}
+              value={logFilters.source || ''}
+              onChange={(e) => handleFilterChange({ source: e.target.value || undefined })}
               className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <option value="">All sources</option>
@@ -215,29 +215,29 @@ export function LogViewerPanel() {
             </select>
           </div>
 
-          {/* Session Filtrar */}
+          {/* Session Filter */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Session
             </label>
             <input
               type="text"
-              value={logFiltrars.session || ''}
-              onChange={(e) => handleFiltrarChange({ session: e.target.value || undefined })}
+              value={logFilters.session || ''}
+              onChange={(e) => handleFilterChange({ session: e.target.value || undefined })}
               placeholder="Session ID"
               className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
 
-          {/* Search Filtrar */}
+          {/* Search Filter */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Search
             </label>
             <input
               type="text"
-              value={logFiltrars.search || ''}
-              onChange={(e) => handleFiltrarChange({ search: e.target.value || undefined })}
+              value={logFilters.search || ''}
+              onChange={(e) => handleFilterChange({ search: e.target.value || undefined })}
               placeholder="Search messages..."
               className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
@@ -278,11 +278,11 @@ export function LogViewerPanel() {
       {/* Log Stats */}
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <div>
-          Mostraring {filteredLogs.length} of {logs.length} logs
+          Showing {filteredLogs.length} of {logs.length} logs
         </div>
         <div>
           Auto-scroll: {isAutoScroll ? 'ON' : 'OFF'} • 
-          Última atualização: {logs.length > 0 ? new Date(logs[0]?.timestamp).toLocaleTimeString() : 'Never'}
+          Last updated: {logs.length > 0 ? new Date(logs[0]?.timestamp).toLocaleTimeString() : 'Never'}
         </div>
       </div>
 

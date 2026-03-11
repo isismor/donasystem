@@ -74,7 +74,7 @@ export function AlertRulesPanel() {
   const toggleRule = async (rule: AlertRule) => {
     await fetch('/api/alerts', {
       method: 'PUT',
-      headers: { 'Content-Tipo': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: rule.id, enabled: rule.enabled ? 0 : 1 }),
     })
     fetchRules()
@@ -83,7 +83,7 @@ export function AlertRulesPanel() {
   const deleteRule = async (id: number) => {
     await fetch('/api/alerts', {
       method: 'DELETE',
-      headers: { 'Content-Tipo': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     })
     fetchRules()
@@ -94,7 +94,7 @@ export function AlertRulesPanel() {
     try {
       const res = await fetch('/api/alerts', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'evaluate' }),
       })
       const data = await res.json()
@@ -112,7 +112,7 @@ export function AlertRulesPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Regras de Alerta</h2>
+          <h2 className="text-lg font-semibold text-foreground">Alert Rules</h2>
           <p className="text-xs text-muted-foreground mt-0.5">
             Configure automated alerts for agent, task, and system events
           </p>
@@ -151,7 +151,7 @@ export function AlertRulesPanel() {
           <div className="text-xl font-bold text-foreground mt-0.5">{rules.length}</div>
         </div>
         <div className="bg-card border border-border rounded-lg p-3">
-          <div className="text-2xs text-muted-foreground">Ativo</div>
+          <div className="text-2xs text-muted-foreground">Active</div>
           <div className="text-xl font-bold text-[#b4a68c] mt-0.5">{enabledCount}</div>
         </div>
         <div className="bg-card border border-border rounded-lg p-3">
@@ -189,7 +189,7 @@ export function AlertRulesPanel() {
 
       {/* Create Form */}
       {showCreate && (
-        <CreateRuleForm onCriado={() => { fetchRules(); setShowCreate(false) }} onCancel={() => setShowCreate(false)} />
+        <CreateRuleForm onCreated={() => { fetchRules(); setShowCreate(false) }} onCancel={() => setShowCreate(false)} />
       )}
 
       {/* Rules List */}
@@ -268,7 +268,7 @@ function RuleCard({ rule, onToggle, onDelete }: { rule: AlertRule; onToggle: () 
   )
 }
 
-function CreateRuleForm({ onCriado, onCancel }: { onCriado: () => void; onCancel: () => void }) {
+function CreateRuleForm({ onCreated, onCancel }: { onCreated: () => void; onCancel: () => void }) {
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -292,7 +292,7 @@ function CreateRuleForm({ onCriado, onCancel }: { onCriado: () => void; onCancel
     try {
       const res = await fetch('/api/alerts', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.name,
           description: form.description || null,
@@ -310,7 +310,7 @@ function CreateRuleForm({ onCriado, onCancel }: { onCriado: () => void; onCancel
         setError(data.error || 'Failed to create rule')
         return
       }
-      onCriado()
+      onCreated()
     } catch {
       setError('Network error')
     } finally {
@@ -324,7 +324,7 @@ function CreateRuleForm({ onCriado, onCancel }: { onCriado: () => void; onCancel
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label className="block text-2xs text-muted-foreground mb-1">Rule Nome</label>
+          <label className="block text-2xs text-muted-foreground mb-1">Rule Name</label>
           <input
             type="text"
             value={form.name}
@@ -335,7 +335,7 @@ function CreateRuleForm({ onCriado, onCancel }: { onCriado: () => void; onCancel
           />
         </div>
         <div>
-          <label className="block text-2xs text-muted-foreground mb-1">Descrição</label>
+          <label className="block text-2xs text-muted-foreground mb-1">Description</label>
           <input
             type="text"
             value={form.description}

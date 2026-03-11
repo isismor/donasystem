@@ -7,7 +7,7 @@ interface NavItem {
   id: string
   label: string
   icon: React.ReactNode
-  priority: boolean // Mostrar in mobile bottom bar
+  priority: boolean // Show in mobile bottom bar
 }
 
 interface NavGroup {
@@ -33,7 +33,7 @@ const navGroups: NavGroup[] = [
       { id: 'activity', label: 'Activity', icon: <ActivityIcon />, priority: true },
       { id: 'logs', label: 'Logs', icon: <LogsIcon />, priority: true },
       { id: 'tokens', label: 'Tokens', icon: <TokensIcon />, priority: false },
-      { id: 'memory', label: 'Memória', icon: <MemóriaIcon />, priority: false },
+      { id: 'memory', label: 'Memory', icon: <MemoryIcon />, priority: false },
     ],
   },
   {
@@ -50,12 +50,12 @@ const navGroups: NavGroup[] = [
     id: 'admin',
     label: 'ADMIN',
     items: [
-      { id: 'users', label: 'Usuários', icon: <UsuáriosIcon />, priority: false },
+      { id: 'users', label: 'Users', icon: <UsersIcon />, priority: false },
       { id: 'audit', label: 'Audit', icon: <AuditIcon />, priority: false },
       { id: 'history', label: 'History', icon: <HistoryIcon />, priority: false },
       { id: 'gateways', label: 'Gateways', icon: <GatewaysIcon />, priority: false },
       { id: 'gateway-config', label: 'Config', icon: <GatewayConfigIcon />, priority: false },
-      { id: 'settings', label: 'Configurações', icon: <ConfiguraçõesIcon />, priority: false },
+      { id: 'settings', label: 'Settings', icon: <SettingsIcon />, priority: false },
     ],
   },
 ]
@@ -64,7 +64,7 @@ const navGroups: NavGroup[] = [
 const allNavItems = navGroups.flatMap(g => g.items)
 
 export function NavRail() {
-  const { activeTab, setActiveTab, connection, sidebarExpandired, collapsedGroups, toggleSidebar, toggleGroup } = useMissionControl()
+  const { activeTab, setActiveTab, connection, sidebarExpanded, collapsedGroups, toggleSidebar, toggleGroup } = useMissionControl()
 
   // Keyboard shortcut: [ to toggle sidebar
   useEffect(() => {
@@ -83,24 +83,24 @@ export function NavRail() {
       {/* Desktop: Grouped sidebar */}
       <nav
         className={`hidden md:flex flex-col bg-card border-r border-border shrink-0 transition-all duration-200 ease-in-out ${
-          sidebarExpandired ? 'w-[220px]' : 'w-14'
+          sidebarExpanded ? 'w-[220px]' : 'w-14'
         }`}
       >
         {/* Header: Logo + toggle */}
-        <div className={`flex items-center shrink-0 ${sidebarExpandired ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
+        <div className={`flex items-center shrink-0 ${sidebarExpanded ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
           <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0">
             <span className="text-primary-foreground font-bold text-xs">MC</span>
           </div>
-          {sidebarExpandired && (
+          {sidebarExpanded && (
             <span className="text-sm font-semibold text-foreground truncate flex-1">Mission Control</span>
           )}
           <button
             onClick={toggleSidebar}
-            title={sidebarExpandired ? 'Recolher sidebar' : 'Expandir sidebar'}
+            title={sidebarExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
             className="w-7 h-7 rounded-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth shrink-0"
           >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-              {sidebarExpandired ? (
+              {sidebarExpanded ? (
                 <polyline points="10,3 5,8 10,13" />
               ) : (
                 <polyline points="6,3 11,8 6,13" />
@@ -115,11 +115,11 @@ export function NavRail() {
             <div key={group.id}>
               {/* Divider between groups (not before first) */}
               {groupIndex > 0 && (
-                <div className={`my-1.5 border-t border-border ${sidebarExpandired ? 'mx-3' : 'mx-2'}`} />
+                <div className={`my-1.5 border-t border-border ${sidebarExpanded ? 'mx-3' : 'mx-2'}`} />
               )}
 
               {/* Group header (expanded mode, only for groups with labels) */}
-              {sidebarExpandired && group.label && (
+              {sidebarExpanded && group.label && (
                 <button
                   onClick={() => toggleGroup(group.id)}
                   className="w-full flex items-center justify-between px-3 mt-3 mb-1 group/header"
@@ -146,16 +146,16 @@ export function NavRail() {
               {/* Group items */}
               <div
                 className={`overflow-hidden transition-all duration-150 ease-in-out ${
-                  sidebarExpandired && collapsedGroups.includes(group.id) ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
+                  sidebarExpanded && collapsedGroups.includes(group.id) ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
                 }`}
               >
-                <div className={`flex flex-col ${sidebarExpandired ? 'gap-0.5 px-2' : 'items-center gap-1'}`}>
+                <div className={`flex flex-col ${sidebarExpanded ? 'gap-0.5 px-2' : 'items-center gap-1'}`}>
                   {group.items.map((item) => (
                     <NavButton
                       key={item.id}
                       item={item}
                       active={activeTab === item.id}
-                      expanded={sidebarExpandired}
+                      expanded={sidebarExpanded}
                       onClick={() => setActiveTab(item.id)}
                     />
                   ))}
@@ -166,16 +166,16 @@ export function NavRail() {
         </div>
 
         {/* Connection indicator */}
-        <div className={`shrink-0 py-3 flex ${sidebarExpandired ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
+        <div className={`shrink-0 py-3 flex ${sidebarExpanded ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
           <div
             className={`w-2.5 h-2.5 rounded-full shrink-0 ${
               connection.isConnected ? 'bg-[#b4a68c] pulse-dot' : 'bg-[#9e5c50]'
             }`}
-            title={connection.isConnected ? 'Gateway conectado' : 'Gateway desconectado'}
+            title={connection.isConnected ? 'Gateway connected' : 'Gateway disconnected'}
           />
-          {sidebarExpandired && (
+          {sidebarExpanded && (
             <span className="text-xs text-muted-foreground truncate">
-              {connection.isConnected ? 'Conectado' : 'Desconectado'}
+              {connection.isConnected ? 'Connected' : 'Disconnected'}
             </span>
           )}
         </div>
@@ -380,7 +380,7 @@ function CronIcon() {
   )
 }
 
-function MemóriaIcon() {
+function MemoryIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <ellipse cx="8" cy="8" rx="6" ry="3" />
@@ -399,7 +399,7 @@ function TokensIcon() {
   )
 }
 
-function UsuáriosIcon() {
+function UsersIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="6" cy="5" r="2.5" />
@@ -473,7 +473,7 @@ function AlertIcon() {
   )
 }
 
-function ConfiguraçõesIcon() {
+function SettingsIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="8" cy="8" r="2" />

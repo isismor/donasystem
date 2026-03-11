@@ -21,12 +21,12 @@ const actionLabels: Record<string, string> = {
   login_failed: 'Failed login',
   logout: 'Logged out',
   password_change: 'Changed password',
-  profile_update: 'Atualizado profile',
-  user_create: 'Criado user',
-  user_update: 'Atualizado user',
+  profile_update: 'Updated profile',
+  user_create: 'Created user',
+  user_update: 'Updated user',
   user_delete: 'Deleted user',
   role_denied: 'Access denied',
-  backup_create: 'Criado backup',
+  backup_create: 'Created backup',
   backup_delete: 'Deleted backup',
 }
 
@@ -135,7 +135,7 @@ export function AuditTrailPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-base font-semibold text-foreground">Auditoria</h2>
+          <h2 className="text-base font-semibold text-foreground">Audit Trail</h2>
           <p className="text-xs text-muted-foreground mt-0.5">{total} event{total !== 1 ? 's' : ''} logged</p>
         </div>
         <button
@@ -146,7 +146,7 @@ export function AuditTrailPanel() {
         </button>
       </div>
 
-      {/* Filtrars */}
+      {/* Filters */}
       <div className="flex gap-2">
         <select
           value={filter.action}
@@ -156,7 +156,7 @@ export function AuditTrailPanel() {
           <option value="">All actions</option>
           <option value="login">Login</option>
           <option value="login_failed">Failed login</option>
-          <option value="logout">Sair</option>
+          <option value="logout">Logout</option>
           <option value="password_change">Password change</option>
           <option value="profile_update">Profile update</option>
           <option value="user_create">User created</option>
@@ -170,7 +170,7 @@ export function AuditTrailPanel() {
           type="text"
           value={filter.actor}
           onChange={e => { setFilter(f => ({ ...f, actor: e.target.value })); setPage(0) }}
-          placeholder="Filtrar by actor..."
+          placeholder="Filter by actor..."
           className="h-8 px-2.5 text-xs rounded-md bg-secondary border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary w-40"
         />
       </div>

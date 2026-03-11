@@ -121,13 +121,13 @@ export function ChatPanel() {
       pendingStatus: 'sending' as const,
     }
 
-    // Mostrar immediately
+    // Show immediately
     addChatMessage(optimisticMessage)
 
     try {
       const res = await fetch('/api/chat/messages', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           from: 'human',
           to,
@@ -210,7 +210,7 @@ export function ChatPanel() {
             <button
               onClick={() => setShowConversations(!showConversations)}
               className="hidden md:flex w-7 h-7 items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
-              title={showConversations ? 'Ocultar conversations' : 'Mostrar conversations'}
+              title={showConversations ? 'Hide conversations' : 'Show conversations'}
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                 <path d="M2 4h12M2 8h12M2 12h12" />

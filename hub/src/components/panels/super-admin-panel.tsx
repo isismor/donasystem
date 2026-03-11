@@ -63,7 +63,7 @@ interface GatewayOption {
   is_primary?: number
 }
 
-interface AgendarTask {
+interface SchedulerTask {
   id: string
   name: string
   enabled: boolean
@@ -95,15 +95,15 @@ export function SuperAdminPanel() {
   const [busyJobId, setBusyJobId] = useState<number | null>(null)
 
   const [activeTab, setActiveTab] = useState<SuperTab>('tenants')
-  const [createExpandired, setCreateExpandired] = useState(false)
+  const [createExpanded, setCreateExpanded] = useState(false)
 
   const [tenantSearch, setTenantSearch] = useState('')
-  const [tenantStatusFiltrar, setTenantStatusFiltrar] = useState('all')
+  const [tenantStatusFilter, setTenantStatusFilter] = useState('all')
   const [tenantPage, setTenantPage] = useState(1)
 
   const [jobSearch, setJobSearch] = useState('')
-  const [jobStatusFiltrar, setJobStatusFiltrar] = useState('all')
-  const [jobTipoFiltrar, setJobTipoFiltrar] = useState('all')
+  const [jobStatusFilter, setJobStatusFilter] = useState('all')
+  const [jobTypeFilter, setJobTypeFilter] = useState('all')
   const [jobPage, setJobPage] = useState(1)
 
   const [openActionMenu, setOpenActionMenu] = useState<string | null>(null)
@@ -157,7 +157,7 @@ export function SuperAdminPanel() {
       let tenantRows = Array.isArray(tenantsJson?.tenants) ? tenantsJson.tenants : []
       let jobRows = Array.isArray(jobsJson?.jobs) ? jobsJson.jobs : []
       const gatewayRows = Array.isArray(gatewaysJson?.gateways) ? gatewaysJson.gateways : []
-      const schedulerTasks: AgendarTask[] = Array.isArray(schedulerJson?.tasks) ? schedulerJson.tasks : []
+      const schedulerTasks: SchedulerTask[] = Array.isArray(schedulerJson?.tasks) ? schedulerJson.tasks : []
       const localEvents: Record<number, ProvisionEvent[]> = {}
 
       if (isLocal) {
@@ -201,7 +201,7 @@ export function SuperAdminPanel() {
               id: id * -10 + 1,
               level: 'info',
               step_key: task.id,
-              message: `Próxima execução: ${new Date(task.nextRun).toLocaleString()}`,
+              message: `Next run: ${new Date(task.nextRun).toLocaleString()}`,
               created_at: Math.floor(Date.now() / 1000),
             })
             localEvents[id] = eventRows
@@ -267,11 +267,11 @@ export function SuperAdminPanel() {
 
   useEffect(() => {
     setTenantPage(1)
-  }, [tenantSearch, tenantStatusFiltrar])
+  }, [tenantSearch, tenantStatusFilter])
 
   useEffect(() => {
     setJobPage(1)
-  }, [jobSearch, jobStatusFiltrar, jobTipoFiltrar])
+  }, [jobSearch, jobStatusFilter, jobTypeFilter])
 
   useEffect(() => {
     setOpenActionMenu(null)
@@ -295,7 +295,7 @@ export function SuperAdminPanel() {
     return ['all', ...values]
   }, [jobs])
 
-  const jobTipoOptions = useMemo(() => {
+  const jobTypeOptions = useMemo(() => {
     const values = Array.from(new Set(jobs.map((j) => j.job_type))).sort()
     return ['all', ...values]
   }, [jobs])
@@ -303,11 +303,11 @@ export function SuperAdminPanel() {
   const filteredTenants = useMemo(() => {
     const q = tenantSearch.trim().toLowerCase()
     return tenants.filter((tenant) => {
-      if (tenantStatusFiltrar !== 'all' && tenant.status !== tenantStatusFiltrar) return false
+      if (tenantStatusFilter !== 'all' && tenant.status !== tenantStatusFilter) return false
       if (!q) return true
       return [tenant.display_name, tenant.slug, tenant.linux_user, tenant.created_by || '', tenant.owner_gateway || '', tenant.status].join(' ').toLowerCase().includes(q)
     })
-  }, [tenants, tenantSearch, tenantStatusFiltrar])
+  }, [tenants, tenantSearch, tenantStatusFilter])
 
   const tenantPages = Math.max(1, Math.ceil(filteredTenants.length / TENANT_PAGE_SIZE))
   const pagedTenants = filteredTenants.slice((tenantPage - 1) * TENANT_PAGE_SIZE, tenantPage * TENANT_PAGE_SIZE)
@@ -315,12 +315,12 @@ export function SuperAdminPanel() {
   const filteredJobs = useMemo(() => {
     const q = jobSearch.trim().toLowerCase()
     return jobs.filter((job) => {
-      if (jobStatusFiltrar !== 'all' && job.status !== jobStatusFiltrar) return false
-      if (jobTipoFiltrar !== 'all' && job.job_type !== jobTipoFiltrar) return false
+      if (jobStatusFilter !== 'all' && job.status !== jobStatusFilter) return false
+      if (jobTypeFilter !== 'all' && job.job_type !== jobTypeFilter) return false
       if (!q) return true
       return [String(job.id), job.tenant_slug || '', String(job.tenant_id), job.requested_by, job.approved_by || '', job.status, job.job_type].join(' ').toLowerCase().includes(q)
     })
-  }, [jobs, jobSearch, jobStatusFiltrar, jobTipoFiltrar])
+  }, [jobs, jobSearch, jobStatusFilter, jobTypeFilter])
 
   const jobPages = Math.max(1, Math.ceil(filteredJobs.length / JOB_PAGE_SIZE))
   const pagedJobs = filteredJobs.slice((jobPage - 1) * JOB_PAGE_SIZE, jobPage * JOB_PAGE_SIZE)
@@ -342,7 +342,7 @@ export function SuperAdminPanel() {
     try {
       const res = await fetch('/api/super/tenants', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           slug: form.slug.trim().toLowerCase(),
           display_name: form.display_name.trim(),
@@ -400,7 +400,7 @@ export function SuperAdminPanel() {
     try {
       const approveRes = await fetch(`/api/super/provision-jobs/${jobId}`, {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'approve' }),
       })
       const approveJson = await approveRes.json().catch(() => ({}))
@@ -455,7 +455,7 @@ export function SuperAdminPanel() {
     try {
       const res = await fetch(`/api/super/tenants/${tenant.id}/decommission`, {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           dry_run: decommissionDialog.dryRun,
           remove_linux_user: decommissionDialog.removeLinuxUser,
@@ -483,7 +483,7 @@ export function SuperAdminPanel() {
     try {
       const res = await fetch(`/api/super/provision-jobs/${jobId}`, {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action, reason }),
       })
       const json = await res.json().catch(() => ({}))
@@ -535,7 +535,7 @@ export function SuperAdminPanel() {
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setCreateExpandired(true)}
+            onClick={() => setCreateExpanded(true)}
             className="h-8 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth"
           >
             + Add Workspace
@@ -584,12 +584,12 @@ export function SuperAdminPanel() {
         </div>
       )}
 
-      {createExpandired && (
+      {createExpanded && (
       <div className="rounded-lg border border-primary/30 bg-card overflow-hidden">
         <div className="px-4 py-3 border-b border-border flex items-center justify-between">
           <h3 className="text-sm font-medium text-foreground">Create New Workspace</h3>
           <button
-            onClick={() => setCreateExpandired(false)}
+            onClick={() => setCreateExpanded(false)}
             className="text-muted-foreground hover:text-foreground text-lg leading-none transition-smooth"
             aria-label="Close create form"
           >
@@ -707,8 +707,8 @@ export function SuperAdminPanel() {
                   className="h-8 w-56 px-3 rounded-md bg-secondary border border-border text-xs text-foreground"
                 />
                 <select
-                  value={tenantStatusFiltrar}
-                  onChange={(e) => setTenantStatusFiltrar(e.target.value)}
+                  value={tenantStatusFilter}
+                  onChange={(e) => setTenantStatusFilter(e.target.value)}
                   className="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
                 >
                   {statusOptions.map((opt) => (
@@ -717,7 +717,7 @@ export function SuperAdminPanel() {
                 </select>
               </div>
               <div className="text-xs text-muted-foreground">
-                Mostraring {pagedTenants.length} of {filteredTenants.length}
+                Showing {pagedTenants.length} of {filteredTenants.length}
               </div>
             </div>
 
@@ -777,7 +777,7 @@ export function SuperAdminPanel() {
                                 onClick={() => setOpenActionMenu((cur) => (cur === menuKey ? null : menuKey))}
                                 className="h-7 px-2 rounded border border-border text-xs hover:bg-secondary/60"
                               >
-                                Ações
+                                Actions
                               </button>
                               {openActionMenu === menuKey && (
                                 <div className="absolute right-3 top-10 z-20 w-44 rounded-md border border-border bg-card shadow-xl text-left">
@@ -835,8 +835,8 @@ export function SuperAdminPanel() {
                   className="h-8 w-56 px-3 rounded-md bg-secondary border border-border text-xs text-foreground"
                 />
                 <select
-                  value={jobStatusFiltrar}
-                  onChange={(e) => setJobStatusFiltrar(e.target.value)}
+                  value={jobStatusFilter}
+                  onChange={(e) => setJobStatusFilter(e.target.value)}
                   className="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
                 >
                   {jobStatusOptions.map((opt) => (
@@ -844,17 +844,17 @@ export function SuperAdminPanel() {
                   ))}
                 </select>
                 <select
-                  value={jobTipoFiltrar}
-                  onChange={(e) => setJobTipoFiltrar(e.target.value)}
+                  value={jobTypeFilter}
+                  onChange={(e) => setJobTypeFilter(e.target.value)}
                   className="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
                 >
-                  {jobTipoOptions.map((opt) => (
+                  {jobTypeOptions.map((opt) => (
                     <option key={opt} value={opt}>{opt}</option>
                   ))}
                 </select>
               </div>
               <div className="text-xs text-muted-foreground">
-                Mostraring {pagedJobs.length} of {filteredJobs.length}
+                Showing {pagedJobs.length} of {filteredJobs.length}
               </div>
             </div>
 
@@ -901,7 +901,7 @@ export function SuperAdminPanel() {
                                 onClick={() => setOpenActionMenu((cur) => (cur === menuKey ? null : menuKey))}
                                 className="h-7 px-2 rounded border border-border text-xs hover:bg-secondary/60"
                               >
-                                Ações
+                                Actions
                               </button>
                               {openActionMenu === menuKey && (
                                 <div className="absolute right-3 top-10 z-20 w-40 rounded-md border border-border bg-card shadow-xl text-left">
@@ -972,7 +972,7 @@ export function SuperAdminPanel() {
         {activeTab === 'events' && (
           <div className="p-3 space-y-2">
             <div className="text-xs text-muted-foreground px-1">
-              {selectedJobId ? `Mostraring events for job #${selectedJobId}` : 'Select a job to inspect provisioning event log.'}
+              {selectedJobId ? `Showing events for job #${selectedJobId}` : 'Select a job to inspect provisioning event log.'}
             </div>
             <div className="max-h-[420px] overflow-y-auto space-y-2">
               {selectedJobId && selectedJobEvents.length === 0 && (

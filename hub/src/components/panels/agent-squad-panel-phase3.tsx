@@ -7,7 +7,7 @@ import { AgentAvatar } from '@/components/ui/agent-avatar'
 import {
   OverviewTab,
   SoulTab,
-  MemóriaTab,
+  MemoryTab,
   TasksTab,
   ActivityTab,
   ConfigTab,
@@ -152,7 +152,7 @@ export function AgentSquadPanelPhase3() {
     try {
       const response = await fetch('/api/agents', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: agentName,
           status,
@@ -185,7 +185,7 @@ export function AgentSquadPanelPhase3() {
     try {
       const response = await fetch(`/api/agents/${agentName}/wake`, {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: `🤖 **Wake Up Call**\n\nAgent ${agentName}, you have been manually woken up.\nCheck Mission Control for any pending tasks or notifications.\n\n⏰ ${new Date().toLocaleString()}`
         })
@@ -214,9 +214,9 @@ export function AgentSquadPanelPhase3() {
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
     if (diffMinutes < 1) return 'Just now'
-    if (diffMinutes < 60) return `${diffMinutes}m atrás`
-    if (diffHours < 24) return `${diffHours}h atrás`
-    if (diffDays < 7) return `${diffDays}d atrás`
+    if (diffMinutes < 60) return `${diffMinutes}m ago`
+    if (diffHours < 24) return `${diffHours}h ago`
+    if (diffDays < 7) return `${diffDays}d ago`
     
     return new Date(timestamp * 1000).toLocaleDateString()
   }
@@ -248,7 +248,7 @@ export function AgentSquadPanelPhase3() {
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-bold text-foreground">Agentes</h2>
+          <h2 className="text-xl font-bold text-foreground">Agent Squad</h2>
           
           {/* Status Summary */}
           <div className="flex gap-2 text-sm">
@@ -332,7 +332,7 @@ export function AgentSquadPanelPhase3() {
                 <path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" />
               </svg>
             </div>
-            <p className="text-sm font-medium">Nenhum agente</p>
+            <p className="text-sm font-medium">No agents found</p>
             <p className="text-xs mt-1">Add your first agent to get started</p>
           </div>
         ) : (
@@ -374,7 +374,7 @@ export function AgentSquadPanelPhase3() {
                     {agent.session_key && (
                       <div className="flex items-center gap-1">
                         <div className="w-2 h-2 rounded-full bg-[#b4a68c]"></div>
-                        <span>Ativo</span>
+                        <span>Active</span>
                       </div>
                     )}
                   </div>
@@ -406,7 +406,7 @@ export function AgentSquadPanelPhase3() {
                   )}
                 </div>
 
-                {/* Ações Rápidas */}
+                {/* Quick Actions */}
                 <div className="flex gap-1">
                   {agent.session_key ? (
                     <button
@@ -473,7 +473,7 @@ export function AgentSquadPanelPhase3() {
       {showCreateModal && (
         <CreateAgentModal
           onClose={() => setShowCreateModal(false)}
-          onCriado={fetchAgents}
+          onCreated={fetchAgents}
         />
       )}
 
@@ -524,8 +524,8 @@ function AgentDetailModalPhase3({
     const diffMinutes = Math.floor(diffMs / (1000 * 60))
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
     if (diffMinutes < 1) return 'Just now'
-    if (diffMinutes < 60) return `${diffMinutes}m atrás`
-    if (diffHours < 24) return `${diffHours}h atrás`
+    if (diffMinutes < 60) return `${diffMinutes}m ago`
+    if (diffHours < 24) return `${diffHours}h ago`
     return new Date(timestamp * 1000).toLocaleDateString()
   }
 
@@ -570,7 +570,7 @@ function AgentDetailModalPhase3({
     try {
       const response = await fetch('/api/agents', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: agent.name,
           ...formData
@@ -590,7 +590,7 @@ function AgentDetailModalPhase3({
     try {
       const response = await fetch(`/api/agents/${agent.name}/soul`, {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           soul_content: content,
           template_name: templateName
@@ -606,11 +606,11 @@ function AgentDetailModalPhase3({
     }
   }
 
-  const handleMemóriaSave = async (content: string, append: boolean = false) => {
+  const handleMemorySave = async (content: string, append: boolean = false) => {
     try {
       const response = await fetch(`/api/agents/${agent.name}/memory`, {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           working_memory: content,
           append
@@ -630,7 +630,7 @@ function AgentDetailModalPhase3({
   const tabs = [
     { id: 'overview', label: 'Overview', icon: 'O' },
     { id: 'soul', label: 'SOUL', icon: 'S' },
-    { id: 'memory', label: 'Memória', icon: 'M' },
+    { id: 'memory', label: 'Memory', icon: 'M' },
     { id: 'tasks', label: 'Tasks', icon: 'T' },
     { id: 'config', label: 'Config', icon: 'C' },
     { id: 'activity', label: 'Activity', icon: 'A' }
@@ -728,10 +728,10 @@ function AgentDetailModalPhase3({
           )}
           
           {activeTab === 'memory' && (
-            <MemóriaTab
+            <MemoryTab
               agent={agent}
-              workingMemória={formData.working_memory}
-              onSave={handleMemóriaSave}
+              workingMemory={formData.working_memory}
+              onSave={handleMemorySave}
             />
           )}
           
@@ -790,7 +790,7 @@ function QuickSpawnModal({
     try {
       const response = await fetch('/api/spawn', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...spawnData,
           parentAgent: agent.name,
@@ -841,10 +841,10 @@ function QuickSpawnModal({
           </div>
         ) : (
           <div className="space-y-4">
-            {/* Task Descrição */}
+            {/* Task Description */}
             <div>
               <label className="block text-sm font-medium text-foreground/80 mb-2">
-                Task Descrição *
+                Task Description *
               </label>
               <textarea
                 value={spawnData.task}
@@ -907,7 +907,7 @@ function QuickSpawnModal({
                 disabled={isSpawning || !spawnData.task.trim()}
                 className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
               >
-                {isSpawning ? 'Spawning...' : 'Iniciar Agente'}
+                {isSpawning ? 'Spawning...' : 'Spawn Agent'}
               </button>
               <button
                 onClick={onClose}

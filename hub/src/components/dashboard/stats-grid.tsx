@@ -84,7 +84,7 @@ export function StatsGrid({ stats, systemStats }: StatsGridProps) {
       />
       
       <StatCard
-        title="Sessões Ativas"
+        title="Active Sessions"
         value={stats.activeSessions}
         icon="🟢"
         trend="up"
@@ -102,7 +102,7 @@ export function StatsGrid({ stats, systemStats }: StatsGridProps) {
       />
       
       <StatCard
-        title="Tempo ativo"
+        title="Uptime"
         value={uptimeFormatted}
         icon="⏱️"
         trend="stable"

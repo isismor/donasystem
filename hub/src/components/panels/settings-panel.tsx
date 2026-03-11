@@ -23,10 +23,10 @@ const categoryLabels: Record<string, { label: string; icon: string; description:
 
 const categoryOrder = ['general', 'retention', 'gateway', 'custom']
 
-export function ConfiguraçõesPanel() {
+export function SettingsPanel() {
   const { currentUser } = useMissionControl()
   const navigateToPanel = useNavigateToPanel()
-  const [settings, setConfigurações] = useState<Setting[]>([])
+  const [settings, setSettings] = useState<Setting[]>([])
   const [grouped, setGrouped] = useState<Record<string, Setting[]>>({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -42,7 +42,7 @@ export function ConfiguraçõesPanel() {
     setTimeout(() => setFeedback(null), 3000)
   }
 
-  const fetchConfigurações = useCallback(async () => {
+  const fetchSettings = useCallback(async () => {
     try {
       const res = await fetch('/api/settings')
       if (res.status === 401) {
@@ -59,7 +59,7 @@ export function ConfiguraçõesPanel() {
         return
       }
       const data = await res.json()
-      setConfigurações(data.settings || [])
+      setSettings(data.settings || [])
       setGrouped(data.grouped || {})
     } catch {
       setError('Failed to load settings')
@@ -68,7 +68,7 @@ export function ConfiguraçõesPanel() {
     }
   }, [])
 
-  useEffect(() => { fetchConfigurações() }, [fetchConfigurações])
+  useEffect(() => { fetchSettings() }, [fetchSettings])
 
   const handleEdit = (key: string, value: string) => {
     setEdits(prev => ({ ...prev, [key]: value }))
@@ -80,7 +80,7 @@ export function ConfiguraçõesPanel() {
   })
 
   const handleSave = async () => {
-    // Filtrar only actual changes
+    // Filter only actual changes
     const changes: Record<string, string> = {}
     for (const [key, value] of Object.entries(edits)) {
       const setting = settings.find(s => s.key === key)
@@ -95,14 +95,14 @@ export function ConfiguraçõesPanel() {
     try {
       const res = await fetch('/api/settings', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ settings: changes }),
       })
       const data = await res.json()
       if (res.ok) {
         showFeedback(true, `Saved ${data.count} setting${data.count === 1 ? '' : 's'}`)
         setEdits({})
-        fetchConfigurações()
+        fetchSettings()
       } else {
         showFeedback(false, data.error || 'Failed to save')
       }
@@ -124,7 +124,7 @@ export function ConfiguraçõesPanel() {
           delete next[key]
           return next
         })
-        fetchConfigurações()
+        fetchSettings()
       } else {
         showFeedback(false, data.error || 'Failed to reset')
       }
@@ -161,7 +161,7 @@ export function ConfiguraçõesPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Configurações</h2>
+          <h2 className="text-lg font-semibold text-foreground">Settings</h2>
           <p className="text-xs text-muted-foreground mt-0.5">Configure Mission Control behavior and retention policies</p>
         </div>
         <div className="flex items-center gap-2">
@@ -237,7 +237,7 @@ export function ConfiguraçõesPanel() {
         })}
       </div>
 
-      {/* Configurações list for active category */}
+      {/* Settings list for active category */}
       <div className="space-y-3">
         {(grouped[activeCategory] || []).map(setting => {
           const currentValue = edits[setting.key] ?? setting.value
@@ -313,7 +313,7 @@ export function ConfiguraçõesPanel() {
 
               {setting.updated_by && setting.updated_at && (
                 <div className="text-2xs text-muted-foreground/50 mt-2">
-                  Última atualização by {setting.updated_by} on {new Date(setting.updated_at * 1000).toLocaleDateString()}
+                  Last updated by {setting.updated_by} on {new Date(setting.updated_at * 1000).toLocaleDateString()}
                 </div>
               )}
             </div>

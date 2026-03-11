@@ -5,9 +5,9 @@ import { useMissionControl } from '@/store'
 import { useSmartPoll } from '@/lib/use-smart-poll'
 import { createClientLogger } from '@/lib/client-logger'
 
-const log = createClientLogger('SessionDetalhes')
+const log = createClientLogger('SessionDetails')
 
-export function SessionDetalhesPanel() {
+export function SessionDetailsPanel() {
   const { 
     sessions, 
     selectedSession, 
@@ -30,7 +30,7 @@ export function SessionDetalhesPanel() {
   useSmartPoll(loadSessions, 60000, { pauseWhenConnected: true })
 
   const [controllingSession, setControllingSession] = useState<string | null>(null)
-  const [sessionFiltrar, setSessionFilter] = useState<'all' | 'active' | 'idle'>('all')
+  const [sessionFilter, setSessionFilter] = useState<'all' | 'active' | 'idle'>('all')
   const [sortBy, setSortBy] = useState<'age' | 'tokens' | 'model'>('age')
   const [expandedSession, setExpandedSession] = useState<string | null>(null)
 
@@ -103,7 +103,7 @@ export function SessionDetalhesPanel() {
   }
 
   const filteredSessions = sessions.filter(session => {
-    switch (sessionFiltrar) {
+    switch (sessionFilter) {
       case 'active': return session.active
       case 'idle': return !session.active
       default: return true
@@ -120,9 +120,9 @@ export function SessionDetalhesPanel() {
         return a.model.localeCompare(b.model)
       case 'age':
       default:
-        // Ordenar por age (newest first)
-        if (a.age === 'atrásra') return -1
-        if (b.age === 'atrásra') return 1
+        // Sort by age (newest first)
+        if (a.age === 'just now') return -1
+        if (b.age === 'just now') return 1
         return a.age.localeCompare(b.age)
     }
   })
@@ -143,17 +143,17 @@ export function SessionDetalhesPanel() {
         </p>
       </div>
 
-      {/* Filtrars and Controls */}
+      {/* Filters and Controls */}
       <div className="bg-card border border-border rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div className="flex space-x-4">
-            {/* Filtrar by Status */}
+            {/* Filter by Status */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Filtrar
+                Filter
               </label>
               <select
-                value={sessionFiltrar}
+                value={sessionFilter}
                 onChange={(e) => setSessionFilter(e.target.value as any)}
                 className="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
@@ -163,10 +163,10 @@ export function SessionDetalhesPanel() {
               </select>
             </div>
 
-            {/* Ordenar por */}
+            {/* Sort by */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Ordenar por
+                Sort by
               </label>
               <select
                 value={sortBy}
@@ -174,7 +174,7 @@ export function SessionDetalhesPanel() {
                 className="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
                 <option value="age">Age</option>
-                <option value="tokens">Uso de Tokens</option>
+                <option value="tokens">Token Usage</option>
                 <option value="model">Model</option>
               </select>
             </div>
@@ -202,7 +202,7 @@ export function SessionDetalhesPanel() {
               const modelInfo = getModelInfo(session.model)
               const tokenUsage = parseTokenUsage(session.tokens)
               const status = getSessionStatus(session)
-              const isExpandired = expandedSession === session.id
+              const isExpanded = expandedSession === session.id
 
               return (
                 <div 
@@ -251,7 +251,7 @@ export function SessionDetalhesPanel() {
                       </div>
                     </div>
 
-                    {/* Model and Uso de Tokens */}
+                    {/* Model and Token Usage */}
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <div className="text-sm text-muted-foreground mb-1">Model</div>
@@ -259,7 +259,7 @@ export function SessionDetalhesPanel() {
                         <div className="text-xs text-muted-foreground">{modelInfo.provider}</div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground mb-1">Uso de Tokens</div>
+                        <div className="text-sm text-muted-foreground mb-1">Token Usage</div>
                         <div className="font-medium text-foreground">{session.tokens}</div>
                         <div className="w-full bg-secondary rounded-full h-2 mt-1">
                           <div
@@ -273,11 +273,11 @@ export function SessionDetalhesPanel() {
                       </div>
                     </div>
 
-                    {/* Expandired Detalhes */}
-                    {isExpandired && (
+                    {/* Expanded Details */}
+                    {isExpanded && (
                       <div className="pt-4 border-t border-border space-y-3">
                         <div>
-                          <h4 className="font-medium text-foreground mb-2">Session Detalhes</h4>
+                          <h4 className="font-medium text-foreground mb-2">Session Details</h4>
                           <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
                               <span className="text-muted-foreground">Kind:</span> 
@@ -310,7 +310,7 @@ export function SessionDetalhesPanel() {
                           <div className="bg-secondary rounded p-3 text-sm">
                             <div className="grid grid-cols-2 gap-2">
                               <div>
-                                <span className="text-muted-foreground">Full Nome:</span> 
+                                <span className="text-muted-foreground">Full Name:</span> 
                                 <div className="font-mono text-xs text-foreground mt-1">{modelInfo.name}</div>
                               </div>
                               <div>
@@ -318,14 +318,14 @@ export function SessionDetalhesPanel() {
                                 <div className="text-foreground mt-1">{modelInfo.provider}</div>
                               </div>
                               <div className="col-span-2">
-                                <span className="text-muted-foreground">Descrição:</span> 
+                                <span className="text-muted-foreground">Description:</span> 
                                 <div className="text-foreground mt-1">{modelInfo.description}</div>
                               </div>
                             </div>
                           </div>
                         </div>
 
-                        {/* Ações */}
+                        {/* Actions */}
                         <div className="flex space-x-2">
                           <button
                             className="px-3 py-1 text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded hover:bg-blue-500/30 transition-colors disabled:opacity-50"
@@ -336,7 +336,7 @@ export function SessionDetalhesPanel() {
                               try {
                                 const res = await fetch(`/api/sessions/${session.id}/control`, {
                                   method: 'POST',
-                                  headers: { 'Content-Tipo': 'application/json' },
+                                  headers: { 'Content-Type': 'application/json' },
                                   body: JSON.stringify({ action: 'monitor' }),
                                 })
                                 if (!res.ok) {
@@ -361,7 +361,7 @@ export function SessionDetalhesPanel() {
                               try {
                                 const res = await fetch(`/api/sessions/${session.id}/control`, {
                                   method: 'POST',
-                                  headers: { 'Content-Tipo': 'application/json' },
+                                  headers: { 'Content-Type': 'application/json' },
                                   body: JSON.stringify({ action: 'pause' }),
                                 })
                                 if (!res.ok) {
@@ -387,7 +387,7 @@ export function SessionDetalhesPanel() {
                               try {
                                 const res = await fetch(`/api/sessions/${session.id}/control`, {
                                   method: 'POST',
-                                  headers: { 'Content-Tipo': 'application/json' },
+                                  headers: { 'Content-Type': 'application/json' },
                                   body: JSON.stringify({ action: 'terminate' }),
                                 })
                                 if (!res.ok) {
@@ -478,10 +478,10 @@ export function SessionDetalhesPanel() {
             </div>
           </div>
 
-          {/* High Uso de Tokens Alert */}
+          {/* High Token Usage Alert */}
           {sessions.some(s => parseTokenUsage(s.tokens).percentage > 80) && (
             <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-              <h3 className="font-medium text-yellow-400 mb-2">⚠️ High Uso de Tokens</h3>
+              <h3 className="font-medium text-yellow-400 mb-2">⚠️ High Token Usage</h3>
               <div className="text-sm text-muted-foreground">
                 {sessions.filter(s => parseTokenUsage(s.tokens).percentage > 80).length} sessions 
                 are using more than 80% of their token limit.

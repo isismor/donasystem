@@ -13,11 +13,11 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
   const { chatInput, setChatInput, isSendingMessage } = useMissionControl()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [showMentions, setShowMentions] = useState(false)
-  const [mentionFiltrar, setMentionFiltrar] = useState('')
+  const [mentionFilter, setMentionFilter] = useState('')
   const [mentionIndex, setMentionIndex] = useState(0)
 
   const filteredAgents = agents.filter(a =>
-    a.name.toLowerCase().includes(mentionFiltrar.toLowerCase())
+    a.name.toLowerCase().includes(mentionFilter.toLowerCase())
   )
 
   const autoResize = useCallback(() => {
@@ -79,7 +79,7 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
     const atMatch = textBeforeCursor.match(/@(\w*)$/)
 
     if (atMatch) {
-      setMentionFiltrar(atMatch[1])
+      setMentionFilter(atMatch[1])
       setShowMentions(true)
       setMentionIndex(0)
     } else {

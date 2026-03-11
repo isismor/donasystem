@@ -4,31 +4,31 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useMissionControl } from '@/store'
 import { createClientLogger } from '@/lib/client-logger'
 
-const log = createClientLogger('MemóriaBrowser')
+const log = createClientLogger('MemoryBrowser')
 
-interface MemóriaFile {
+interface MemoryFile {
   path: string
   name: string
   type: 'file' | 'directory'
   size?: number
   modified?: number
-  children?: MemóriaFile[]
+  children?: MemoryFile[]
 }
 
-export function MemóriaBrowserPanel() {
+export function MemoryBrowserPanel() {
   const {
     memoryFiles,
-    selectedMemóriaFile,
+    selectedMemoryFile,
     memoryContent,
     dashboardMode,
-    setMemóriaFiles,
-    setSelectedMemóriaFile,
-    setMemóriaContent
+    setMemoryFiles,
+    setSelectedMemoryFile,
+    setMemoryContent
   } = useMissionControl()
   const isLocal = dashboardMode === 'local'
 
   const [isLoading, setIsLoading] = useState(false)
-  const [expandedFolders, setExpandiredFolders] = useState<Set<string>>(new Set())
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set())
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
@@ -44,16 +44,16 @@ export function MemóriaBrowserPanel() {
     try {
       const response = await fetch('/api/memory?action=tree')
       const data = await response.json()
-      setMemóriaFiles(data.tree || [])
+      setMemoryFiles(data.tree || [])
 
       // Auto-expand some common directories
-      setExpandiredFolders(new Set(['daily', 'knowledge', 'memory', 'knowledge-base']))
+      setExpandedFolders(new Set(['daily', 'knowledge', 'memory', 'knowledge-base']))
     } catch (error) {
       log.error('Failed to load file tree:', error)
     } finally {
       setIsLoading(false)
     }
-  }, [setMemóriaFiles])
+  }, [setMemoryFiles])
 
   useEffect(() => {
     loadFileTree()
@@ -79,8 +79,8 @@ export function MemóriaBrowserPanel() {
       const data = await response.json()
       
       if (data.content !== undefined) {
-        setSelectedMemóriaFile(filePath)
-        setMemóriaContent(data.content)
+        setSelectedMemoryFile(filePath)
+        setMemoryContent(data.content)
       } else {
         alert(data.error || 'Failed to load file content')
       }
@@ -109,13 +109,13 @@ export function MemóriaBrowserPanel() {
   }
 
   const toggleFolder = (folderPath: string) => {
-    const newExpandired = new Set(expandedFolders)
-    if (newExpandired.has(folderPath)) {
-      newExpandired.delete(folderPath)
+    const newExpanded = new Set(expandedFolders)
+    if (newExpanded.has(folderPath)) {
+      newExpanded.delete(folderPath)
     } else {
-      newExpandired.add(folderPath)
+      newExpanded.add(folderPath)
     }
-    setExpandiredFolders(newExpandired)
+    setExpandedFolders(newExpanded)
   }
 
   const formatFileSize = (bytes: number) => {
@@ -142,23 +142,23 @@ export function MemóriaBrowserPanel() {
   }
 
   const saveFile = async () => {
-    if (!selectedMemóriaFile) return
+    if (!selectedMemoryFile) return
 
     setIsSaving(true)
     try {
       const response = await fetch(`/api/memory`, {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'save',
-          path: selectedMemóriaFile,
+          path: selectedMemoryFile,
           content: editedContent
         })
       })
 
       const data = await response.json()
       if (data.success) {
-        setMemóriaContent(editedContent)
+        setMemoryContent(editedContent)
         setIsEditing(false)
         setEditedContent('')
         // Refresh file tree to update file sizes
@@ -178,7 +178,7 @@ export function MemóriaBrowserPanel() {
     try {
       const response = await fetch(`/api/memory`, {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'create',
           path: filePath,
@@ -200,22 +200,22 @@ export function MemóriaBrowserPanel() {
   }
 
   const deleteFile = async () => {
-    if (!selectedMemóriaFile) return
+    if (!selectedMemoryFile) return
 
     try {
       const response = await fetch(`/api/memory`, {
         method: 'DELETE',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'delete',
-          path: selectedMemóriaFile
+          path: selectedMemoryFile
         })
       })
 
       const data = await response.json()
       if (data.success) {
-        setSelectedMemóriaFile('')
-        setMemóriaContent('')
+        setSelectedMemoryFile('')
+        setMemoryContent('')
         setShowDeleteConfirm(false)
         loadFileTree()
       } else {
@@ -227,7 +227,7 @@ export function MemóriaBrowserPanel() {
     }
   }
 
-  const renderFileTree = (files: MemóriaFile[], level = 0): React.ReactElement[] => {
+  const renderFileTree = (files: MemoryFile[], level = 0): React.ReactElement[] => {
     return files.map((file) => (
       <div key={file.path} style={{ marginLeft: `${level * 16}px` }}>
         {file.type === 'directory' ? (
@@ -253,7 +253,7 @@ export function MemóriaBrowserPanel() {
         ) : (
           <div
             className={`flex items-center space-x-2 py-1 px-2 hover:bg-secondary rounded cursor-pointer ${
-              selectedMemóriaFile === file.path ? 'bg-primary/20 border border-primary/30' : ''
+              selectedMemoryFile === file.path ? 'bg-primary/20 border border-primary/30' : ''
             }`}
             onClick={() => loadFileContent(file.path)}
           >
@@ -363,14 +363,14 @@ export function MemóriaBrowserPanel() {
   return (
     <div className="p-6 space-y-6">
       <div className="border-b border-border pb-4">
-        <h1 className="text-3xl font-bold text-foreground">Memória Browser</h1>
+        <h1 className="text-3xl font-bold text-foreground">Memory Browser</h1>
         <p className="text-muted-foreground mt-2">
           {isLocal
             ? 'Browse and manage local knowledge files and memory'
             : 'Explore knowledge files and memory structure'}
         </p>
         <p className="text-xs text-muted-foreground mt-1">
-          This page shows all workspace memory files. The agent profile Memória tab only edits that single agent&apos;s working memory.
+          This page shows all workspace memory files. The agent profile Memory tab only edits that single agent&apos;s working memory.
         </p>
         
         {/* Tab Navigation */}
@@ -465,12 +465,12 @@ export function MemóriaBrowserPanel() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* File Tree */}
         <div className="bg-card border border-border rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Memória Structure</h2>
+          <h2 className="text-xl font-semibold mb-4">Memory Structure</h2>
           
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-              <span className="ml-3 text-muted-foreground">Carregando...</span>
+              <span className="ml-3 text-muted-foreground">Loading...</span>
             </div>
           ) : (
             <div className="max-h-96 overflow-y-auto text-sm">
@@ -491,10 +491,10 @@ export function MemóriaBrowserPanel() {
         <div className="lg:col-span-2 bg-card border border-border rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold">
-              {selectedMemóriaFile || 'File Content'}
+              {selectedMemoryFile || 'File Content'}
             </h2>
             <div className="flex items-center gap-2">
-              {selectedMemóriaFile && (
+              {selectedMemoryFile && (
                 <>
                   {!isEditing ? (
                     <>
@@ -530,8 +530,8 @@ export function MemóriaBrowserPanel() {
                   )}
                   <button
                     onClick={() => {
-                      setSelectedMemóriaFile('')
-                      setMemóriaContent('')
+                      setSelectedMemoryFile('')
+                      setMemoryContent('')
                       setIsEditing(false)
                       setEditedContent('')
                     }}
@@ -565,19 +565,19 @@ export function MemóriaBrowserPanel() {
                     className="w-full min-h-[500px] p-3 bg-surface-1 text-foreground font-mono text-sm border border-border rounded-md resize-none focus:outline-none focus:ring-1 focus:ring-primary/50"
                     placeholder="Edit file content..."
                   />
-                ) : selectedMemóriaFile?.endsWith('.md') ? (
+                ) : selectedMemoryFile?.endsWith('.md') ? (
                   <div className="prose prose-invert max-w-none w-full">
                     <div className="mb-4 text-sm text-muted-foreground">
-                      File: {selectedMemóriaFile} | Size: {memoryContent.length} chars
+                      File: {selectedMemoryFile} | Size: {memoryContent.length} chars
                     </div>
                     <div className="whitespace-pre-wrap break-words">
                       {renderMarkdown(memoryContent)}
                     </div>
                   </div>
-                ) : selectedMemóriaFile?.endsWith('.json') ? (
+                ) : selectedMemoryFile?.endsWith('.json') ? (
                   <div>
                     <div className="mb-4 text-sm text-muted-foreground">
-                      File: {selectedMemóriaFile} | Size: {memoryContent.length} chars
+                      File: {selectedMemoryFile} | Size: {memoryContent.length} chars
                     </div>
                     <pre className="text-sm overflow-auto whitespace-pre-wrap break-words">
                       <code>{JSON.stringify(JSON.parse(memoryContent), null, 2)}</code>
@@ -586,7 +586,7 @@ export function MemóriaBrowserPanel() {
                 ) : (
                   <div>
                     <div className="mb-4 text-sm text-muted-foreground">
-                      File: {selectedMemóriaFile} | Size: {memoryContent.length} chars
+                      File: {selectedMemoryFile} | Size: {memoryContent.length} chars
                     </div>
                     <pre className="text-sm whitespace-pre-wrap break-words overflow-auto">
                       {memoryContent}
@@ -612,13 +612,13 @@ export function MemóriaBrowserPanel() {
       {/* File Stats */}
       {memoryFiles.length > 0 && (
         <div className="bg-card border border-border rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Memória Statistics</h2>
+          <h2 className="text-xl font-semibold mb-4">Memory Statistics</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-secondary rounded p-4">
               <div className="text-2xl font-bold text-foreground">
                 {memoryFiles.reduce((count, dir) => {
-                  const countFiles = (files: MemóriaFile[]): number => {
+                  const countFiles = (files: MemoryFile[]): number => {
                     return files.reduce((acc, file) => {
                       if (file.type === 'file') return acc + 1
                       return acc + countFiles(file.children || [])
@@ -633,7 +633,7 @@ export function MemóriaBrowserPanel() {
             <div className="bg-secondary rounded p-4">
               <div className="text-2xl font-bold text-foreground">
                 {memoryFiles.reduce((count, dir) => {
-                  const countDirs = (files: MemóriaFile[]): number => {
+                  const countDirs = (files: MemoryFile[]): number => {
                     return files.reduce((acc, file) => {
                       if (file.type === 'directory') return acc + 1 + countDirs(file.children || [])
                       return acc
@@ -648,7 +648,7 @@ export function MemóriaBrowserPanel() {
             <div className="bg-secondary rounded p-4">
               <div className="text-2xl font-bold text-foreground">
                 {formatFileSize(memoryFiles.reduce((size, dir) => {
-                  const calculateSize = (files: MemóriaFile[]): number => {
+                  const calculateSize = (files: MemoryFile[]): number => {
                     return files.reduce((acc, file) => {
                       if (file.type === 'file' && file.size) return acc + file.size
                       return acc + calculateSize(file.children || [])
@@ -672,9 +672,9 @@ export function MemóriaBrowserPanel() {
       )}
 
       {/* Delete Confirmation Modal */}
-      {showDeleteConfirm && selectedMemóriaFile && (
+      {showDeleteConfirm && selectedMemoryFile && (
         <DeleteConfirmModal
-          fileName={selectedMemóriaFile}
+          fileName={selectedMemoryFile}
           onClose={() => setShowDeleteConfirm(false)}
           onConfirm={deleteFile}
         />
@@ -708,7 +708,7 @@ function CreateFileModal({
   }
 
   const fileTypesWithTemplates = {
-    md: '# New Document\n\n## Overview\n\n## Detalhes\n\n',
+    md: '# New Document\n\n## Overview\n\n## Details\n\n',
     json: '{\n  "name": "",\n  "description": "",\n  "data": {}\n}',
     txt: '',
     log: `[${new Date().toISOString()}] Log entry\n`
@@ -742,7 +742,7 @@ function CreateFileModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">File Nome</label>
+            <label className="block text-sm font-medium text-foreground mb-2">File Name</label>
             <input
               type="text"
               value={fileName}
@@ -753,7 +753,7 @@ function CreateFileModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">File Tipo</label>
+            <label className="block text-sm font-medium text-foreground mb-2">File Type</label>
             <select
               value={fileType}
               onChange={(e) => {

@@ -99,7 +99,7 @@ export function OverviewTab({
       setMessageStatus(null)
       const response = await fetch('/api/agents/message', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           to: agent.name,
           message: directMessage
@@ -217,7 +217,7 @@ export function OverviewTab({
         )}
       </div>
 
-      {/* Agent Detalhes */}
+      {/* Agent Details */}
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-muted-foreground mb-1">Role</label>
@@ -284,11 +284,11 @@ export function OverviewTab({
         {/* Timestamps */}
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-muted-foreground">Criado:</span>
+            <span className="text-muted-foreground">Created:</span>
             <span className="text-foreground ml-2">{new Date(agent.created_at * 1000).toLocaleDateString()}</span>
           </div>
           <div>
-            <span className="text-muted-foreground">Last Atualizado:</span>
+            <span className="text-muted-foreground">Last Updated:</span>
             <span className="text-foreground ml-2">{new Date(agent.updated_at * 1000).toLocaleDateString()}</span>
           </div>
           {agent.last_seen && (
@@ -300,7 +300,7 @@ export function OverviewTab({
         </div>
       </div>
 
-      {/* Ações */}
+      {/* Actions */}
       <div className="flex gap-3 mt-6">
         {editing ? (
           <>
@@ -373,7 +373,7 @@ export function SoulTab({
   return (
     <div className="p-6 space-y-4">
       <div className="flex justify-between items-center">
-        <h4 className="text-lg font-medium text-foreground">SOUL Configuração</h4>
+        <h4 className="text-lg font-medium text-foreground">SOUL Configuration</h4>
         <div className="flex gap-2">
           {!editing && (
             <button
@@ -438,7 +438,7 @@ export function SoulTab({
         )}
       </div>
 
-      {/* Ações */}
+      {/* Actions */}
       {editing && (
         <div className="flex gap-3">
           <button
@@ -462,24 +462,24 @@ export function SoulTab({
   )
 }
 
-// Memória Tab Component
-export function MemóriaTab({
+// Memory Tab Component
+export function MemoryTab({
   agent,
-  workingMemória,
+  workingMemory,
   onSave
 }: {
   agent: Agent
-  workingMemória: string
+  workingMemory: string
   onSave: (content: string, append?: boolean) => Promise<void>
 }) {
   const [editing, setEditing] = useState(false)
-  const [content, setContent] = useState(workingMemória)
+  const [content, setContent] = useState(workingMemory)
   const [appendMode, setAppendMode] = useState(false)
   const [newEntry, setNewEntry] = useState('')
 
   useEffect(() => {
-    setContent(workingMemória)
-  }, [workingMemória])
+    setContent(workingMemory)
+  }, [workingMemory])
 
   const handleSave = async () => {
     if (appendMode && newEntry.trim()) {
@@ -504,7 +504,7 @@ export function MemóriaTab({
     <div className="p-6 space-y-4">
       <div className="flex justify-between items-center">
         <div>
-          <h4 className="text-lg font-medium text-foreground">Working Memória</h4>
+          <h4 className="text-lg font-medium text-foreground">Working Memory</h4>
           <p className="text-xs text-muted-foreground mt-1">
             This is <strong className="text-foreground">agent-level</strong> scratchpad memory (stored as WORKING.md in the database), not the workspace memory folder.
           </p>
@@ -525,7 +525,7 @@ export function MemóriaTab({
                 onClick={() => setEditing(true)}
                 className="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
               >
-                Edit Memória
+                Edit Memory
               </button>
             </>
           )}
@@ -534,16 +534,16 @@ export function MemóriaTab({
 
       {/* Info Banner */}
       <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-xs text-blue-300">
-        <strong className="text-blue-200">Agent Memória vs Workspace Memória:</strong>{' '}
+        <strong className="text-blue-200">Agent Memory vs Workspace Memory:</strong>{' '}
         This tab edits only this agent&apos;s private working memory (a scratchpad stored in the database).
         To browse or edit all workspace memory files (daily logs, knowledge base, MEMORY.md, etc.), visit the{' '}
-        <Link href="/memory" className="text-blue-400 underline hover:text-blue-300">Memória Browser</Link> page.
+        <Link href="/memory" className="text-blue-400 underline hover:text-blue-300">Memory Browser</Link> page.
       </div>
 
-      {/* Memória Content */}
+      {/* Memory Content */}
       <div>
         <label className="block text-sm font-medium text-muted-foreground mb-1">
-          Memória Content ({content.length} characters)
+          Memory Content ({content.length} characters)
         </label>
         
         {editing && appendMode ? (
@@ -578,20 +578,20 @@ export function MemóriaTab({
         )}
       </div>
 
-      {/* Ações */}
+      {/* Actions */}
       {editing && (
         <div className="flex gap-3">
           <button
             onClick={handleSave}
             className="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
           >
-            {appendMode ? 'Add Entry' : 'Save Memória'}
+            {appendMode ? 'Add Entry' : 'Save Memory'}
           </button>
           <button
             onClick={() => {
               setEditing(false)
               setAppendMode(false)
-              setContent(workingMemória)
+              setContent(workingMemory)
               setNewEntry('')
             }}
             className="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
@@ -760,7 +760,7 @@ export function ActivityTab({ agent }: { agent: Agent }) {
 
   return (
     <div className="p-6 space-y-4">
-      <h4 className="text-lg font-medium text-foreground">Atividade Recente</h4>
+      <h4 className="text-lg font-medium text-foreground">Recent Activity</h4>
       
       {activities.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
@@ -829,10 +829,10 @@ const DEFAULT_MODEL_BY_TIER: Record<'opus' | 'sonnet' | 'haiku', string> = {
 // Enhanced Create Agent Modal with Template Wizard
 export function CreateAgentModal({
   onClose,
-  onCriado
+  onCreated
 }: {
   onClose: () => void
-  onCriado: () => void
+  onCreated: () => void
 }) {
   const [step, setStep] = useState<1 | 2 | 3>(1)
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
@@ -902,7 +902,7 @@ export function CreateAgentModal({
 
   const handleCreate = async () => {
     if (!formData.name.trim()) {
-      setError('Nome is required')
+      setError('Name is required')
       return
     }
     setIsCreating(true)
@@ -911,7 +911,7 @@ export function CreateAgentModal({
       const primaryModel = formData.modelPrimary.trim() || DEFAULT_MODEL_BY_TIER[formData.modelTier]
       const response = await fetch('/api/agents', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           openclaw_id: formData.id || undefined,
@@ -937,7 +937,7 @@ export function CreateAgentModal({
         const data = await response.json()
         throw new Error(data.error || 'Failed to create agent')
       }
-      onCriado()
+      onCreated()
       onClose()
     } catch (err: any) {
       setError(err.message)
@@ -1030,7 +1030,7 @@ export function CreateAgentModal({
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Display Nome *</label>
+                  <label className="block text-sm text-muted-foreground mb-1">Display Name *</label>
                   <input
                     type="text"
                     value={formData.name}
@@ -1054,7 +1054,7 @@ export function CreateAgentModal({
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Role / Tema</label>
+                  <label className="block text-sm text-muted-foreground mb-1">Role / Theme</label>
                   <input
                     type="text"
                     value={formData.role}
@@ -1362,7 +1362,7 @@ export function ConfigTab({
       }
       const response = await fetch(`/api/agents/${agent.id}`, {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           gateway_config: showJson ? JSON.parse(jsonInput) : config,
           write_to_gateway: true,
@@ -1389,7 +1389,7 @@ export function ConfigTab({
   const sandboxWorkspace = sandbox.workspaceAccess || sandbox.workspace_access || sandbox.workspace || config.workspaceAccess || 'not configured'
   const sandboxNetwork = sandbox?.docker?.network || sandbox.network || sandbox.dockerNetwork || sandbox.docker_network || 'none'
   const identityName = identity.name || agent.name || 'not configured'
-  const identityTema = identity.theme || agent.role || 'not configured'
+  const identityTheme = identity.theme || agent.role || 'not configured'
   const identityEmoji = identity.emoji || '?'
   const identityPreview = identity.content || ''
   const toolAllow = Array.isArray(tools.allow) ? tools.allow : []
@@ -1549,7 +1549,7 @@ export function ConfigTab({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Nome</label>
+                    <label className="block text-xs text-muted-foreground mb-1">Name</label>
                     <input
                       value={identity.name || ''}
                       onChange={(e) => updateIdentityField('name', e.target.value)}
@@ -1558,7 +1558,7 @@ export function ConfigTab({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Tema / Role</label>
+                    <label className="block text-xs text-muted-foreground mb-1">Theme / Role</label>
                     <input
                       value={identity.theme || ''}
                       onChange={(e) => updateIdentityField('theme', e.target.value)}
@@ -1584,7 +1584,7 @@ export function ConfigTab({
                   <span className="text-2xl">{identityEmoji}</span>
                   <div>
                     <div className="text-foreground font-medium">{identityName}</div>
-                    <div className="text-muted-foreground">{identityTema}</div>
+                    <div className="text-muted-foreground">{identityTheme}</div>
                   </div>
                 </div>
                 {identityPreview && (
@@ -1753,10 +1753,10 @@ export function ConfigTab({
             </div>
           )}
 
-          {/* Memória Search */}
+          {/* Memory Search */}
           {memorySearch.sources && (
             <div className="bg-surface-1/50 rounded-lg p-4">
-              <h5 className="text-sm font-medium text-foreground mb-2">Memória Search</h5>
+              <h5 className="text-sm font-medium text-foreground mb-2">Memory Search</h5>
               <div className="flex gap-1">
                 {memorySearch.sources.map((s: string) => (
                   <span key={s} className="px-2 py-0.5 text-xs bg-cyan-500/10 text-cyan-400 rounded">{s}</span>
@@ -1767,7 +1767,7 @@ export function ConfigTab({
         </div>
       )}
 
-      {/* Ações */}
+      {/* Actions */}
       {editing && (
         <div className="flex gap-3 pt-2">
           <button

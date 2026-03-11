@@ -9,22 +9,22 @@ import { Dashboard } from '@/components/dashboard/dashboard'
 import { AgentSpawnPanel } from '@/components/panels/agent-spawn-panel'
 import { LogViewerPanel } from '@/components/panels/log-viewer-panel'
 import { CronManagementPanel } from '@/components/panels/cron-management-panel'
-import { MemóriaBrowserPanel } from '@/components/panels/memory-browser-panel'
+import { MemoryBrowserPanel } from '@/components/panels/memory-browser-panel'
 import { TokenDashboardPanel } from '@/components/panels/token-dashboard-panel'
 import { AgentCostPanel } from '@/components/panels/agent-cost-panel'
-import { SessionDetalhesPanel } from '@/components/panels/session-details-panel'
+import { SessionDetailsPanel } from '@/components/panels/session-details-panel'
 import { TaskBoardPanel } from '@/components/panels/task-board-panel'
 import { ActivityFeedPanel } from '@/components/panels/activity-feed-panel'
 import { AgentSquadPanelPhase3 } from '@/components/panels/agent-squad-panel-phase3'
 import { AgentCommsPanel } from '@/components/panels/agent-comms-panel'
 import { StandupPanel } from '@/components/panels/standup-panel'
 import { OrchestrationBar } from '@/components/panels/orchestration-bar'
-import { NotificaçõesPanel } from '@/components/panels/notifications-panel'
+import { NotificationsPanel } from '@/components/panels/notifications-panel'
 import { UserManagementPanel } from '@/components/panels/user-management-panel'
 import { AuditTrailPanel } from '@/components/panels/audit-trail-panel'
 import { AgentHistoryPanel } from '@/components/panels/agent-history-panel'
 import { WebhookPanel } from '@/components/panels/webhook-panel'
-import { ConfiguraçõesPanel } from '@/components/panels/settings-panel'
+import { SettingsPanel } from '@/components/panels/settings-panel'
 import { GatewayConfigPanel } from '@/components/panels/gateway-config-panel'
 import { IntegrationsPanel } from '@/components/panels/integrations-panel'
 import { AlertRulesPanel } from '@/components/panels/alert-rules-panel'
@@ -32,7 +32,7 @@ import { MultiGatewayPanel } from '@/components/panels/multi-gateway-panel'
 import { SuperAdminPanel } from '@/components/panels/super-admin-panel'
 import { OfficePanel } from '@/components/panels/office-panel'
 import { GitHubSyncPanel } from '@/components/panels/github-sync-panel'
-import { DocumentosPanel } from '@/components/panels/documents-panel'
+import { DocumentsPanel } from '@/components/panels/documents-panel'
 import { ChatPanel } from '@/components/chat/chat-panel'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { LocalModeBanner } from '@/components/layout/local-mode-banner'
@@ -181,7 +181,7 @@ export default function Home() {
         <button
           onClick={toggleLiveFeed}
           className="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 z-30 w-6 h-12 items-center justify-center bg-card border border-r-0 border-border rounded-l-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200"
-          title="Mostrar live feed"
+          title="Show live feed"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M10 3l-5 5 5 5" strokeLinecap="round" strokeLinejoin="round" />
@@ -228,19 +228,19 @@ function ContentRouter({ tab }: { tab: string }) {
     case 'activity':
       return <ActivityFeedPanel />
     case 'notifications':
-      return <NotificaçõesPanel />
+      return <NotificationsPanel />
     case 'standup':
       return <StandupPanel />
     case 'spawn':
       return <AgentSpawnPanel />
     case 'sessions':
-      return <SessionDetalhesPanel />
+      return <SessionDetailsPanel />
     case 'logs':
       return <LogViewerPanel />
     case 'cron':
       return <CronManagementPanel />
     case 'memory':
-      return <MemóriaBrowserPanel />
+      return <MemoryBrowserPanel />
     case 'tokens':
       return <TokenDashboardPanel />
     case 'agent-costs':
@@ -262,13 +262,13 @@ function ContentRouter({ tab }: { tab: string }) {
     case 'integrations':
       return <IntegrationsPanel />
     case 'settings':
-      return <ConfiguraçõesPanel />
+      return <SettingsPanel />
     case 'github':
       return <GitHubSyncPanel />
     case 'office':
       return <OfficePanel />
     case 'documents':
-      return <DocumentosPanel />
+      return <DocumentsPanel />
     case 'super-admin':
       return <SuperAdminPanel />
     case 'workspaces':

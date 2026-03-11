@@ -61,7 +61,7 @@ function formatTime(value: number): string {
   return new Date(value).toLocaleString()
 }
 
-export function DocumentosPanel() {
+export function DocumentsPanel() {
   const [tree, setTree] = useState<DocsTreeNode[]>([])
   const [roots, setRoots] = useState<string[]>([])
   const [loadingTree, setLoadingTree] = useState(true)
@@ -75,7 +75,7 @@ export function DocumentosPanel() {
   const [searchResults, setSearchResults] = useState<DocsSearchResult[]>([])
   const [searching, setSearching] = useState(false)
   const [searchError, setSearchError] = useState<string | null>(null)
-  const [expandedDirs, setExpandiredDirs] = useState<Set<string>>(new Set())
+  const [expandedDirs, setExpandedDirs] = useState<Set<string>>(new Set())
 
   const loadTree = useCallback(async () => {
     setLoadingTree(true)
@@ -87,8 +87,8 @@ export function DocumentosPanel() {
 
       setTree(data.tree || [])
       setRoots(data.roots || [])
-      const defaultExpandired = new Set<string>((data.roots || []).filter(Boolean))
-      setExpandiredDirs(defaultExpandired)
+      const defaultExpanded = new Set<string>((data.roots || []).filter(Boolean))
+      setExpandedDirs(defaultExpanded)
     } catch (error) {
       setTree([])
       setRoots([])
@@ -157,10 +157,10 @@ export function DocumentosPanel() {
     return () => clearTimeout(handle)
   }, [searchQuery])
 
-  const isMostraringSearch = searchQuery.trim().length >= 2
+  const isShowingSearch = searchQuery.trim().length >= 2
 
   const toggleDir = (path: string) => {
-    setExpandiredDirs((prev) => {
+    setExpandedDirs((prev) => {
       const next = new Set(prev)
       if (next.has(path)) next.delete(path)
       else next.add(path)
@@ -210,7 +210,7 @@ export function DocumentosPanel() {
       <div className="h-full min-h-[600px] rounded-xl border border-border bg-card overflow-hidden grid grid-cols-1 lg:grid-cols-[340px_1fr]">
         <aside className="border-r border-border p-4 space-y-3 overflow-y-auto">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-foreground">Documentos</h2>
+            <h2 className="text-sm font-semibold text-foreground">Documents</h2>
             <button
               onClick={() => void loadTree()}
               className="text-xs px-2 py-1 rounded-md border border-border text-muted-foreground hover:text-foreground hover:bg-secondary"
@@ -225,7 +225,7 @@ export function DocumentosPanel() {
               id="docs-search"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Tipo at least 2 characters..."
+              placeholder="Type at least 2 characters..."
               className="w-full h-9 px-3 rounded-md bg-background border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
             />
           </div>
@@ -244,7 +244,7 @@ export function DocumentosPanel() {
             <div className="text-sm text-[#9e5c50]">{treeError}</div>
           )}
 
-          {!loadingTree && !treeError && isMostraringSearch && (
+          {!loadingTree && !treeError && isShowingSearch && (
             <div className="space-y-1">
               {searching && <div className="text-sm text-muted-foreground">Searching...</div>}
               {searchError && <div className="text-sm text-[#9e5c50]">{searchError}</div>}
@@ -269,7 +269,7 @@ export function DocumentosPanel() {
             </div>
           )}
 
-          {!loadingTree && !treeError && !isMostraringSearch && (
+          {!loadingTree && !treeError && !isShowingSearch && (
             <div className="space-y-1">
               {tree.length === 0 && (
                 <div className="text-sm text-muted-foreground">
@@ -299,7 +299,7 @@ export function DocumentosPanel() {
                 <div className="text-sm text-foreground font-medium break-all">{selectedPath}</div>
                 {docMeta && (
                   <div className="mt-1 text-xs text-muted-foreground">
-                    {formatBytes(docMeta.size)} • Atualizado {formatTime(docMeta.modified)}
+                    {formatBytes(docMeta.size)} • Updated {formatTime(docMeta.modified)}
                   </div>
                 )}
               </div>

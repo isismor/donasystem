@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react'
 export function LiveFeed() {
   const { logs, sessions, activities, connection, dashboardMode, toggleLiveFeed } = useMissionControl()
   const isLocal = dashboardMode === 'local'
-  const [expanded, setExpandired] = useState(true)
-  const [hasRecolherd, setHasRecolherd] = useState(false)
+  const [expanded, setExpanded] = useState(true)
+  const [hasCollapsed, setHasCollapsed] = useState(false)
 
   // Combine logs, activities, and (in local mode) session events into a unified feed
   const sessionItems = isLocal
@@ -45,9 +45,9 @@ export function LiveFeed() {
     return (
       <div className="w-10 bg-card border-l border-border flex flex-col items-center py-3 shrink-0">
         <button
-          onClick={() => setExpandired(true)}
+          onClick={() => setExpanded(true)}
           className="w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth flex items-center justify-center"
-          title="Mostrar live feed"
+          title="Show live feed"
         >
           <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M10 3l-5 5 5 5" strokeLinecap="round" strokeLinejoin="round" />
@@ -71,7 +71,7 @@ export function LiveFeed() {
   }
 
   return (
-    <div className={`w-72 h-full bg-card border-l border-border flex flex-col shrink-0${hasRecolherd ? ' slide-in-right' : ''}`}>
+    <div className={`w-72 h-full bg-card border-l border-border flex flex-col shrink-0${hasCollapsed ? ' slide-in-right' : ''}`}>
       {/* Header */}
       <div className="h-10 px-3 flex items-center justify-between border-b border-border shrink-0">
         <div className="flex items-center gap-2">
@@ -81,9 +81,9 @@ export function LiveFeed() {
         </div>
         <div className="flex items-center gap-0.5">
           <button
-            onClick={() => { setExpandired(false); setHasRecolherd(true) }}
+            onClick={() => { setExpanded(false); setHasCollapsed(true) }}
             className="w-6 h-6 rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth flex items-center justify-center"
-            title="Recolher feed"
+            title="Collapse feed"
           >
             <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M6 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
@@ -123,7 +123,7 @@ export function LiveFeed() {
 
       {/* Active sessions mini-list */}
       <div className="border-t border-border px-3 py-2 shrink-0">
-        <div className="text-2xs font-medium text-muted-foreground mb-1.5">Sessões Ativas</div>
+        <div className="text-2xs font-medium text-muted-foreground mb-1.5">Active Sessions</div>
         <div className="space-y-1">
           {sessions.filter(s => s.active).slice(0, 4).map(session => (
             <div key={session.id} className="flex items-center gap-1.5 text-2xs">

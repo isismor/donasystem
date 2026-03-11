@@ -108,7 +108,7 @@ export function IntegrationsPanel() {
     try {
       const res = await fetch('/api/integrations', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ vars: edits }),
       })
       const data = await res.json()
@@ -154,7 +154,7 @@ export function IntegrationsPanel() {
     try {
       const res = await fetch('/api/integrations', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'test', integrationId }),
       })
       const data = await res.json()
@@ -175,7 +175,7 @@ export function IntegrationsPanel() {
     try {
       const res = await fetch('/api/integrations', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'pull', integrationId }),
       })
       const data = await res.json()
@@ -197,7 +197,7 @@ export function IntegrationsPanel() {
     try {
       const res = await fetch('/api/integrations', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'pull-all', category: activeCategory }),
       })
       const data = await res.json()
@@ -461,7 +461,7 @@ function IntegrationCard({
   }
 
   const statusLabels = {
-    connected: 'Conectado',
+    connected: 'Connected',
     partial: 'Partial',
     not_configured: 'Not configured',
   }
@@ -573,7 +573,7 @@ function IntegrationCard({
                 {isEditing && (
                   <button
                     onClick={() => onToggleReveal(envKey)}
-                    title={isRevealed ? 'Ocultar value' : 'Mostrar value'}
+                    title={isRevealed ? 'Hide value' : 'Show value'}
                     className="p-1 text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {isRevealed ? <EyeOffIcon /> : <EyeIcon />}

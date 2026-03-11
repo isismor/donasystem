@@ -264,7 +264,7 @@ export function TaskBoardPanel() {
   const searchParams = useSearchParams()
   const [agents, setAgents] = useState<Agent[]>([])
   const [projects, setProjects] = useState<Project[]>([])
-  const [projectFiltrar, setProjectFilter] = useState<string>('all')
+  const [projectFilter, setProjectFilter] = useState<string>('all')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [aegisMap, setAegisMap] = useState<Record<number, boolean>>({})
@@ -304,8 +304,8 @@ export function TaskBoardPanel() {
       setError(null)
 
       const tasksQuery = new URLSearchParams()
-      if (projectFiltrar !== 'all') {
-        tasksQuery.set('project_id', projectFiltrar)
+      if (projectFilter !== 'all') {
+        tasksQuery.set('project_id', projectFilter)
       }
       const tasksUrl = tasksQuery.toString() ? `/api/tasks?${tasksQuery.toString()}` : '/api/tasks'
 
@@ -354,7 +354,7 @@ export function TaskBoardPanel() {
     } finally {
       setLoading(false)
     }
-  }, [projectFiltrar, storeSetTasks])
+  }, [projectFilter, storeSetTasks])
 
   useEffect(() => {
     fetchData()
@@ -449,7 +449,7 @@ export function TaskBoardPanel() {
       // Update on server
       const response = await fetch('/api/tasks', {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           tasks: [{ id: draggedTask.id, status: newStatus }]
         })
@@ -479,10 +479,10 @@ export function TaskBoardPanel() {
     const hours = Math.floor(minutes / 60)
     const days = Math.floor(hours / 24)
     
-    if (days > 0) return `${days} day${days > 1 ? 's' : ''} atrás`
-    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} atrás`
-    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} atrás`
-    return 'atrásra'
+    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`
+    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`
+    return 'just now'
   }
 
   const getTagColor = (tag: string) => {
@@ -525,9 +525,9 @@ export function TaskBoardPanel() {
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
         <div className="flex items-center gap-3">
-          <h2 className="text-xl font-bold text-foreground">Tarefas</h2>
+          <h2 className="text-xl font-bold text-foreground">Task Board</h2>
           <select
-            value={projectFiltrar}
+            value={projectFilter}
             onChange={(e) => setProjectFilter(e.target.value)}
             className="h-9 px-3 bg-surface-1 text-foreground border border-border rounded-md text-sm"
           >
@@ -692,7 +692,7 @@ export function TaskBoardPanel() {
                   {/* Enhanced timestamp display */}
                   {task.updated_at && task.updated_at !== task.created_at && (
                     <div className="text-xs text-muted-foreground/70 mt-1">
-                      Atualizado {formatTaskTimestamp(task.updated_at)}
+                      Updated {formatTaskTimestamp(task.updated_at)}
                     </div>
                   )}
 
@@ -744,7 +744,7 @@ export function TaskBoardPanel() {
           agents={agents}
           projects={projects}
           onClose={() => setShowCreateModal(false)}
-          onCriado={fetchData}
+          onCreated={fetchData}
         />
       )}
 
@@ -755,7 +755,7 @@ export function TaskBoardPanel() {
           agents={agents}
           projects={projects}
           onClose={() => setEditingTask(null)}
-          onAtualizado={() => { fetchData(); setEditingTask(null) }}
+          onUpdated={() => { fetchData(); setEditingTask(null) }}
         />
       )}
 
@@ -846,7 +846,7 @@ function TaskDetailModal({
       setCommentError(null)
       const response = await fetch(`/api/tasks/${task.id}/comments`, {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           author: commentAuthor || 'system',
           content: commentText
@@ -869,7 +869,7 @@ function TaskDetailModal({
       setBroadcastStatus(null)
       const response = await fetch(`/api/tasks/${task.id}/broadcast`, {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           author: commentAuthor || 'system',
           message: broadcastMessage
@@ -890,7 +890,7 @@ function TaskDetailModal({
       setReviewError(null)
       const response = await fetch('/api/quality-review', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           taskId: task.id,
           reviewer,
@@ -966,13 +966,13 @@ function TaskDetailModal({
                   activeTab === tab ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'
                 }`}
               >
-                {tab === 'details' ? 'Detalhes' : tab === 'comments' ? 'Comments' : 'Quality Review'}
+                {tab === 'details' ? 'Details' : tab === 'comments' ? 'Comments' : 'Quality Review'}
               </button>
             ))}
           </div>
 
           {activeTab === 'details' && (
-            <div id="tabpanel-details" role="tabpanel" aria-label="Detalhes" className="grid grid-cols-2 gap-4 text-sm mt-4">
+            <div id="tabpanel-details" role="tabpanel" aria-label="Details" className="grid grid-cols-2 gap-4 text-sm mt-4">
               {task.ticket_ref && (
                 <div>
                   <span className="text-muted-foreground">Ticket:</span>
@@ -1007,7 +1007,7 @@ function TaskDetailModal({
                 </span>
               </div>
               <div>
-                <span className="text-muted-foreground">Criado:</span>
+                <span className="text-muted-foreground">Created:</span>
                 <span className="text-foreground ml-2">{new Date(task.created_at * 1000).toLocaleDateString()}</span>
               </div>
             </div>
@@ -1166,12 +1166,12 @@ function CreateTaskModal({
   agents, 
   projects,
   onClose, 
-  onCriado 
+  onCreated 
 }: { 
   agents: Agent[]
   projects: Project[]
   onClose: () => void
-  onCriado: () => void
+  onCreated: () => void
 }) {
   const [formData, setFormData] = useState({
     title: '',
@@ -1191,7 +1191,7 @@ function CreateTaskModal({
     try {
       const response = await fetch('/api/tasks', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
           project_id: formData.project_id ? Number(formData.project_id) : undefined,
@@ -1206,7 +1206,7 @@ function CreateTaskModal({
         throw new Error(errorMsg)
       }
 
-      onCriado()
+      onCreated()
       onClose()
     } catch (error) {
       log.error('Error creating task:', error)
@@ -1235,7 +1235,7 @@ function CreateTaskModal({
             </div>
             
             <div>
-              <label htmlFor="create-description" className="block text-sm text-muted-foreground mb-1">Descrição</label>
+              <label htmlFor="create-description" className="block text-sm text-muted-foreground mb-1">Description</label>
               <MentionTextarea
                 id="create-description"
                 value={formData.description}
@@ -1337,13 +1337,13 @@ function EditTaskModal({
   agents,
   projects,
   onClose,
-  onAtualizado
+  onUpdated
 }: {
   task: Task
   agents: Agent[]
   projects: Project[]
   onClose: () => void
-  onAtualizado: () => void
+  onUpdated: () => void
 }) {
   const [formData, setFormData] = useState({
     title: task.title,
@@ -1364,7 +1364,7 @@ function EditTaskModal({
     try {
       const response = await fetch(`/api/tasks/${task.id}`, {
         method: 'PUT',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
           project_id: formData.project_id ? Number(formData.project_id) : undefined,
@@ -1379,7 +1379,7 @@ function EditTaskModal({
         throw new Error(errorMsg)
       }
 
-      onAtualizado()
+      onUpdated()
     } catch (error) {
       log.error('Error updating task:', error)
     }
@@ -1407,7 +1407,7 @@ function EditTaskModal({
             </div>
 
             <div>
-              <label htmlFor="edit-description" className="block text-sm text-muted-foreground mb-1">Descrição</label>
+              <label htmlFor="edit-description" className="block text-sm text-muted-foreground mb-1">Description</label>
               <MentionTextarea
                 id="edit-description"
                 value={formData.description}
@@ -1557,7 +1557,7 @@ function ProjectManagerModal({
     try {
       const response = await fetch('/api/projects', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.name,
           ticket_prefix: form.ticket_prefix,
@@ -1578,7 +1578,7 @@ function ProjectManagerModal({
     try {
       const response = await fetch(`/api/projects/${project.id}`, {
         method: 'PATCH',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: project.status === 'active' ? 'archived' : 'active' })
       })
       const data = await response.json()
@@ -1639,7 +1639,7 @@ function ProjectManagerModal({
               type="text"
               value={form.description}
               onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-              placeholder="Descrição (optional)"
+              placeholder="Description (optional)"
               className="md:col-span-3 bg-surface-1 text-foreground border border-border rounded-md px-3 py-2"
             />
           </form>

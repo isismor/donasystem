@@ -124,7 +124,7 @@ export function PipelineTab() {
       }
       const res = await fetch('/api/pipelines', {
         method: formMode === 'edit' ? 'PUT' : 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
       if (res.ok) {
@@ -159,7 +159,7 @@ export function PipelineTab() {
     try {
       const res = await fetch('/api/pipelines/run', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'start', pipeline_id: id }),
       })
       const data = await res.json()
@@ -180,7 +180,7 @@ export function PipelineTab() {
     try {
       await fetch('/api/pipelines/run', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'advance', run_id: runId, success }),
       })
       fetchData()
@@ -191,7 +191,7 @@ export function PipelineTab() {
     try {
       await fetch('/api/pipelines/run', {
         method: 'POST',
-        headers: { 'Content-Tipo': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'cancel', run_id: runId }),
       })
       fetchData()
@@ -243,7 +243,7 @@ export function PipelineTab() {
           <input
             value={formDesc}
             onChange={e => setFormDesc(e.target.value)}
-            placeholder="Descrição (optional)"
+            placeholder="Description (optional)"
             className="w-full h-8 px-2 rounded-md bg-secondary border border-border text-sm text-foreground"
           />
 
@@ -361,7 +361,7 @@ export function PipelineTab() {
                 </div>
               </div>
 
-              {/* Expandired: pipeline visualization + recent runs */}
+              {/* Expanded: pipeline visualization + recent runs */}
               {expandedId === p.id && (
                 <div className="px-3 pb-3 border-t border-border/50 mt-1 pt-2 space-y-3">
                   {/* Full pipeline visualization */}
