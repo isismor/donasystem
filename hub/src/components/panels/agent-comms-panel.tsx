@@ -83,7 +83,7 @@ function formatTime(ts: number): string {
 function formatDate(ts: number): string {
   const d = new Date(ts * 1000)
   const today = new Date()
-  if (d.toDateString() === today.toDateString()) return 'Today'
+  if (d.toDateString() === today.toDateString()) return 'Hoje'
   const yesterday = new Date(today)
   yesterday.setDate(yesterday.getDate() - 1)
   if (d.toDateString() === yesterday.toDateString()) return 'Yesterday'
@@ -92,17 +92,17 @@ function formatDate(ts: number): string {
 
 function timeAgo(ts: number): string {
   const diff = Math.floor(Date.now() / 1000) - ts
-  if (diff < 60) return 'just now'
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
-  return `${Math.floor(diff / 86400)}d ago`
+  if (diff < 60) return 'atrásra'
+  if (diff < 3600) return `${Math.floor(diff / 60)}m atrás`
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h atrás`
+  return `${Math.floor(diff / 86400)}d atrás`
 }
 
 export function AgentCommsPanel() {
   const [data, setData] = useState<CommsData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [filter, setFilter] = useState<string>('all')
+  const [filter, setFiltrar] = useState<string>('all')
   const [view, setView] = useState<'chat' | 'graph'>('chat')
   const [agentOptions, setAgentOptions] = useState<AgentOption[]>([])
   const [toAgent, setToAgent] = useState('')
@@ -179,7 +179,7 @@ export function AgentCommsPanel() {
 
       const res = await fetch('/api/chat/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           from,
           to,
@@ -211,29 +211,29 @@ export function AgentCommsPanel() {
 
   if (loading && !data) {
     return (
-      <div className="p-6 flex items-center justify-center">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          <span className="text-sm">Loading agent comms...</span>
+      <div classNome="p-6 flex items-center justify-center">
+        <div classNome="flex items-center gap-2 text-muted-foreground">
+          <div classNome="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <span classNome="text-sm">Loading agent comms...</span>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div classNome="flex flex-col h-full">
       {/* Header bar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <span className="text-base">💬</span>
-            <h2 className="text-sm font-semibold text-foreground"># agent-comms</h2>
+      <div classNome="flex items-center justify-between px-4 py-3 border-b border-border/50 flex-shrink-0">
+        <div classNome="flex items-center gap-3">
+          <div classNome="flex items-center gap-1.5">
+            <span classNome="text-base">💬</span>
+            <h2 classNome="text-sm font-semibold text-foreground"># agent-comms</h2>
           </div>
-          <span className="text-xs text-muted-foreground/60">
+          <span classNome="text-xs text-muted-foreground/60">
             {data?.total || 0} messages
           </span>
           <span
-            className={`text-[10px] px-2 py-0.5 rounded-full border ${
+            classNome={`text-[10px] px-2 py-0.5 rounded-full border ${
               sourceMode === "live"
                 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                 : sourceMode === "mixed"
@@ -256,12 +256,12 @@ export function AgentCommsPanel() {
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div classNome="flex items-center gap-2">
           {/* View toggle */}
-          <div className="flex bg-surface-1 rounded-lg p-0.5 border border-border/50">
+          <div classNome="flex bg-surface-1 rounded-lg p-0.5 border border-border/50">
             <button
               onClick={() => setView('chat')}
-              className={`px-2.5 py-1 text-[11px] rounded-md transition-smooth ${
+              classNome={`px-2.5 py-1 text-[11px] rounded-md transition-smooth ${
                 view === 'chat' ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -269,7 +269,7 @@ export function AgentCommsPanel() {
             </button>
             <button
               onClick={() => setView('graph')}
-              className={`px-2.5 py-1 text-[11px] rounded-md transition-smooth ${
+              classNome={`px-2.5 py-1 text-[11px] rounded-md transition-smooth ${
                 view === 'graph' ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -279,8 +279,8 @@ export function AgentCommsPanel() {
 
           <select
             value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="bg-surface-1 border border-border/50 rounded-lg px-2 py-1 text-[11px] text-foreground"
+            onChange={(e) => setFiltrar(e.target.value)}
+            classNome="bg-surface-1 border border-border/50 rounded-lg px-2 py-1 text-[11px] text-foreground"
           >
             <option value="all">All</option>
             {agents.map(a => {
@@ -292,15 +292,15 @@ export function AgentCommsPanel() {
       </div>
 
       {error && (
-        <div className="mx-4 mt-2 bg-[#9e5c50]/10 border border-[#9e5c50]/20 rounded-lg px-3 py-2 text-xs text-[#9e5c50]">
+        <div classNome="mx-4 mt-2 bg-[#9e5c50]/10 border border-[#9e5c50]/20 rounded-lg px-3 py-2 text-xs text-[#9e5c50]">
           {error}
         </div>
       )}
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto min-h-0">
+      <div classNome="flex-1 overflow-y-auto min-h-0">
         {view === 'graph' ? (
-          <div className="p-4">
+          <div classNome="p-4">
             <CommGraph edges={data?.graph.edges || []} agentStats={data?.graph.agentStats || []} />
           </div>
         ) : (
@@ -311,20 +311,20 @@ export function AgentCommsPanel() {
 
       {/* Online agents bar */}
       {agents.length > 0 && (
-        <div className="flex items-center gap-1 px-4 py-2 border-t border-border/30 flex-shrink-0 overflow-x-auto">
+        <div classNome="flex items-center gap-1 px-4 py-2 border-t border-border/30 flex-shrink-0 overflow-x-auto">
           {agents.map(a => {
             const id = getIdentity(a)
             return (
               <button
                 key={a}
-                onClick={() => setFilter(filter === a ? 'all' : a)}
-                className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] transition-smooth whitespace-nowrap ${
+                onClick={() => setFiltrar(filter === a ? 'all' : a)}
+                classNome={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] transition-smooth whitespace-nowrap ${
                   filter === a
                     ? 'bg-primary/15 text-primary'
                     : 'text-muted-foreground/60 hover:text-muted-foreground hover:bg-surface-1'
                 }`}
               >
-                <span className="text-xs">{id.emoji}</span>
+                <span classNome="text-xs">{id.emoji}</span>
                 <span>{id.label}</span>
               </button>
             )
@@ -333,12 +333,12 @@ export function AgentCommsPanel() {
       )}
 
       {/* Interactive composer */}
-      <div className="border-t border-border/40 p-3 md:p-4 bg-surface-1/60 flex-shrink-0">
-        <div className="flex items-center gap-2 mb-2">
-          <div className="flex bg-surface-1 rounded-lg p-0.5 border border-border/50">
+      <div classNome="border-t border-border/40 p-3 md:p-4 bg-surface-1/60 flex-shrink-0">
+        <div classNome="flex items-center gap-2 mb-2">
+          <div classNome="flex bg-surface-1 rounded-lg p-0.5 border border-border/50">
             <button
               onClick={() => setComposerMode('coordinator')}
-              className={`px-2.5 py-1 text-[11px] rounded-md transition-smooth ${
+              classNome={`px-2.5 py-1 text-[11px] rounded-md transition-smooth ${
                 composerMode === 'coordinator' ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -346,7 +346,7 @@ export function AgentCommsPanel() {
             </button>
             <button
               onClick={() => setComposerMode('agent')}
-              className={`px-2.5 py-1 text-[11px] rounded-md transition-smooth ${
+              classNome={`px-2.5 py-1 text-[11px] rounded-md transition-smooth ${
                 composerMode === 'agent' ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -356,14 +356,14 @@ export function AgentCommsPanel() {
         </div>
 
         {composerMode === 'agent' ? (
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs text-muted-foreground">
+          <div classNome="flex items-center gap-2 mb-2">
+            <span classNome="text-xs text-muted-foreground">
               You ({currentUser?.display_name || currentUser?.username || 'operator'}) →
             </span>
             <select
               value={toAgent}
               onChange={(e) => setToAgent(e.target.value)}
-              className="bg-card border border-border/50 rounded-md px-2 py-1 text-xs text-foreground"
+              classNome="bg-card border border-border/50 rounded-md px-2 py-1 text-xs text-foreground"
             >
               <option value="">choose agent...</option>
               {allAgents.filter(a => a !== COORDINATOR_AGENT).map(a => (
@@ -372,12 +372,12 @@ export function AgentCommsPanel() {
             </select>
           </div>
         ) : (
-          <div className="mb-2 text-xs text-muted-foreground">
+          <div classNome="mb-2 text-xs text-muted-foreground">
             You ({currentUser?.display_name || currentUser?.username || 'operator'}) → {getIdentity(COORDINATOR_AGENT).label}
           </div>
         )}
 
-        <div className="flex items-end gap-2">
+        <div classNome="flex items-end gap-2">
           <textarea
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
@@ -389,8 +389,8 @@ export function AgentCommsPanel() {
             }}
             placeholder={composerMode === 'coordinator'
               ? 'Write to the coordinator. It will coordinate downstream agents...'
-              : 'Type agent-to-agent message... (Enter to send, Shift+Enter newline)'}
-            className="flex-1 resize-none bg-card border border-border/50 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              : 'Tipo agent-to-agent message... (Enter to send, Shift+Enter newline)'}
+            classNome="flex-1 resize-none bg-card border border-border/50 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
             rows={2}
           />
           <button
@@ -400,20 +400,20 @@ export function AgentCommsPanel() {
               !draft.trim() ||
               (composerMode === 'agent' && !toAgent)
             }
-            className="h-9 px-3 rounded-md bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed"
+            classNome="h-9 px-3 rounded-md bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {sending ? 'Sending...' : 'Send'}
           </button>
         </div>
 
         {composerMode === 'coordinator' && (
-          <div className="mt-2 text-[11px] text-muted-foreground/70">
+          <div classNome="mt-2 text-[11px] text-muted-foreground/70">
             Coordinator messages are sent directly to the coordinator for orchestration.
           </div>
         )}
 
         {sendError && (
-          <div className="mt-2 text-[11px] text-[#9e5c50]">{sendError}</div>
+          <div classNome="mt-2 text-[11px] text-[#9e5c50]">{sendError}</div>
         )}
       </div>
     </div>
@@ -444,18 +444,18 @@ function ChatView({ messages }: { messages: CommsMessage[] }) {
   }
 
   return (
-    <div className="px-2 md:px-4 py-3 space-y-3">
+    <div classNome="px-2 md:px-4 py-3 space-y-3">
       {groups.map(group => (
         <div key={group.date}>
           {/* Date divider */}
-          <div className="flex items-center gap-3 my-4">
-            <div className="h-px flex-1 bg-border/40" />
-            <span className="text-[10px] font-medium text-muted-foreground/50 bg-background px-2">{group.date}</span>
-            <div className="h-px flex-1 bg-border/40" />
+          <div classNome="flex items-center gap-3 my-4">
+            <div classNome="h-px flex-1 bg-border/40" />
+            <span classNome="text-[10px] font-medium text-muted-foreground/50 bg-background px-2">{group.date}</span>
+            <div classNome="h-px flex-1 bg-border/40" />
           </div>
 
           {/* Messages */}
-          <div className="space-y-0.5">
+          <div classNome="space-y-0.5">
             {group.messages.map((msg, i) => {
               const prev = i > 0 ? group.messages[i - 1] : null
               const sameSender = prev?.from_agent === msg.from_agent
@@ -486,12 +486,12 @@ function ChatMessage({ message, collapsed }: { message: CommsMessage; collapsed:
   const mentionPrefix = message.to_agent ? `@${message.to_agent}` : null
 
   return (
-    <div className={`group flex gap-2.5 px-2 py-0.5 rounded-lg hover:bg-surface-1/50 transition-smooth ${collapsed ? '' : 'mt-3'}`}>
+    <div classNome={`group flex gap-2.5 px-2 py-0.5 rounded-lg hover:bg-surface-1/50 transition-smooth ${collapsed ? '' : 'mt-3'}`}>
       {/* Avatar or spacer */}
-      <div className="w-9 flex-shrink-0">
+      <div classNome="w-9 flex-shrink-0">
         {!collapsed && (
           <div
-            className="w-9 h-9 rounded-full flex items-center justify-center text-lg"
+            classNome="w-9 h-9 rounded-full flex items-center justify-center text-lg"
             style={{ backgroundColor: identity.color + '20' }}
           >
             {identity.emoji}
@@ -500,32 +500,32 @@ function ChatMessage({ message, collapsed }: { message: CommsMessage; collapsed:
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0">
+      <div classNome="flex-1 min-w-0">
         {!collapsed && (
-          <div className="flex items-baseline gap-1.5 mb-0.5">
+          <div classNome="flex items-baseline gap-1.5 mb-0.5">
             <span
-              className="text-[13px] font-semibold cursor-default"
+              classNome="text-[13px] font-semibold cursor-default"
               style={{ color: identity.color }}
             >
               {identity.label}
             </span>
             {isHandoff && (
-              <span className="text-[9px] px-1.5 py-px rounded-full font-medium"
+              <span classNome="text-[9px] px-1.5 py-px rounded-full font-medium"
                 style={{ backgroundColor: '#f59e0b20', color: '#f59e0b' }}
               >
                 handoff
               </span>
             )}
-            <span className="text-[10px] text-muted-foreground/40 tabular-nums">
+            <span classNome="text-[10px] text-muted-foreground/40 tabular-nums">
               {formatTime(message.created_at)}
             </span>
           </div>
         )}
 
-        <div className="text-[13px] text-foreground/90 leading-[1.45] break-words">
+        <div classNome="text-[13px] text-foreground/90 leading-[1.45] break-words">
           {mentionPrefix && (
             <span
-              className="font-medium rounded px-0.5 cursor-default"
+              classNome="font-medium rounded px-0.5 cursor-default"
               style={{
                 color: toIdentity.color,
                 backgroundColor: toIdentity.color + '15',
@@ -539,9 +539,9 @@ function ChatMessage({ message, collapsed }: { message: CommsMessage; collapsed:
 
         {/* Metadata (if any) */}
         {message.metadata && Object.keys(message.metadata).length > 0 && (
-          <div className="mt-1.5 flex flex-wrap gap-1">
+          <div classNome="mt-1.5 flex flex-wrap gap-1">
             {Object.entries(message.metadata).map(([k, v]) => (
-              <span key={k} className="text-[10px] px-1.5 py-0.5 rounded bg-surface-1 border border-border/50 text-muted-foreground/60">
+              <span key={k} classNome="text-[10px] px-1.5 py-0.5 rounded bg-surface-1 border border-border/50 text-muted-foreground/60">
                 {k}: {String(v)}
               </span>
             ))}
@@ -551,7 +551,7 @@ function ChatMessage({ message, collapsed }: { message: CommsMessage; collapsed:
 
       {/* Hover timestamp for collapsed messages */}
       {collapsed && (
-        <span className="text-[10px] text-muted-foreground/0 group-hover:text-muted-foreground/40 tabular-nums self-center transition-smooth flex-shrink-0">
+        <span classNome="text-[10px] text-muted-foreground/0 group-hover:text-muted-foreground/40 tabular-nums self-center transition-smooth flex-shrink-0">
           {formatTime(message.created_at)}
         </span>
       )}
@@ -567,25 +567,25 @@ function CommGraph({ edges, agentStats }: { edges: GraphEdge[]; agentStats: Agen
   const maxMessages = Math.max(...agentStats.map(s => s.sent + s.received), 1)
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+    <div classNome="space-y-4">
+      <div classNome="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
         {agentStats.map(stat => {
           const id = getIdentity(stat.agent)
           const total = stat.sent + stat.received
           const pct = Math.max((total / maxMessages) * 100, 8)
 
           return (
-            <div key={stat.agent} className="rounded-lg p-3 space-y-2 bg-surface-1 border border-border/50">
-              <div className="flex items-center gap-2">
-                <span className="text-base">{id.emoji}</span>
-                <span className="text-xs font-medium" style={{ color: id.color }}>{id.label}</span>
+            <div key={stat.agent} classNome="rounded-lg p-3 space-y-2 bg-surface-1 border border-border/50">
+              <div classNome="flex items-center gap-2">
+                <span classNome="text-base">{id.emoji}</span>
+                <span classNome="text-xs font-medium" style={{ color: id.color }}>{id.label}</span>
               </div>
-              <div className="flex items-center gap-3 text-[11px] text-muted-foreground/60">
+              <div classNome="flex items-center gap-3 text-[11px] text-muted-foreground/60">
                 <span>{stat.sent} sent</span>
                 <span>{stat.received} recv</span>
               </div>
-              <div className="h-1 bg-border/30 rounded-full overflow-hidden">
-                <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: id.color }} />
+              <div classNome="h-1 bg-border/30 rounded-full overflow-hidden">
+                <div classNome="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: id.color }} />
               </div>
             </div>
           )
@@ -593,22 +593,22 @@ function CommGraph({ edges, agentStats }: { edges: GraphEdge[]; agentStats: Agen
       </div>
 
       <div>
-        <h3 className="text-xs font-medium text-muted-foreground/60 mb-2 uppercase tracking-wider">Channels</h3>
-        <div className="space-y-1">
+        <h3 classNome="text-xs font-medium text-muted-foreground/60 mb-2 uppercase tracking-wider">Channels</h3>
+        <div classNome="space-y-1">
           {edges.map((edge, i) => {
             const from = getIdentity(edge.from_agent)
             const to = getIdentity(edge.to_agent)
             return (
-              <div key={i} className="flex items-center gap-2 py-1.5 px-3 rounded-lg hover:bg-surface-1 transition-smooth">
-                <span className="text-sm">{from.emoji}</span>
-                <span className="text-xs font-medium" style={{ color: from.color }}>{from.label}</span>
-                <svg className="w-3.5 h-3.5 text-muted-foreground/30 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <div key={i} classNome="flex items-center gap-2 py-1.5 px-3 rounded-lg hover:bg-surface-1 transition-smooth">
+                <span classNome="text-sm">{from.emoji}</span>
+                <span classNome="text-xs font-medium" style={{ color: from.color }}>{from.label}</span>
+                <svg classNome="w-3.5 h-3.5 text-muted-foreground/30 flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                   <path d="M3 8h10M10 5l3 3-3 3" />
                 </svg>
-                <span className="text-sm">{to.emoji}</span>
-                <span className="text-xs font-medium" style={{ color: to.color }}>{to.label}</span>
-                <span className="ml-auto text-[10px] text-muted-foreground/40 tabular-nums">{edge.message_count}</span>
-                <span className="text-[10px] text-muted-foreground/30">{timeAgo(edge.last_message_at)}</span>
+                <span classNome="text-sm">{to.emoji}</span>
+                <span classNome="text-xs font-medium" style={{ color: to.color }}>{to.label}</span>
+                <span classNome="ml-auto text-[10px] text-muted-foreground/40 tabular-nums">{edge.message_count}</span>
+                <span classNome="text-[10px] text-muted-foreground/30">{timeAgo(edge.last_message_at)}</span>
               </div>
             )
           })}
@@ -620,10 +620,10 @@ function CommGraph({ edges, agentStats }: { edges: GraphEdge[]; agentStats: Agen
 
 function EmptyState() {
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="text-4xl mb-3">💬</div>
-      <p className="text-sm font-medium text-muted-foreground">No messages yet</p>
-      <p className="text-xs text-muted-foreground/50 mt-1 max-w-[280px]">
+    <div classNome="flex flex-col items-center justify-center py-20 text-center">
+      <div classNome="text-4xl mb-3">💬</div>
+      <p classNome="text-sm font-medium text-muted-foreground">No messages yet</p>
+      <p classNome="text-xs text-muted-foreground/50 mt-1 max-w-[280px]">
         When agents talk to each other, their conversations will show up here like a group chat.
       </p>
     </div>

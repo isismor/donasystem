@@ -12,12 +12,12 @@ interface ChatInputProps {
 export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
   const { chatInput, setChatInput, isSendingMessage } = useMissionControl()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const [showMentions, setShowMentions] = useState(false)
-  const [mentionFilter, setMentionFilter] = useState('')
+  const [showMentions, setMostrarMentions] = useState(false)
+  const [mentionFiltrar, setMentionFiltrar] = useState('')
   const [mentionIndex, setMentionIndex] = useState(0)
 
   const filteredAgents = agents.filter(a =>
-    a.name.toLowerCase().includes(mentionFilter.toLowerCase())
+    a.name.toLowerCase().includes(mentionFiltrar.toLowerCase())
   )
 
   const autoResize = useCallback(() => {
@@ -59,7 +59,7 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
         return
       }
       if (e.key === 'Escape') {
-        setShowMentions(false)
+        setMostrarMentions(false)
         return
       }
     }
@@ -79,15 +79,15 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
     const atMatch = textBeforeCursor.match(/@(\w*)$/)
 
     if (atMatch) {
-      setMentionFilter(atMatch[1])
-      setShowMentions(true)
+      setMentionFiltrar(atMatch[1])
+      setMostrarMentions(true)
       setMentionIndex(0)
     } else {
-      setShowMentions(false)
+      setMostrarMentions(false)
     }
   }
 
-  const insertMention = (agentName: string) => {
+  const insertMention = (agentNome: string) => {
     const textarea = textareaRef.current
     if (!textarea) return
 
@@ -96,12 +96,12 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
     const textAfterCursor = chatInput.slice(cursorPos)
     const atIndex = textBeforeCursor.lastIndexOf('@')
 
-    const newText = textBeforeCursor.slice(0, atIndex) + `@${agentName} ` + textAfterCursor
+    const newText = textBeforeCursor.slice(0, atIndex) + `@${agentNome} ` + textAfterCursor
     setChatInput(newText)
-    setShowMentions(false)
+    setMostrarMentions(false)
 
     setTimeout(() => {
-      const newPos = atIndex + agentName.length + 2
+      const newPos = atIndex + agentNome.length + 2
       textarea.setSelectionRange(newPos, newPos)
       textarea.focus()
     }, 0)
@@ -118,14 +118,14 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
   }
 
   return (
-    <div className="relative border-t border-border bg-card/80 backdrop-blur-sm p-3 flex-shrink-0 safe-area-bottom">
+    <div classNome="relative border-t border-border bg-card/80 backdrop-blur-sm p-3 flex-shrink-0 safe-area-bottom">
       {/* Mention autocomplete dropdown */}
       {showMentions && filteredAgents.length > 0 && (
-        <div className="absolute bottom-full left-3 right-3 mb-1 bg-popover/95 backdrop-blur-lg border border-border rounded-lg shadow-xl overflow-hidden max-h-40 overflow-y-auto z-10">
+        <div classNome="absolute bottom-full left-3 right-3 mb-1 bg-popover/95 backdrop-blur-lg border border-border rounded-lg shadow-xl overflow-hidden max-h-40 overflow-y-auto z-10">
           {filteredAgents.map((agent, i) => (
             <button
               key={agent.name}
-              className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 transition-colors ${
+              classNome={`w-full text-left px-3 py-2 text-sm flex items-center gap-2 transition-colors ${
                 i === mentionIndex ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50'
               }`}
               onMouseDown={(e) => {
@@ -133,17 +133,17 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
                 insertMention(agent.name)
               }}
             >
-              <div className="w-5 h-5 rounded-full bg-surface-2 flex items-center justify-center text-[9px] font-bold text-muted-foreground">
+              <div classNome="w-5 h-5 rounded-full bg-surface-2 flex items-center justify-center text-[9px] font-bold text-muted-foreground">
                 {agent.name.charAt(0).toUpperCase()}
               </div>
-              <span className="font-medium text-foreground">@{agent.name}</span>
-              <span className="text-muted-foreground text-xs ml-auto">{agent.role}</span>
+              <span classNome="font-medium text-foreground">@{agent.name}</span>
+              <span classNome="text-muted-foreground text-xs ml-auto">{agent.role}</span>
             </button>
           ))}
         </div>
       )}
 
-      <div className="flex items-end gap-2">
+      <div classNome="flex items-end gap-2">
         <textarea
           ref={textareaRef}
           value={chatInput}
@@ -152,16 +152,16 @@ export function ChatInput({ onSend, disabled, agents = [] }: ChatInputProps) {
           placeholder={disabled ? 'Select a conversation...' : 'Message... (@ to mention, Enter to send)'}
           disabled={disabled || isSendingMessage}
           rows={1}
-          className="flex-1 resize-none bg-surface-1 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 disabled:opacity-40 transition-all"
+          classNome="flex-1 resize-none bg-surface-1 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50 disabled:opacity-40 transition-all"
         />
         <button
           onClick={handleSend}
           disabled={!chatInput.trim() || disabled || isSendingMessage}
-          className="w-8 h-8 flex items-center justify-center bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-smooth flex-shrink-0"
+          classNome="w-8 h-8 flex items-center justify-center bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-smooth flex-shrink-0"
           title="Send message"
         >
           {isSendingMessage ? (
-            <span className="inline-block w-3.5 h-3.5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+            <span classNome="inline-block w-3.5 h-3.5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
           ) : (
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 2L7 9" />

@@ -41,12 +41,12 @@ const roleColors: Record<string, string> = {
 
 export function UserManagementPanel() {
   const { currentUser } = useMissionControl()
-  const [users, setUsers] = useState<UserRecord[]>([])
+  const [users, setUsuários] = useState<UserRecord[]>([])
   const [requests, setRequests] = useState<AccessRequest[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const [showCreate, setShowCreate] = useState(false)
+  const [showCreate, setMostrarCreate] = useState(false)
   const [createForm, setCreateForm] = useState({ username: '', password: '', display_name: '', role: 'operator' as const })
   const [creating, setCreating] = useState(false)
 
@@ -77,7 +77,7 @@ export function UserManagementPanel() {
       const uJson = await uRes.json().catch(() => ({}))
       const rJson = await rRes.json().catch(() => ({}))
 
-      setUsers(Array.isArray(uJson?.users) ? uJson.users : [])
+      setUsuários(Array.isArray(uJson?.users) ? uJson.users : [])
       setRequests(Array.isArray(rJson?.requests) ? rJson.requests : [])
       setError(null)
     } catch {
@@ -102,13 +102,13 @@ export function UserManagementPanel() {
     try {
       const res = await fetch('/api/auth/users', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify(createForm),
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok) {
-        showFeedback(true, `Created user "${createForm.username}"`)
-        setShowCreate(false)
+        showFeedback(true, `Criado user "${createForm.username}"`)
+        setMostrarCreate(false)
         setCreateForm({ username: '', password: '', display_name: '', role: 'operator' })
         fetchAll()
       } else {
@@ -137,7 +137,7 @@ export function UserManagementPanel() {
 
       const res = await fetch('/api/auth/users', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify(body),
       })
       const data = await res.json().catch(() => ({}))
@@ -186,7 +186,7 @@ export function UserManagementPanel() {
     try {
       const res = await fetch('/api/auth/access-requests', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({ request_id: req.id, action, role, note: note || undefined }),
       })
       const data = await res.json().catch(() => ({}))
@@ -202,82 +202,82 @@ export function UserManagementPanel() {
 
   if (currentUser?.role !== 'admin') {
     return (
-      <div className="p-8 text-center">
-        <div className="text-lg font-semibold text-foreground mb-2">Access Denied</div>
-        <p className="text-sm text-muted-foreground">User management requires admin privileges.</p>
+      <div classNome="p-8 text-center">
+        <div classNome="text-lg font-semibold text-foreground mb-2">Access Denied</div>
+        <p classNome="text-sm text-muted-foreground">User management requires admin privileges.</p>
       </div>
     )
   }
 
   if (loading) {
     return (
-      <div className="p-8 text-center">
-        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse mx-auto mb-2" />
-        <span className="text-sm text-muted-foreground">Loading users...</span>
+      <div classNome="p-8 text-center">
+        <div classNome="w-1.5 h-1.5 rounded-full bg-primary animate-pulse mx-auto mb-2" />
+        <span classNome="text-sm text-muted-foreground">Loading users...</span>
       </div>
     )
   }
 
   if (error) {
-    return <div className="p-8 text-center"><div className="text-sm text-[#9e5c50]">{error}</div></div>
+    return <div classNome="p-8 text-center"><div classNome="text-sm text-[#9e5c50]">{error}</div></div>
   }
 
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-5">
-      <div className="flex items-center justify-between">
+    <div classNome="p-6 max-w-5xl mx-auto space-y-5">
+      <div classNome="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Users</h2>
-          <p className="text-sm text-muted-foreground">{users.length} registered users · {pendingRequests.length} pending approvals</p>
+          <h2 classNome="text-lg font-semibold text-foreground">Usuários</h2>
+          <p classNome="text-sm text-muted-foreground">{users.length} registered users · {pendingRequests.length} pending approvals</p>
         </div>
         <button
-          onClick={() => setShowCreate(!showCreate)}
-          className="h-8 px-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth"
+          onClick={() => setMostrarCreate(!showCreate)}
+          classNome="h-8 px-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth"
         >
           {showCreate ? 'Cancel' : '+ Add Local User'}
         </button>
       </div>
 
       {feedback && (
-        <div className={`px-3 py-2 rounded-md text-sm border ${feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c] border-[#b4a68c]/20' : 'bg-[#9e5c50]/10 text-[#9e5c50] border-[#9e5c50]/20'}`}>
+        <div classNome={`px-3 py-2 rounded-md text-sm border ${feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c] border-[#b4a68c]/20' : 'bg-[#9e5c50]/10 text-[#9e5c50] border-[#9e5c50]/20'}`}>
           {feedback.text}
         </div>
       )}
 
       {pendingRequests.length > 0 && (
-        <div className="border border-[#c49a6c]/30 rounded-lg overflow-hidden">
-          <div className="px-4 py-3 bg-[#c49a6c]/10 border-b border-[#c49a6c]/20 text-sm font-medium text-[#c49a6c]">Pending Google Access Requests</div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+        <div classNome="border border-[#c49a6c]/30 rounded-lg overflow-hidden">
+          <div classNome="px-4 py-3 bg-[#c49a6c]/10 border-b border-[#c49a6c]/20 text-sm font-medium text-[#c49a6c]">Pending Google Access Requests</div>
+          <div classNome="overflow-x-auto">
+            <table classNome="w-full text-sm">
               <thead>
-                <tr className="bg-secondary/40 border-b border-border">
-                  <th className="text-left px-3 py-2 text-xs text-muted-foreground">Identity</th>
-                  <th className="text-left px-3 py-2 text-xs text-muted-foreground">Attempts</th>
-                  <th className="text-left px-3 py-2 text-xs text-muted-foreground">Last Attempt</th>
-                  <th className="text-right px-3 py-2 text-xs text-muted-foreground">Action</th>
+                <tr classNome="bg-secondary/40 border-b border-border">
+                  <th classNome="text-left px-3 py-2 text-xs text-muted-foreground">Identity</th>
+                  <th classNome="text-left px-3 py-2 text-xs text-muted-foreground">Attempts</th>
+                  <th classNome="text-left px-3 py-2 text-xs text-muted-foreground">Last Attempt</th>
+                  <th classNome="text-right px-3 py-2 text-xs text-muted-foreground">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {pendingRequests.map((req) => (
-                  <tr key={req.id} className="border-b border-border/40 last:border-0">
-                    <td className="px-3 py-2">
-                      <div className="font-medium text-foreground">{req.display_name || req.email}</div>
-                      <div className="text-xs text-muted-foreground">{req.email}</div>
+                  <tr key={req.id} classNome="border-b border-border/40 last:border-0">
+                    <td classNome="px-3 py-2">
+                      <div classNome="font-medium text-foreground">{req.display_name || req.email}</div>
+                      <div classNome="text-xs text-muted-foreground">{req.email}</div>
                     </td>
-                    <td className="px-3 py-2 text-xs text-muted-foreground">{req.attempt_count}</td>
-                    <td className="px-3 py-2 text-xs text-muted-foreground">{formatDate(req.last_attempt_at)}</td>
-                    <td className="px-3 py-2 text-right">
-                      <div className="inline-flex gap-2">
+                    <td classNome="px-3 py-2 text-xs text-muted-foreground">{req.attempt_count}</td>
+                    <td classNome="px-3 py-2 text-xs text-muted-foreground">{formatDate(req.last_attempt_at)}</td>
+                    <td classNome="px-3 py-2 text-right">
+                      <div classNome="inline-flex gap-2">
                         <button
                           onClick={() => reviewRequest(req, 'approve')}
                           disabled={processingRequestId === req.id}
-                          className="h-7 px-2 rounded border border-emerald-500/30 text-emerald-400 text-xs disabled:opacity-50 hover:bg-emerald-500/10"
+                          classNome="h-7 px-2 rounded border border-emerald-500/30 text-emerald-400 text-xs disabled:opacity-50 hover:bg-emerald-500/10"
                         >
                           Approve
                         </button>
                         <button
                           onClick={() => reviewRequest(req, 'reject')}
                           disabled={processingRequestId === req.id}
-                          className="h-7 px-2 rounded border border-[#9e5c50]/30 text-[#9e5c50] text-xs disabled:opacity-50 hover:bg-[#9e5c50]/10"
+                          classNome="h-7 px-2 rounded border border-[#9e5c50]/30 text-[#9e5c50] text-xs disabled:opacity-50 hover:bg-[#9e5c50]/10"
                         >
                           Reject
                         </button>
@@ -292,86 +292,86 @@ export function UserManagementPanel() {
       )}
 
       {showCreate && (
-        <div className="p-4 rounded-lg bg-secondary/50 border border-border space-y-3">
-          <h3 className="text-sm font-medium text-foreground">New Local User</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <input value={createForm.username} onChange={(e) => setCreateForm((f) => ({ ...f, username: e.target.value }))} placeholder="Username" className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground" />
-            <input type="password" value={createForm.password} onChange={(e) => setCreateForm((f) => ({ ...f, password: e.target.value }))} placeholder="Password" className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground" />
-            <input value={createForm.display_name} onChange={(e) => setCreateForm((f) => ({ ...f, display_name: e.target.value }))} placeholder="Display name" className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground" />
-            <select value={createForm.role} onChange={(e) => setCreateForm((f) => ({ ...f, role: e.target.value as any }))} className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground">
+        <div classNome="p-4 rounded-lg bg-secondary/50 border border-border space-y-3">
+          <h3 classNome="text-sm font-medium text-foreground">New Local User</h3>
+          <div classNome="grid grid-cols-2 gap-3">
+            <input value={createForm.username} onChange={(e) => setCreateForm((f) => ({ ...f, username: e.target.value }))} placeholder="Username" classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground" />
+            <input type="password" value={createForm.password} onChange={(e) => setCreateForm((f) => ({ ...f, password: e.target.value }))} placeholder="Password" classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground" />
+            <input value={createForm.display_name} onChange={(e) => setCreateForm((f) => ({ ...f, display_name: e.target.value }))} placeholder="Display name" classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground" />
+            <select value={createForm.role} onChange={(e) => setCreateForm((f) => ({ ...f, role: e.target.value as any }))} classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground">
               <option value="viewer">Viewer</option>
               <option value="operator">Operator</option>
               <option value="admin">Admin</option>
             </select>
           </div>
-          <div className="flex justify-end">
-            <button onClick={handleCreate} disabled={!createForm.username || !createForm.password || creating} className="h-8 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium disabled:opacity-50">
+          <div classNome="flex justify-end">
+            <button onClick={handleCreate} disabled={!createForm.username || !createForm.password || creating} classNome="h-8 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium disabled:opacity-50">
               {creating ? 'Creating...' : 'Create User'}
             </button>
           </div>
         </div>
       )}
 
-      <div className="border border-border rounded-lg overflow-hidden">
-        <table className="w-full">
+      <div classNome="border border-border rounded-lg overflow-hidden">
+        <table classNome="w-full">
           <thead>
-            <tr className="bg-secondary/50 border-b border-border">
-              <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">User</th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">Provider</th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">Role</th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground hidden md:table-cell">Last Login</th>
-              <th className="text-right px-4 py-2.5 text-xs font-medium text-muted-foreground">Actions</th>
+            <tr classNome="bg-secondary/50 border-b border-border">
+              <th classNome="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">User</th>
+              <th classNome="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">Provider</th>
+              <th classNome="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">Role</th>
+              <th classNome="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground hidden md:table-cell">Last Login</th>
+              <th classNome="text-right px-4 py-2.5 text-xs font-medium text-muted-foreground">Ações</th>
             </tr>
           </thead>
           <tbody>
             {users.map((u) => (
-              <tr key={u.id} className="border-b border-border/50 last:border-0 hover:bg-secondary/20 transition-smooth">
+              <tr key={u.id} classNome="border-b border-border/50 last:border-0 hover:bg-secondary/20 transition-smooth">
                 {editingId === u.id ? (
                   <>
-                    <td className="px-4 py-2.5">
-                      <input value={editForm.display_name} onChange={(e) => setEditForm((f) => ({ ...f, display_name: e.target.value }))} className="h-8 px-2 rounded bg-secondary border border-border text-sm text-foreground w-full" />
+                    <td classNome="px-4 py-2.5">
+                      <input value={editForm.display_name} onChange={(e) => setEditForm((f) => ({ ...f, display_name: e.target.value }))} classNome="h-8 px-2 rounded bg-secondary border border-border text-sm text-foreground w-full" />
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-muted-foreground">{u.provider || 'local'}</td>
-                    <td className="px-4 py-2.5">
-                      <select value={editForm.role} onChange={(e) => setEditForm((f) => ({ ...f, role: e.target.value as any }))} className="h-8 px-2 rounded bg-secondary border border-border text-sm text-foreground" disabled={u.id === currentUser?.id}>
+                    <td classNome="px-4 py-2.5 text-xs text-muted-foreground">{u.provider || 'local'}</td>
+                    <td classNome="px-4 py-2.5">
+                      <select value={editForm.role} onChange={(e) => setEditForm((f) => ({ ...f, role: e.target.value as any }))} classNome="h-8 px-2 rounded bg-secondary border border-border text-sm text-foreground" disabled={u.id === currentUser?.id}>
                         <option value="viewer">Viewer</option>
                         <option value="operator">Operator</option>
                         <option value="admin">Admin</option>
                       </select>
                     </td>
-                    <td className="px-4 py-2.5 hidden md:table-cell">
-                      <input type="password" value={editForm.password} onChange={(e) => setEditForm((f) => ({ ...f, password: e.target.value }))} placeholder="New password (optional)" className="h-8 px-2 rounded bg-secondary border border-border text-sm text-foreground w-full" disabled={(u.provider || 'local') !== 'local'} />
+                    <td classNome="px-4 py-2.5 hidden md:table-cell">
+                      <input type="password" value={editForm.password} onChange={(e) => setEditForm((f) => ({ ...f, password: e.target.value }))} placeholder="New password (optional)" classNome="h-8 px-2 rounded bg-secondary border border-border text-sm text-foreground w-full" disabled={(u.provider || 'local') !== 'local'} />
                     </td>
-                    <td className="px-4 py-2.5 text-right space-x-2">
-                      <button onClick={handleEdit} disabled={saving} className="h-7 px-2 rounded bg-primary text-primary-foreground text-xs">Save</button>
-                      <button onClick={() => setEditingId(null)} className="h-7 px-2 rounded border border-border text-xs">Cancel</button>
+                    <td classNome="px-4 py-2.5 text-right space-x-2">
+                      <button onClick={handleEdit} disabled={saving} classNome="h-7 px-2 rounded bg-primary text-primary-foreground text-xs">Salvar</button>
+                      <button onClick={() => setEditingId(null)} classNome="h-7 px-2 rounded border border-border text-xs">Cancelar</button>
                     </td>
                   </>
                 ) : (
                   <>
-                    <td className="px-4 py-2.5">
-                      <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-[10px] font-semibold text-primary overflow-hidden">
+                    <td classNome="px-4 py-2.5">
+                      <div classNome="flex items-center gap-2">
+                        <div classNome="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-[10px] font-semibold text-primary overflow-hidden">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          {u.avatar_url ? <img src={u.avatar_url} alt={u.display_name} className="w-7 h-7 object-cover" /> : u.display_name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)}
+                          {u.avatar_url ? <img src={u.avatar_url} alt={u.display_name} classNome="w-7 h-7 object-cover" /> : u.display_name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)}
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-foreground">{u.display_name}</div>
-                          <div className="text-xs text-muted-foreground">{u.email || u.username}</div>
+                          <div classNome="text-sm font-medium text-foreground">{u.display_name}</div>
+                          <div classNome="text-xs text-muted-foreground">{u.email || u.username}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-2.5 text-xs">
-                      <span className={`px-2 py-0.5 rounded-full ${u.provider === 'google' ? 'bg-blue-500/20 text-blue-300' : 'bg-gray-500/20 text-gray-300'}`}>{u.provider || 'local'}</span>
+                    <td classNome="px-4 py-2.5 text-xs">
+                      <span classNome={`px-2 py-0.5 rounded-full ${u.provider === 'google' ? 'bg-blue-500/20 text-blue-300' : 'bg-gray-500/20 text-gray-300'}`}>{u.provider || 'local'}</span>
                     </td>
-                    <td className="px-4 py-2.5">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${roleColors[u.role] || ''}`}>{u.role}</span>
+                    <td classNome="px-4 py-2.5">
+                      <span classNome={`text-xs px-2 py-0.5 rounded-full font-medium ${roleColors[u.role] || ''}`}>{u.role}</span>
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-muted-foreground hidden md:table-cell">{formatDate(u.last_login_at)}</td>
-                    <td className="px-4 py-2.5 text-right space-x-2">
-                      <button onClick={() => startEdit(u)} className="h-7 px-2 rounded border border-border text-xs">Edit</button>
+                    <td classNome="px-4 py-2.5 text-xs text-muted-foreground hidden md:table-cell">{formatDate(u.last_login_at)}</td>
+                    <td classNome="px-4 py-2.5 text-right space-x-2">
+                      <button onClick={() => startEdit(u)} classNome="h-7 px-2 rounded border border-border text-xs">Editar</button>
                       {u.id !== currentUser?.id && (
-                        <button onClick={() => handleDelete(u)} className="h-7 px-2 rounded-md bg-destructive/20 text-destructive text-xs hover:bg-destructive/30">Delete</button>
+                        <button onClick={() => handleDelete(u)} classNome="h-7 px-2 rounded-md bg-destructive/20 text-destructive text-xs hover:bg-destructive/30">Excluir</button>
                       )}
                     </td>
                   </>

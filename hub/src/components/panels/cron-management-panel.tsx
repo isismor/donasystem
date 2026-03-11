@@ -54,7 +54,7 @@ export function CronManagementPanel() {
   const { cronJobs, setCronJobs, dashboardMode } = useMissionControl()
   const isLocalMode = dashboardMode === 'local'
   const [isLoading, setIsLoading] = useState(false)
-  const [showAddForm, setShowAddForm] = useState(false)
+  const [showAddForm, setMostrarAddForm] = useState(false)
   const [selectedJob, setSelectedJob] = useState<CronJob | null>(null)
   const [jobLogs, setJobLogs] = useState<any[]>([])
   const [availableModels, setAvailableModels] = useState<string[]>([])
@@ -62,8 +62,8 @@ export function CronManagementPanel() {
   const [calendarDate, setCalendarDate] = useState<Date>(startOfDay(new Date()))
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<Date>(startOfDay(new Date()))
   const [searchQuery, setSearchQuery] = useState('')
-  const [agentFilter, setAgentFilter] = useState('all')
-  const [stateFilter, setStateFilter] = useState<'all' | 'enabled' | 'disabled'>('all')
+  const [agentFiltrar, setAgentFiltrar] = useState('all')
+  const [stateFiltrar, setStateFiltrar] = useState<'all' | 'enabled' | 'disabled'>('all')
   const [newJob, setNewJob] = useState<NewJobForm>({
     name: '',
     schedule: '0 * * * *', // Every hour
@@ -82,10 +82,10 @@ export function CronManagementPanel() {
     const hours = Math.floor(minutes / 60)
     const days = Math.floor(hours / 24)
     
-    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ${future ? 'from now' : 'ago'}`
-    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ${future ? 'from now' : 'ago'}`
-    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ${future ? 'from now' : 'ago'}`
-    return future ? 'soon' : 'just now'
+    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ${future ? 'from now' : 'atrás'}`
+    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ${future ? 'from now' : 'atrás'}`
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ${future ? 'from now' : 'atrás'}`
+    return future ? 'soon' : 'atrásra'
   }
 
   const loadCronJobs = useCallback(async () => {
@@ -103,7 +103,7 @@ export function CronManagementPanel() {
       const schedulerResponse = await fetch('/api/scheduler')
       const schedulerData = await schedulerResponse.json()
       const schedulerTasks = Array.isArray(schedulerData.tasks) ? schedulerData.tasks : []
-      const mappedSchedulerJobs: CronJob[] = schedulerTasks.map((task: any) => ({
+      const mappedAgendarJobs: CronJob[] = schedulerTasks.map((task: any) => ({
         id: task.id,
         name: task.name || task.id || 'scheduler-task',
         schedule: 'system-managed automation',
@@ -118,7 +118,7 @@ export function CronManagementPanel() {
           : (task.lastResult?.ok === false ? 'error' : (task.lastResult?.ok === true ? 'success' : undefined)),
       }))
 
-      setCronJobs([...cronList, ...mappedSchedulerJobs])
+      setCronJobs([...cronList, ...mappedAgendarJobs])
     } catch (error) {
       log.error('Failed to load cron jobs:', error)
     } finally {
@@ -155,7 +155,7 @@ export function CronManagementPanel() {
       if (job.lastRun) {
         logs.push({
           timestamp: job.lastRun,
-          message: `Last run recorded for ${job.name}`,
+          message: `Última execução recorded for ${job.name}`,
           level: job.lastStatus === 'error' ? 'error' : 'info',
         })
       }
@@ -198,10 +198,10 @@ export function CronManagementPanel() {
     try {
       const response = await fetch('/api/cron', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           action: 'toggle',
-          jobName: job.name,
+          jobNome: job.name,
           enabled: !job.enabled
         })
       })
@@ -224,7 +224,7 @@ export function CronManagementPanel() {
       if (isLocalAutomation) {
         const response = await fetch('/api/scheduler', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Tipo': 'application/json' },
           body: JSON.stringify({ task_id: job.id }),
         })
         const result = await response.json()
@@ -239,11 +239,11 @@ export function CronManagementPanel() {
 
       const response = await fetch('/api/cron', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           action: 'trigger',
           jobId: job.id,
-          jobName: job.name,
+          jobNome: job.name,
         })
       })
 
@@ -269,10 +269,10 @@ export function CronManagementPanel() {
     try {
       const response = await fetch('/api/cron', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           action: 'add',
-          jobName: newJob.name,
+          jobNome: newJob.name,
           schedule: newJob.schedule,
           command: newJob.command,
           ...(newJob.model.trim() ? { model: newJob.model.trim() } : {})
@@ -287,7 +287,7 @@ export function CronManagementPanel() {
           description: '',
           model: ''
         })
-        setShowAddForm(false)
+        setMostrarAddForm(false)
         await loadCronJobs()
       } else {
         const error = await response.json()
@@ -307,10 +307,10 @@ export function CronManagementPanel() {
     try {
       const response = await fetch('/api/cron', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           action: 'remove',
-          jobName: job.name
+          jobNome: job.name
         })
       })
 
@@ -352,7 +352,7 @@ export function CronManagementPanel() {
     }
   }
 
-  const predefinedSchedules = [
+  const predefinedAgendas = [
     { label: 'Every minute', value: '* * * * *' },
     { label: 'Every 5 minutes', value: '*/5 * * * *' },
     { label: 'Every hour', value: '0 * * * *' },
@@ -380,11 +380,11 @@ export function CronManagementPanel() {
       (job.agentId || '').toLowerCase().includes(query) ||
       (job.model || '').toLowerCase().includes(query)
 
-    const matchesAgent = agentFilter === 'all' || (job.agentId || '') === agentFilter
+    const matchesAgent = agentFiltrar === 'all' || (job.agentId || '') === agentFiltrar
     const matchesState =
-      stateFilter === 'all' ||
-      (stateFilter === 'enabled' && job.enabled) ||
-      (stateFilter === 'disabled' && !job.enabled)
+      stateFiltrar === 'all' ||
+      (stateFiltrar === 'enabled' && job.enabled) ||
+      (stateFiltrar === 'disabled' && !job.enabled)
 
     return matchesQuery && matchesAgent && matchesState
   })
@@ -470,26 +470,26 @@ export function CronManagementPanel() {
         : calendarDate.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="border-b border-border pb-4">
-        <div className="flex items-center justify-between">
+    <div classNome="p-6 space-y-6">
+      <div classNome="border-b border-border pb-4">
+        <div classNome="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Cron Management</h1>
-            <p className="text-muted-foreground mt-2">
+            <h1 classNome="text-3xl font-bold text-foreground">Cron Management</h1>
+            <p classNome="text-muted-foreground mt-2">
               Manage automated tasks and scheduled jobs
             </p>
           </div>
-          <div className="flex space-x-2">
+          <div classNome="flex space-x-2">
             <button
               onClick={loadCronJobs}
               disabled={isLoading}
-              className="px-4 py-2 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md font-medium hover:bg-blue-500/30 transition-colors disabled:opacity-50"
+              classNome="px-4 py-2 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md font-medium hover:bg-blue-500/30 transition-colors disabled:opacity-50"
             >
               {isLoading ? 'Loading...' : 'Refresh'}
             </button>
             <button
-              onClick={() => setShowAddForm(true)}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors"
+              onClick={() => setMostrarAddForm(true)}
+              classNome="px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors"
             >
               Add Job
             </button>
@@ -497,48 +497,48 @@ export function CronManagementPanel() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div classNome="grid lg:grid-cols-2 gap-6">
         {/* Calendar View - Phase A (read-only) */}
-        <div className="lg:col-span-2 bg-card border border-border rounded-lg p-6">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+        <div classNome="lg:col-span-2 bg-card border border-border rounded-lg p-6">
+          <div classNome="flex flex-col gap-4">
+            <div classNome="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h2 className="text-xl font-semibold">Calendar View</h2>
-                <p className="text-sm text-muted-foreground">
+                <h2 classNome="text-xl font-semibold">Calendar View</h2>
+                <p classNome="text-sm text-muted-foreground">
                   {isLocalMode
                     ? 'Read-only schedule visibility across local cron jobs and automations'
                     : 'Interactive schedule across all matching cron jobs'}
                 </p>
               </div>
-              <div className="flex items-center gap-2">
+              <div classNome="flex items-center gap-2">
                 <button
                   onClick={() => moveCalendar(-1)}
-                  className="px-2 py-1.5 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                  classNome="px-2 py-1.5 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
                 >
                   Prev
                 </button>
                 <button
                   onClick={() => setCalendarDate(startOfDay(new Date()))}
-                  className="px-3 py-1.5 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors text-sm"
+                  classNome="px-3 py-1.5 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors text-sm"
                 >
-                  Today
+                  Hoje
                 </button>
                 <button
                   onClick={() => moveCalendar(1)}
-                  className="px-2 py-1.5 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                  classNome="px-2 py-1.5 rounded border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
                 >
                   Next
                 </button>
-                <div className="text-sm font-medium text-foreground ml-1">{calendarRangeLabel}</div>
+                <div classNome="text-sm font-medium text-foreground ml-1">{calendarRangeLabel}</div>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div classNome="flex flex-wrap gap-2">
               {(['agenda', 'day', 'week', 'month'] as CalendarViewMode[]).map((mode) => (
                 <button
                   key={mode}
                   onClick={() => setCalendarView(mode)}
-                  className={`px-3 py-1.5 rounded text-sm border transition-colors ${
+                  classNome={`px-3 py-1.5 rounded text-sm border transition-colors ${
                     calendarView === mode
                       ? 'bg-primary text-primary-foreground border-primary'
                       : 'border-border text-muted-foreground hover:text-foreground hover:bg-secondary'
@@ -549,17 +549,17 @@ export function CronManagementPanel() {
               ))}
             </div>
 
-            <div className="grid md:grid-cols-3 gap-3">
+            <div classNome="grid md:grid-cols-3 gap-3">
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search jobs, agents, models..."
-                className="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
+                classNome="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
               />
               <select
-                value={agentFilter}
-                onChange={(e) => setAgentFilter(e.target.value)}
-                className="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
+                value={agentFiltrar}
+                onChange={(e) => setAgentFiltrar(e.target.value)}
+                classNome="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
               >
                 <option value="all">All Agents</option>
                 {uniqueAgents.map((agentId) => (
@@ -569,35 +569,35 @@ export function CronManagementPanel() {
                 ))}
               </select>
               <select
-                value={stateFilter}
-                onChange={(e) => setStateFilter(e.target.value as 'all' | 'enabled' | 'disabled')}
-                className="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
+                value={stateFiltrar}
+                onChange={(e) => setStateFiltrar(e.target.value as 'all' | 'enabled' | 'disabled')}
+                classNome="px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
               >
                 <option value="all">All States</option>
-                <option value="enabled">Enabled</option>
-                <option value="disabled">Disabled</option>
+                <option value="enabled">Ativado</option>
+                <option value="disabled">Desativado</option>
               </select>
             </div>
 
             {calendarView === 'agenda' && (
-              <div className="border border-border rounded-lg overflow-hidden">
-                <div className="max-h-80 overflow-y-auto divide-y divide-border">
+              <div classNome="border border-border rounded-lg overflow-hidden">
+                <div classNome="max-h-80 overflow-y-auto divide-y divide-border">
                   {calendarOccurrences.length === 0 ? (
-                    <div className="p-4 text-sm text-muted-foreground">No jobs match the current filters.</div>
+                    <div classNome="p-4 text-sm text-muted-foreground">No jobs match the current filters.</div>
                   ) : (
                     calendarOccurrences.map((row) => (
                       <button
                         key={`agenda-${row.job.id || row.job.name}-${row.atMs}`}
                         onClick={() => handleJobSelect(row.job)}
-                        className="w-full p-3 text-left flex flex-col md:flex-row md:items-center md:justify-between gap-2 hover:bg-secondary transition-colors"
+                        classNome="w-full p-3 text-left flex flex-col md:flex-row md:items-center md:justify-between gap-2 hover:bg-secondary transition-colors"
                       >
                         <div>
-                          <div className="font-medium text-foreground">{row.job.name}</div>
-                          <div className="text-xs text-muted-foreground">
+                          <div classNome="font-medium text-foreground">{row.job.name}</div>
+                          <div classNome="text-xs text-muted-foreground">
                             {row.job.agentId || 'system'} · {row.job.enabled ? 'enabled' : 'disabled'} · {row.job.schedule}
                           </div>
                         </div>
-                        <div className="text-sm text-muted-foreground">
+                        <div classNome="text-sm text-muted-foreground">
                           {new Date(row.atMs).toLocaleString()}
                         </div>
                       </button>
@@ -608,19 +608,19 @@ export function CronManagementPanel() {
             )}
 
             {calendarView === 'day' && (
-              <div className="border border-border rounded-lg p-3">
+              <div classNome="border border-border rounded-lg p-3">
                 {dayJobs.length === 0 ? (
-                  <div className="text-sm text-muted-foreground">No scheduled jobs for this day.</div>
+                  <div classNome="text-sm text-muted-foreground">No scheduled jobs for this day.</div>
                 ) : (
-                  <div className="space-y-2">
+                  <div classNome="space-y-2">
                     {dayJobs.map((row) => (
                       <button
                         key={`day-${row.job.id || row.job.name}-${row.atMs}`}
                         onClick={() => handleJobSelect(row.job)}
-                        className="w-full p-2 rounded border border-border bg-secondary/40 hover:bg-secondary transition-colors text-left"
+                        classNome="w-full p-2 rounded border border-border bg-secondary/40 hover:bg-secondary transition-colors text-left"
                       >
-                        <div className="text-sm font-medium text-foreground">{row.job.name}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div classNome="text-sm font-medium text-foreground">{row.job.name}</div>
+                        <div classNome="text-xs text-muted-foreground">
                           {new Date(row.atMs).toLocaleTimeString()} · {row.job.agentId || 'system'} · {row.job.enabled ? 'enabled' : 'disabled'}
                         </div>
                       </button>
@@ -631,24 +631,24 @@ export function CronManagementPanel() {
             )}
 
             {calendarView === 'week' && (
-              <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
+              <div classNome="grid grid-cols-1 md:grid-cols-7 gap-2">
                 {jobsByWeekDay.map(({ date, jobs }) => (
                   <button
                     key={`week-${date.toISOString()}`}
                     onClick={() => setSelectedCalendarDate(startOfDay(date))}
-                    className={`border border-border rounded-lg p-2 min-h-36 text-left ${isSameDay(date, selectedCalendarDate) ? 'bg-primary/10 border-primary/40' : 'hover:bg-secondary/50'}`}
+                    classNome={`border border-border rounded-lg p-2 min-h-36 text-left ${isSameDay(date, selectedCalendarDate) ? 'bg-primary/10 border-primary/40' : 'hover:bg-secondary/50'}`}
                   >
-                    <div className={`text-xs font-medium mb-2 ${isSameDay(date, new Date()) ? 'text-primary' : 'text-muted-foreground'}`}>
+                    <div classNome={`text-xs font-medium mb-2 ${isSameDay(date, new Date()) ? 'text-primary' : 'text-muted-foreground'}`}>
                       {date.toLocaleDateString(undefined, { weekday: 'short', month: 'numeric', day: 'numeric' })}
                     </div>
-                    <div className="space-y-1">
+                    <div classNome="space-y-1">
                       {jobs.slice(0, 4).map((row) => (
-                        <div key={`week-job-${row.job.id || row.job.name}-${row.atMs}`} className="text-xs px-2 py-1 rounded bg-secondary text-foreground truncate" title={row.job.name}>
+                        <div key={`week-job-${row.job.id || row.job.name}-${row.atMs}`} classNome="text-xs px-2 py-1 rounded bg-secondary text-foreground truncate" title={row.job.name}>
                           {new Date(row.atMs).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} {row.job.name}
                         </div>
                       ))}
                       {jobs.length > 4 && (
-                        <div className="text-xs text-muted-foreground">+{jobs.length - 4} more</div>
+                        <div classNome="text-xs text-muted-foreground">+{jobs.length - 4} more</div>
                       )}
                     </div>
                   </button>
@@ -657,25 +657,25 @@ export function CronManagementPanel() {
             )}
 
             {calendarView === 'month' && (
-              <div className="grid grid-cols-7 gap-2">
+              <div classNome="grid grid-cols-7 gap-2">
                 {jobsByMonthDay.map(({ date, jobs }) => {
                   const inCurrentMonth = date.getMonth() === calendarDate.getMonth()
                   return (
                     <div
                       key={`month-${date.toISOString()}`}
                       onClick={() => setSelectedCalendarDate(startOfDay(date))}
-                      className={`border border-border rounded-lg p-2 min-h-24 cursor-pointer ${inCurrentMonth ? 'bg-transparent' : 'bg-secondary/30'} ${isSameDay(date, selectedCalendarDate) ? 'border-primary/40 bg-primary/10' : 'hover:bg-secondary/50'}`}
+                      classNome={`border border-border rounded-lg p-2 min-h-24 cursor-pointer ${inCurrentMonth ? 'bg-transparent' : 'bg-secondary/30'} ${isSameDay(date, selectedCalendarDate) ? 'border-primary/40 bg-primary/10' : 'hover:bg-secondary/50'}`}
                     >
-                      <div className={`text-xs mb-1 ${isSameDay(date, new Date()) ? 'text-primary font-semibold' : inCurrentMonth ? 'text-foreground' : 'text-muted-foreground'}`}>
+                      <div classNome={`text-xs mb-1 ${isSameDay(date, new Date()) ? 'text-primary font-semibold' : inCurrentMonth ? 'text-foreground' : 'text-muted-foreground'}`}>
                         {date.getDate()}
                       </div>
-                      <div className="space-y-1">
+                      <div classNome="space-y-1">
                         {jobs.slice(0, 2).map((row) => (
-                          <div key={`month-job-${row.job.id || row.job.name}-${row.atMs}`} className="text-[11px] px-1.5 py-0.5 rounded bg-secondary text-foreground truncate" title={row.job.name}>
+                          <div key={`month-job-${row.job.id || row.job.name}-${row.atMs}`} classNome="text-[11px] px-1.5 py-0.5 rounded bg-secondary text-foreground truncate" title={row.job.name}>
                             {row.job.name}
                           </div>
                         ))}
-                        {jobs.length > 2 && <div className="text-[11px] text-muted-foreground">+{jobs.length - 2}</div>}
+                        {jobs.length > 2 && <div classNome="text-[11px] text-muted-foreground">+{jobs.length - 2}</div>}
                       </div>
                     </div>
                   )
@@ -684,25 +684,25 @@ export function CronManagementPanel() {
             )}
 
             {calendarView !== 'agenda' && (
-              <div className="border border-border rounded-lg p-3">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm font-medium text-foreground">
+              <div classNome="border border-border rounded-lg p-3">
+                <div classNome="flex items-center justify-between mb-2">
+                  <h3 classNome="text-sm font-medium text-foreground">
                     {selectedCalendarDate.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
                   </h3>
-                  <span className="text-xs text-muted-foreground">{selectedDayJobs.length} jobs</span>
+                  <span classNome="text-xs text-muted-foreground">{selectedDayJobs.length} jobs</span>
                 </div>
                 {selectedDayJobs.length === 0 ? (
-                  <div className="text-sm text-muted-foreground">No jobs scheduled on this date.</div>
+                  <div classNome="text-sm text-muted-foreground">No jobs scheduled on this date.</div>
                 ) : (
-                  <div className="space-y-2">
+                  <div classNome="space-y-2">
                     {selectedDayJobs.map((row) => (
                       <button
                         key={`selected-day-${row.job.id || row.job.name}-${row.atMs}`}
                         onClick={() => handleJobSelect(row.job)}
-                        className="w-full text-left p-2 rounded border border-border bg-secondary/40 hover:bg-secondary transition-colors"
+                        classNome="w-full text-left p-2 rounded border border-border bg-secondary/40 hover:bg-secondary transition-colors"
                       >
-                        <div className="text-sm font-medium text-foreground">{row.job.name}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div classNome="text-sm font-medium text-foreground">{row.job.name}</div>
+                        <div classNome="text-xs text-muted-foreground">
                           {new Date(row.atMs).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} · {row.job.agentId || 'system'}
                         </div>
                       </button>
@@ -715,40 +715,40 @@ export function CronManagementPanel() {
         </div>
 
         {/* Job List */}
-        <div className="bg-card border border-border rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Scheduled Jobs</h2>
+        <div classNome="bg-card border border-border rounded-lg p-6">
+          <h2 classNome="text-xl font-semibold mb-4">Agendad Jobs</h2>
           
           {isLoading ? (
-            <div className="flex items-center justify-center h-32">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-              <span className="ml-3 text-muted-foreground">Loading jobs...</span>
+            <div classNome="flex items-center justify-center h-32">
+              <div classNome="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+              <span classNome="ml-3 text-muted-foreground">Loading jobs...</span>
             </div>
           ) : cronJobs.length === 0 ? (
-            <div className="text-center text-muted-foreground py-8">
+            <div classNome="text-center text-muted-foreground py-8">
               No cron jobs found
             </div>
           ) : (
-            <div className="space-y-3 max-h-96 overflow-y-auto">
+            <div classNome="space-y-3 max-h-96 overflow-y-auto">
                       {cronJobs.map((job, index) => {
                         const isLocalAutomation = job.delivery === 'local' && job.agentId === 'mission-control-local'
                         return (
                         <div 
                           key={`${job.name}-${index}`} 
-                          className={`border border-border rounded-lg p-4 cursor-pointer transition-colors ${
+                          classNome={`border border-border rounded-lg p-4 cursor-pointer transition-colors ${
                     selectedJob?.name === job.name 
                       ? 'bg-primary/10 border-primary/30' 
                       : 'hover:bg-secondary'
                   }`}
                   onClick={() => handleJobSelect(job)}
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium text-foreground">{job.name}</span>
-                        <div className={`w-2 h-2 rounded-full ${job.enabled ? 'bg-[#b4a68c]' : 'bg-gray-500'}`}></div>
+                  <div classNome="flex items-start justify-between">
+                    <div classNome="flex-1 min-w-0">
+                      <div classNome="flex items-center space-x-2">
+                        <span classNome="font-medium text-foreground">{job.name}</span>
+                        <div classNome={`w-2 h-2 rounded-full ${job.enabled ? 'bg-[#b4a68c]' : 'bg-gray-500'}`}></div>
                         
-                        {/* Job Type Tag */}
-                        <span className={`px-2 py-0.5 text-xs font-medium rounded-full border ${
+                        {/* Job Tipo Tag */}
+                        <span classNome={`px-2 py-0.5 text-xs font-medium rounded-full border ${
                           isLocalAutomation ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' :
                           job.name.includes('backup') ? 'bg-[#b4a68c]/20 text-[#b4a68c] border-[#b4a68c]/30' :
                           job.name.includes('alert') ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' :
@@ -765,41 +765,41 @@ export function CronManagementPanel() {
                         </span>
 
                         {job.lastStatus && (
-                          <span className={`px-2 py-1 text-xs rounded-full ${getStatusBg(job.lastStatus)} ${getStatusColor(job.lastStatus)}`}>
+                          <span classNome={`px-2 py-1 text-xs rounded-full ${getStatusBg(job.lastStatus)} ${getStatusColor(job.lastStatus)}`}>
                             {job.lastStatus}
                           </span>
                         )}
                       </div>
-                      <div className="text-sm text-muted-foreground mt-1 font-mono">
+                      <div classNome="text-sm text-muted-foreground mt-1 font-mono">
                         {job.schedule}
                       </div>
-                      <div className="text-sm text-muted-foreground mt-1 truncate">
+                      <div classNome="text-sm text-muted-foreground mt-1 truncate">
                         {job.command}
                       </div>
                       {job.model && (
-                        <div className="text-xs text-muted-foreground mt-1">
-                          Model: <span className="font-mono">{job.model}</span>
+                        <div classNome="text-xs text-muted-foreground mt-1">
+                          Model: <span classNome="font-mono">{job.model}</span>
                         </div>
                       )}
                       {job.lastRun && (
-                        <div className="text-xs text-muted-foreground mt-2">
-                          Last run: {formatRelativeTime(job.lastRun)}
+                        <div classNome="text-xs text-muted-foreground mt-2">
+                          Última execução: {formatRelativeTime(job.lastRun)}
                         </div>
                       )}
                       {job.nextRun && (
-                        <div className="text-xs text-primary/70 mt-1">
+                        <div classNome="text-xs text-primary/70 mt-1">
                           Next: {formatRelativeTime(job.nextRun, true)}
                         </div>
                       )}
                     </div>
-                    <div className="flex space-x-1 ml-4">
+                    <div classNome="flex space-x-1 ml-4">
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
                           toggleJob(job)
                         }}
                         disabled={isLocalAutomation}
-                        className={`px-2 py-1 text-xs rounded ${
+                        classNome={`px-2 py-1 text-xs rounded ${
                           job.enabled 
                             ? 'bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30' 
                             : 'bg-[#b4a68c]/20 text-[#b4a68c] hover:bg-[#b4a68c]/30'
@@ -812,7 +812,7 @@ export function CronManagementPanel() {
                           e.stopPropagation()
                           triggerJob(job)
                         }}
-                        className="px-2 py-1 text-xs bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 rounded transition-colors"
+                        classNome="px-2 py-1 text-xs bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 rounded transition-colors"
                       >
                         Run
                       </button>
@@ -822,7 +822,7 @@ export function CronManagementPanel() {
                           removeJob(job)
                         }}
                         disabled={isLocalAutomation}
-                        className="px-2 py-1 text-xs bg-[#9e5c50]/20 text-[#9e5c50] hover:bg-[#9e5c50]/30 rounded transition-colors"
+                        classNome="px-2 py-1 text-xs bg-[#9e5c50]/20 text-[#9e5c50] hover:bg-[#9e5c50]/30 rounded transition-colors"
                       >
                         Remove
                       </button>
@@ -834,42 +834,42 @@ export function CronManagementPanel() {
           )}
         </div>
 
-        {/* Job Details & Logs */}
-        <div className="bg-card border border-border rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">
-            {selectedJob ? `Job Details: ${selectedJob.name}` : 'Job Details'}
+        {/* Job Detalhes & Logs */}
+        <div classNome="bg-card border border-border rounded-lg p-6">
+          <h2 classNome="text-xl font-semibold mb-4">
+            {selectedJob ? `Job Detalhes: ${selectedJob.name}` : 'Job Detalhes'}
           </h2>
           
           {selectedJob ? (
-            <div className="space-y-4">
+            <div classNome="space-y-4">
               <div>
-                <h3 className="font-medium text-foreground mb-2">Configuration</h3>
-                <div className="bg-secondary rounded p-3 space-y-2 text-sm">
-                  <div><span className="text-muted-foreground">Schedule:</span> <code className="font-mono">{selectedJob.schedule}</code></div>
-                  <div><span className="text-muted-foreground">Command:</span> <code className="font-mono text-xs">{selectedJob.command}</code></div>
+                <h3 classNome="font-medium text-foreground mb-2">Configuração</h3>
+                <div classNome="bg-secondary rounded p-3 space-y-2 text-sm">
+                  <div><span classNome="text-muted-foreground">Agenda:</span> <code classNome="font-mono">{selectedJob.schedule}</code></div>
+                  <div><span classNome="text-muted-foreground">Command:</span> <code classNome="font-mono text-xs">{selectedJob.command}</code></div>
                   {selectedJob.model && (
-                    <div><span className="text-muted-foreground">Model:</span> <code className="font-mono text-xs">{selectedJob.model}</code></div>
+                    <div><span classNome="text-muted-foreground">Model:</span> <code classNome="font-mono text-xs">{selectedJob.model}</code></div>
                   )}
-                  <div><span className="text-muted-foreground">Status:</span> {selectedJob.enabled ? '🟢 Enabled' : '🔴 Disabled'}</div>
+                  <div><span classNome="text-muted-foreground">Status:</span> {selectedJob.enabled ? '🟢 Enabled' : '🔴 Disabled'}</div>
                   {selectedJob.delivery === 'local' && selectedJob.agentId === 'mission-control-local' && (
-                    <div><span className="text-muted-foreground">Source:</span> Local scheduler automation</div>
+                    <div><span classNome="text-muted-foreground">Source:</span> Local scheduler automation</div>
                   )}
                   {selectedJob.nextRun && (
-                    <div><span className="text-muted-foreground">Next run:</span> {new Date(selectedJob.nextRun).toLocaleString()}</div>
+                    <div><span classNome="text-muted-foreground">Próxima execução:</span> {new Date(selectedJob.nextRun).toLocaleString()}</div>
                   )}
                 </div>
               </div>
 
               <div>
-                <h3 className="font-medium text-foreground mb-2">Recent Logs</h3>
-                <div className="bg-secondary rounded p-3 max-h-64 overflow-y-auto">
+                <h3 classNome="font-medium text-foreground mb-2">Recent Logs</h3>
+                <div classNome="bg-secondary rounded p-3 max-h-64 overflow-y-auto">
                   {jobLogs.length === 0 ? (
-                    <div className="text-muted-foreground text-sm">No logs available</div>
+                    <div classNome="text-muted-foreground text-sm">No logs available</div>
                   ) : (
-                    <div className="space-y-1 text-xs font-mono">
+                    <div classNome="space-y-1 text-xs font-mono">
                       {jobLogs.map((log, index) => (
-                        <div key={index} className="text-muted-foreground">
-                          <span className="text-xs">[{new Date(log.timestamp).toLocaleString()}]</span> {log.message}
+                        <div key={index} classNome="text-muted-foreground">
+                          <span classNome="text-xs">[{new Date(log.timestamp).toLocaleString()}]</span> {log.message}
                         </div>
                       ))}
                     </div>
@@ -878,7 +878,7 @@ export function CronManagementPanel() {
               </div>
             </div>
           ) : (
-            <div className="text-center text-muted-foreground py-8">
+            <div classNome="text-center text-muted-foreground py-8">
               Select a job to view details and logs
             </div>
           )}
@@ -887,100 +887,100 @@ export function CronManagementPanel() {
 
       {/* Add Job Modal */}
       {showAddForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-card border border-border rounded-lg p-6 w-full max-w-2xl m-4">
-            <h2 className="text-xl font-semibold mb-4">Add New Cron Job</h2>
+        <div classNome="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div classNome="bg-card border border-border rounded-lg p-6 w-full max-w-2xl m-4">
+            <h2 classNome="text-xl font-semibold mb-4">Add New Cron Job</h2>
             
-            <div className="space-y-4">
+            <div classNome="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Job Name</label>
+                <label classNome="block text-sm font-medium text-foreground mb-2">Job Nome</label>
                 <input
                   type="text"
                   value={newJob.name}
                   onChange={(e) => setNewJob(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="e.g., daily-backup, system-check"
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                  classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Schedule (Cron Format)</label>
-                <div className="flex space-x-2">
+                <label classNome="block text-sm font-medium text-foreground mb-2">Agenda (Cron Format)</label>
+                <div classNome="flex space-x-2">
                   <input
                     type="text"
                     value={newJob.schedule}
                     onChange={(e) => setNewJob(prev => ({ ...prev, schedule: e.target.value }))}
                     placeholder="0 * * * *"
-                    className="flex-1 px-3 py-2 border border-border rounded-md bg-background text-foreground font-mono"
+                    classNome="flex-1 px-3 py-2 border border-border rounded-md bg-background text-foreground font-mono"
                   />
                   <select
                     value=""
                     onChange={(e) => e.target.value && setNewJob(prev => ({ ...prev, schedule: e.target.value }))}
-                    className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                    classNome="px-3 py-2 border border-border rounded-md bg-background text-foreground"
                   >
                     <option value="">Quick select...</option>
-                    {predefinedSchedules.map((sched) => (
+                    {predefinedAgendas.map((sched) => (
                       <option key={sched.value} value={sched.value}>{sched.label}</option>
                     ))}
                   </select>
                 </div>
-                <div className="mt-1 text-xs text-muted-foreground">
+                <div classNome="mt-1 text-xs text-muted-foreground">
                   Format: minute hour day month dayOfWeek
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Command</label>
+                <label classNome="block text-sm font-medium text-foreground mb-2">Command</label>
                 <textarea
                   value={newJob.command}
                   onChange={(e) => setNewJob(prev => ({ ...prev, command: e.target.value }))}
                   placeholder="cd /path/to/script && ./script.sh"
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground font-mono h-24"
+                  classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground font-mono h-24"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Model (Optional)</label>
+                <label classNome="block text-sm font-medium text-foreground mb-2">Model (Optional)</label>
                 <input
                   type="text"
                   value={newJob.model}
                   onChange={(e) => setNewJob(prev => ({ ...prev, model: e.target.value }))}
                   list="cron-model-suggestions"
                   placeholder="anthropic/claude-sonnet-4-20250514"
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground font-mono text-sm"
+                  classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground font-mono text-sm"
                 />
                 <datalist id="cron-model-suggestions">
-                  {availableModels.map((modelName) => (
-                    <option key={modelName} value={modelName} />
+                  {availableModels.map((modelNome) => (
+                    <option key={modelNome} value={modelNome} />
                   ))}
                 </datalist>
-                <div className="mt-1 text-xs text-muted-foreground">
+                <div classNome="mt-1 text-xs text-muted-foreground">
                   Leave empty to use the agent or gateway default model.
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Description (Optional)</label>
+                <label classNome="block text-sm font-medium text-foreground mb-2">Descrição (Optional)</label>
                 <input
                   type="text"
                   value={newJob.description}
                   onChange={(e) => setNewJob(prev => ({ ...prev, description: e.target.value }))}
                   placeholder="What does this job do?"
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
+                  classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end space-x-3 mt-6">
+            <div classNome="flex justify-end space-x-3 mt-6">
               <button
-                onClick={() => setShowAddForm(false)}
-                className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setMostrarAddForm(false)}
+                classNome="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={addJob}
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors"
+                classNome="px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors"
               >
                 Add Job
               </button>

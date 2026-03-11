@@ -7,7 +7,7 @@ import { createClientLogger } from '@/lib/client-logger'
 
 const log = createClientLogger('LogViewer')
 
-interface LogFilters {
+interface LogFiltrars {
   level?: string
   source?: string
   search?: string
@@ -15,44 +15,44 @@ interface LogFilters {
 }
 
 export function LogViewerPanel() {
-  const { logs, logFilters, setLogFilters, clearLogs, addLog } = useMissionControl()
+  const { logs, logFiltrars, setLogFiltrars, clearLogs, addLog } = useMissionControl()
   const [isAutoScroll, setIsAutoScroll] = useState(true)
   const [availableSources, setAvailableSources] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const logContainerRef = useRef<HTMLDivElement>(null)
   const autoScrollRef = useRef<boolean>(true)
   const logsRef = useRef(logs)
-  const logFiltersRef = useRef(logFilters)
+  const logFiltrarsRef = useRef(logFiltrars)
 
   // Update ref when autoScroll state changes
   useEffect(() => {
     autoScrollRef.current = isAutoScroll
   }, [isAutoScroll])
 
-  // Keep refs in sync so callbacks don't need `logs` / `logFilters` deps.
+  // Keep refs in sync so callbacks don't need `logs` / `logFiltrars` deps.
   useEffect(() => {
     logsRef.current = logs
   }, [logs])
 
   useEffect(() => {
-    logFiltersRef.current = logFilters
-  }, [logFilters])
+    logFiltrarsRef.current = logFiltrars
+  }, [logFiltrars])
 
   const loadLogs = useCallback(async (tail = false) => {
     log.debug(`Loading logs (tail=${tail})`)
     setIsLoading(!tail) // Only show loading for initial load, not for tailing
 
     try {
-      const currentFilters = logFiltersRef.current
+      const currentFiltrars = logFiltrarsRef.current
       const currentLogs = logsRef.current
 
       const params = new URLSearchParams({
         action: tail ? 'tail' : 'recent',
         limit: '200',
-        ...(currentFilters.level && { level: currentFilters.level }),
-        ...(currentFilters.source && { source: currentFilters.source }),
-        ...(currentFilters.search && { search: currentFilters.search }),
-        ...(currentFilters.session && { session: currentFilters.session }),
+        ...(currentFiltrars.level && { level: currentFiltrars.level }),
+        ...(currentFiltrars.source && { source: currentFiltrars.source }),
+        ...(currentFiltrars.search && { search: currentFiltrars.search }),
+        ...(currentFiltrars.session && { session: currentFiltrars.session }),
         ...(tail && currentLogs.length > 0 && { since: currentLogs[0]?.timestamp.toString() })
       })
 
@@ -125,8 +125,8 @@ export function LogViewerPanel() {
     }
   }, [logs, isAutoScroll])
 
-  const handleFilterChange = (newFilters: Partial<LogFilters>) => {
-    setLogFilters(newFilters)
+  const handleFiltrarChange = (newFiltrars: Partial<LogFiltrars>) => {
+    setLogFiltrars(newFiltrars)
     // Reload logs with new filters
     setTimeout(() => loadLogs(), 100)
   }
@@ -158,10 +158,10 @@ export function LogViewerPanel() {
   }
 
   const filteredLogs = logs.filter(entry => {
-    if (logFilters.level && entry.level !== logFilters.level) return false
-    if (logFilters.source && entry.source !== logFilters.source) return false
-    if (logFilters.search && !entry.message.toLowerCase().includes(logFilters.search.toLowerCase())) return false
-    if (logFilters.session && (!entry.session || !entry.session.includes(logFilters.session))) return false
+    if (logFiltrars.level && entry.level !== logFiltrars.level) return false
+    if (logFiltrars.source && entry.source !== logFiltrars.source) return false
+    if (logFiltrars.search && !entry.message.toLowerCase().includes(logFiltrars.search.toLowerCase())) return false
+    if (logFiltrars.session && (!entry.session || !entry.session.includes(logFiltrars.session))) return false
     return true
   })
 
@@ -169,44 +169,44 @@ export function LogViewerPanel() {
   log.debug(`Store has ${logs.length} logs, filtered to ${filteredLogs.length}`)
 
   return (
-    <div className="flex flex-col h-full p-6 space-y-4">
-      <div className="border-b border-border pb-4">
-        <h1 className="text-3xl font-bold text-foreground">Log Viewer</h1>
-        <p className="text-muted-foreground mt-2">
+    <div classNome="flex flex-col h-full p-6 space-y-4">
+      <div classNome="border-b border-border pb-4">
+        <h1 classNome="text-3xl font-bold text-foreground">Logs</h1>
+        <p classNome="text-muted-foreground mt-2">
           Real-time streaming logs from ClawdBot gateway and system
         </p>
       </div>
 
-      {/* Filters and Controls */}
-      <div className="bg-card border border-border rounded-lg p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-          {/* Level Filter */}
+      {/* Filtrars and Controls */}
+      <div classNome="bg-card border border-border rounded-lg p-4">
+        <div classNome="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          {/* Level Filtrar */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label classNome="block text-sm font-medium text-foreground mb-2">
               Level
             </label>
             <select
-              value={logFilters.level || ''}
-              onChange={(e) => handleFilterChange({ level: e.target.value || undefined })}
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              value={logFiltrars.level || ''}
+              onChange={(e) => handleFiltrarChange({ level: e.target.value || undefined })}
+              classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <option value="">All levels</option>
-              <option value="error">Error</option>
-              <option value="warn">Warning</option>
+              <option value="error">Erro</option>
+              <option value="warn">Aviso</option>
               <option value="info">Info</option>
               <option value="debug">Debug</option>
             </select>
           </div>
 
-          {/* Source Filter */}
+          {/* Source Filtrar */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label classNome="block text-sm font-medium text-foreground mb-2">
               Source
             </label>
             <select
-              value={logFilters.source || ''}
-              onChange={(e) => handleFilterChange({ source: e.target.value || undefined })}
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              value={logFiltrars.source || ''}
+              onChange={(e) => handleFiltrarChange({ source: e.target.value || undefined })}
+              classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <option value="">All sources</option>
               {availableSources.map((source) => (
@@ -215,39 +215,39 @@ export function LogViewerPanel() {
             </select>
           </div>
 
-          {/* Session Filter */}
+          {/* Session Filtrar */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label classNome="block text-sm font-medium text-foreground mb-2">
               Session
             </label>
             <input
               type="text"
-              value={logFilters.session || ''}
-              onChange={(e) => handleFilterChange({ session: e.target.value || undefined })}
+              value={logFiltrars.session || ''}
+              onChange={(e) => handleFiltrarChange({ session: e.target.value || undefined })}
               placeholder="Session ID"
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
 
-          {/* Search Filter */}
+          {/* Search Filtrar */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label classNome="block text-sm font-medium text-foreground mb-2">
               Search
             </label>
             <input
               type="text"
-              value={logFilters.search || ''}
-              onChange={(e) => handleFilterChange({ search: e.target.value || undefined })}
+              value={logFiltrars.search || ''}
+              onChange={(e) => handleFiltrarChange({ search: e.target.value || undefined })}
               placeholder="Search messages..."
-              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              classNome="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
 
           {/* Controls */}
-          <div className="flex items-end space-x-2">
+          <div classNome="flex items-end space-x-2">
             <button
               onClick={() => setIsAutoScroll(!isAutoScroll)}
-              className={`px-3 py-2 text-sm rounded-md font-medium transition-colors ${
+              classNome={`px-3 py-2 text-sm rounded-md font-medium transition-colors ${
                 isAutoScroll
                   ? 'bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30'
                   : 'bg-secondary text-muted-foreground border border-border'
@@ -257,17 +257,17 @@ export function LogViewerPanel() {
             </button>
             <button
               onClick={handleScrollToBottom}
-              className="px-3 py-2 text-sm bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md font-medium hover:bg-blue-500/30 transition-colors"
+              classNome="px-3 py-2 text-sm bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md font-medium hover:bg-blue-500/30 transition-colors"
             >
               Bottom
             </button>
           </div>
 
           {/* Clear Logs */}
-          <div className="flex items-end">
+          <div classNome="flex items-end">
             <button
               onClick={clearLogs}
-              className="px-3 py-2 text-sm bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md font-medium hover:bg-[#9e5c50]/30 transition-colors"
+              classNome="px-3 py-2 text-sm bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md font-medium hover:bg-[#9e5c50]/30 transition-colors"
             >
               Clear
             </button>
@@ -276,64 +276,64 @@ export function LogViewerPanel() {
       </div>
 
       {/* Log Stats */}
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
+      <div classNome="flex items-center justify-between text-sm text-muted-foreground">
         <div>
-          Showing {filteredLogs.length} of {logs.length} logs
+          Mostraring {filteredLogs.length} of {logs.length} logs
         </div>
         <div>
           Auto-scroll: {isAutoScroll ? 'ON' : 'OFF'} • 
-          Last updated: {logs.length > 0 ? new Date(logs[0]?.timestamp).toLocaleTimeString() : 'Never'}
+          Última atualização: {logs.length > 0 ? new Date(logs[0]?.timestamp).toLocaleTimeString() : 'Never'}
         </div>
       </div>
 
       {/* Log Display */}
-      <div className="flex-1 bg-card border border-border rounded-lg overflow-hidden">
+      <div classNome="flex-1 bg-card border border-border rounded-lg overflow-hidden">
         <div 
           ref={logContainerRef}
-          className="h-full overflow-auto p-4 space-y-2 font-mono text-sm"
+          classNome="h-full overflow-auto p-4 space-y-2 font-mono text-sm"
         >
           {isLoading ? (
-            <div className="flex items-center justify-center h-32">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-              <span className="ml-3 text-muted-foreground">Loading logs...</span>
+            <div classNome="flex items-center justify-center h-32">
+              <div classNome="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+              <span classNome="ml-3 text-muted-foreground">Loading logs...</span>
             </div>
           ) : filteredLogs.length === 0 ? (
-            <div className="flex items-center justify-center h-32 text-muted-foreground">
+            <div classNome="flex items-center justify-center h-32 text-muted-foreground">
               No logs match the current filters
             </div>
           ) : (
             filteredLogs.map((log) => (
               <div 
                 key={log.id} 
-                className={`border-l-4 pl-4 py-2 rounded-r-md ${getLogLevelBg(log.level)}`}
+                classNome={`border-l-4 pl-4 py-2 rounded-r-md ${getLogLevelBg(log.level)}`}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center space-x-2 text-xs">
-                      <span className="text-muted-foreground">
+                <div classNome="flex items-start justify-between">
+                  <div classNome="flex-1 min-w-0">
+                    <div classNome="flex items-center space-x-2 text-xs">
+                      <span classNome="text-muted-foreground">
                         {new Date(log.timestamp).toLocaleTimeString()}
                       </span>
-                      <span className={`font-medium uppercase ${getLogLevelColor(log.level)}`}>
+                      <span classNome={`font-medium uppercase ${getLogLevelColor(log.level)}`}>
                         {log.level}
                       </span>
-                      <span className="text-muted-foreground">
+                      <span classNome="text-muted-foreground">
                         [{log.source}]
                       </span>
                       {log.session && (
-                        <span className="text-muted-foreground">
+                        <span classNome="text-muted-foreground">
                           session:{log.session}
                         </span>
                       )}
                     </div>
-                    <div className="mt-1 text-foreground break-words">
+                    <div classNome="mt-1 text-foreground break-words">
                       {log.message}
                     </div>
                     {log.data && (
-                      <details className="mt-2">
-                        <summary className="cursor-pointer text-xs text-muted-foreground hover:text-foreground">
+                      <details classNome="mt-2">
+                        <summary classNome="cursor-pointer text-xs text-muted-foreground hover:text-foreground">
                           Additional data
                         </summary>
-                        <pre className="mt-1 text-xs text-muted-foreground overflow-auto">
+                        <pre classNome="mt-1 text-xs text-muted-foreground overflow-auto">
                           {JSON.stringify(log.data, null, 2)}
                         </pre>
                       </details>

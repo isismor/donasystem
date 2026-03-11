@@ -99,7 +99,7 @@ export function OverviewTab({
       setMessageStatus(null)
       const response = await fetch('/api/agents/message', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           to: agent.name,
           message: directMessage
@@ -115,16 +115,16 @@ export function OverviewTab({
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div classNome="p-6 space-y-6">
       {/* Status Controls */}
-      <div className="p-4 bg-surface-1/50 rounded-lg">
-        <h4 className="text-sm font-medium text-foreground mb-3">Status Control</h4>
-        <div className="flex gap-2 mb-3">
+      <div classNome="p-4 bg-surface-1/50 rounded-lg">
+        <h4 classNome="text-sm font-medium text-foreground mb-3">Status Control</h4>
+        <div classNome="flex gap-2 mb-3">
           {(['idle', 'busy', 'offline'] as const).map(status => (
             <button
               key={status}
               onClick={() => onStatusUpdate(agent.name, status)}
-              className={`px-3 py-1 text-sm rounded transition-smooth ${
+              classNome={`px-3 py-1 text-sm rounded transition-smooth ${
                 agent.status === status
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-secondary text-muted-foreground hover:bg-surface-2'
@@ -139,7 +139,7 @@ export function OverviewTab({
         {agent.session_key && (
           <button
             onClick={() => onWakeAgent(agent.name, agent.session_key!)}
-            className="w-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 py-2 rounded-md hover:bg-cyan-500/30 transition-smooth"
+            classNome="w-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 py-2 rounded-md hover:bg-cyan-500/30 transition-smooth"
           >
             Wake Agent via Session
           </button>
@@ -147,25 +147,25 @@ export function OverviewTab({
       </div>
 
       {/* Direct Message */}
-      <div className="p-4 bg-surface-1/50 rounded-lg">
-        <h4 className="text-sm font-medium text-foreground mb-3">Direct Message</h4>
+      <div classNome="p-4 bg-surface-1/50 rounded-lg">
+        <h4 classNome="text-sm font-medium text-foreground mb-3">Direct Message</h4>
         {messageStatus && (
-          <div className="text-xs text-foreground/80 mb-2">{messageStatus}</div>
+          <div classNome="text-xs text-foreground/80 mb-2">{messageStatus}</div>
         )}
-        <form onSubmit={handleSendMessage} className="space-y-2">
+        <form onSubmit={handleSendMessage} classNome="space-y-2">
           <div>
-            <label className="block text-xs text-muted-foreground mb-1">Message</label>
+            <label classNome="block text-xs text-muted-foreground mb-1">Message</label>
             <textarea
               value={directMessage}
               onChange={(e) => setDirectMessage(e.target.value)}
-              className="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+              classNome="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
               rows={3}
             />
           </div>
-          <div className="flex justify-end">
+          <div classNome="flex justify-end">
             <button
               type="submit"
-              className="px-3 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth text-xs"
+              classNome="px-3 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth text-xs"
             >
               Send Message
             </button>
@@ -174,34 +174,34 @@ export function OverviewTab({
       </div>
 
       {/* Heartbeat Check */}
-      <div className="p-4 bg-surface-1/50 rounded-lg">
-        <div className="flex justify-between items-center mb-3">
-          <h4 className="text-sm font-medium text-foreground">Heartbeat Check</h4>
+      <div classNome="p-4 bg-surface-1/50 rounded-lg">
+        <div classNome="flex justify-between items-center mb-3">
+          <h4 classNome="text-sm font-medium text-foreground">Heartbeat Check</h4>
           <button
             onClick={onPerformHeartbeat}
             disabled={loadingHeartbeat}
-            className="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
+            classNome="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
           >
             {loadingHeartbeat ? 'Checking...' : 'Check Now'}
           </button>
         </div>
         
         {heartbeatData && (
-          <div className="space-y-2">
-            <div className="text-sm text-foreground/80">
+          <div classNome="space-y-2">
+            <div classNome="text-sm text-foreground/80">
               <strong>Status:</strong> {heartbeatData.status}
             </div>
-            <div className="text-sm text-foreground/80">
+            <div classNome="text-sm text-foreground/80">
               <strong>Checked:</strong> {new Date(heartbeatData.checked_at * 1000).toLocaleString()}
             </div>
             
             {heartbeatData.work_items && heartbeatData.work_items.length > 0 && (
-              <div className="mt-3">
-                <div className="text-sm font-medium text-yellow-400 mb-2">
+              <div classNome="mt-3">
+                <div classNome="text-sm font-medium text-yellow-400 mb-2">
                   Work Items Found: {heartbeatData.total_items}
                 </div>
                 {heartbeatData.work_items.map((item, idx) => (
-                  <div key={idx} className="text-sm text-foreground/80 ml-2">
+                  <div key={idx} classNome="text-sm text-foreground/80 ml-2">
                     • {item.type}: {item.count} items
                   </div>
                 ))}
@@ -209,7 +209,7 @@ export function OverviewTab({
             )}
             
             {heartbeatData.message && (
-              <div className="text-sm text-foreground/80">
+              <div classNome="text-sm text-foreground/80">
                 <strong>Message:</strong> {heartbeatData.message}
               </div>
             )}
@@ -217,38 +217,38 @@ export function OverviewTab({
         )}
       </div>
 
-      {/* Agent Details */}
-      <div className="space-y-4">
+      {/* Agent Detalhes */}
+      <div classNome="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1">Role</label>
+          <label classNome="block text-sm font-medium text-muted-foreground mb-1">Role</label>
           {editing ? (
             <input
               type="text"
               value={formData.role}
               onChange={(e) => setFormData((prev: any) => ({ ...prev, role: e.target.value }))}
-              className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
             />
           ) : (
-            <p className="text-foreground">{agent.role}</p>
+            <p classNome="text-foreground">{agent.role}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-muted-foreground mb-1">Session Key</label>
+          <label classNome="block text-sm font-medium text-muted-foreground mb-1">Session Key</label>
           {editing ? (
             <input
               type="text"
               value={formData.session_key}
               onChange={(e) => setFormData((prev: any) => ({ ...prev, session_key: e.target.value }))}
-              className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
               placeholder="OpenClaw session identifier"
             />
           ) : (
-            <div className="flex items-center gap-2">
-              <p className="text-foreground font-mono">{agent.session_key || 'Not set'}</p>
+            <div classNome="flex items-center gap-2">
+              <p classNome="text-foreground font-mono">{agent.session_key || 'Not set'}</p>
               {agent.session_key && (
-                <div className="flex items-center gap-1 text-xs text-[#b4a68c]">
-                  <div className="w-2 h-2 rounded-full bg-[#b4a68c]"></div>
+                <div classNome="flex items-center gap-1 text-xs text-[#b4a68c]">
+                  <div classNome="w-2 h-2 rounded-full bg-[#b4a68c]"></div>
                   <span>Bound</span>
                 </div>
               )}
@@ -259,60 +259,60 @@ export function OverviewTab({
         {/* Task Statistics */}
         {agent.taskStats && (
           <div>
-            <label className="block text-sm font-medium text-muted-foreground mb-1">Task Statistics</label>
-            <div className="grid grid-cols-4 gap-2">
-              <div className="bg-surface-1/50 rounded p-3 text-center">
-                <div className="text-lg font-semibold text-foreground">{agent.taskStats.total}</div>
-                <div className="text-xs text-muted-foreground">Total</div>
+            <label classNome="block text-sm font-medium text-muted-foreground mb-1">Task Statistics</label>
+            <div classNome="grid grid-cols-4 gap-2">
+              <div classNome="bg-surface-1/50 rounded p-3 text-center">
+                <div classNome="text-lg font-semibold text-foreground">{agent.taskStats.total}</div>
+                <div classNome="text-xs text-muted-foreground">Total</div>
               </div>
-              <div className="bg-surface-1/50 rounded p-3 text-center">
-                <div className="text-lg font-semibold text-blue-400">{agent.taskStats.assigned}</div>
-                <div className="text-xs text-muted-foreground">Assigned</div>
+              <div classNome="bg-surface-1/50 rounded p-3 text-center">
+                <div classNome="text-lg font-semibold text-blue-400">{agent.taskStats.assigned}</div>
+                <div classNome="text-xs text-muted-foreground">Assigned</div>
               </div>
-              <div className="bg-surface-1/50 rounded p-3 text-center">
-                <div className="text-lg font-semibold text-yellow-400">{agent.taskStats.in_progress}</div>
-                <div className="text-xs text-muted-foreground">In Progress</div>
+              <div classNome="bg-surface-1/50 rounded p-3 text-center">
+                <div classNome="text-lg font-semibold text-yellow-400">{agent.taskStats.in_progress}</div>
+                <div classNome="text-xs text-muted-foreground">In Progress</div>
               </div>
-              <div className="bg-surface-1/50 rounded p-3 text-center">
-                <div className="text-lg font-semibold text-[#b4a68c]">{agent.taskStats.completed}</div>
-                <div className="text-xs text-muted-foreground">Done</div>
+              <div classNome="bg-surface-1/50 rounded p-3 text-center">
+                <div classNome="text-lg font-semibold text-[#b4a68c]">{agent.taskStats.completed}</div>
+                <div classNome="text-xs text-muted-foreground">Done</div>
               </div>
             </div>
           </div>
         )}
 
         {/* Timestamps */}
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div classNome="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-muted-foreground">Created:</span>
-            <span className="text-foreground ml-2">{new Date(agent.created_at * 1000).toLocaleDateString()}</span>
+            <span classNome="text-muted-foreground">Criado:</span>
+            <span classNome="text-foreground ml-2">{new Date(agent.created_at * 1000).toLocaleDateString()}</span>
           </div>
           <div>
-            <span className="text-muted-foreground">Last Updated:</span>
-            <span className="text-foreground ml-2">{new Date(agent.updated_at * 1000).toLocaleDateString()}</span>
+            <span classNome="text-muted-foreground">Last Atualizado:</span>
+            <span classNome="text-foreground ml-2">{new Date(agent.updated_at * 1000).toLocaleDateString()}</span>
           </div>
           {agent.last_seen && (
-            <div className="col-span-2">
-              <span className="text-muted-foreground">Last Seen:</span>
-              <span className="text-foreground ml-2">{new Date(agent.last_seen * 1000).toLocaleString()}</span>
+            <div classNome="col-span-2">
+              <span classNome="text-muted-foreground">Last Seen:</span>
+              <span classNome="text-foreground ml-2">{new Date(agent.last_seen * 1000).toLocaleString()}</span>
             </div>
           )}
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-3 mt-6">
+      {/* Ações */}
+      <div classNome="flex gap-3 mt-6">
         {editing ? (
           <>
             <button
               onClick={onSave}
-              className="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
+              classNome="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
             >
               Save Changes
             </button>
             <button
               onClick={onCancel}
-              className="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
+              classNome="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
             >
               Cancel
             </button>
@@ -320,7 +320,7 @@ export function OverviewTab({
         ) : (
           <button
             onClick={onEdit}
-            className="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
+            classNome="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
           >
             Edit Agent
           </button>
@@ -340,7 +340,7 @@ export function SoulTab({
   agent: Agent
   soulContent: string
   templates: SoulTemplate[]
-  onSave: (content: string, templateName?: string) => Promise<void>
+  onSave: (content: string, templateNome?: string) => Promise<void>
 }) {
   const [editing, setEditing] = useState(false)
   const [content, setContent] = useState(soulContent)
@@ -355,15 +355,15 @@ export function SoulTab({
     setEditing(false)
   }
 
-  const handleLoadTemplate = async (templateName: string) => {
+  const handleLoadTemplate = async (templateNome: string) => {
     try {
-      const response = await fetch(`/api/agents/${agent.name}/soul?template=${templateName}`, {
+      const response = await fetch(`/api/agents/${agent.name}/soul?template=${templateNome}`, {
         method: 'PATCH'
       })
       if (response.ok) {
         const data = await response.json()
         setContent(data.content)
-        setSelectedTemplate(templateName)
+        setSelectedTemplate(templateNome)
       }
     } catch (error) {
       log.error('Failed to load template:', error)
@@ -371,14 +371,14 @@ export function SoulTab({
   }
 
   return (
-    <div className="p-6 space-y-4">
-      <div className="flex justify-between items-center">
-        <h4 className="text-lg font-medium text-foreground">SOUL Configuration</h4>
-        <div className="flex gap-2">
+    <div classNome="p-6 space-y-4">
+      <div classNome="flex justify-between items-center">
+        <h4 classNome="text-lg font-medium text-foreground">SOUL Configuração</h4>
+        <div classNome="flex gap-2">
           {!editing && (
             <button
               onClick={() => setEditing(true)}
-              className="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
+              classNome="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
             >
               Edit SOUL
             </button>
@@ -388,13 +388,13 @@ export function SoulTab({
 
       {/* Template Selector */}
       {editing && templates.length > 0 && (
-        <div className="p-4 bg-surface-1/50 rounded-lg">
-          <h5 className="text-sm font-medium text-foreground mb-2">Load Template</h5>
-          <div className="flex gap-2">
+        <div classNome="p-4 bg-surface-1/50 rounded-lg">
+          <h5 classNome="text-sm font-medium text-foreground mb-2">Load Template</h5>
+          <div classNome="flex gap-2">
             <select
               value={selectedTemplate}
               onChange={(e) => setSelectedTemplate(e.target.value)}
-              className="flex-1 bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              classNome="flex-1 bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
             >
               <option value="">Select a template...</option>
               {templates.map(template => (
@@ -406,7 +406,7 @@ export function SoulTab({
             <button
               onClick={() => selectedTemplate && handleLoadTemplate(selectedTemplate)}
               disabled={!selectedTemplate}
-              className="px-4 py-2 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 disabled:opacity-50 transition-smooth"
+              classNome="px-4 py-2 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 disabled:opacity-50 transition-smooth"
             >
               Load
             </button>
@@ -416,7 +416,7 @@ export function SoulTab({
 
       {/* SOUL Editor */}
       <div>
-        <label className="block text-sm font-medium text-muted-foreground mb-1">
+        <label classNome="block text-sm font-medium text-muted-foreground mb-1">
           SOUL Content ({content.length} characters)
         </label>
         {editing ? (
@@ -424,26 +424,26 @@ export function SoulTab({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={20}
-            className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono text-sm"
+            classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono text-sm"
             placeholder="Define the agent's personality, instructions, and behavior patterns..."
           />
         ) : (
-          <div className="bg-surface-1/30 rounded p-4 max-h-96 overflow-y-auto">
+          <div classNome="bg-surface-1/30 rounded p-4 max-h-96 overflow-y-auto">
             {content ? (
-              <pre className="text-foreground whitespace-pre-wrap text-sm">{content}</pre>
+              <pre classNome="text-foreground whitespace-pre-wrap text-sm">{content}</pre>
             ) : (
-              <p className="text-muted-foreground italic">No SOUL content defined</p>
+              <p classNome="text-muted-foreground italic">No SOUL content defined</p>
             )}
           </div>
         )}
       </div>
 
-      {/* Actions */}
+      {/* Ações */}
       {editing && (
-        <div className="flex gap-3">
+        <div classNome="flex gap-3">
           <button
             onClick={handleSave}
-            className="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
+            classNome="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
           >
             Save SOUL
           </button>
@@ -452,7 +452,7 @@ export function SoulTab({
               setEditing(false)
               setContent(soulContent)
             }}
-            className="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
+            classNome="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
           >
             Cancel
           </button>
@@ -462,24 +462,24 @@ export function SoulTab({
   )
 }
 
-// Memory Tab Component
-export function MemoryTab({
+// Memória Tab Component
+export function MemóriaTab({
   agent,
-  workingMemory,
+  workingMemória,
   onSave
 }: {
   agent: Agent
-  workingMemory: string
+  workingMemória: string
   onSave: (content: string, append?: boolean) => Promise<void>
 }) {
   const [editing, setEditing] = useState(false)
-  const [content, setContent] = useState(workingMemory)
+  const [content, setContent] = useState(workingMemória)
   const [appendMode, setAppendMode] = useState(false)
   const [newEntry, setNewEntry] = useState('')
 
   useEffect(() => {
-    setContent(workingMemory)
-  }, [workingMemory])
+    setContent(workingMemória)
+  }, [workingMemória])
 
   const handleSave = async () => {
     if (appendMode && newEntry.trim()) {
@@ -501,15 +501,15 @@ export function MemoryTab({
   }
 
   return (
-    <div className="p-6 space-y-4">
-      <div className="flex justify-between items-center">
+    <div classNome="p-6 space-y-4">
+      <div classNome="flex justify-between items-center">
         <div>
-          <h4 className="text-lg font-medium text-foreground">Working Memory</h4>
-          <p className="text-xs text-muted-foreground mt-1">
-            This is <strong className="text-foreground">agent-level</strong> scratchpad memory (stored as WORKING.md in the database), not the workspace memory folder.
+          <h4 classNome="text-lg font-medium text-foreground">Working Memória</h4>
+          <p classNome="text-xs text-muted-foreground mt-1">
+            This is <strong classNome="text-foreground">agent-level</strong> scratchpad memory (stored as WORKING.md in the database), not the workspace memory folder.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div classNome="flex gap-2">
           {!editing && (
             <>
               <button
@@ -517,15 +517,15 @@ export function MemoryTab({
                   setAppendMode(true)
                   setEditing(true)
                 }}
-                className="px-3 py-1 text-sm bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 transition-smooth"
+                classNome="px-3 py-1 text-sm bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 transition-smooth"
               >
                 Add Entry
               </button>
               <button
                 onClick={() => setEditing(true)}
-                className="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
+                classNome="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
               >
-                Edit Memory
+                Edit Memória
               </button>
             </>
           )}
@@ -533,29 +533,29 @@ export function MemoryTab({
       </div>
 
       {/* Info Banner */}
-      <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-xs text-blue-300">
-        <strong className="text-blue-200">Agent Memory vs Workspace Memory:</strong>{' '}
+      <div classNome="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-xs text-blue-300">
+        <strong classNome="text-blue-200">Agent Memória vs Workspace Memória:</strong>{' '}
         This tab edits only this agent&apos;s private working memory (a scratchpad stored in the database).
         To browse or edit all workspace memory files (daily logs, knowledge base, MEMORY.md, etc.), visit the{' '}
-        <Link href="/memory" className="text-blue-400 underline hover:text-blue-300">Memory Browser</Link> page.
+        <Link href="/memory" classNome="text-blue-400 underline hover:text-blue-300">Memória Browser</Link> page.
       </div>
 
-      {/* Memory Content */}
+      {/* Memória Content */}
       <div>
-        <label className="block text-sm font-medium text-muted-foreground mb-1">
-          Memory Content ({content.length} characters)
+        <label classNome="block text-sm font-medium text-muted-foreground mb-1">
+          Memória Content ({content.length} characters)
         </label>
         
         {editing && appendMode ? (
-          <div className="space-y-2">
-            <div className="bg-surface-1/30 rounded p-4 max-h-40 overflow-y-auto">
-              <pre className="text-foreground whitespace-pre-wrap text-sm">{content}</pre>
+          <div classNome="space-y-2">
+            <div classNome="bg-surface-1/30 rounded p-4 max-h-40 overflow-y-auto">
+              <pre classNome="text-foreground whitespace-pre-wrap text-sm">{content}</pre>
             </div>
             <textarea
               value={newEntry}
               onChange={(e) => setNewEntry(e.target.value)}
               rows={5}
-              className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
               placeholder="Add new memory entry..."
             />
           </div>
@@ -564,44 +564,44 @@ export function MemoryTab({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={15}
-            className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono text-sm"
+            classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono text-sm"
             placeholder="Working memory for temporary notes, current tasks, and session data..."
           />
         ) : (
-          <div className="bg-surface-1/30 rounded p-4 max-h-96 overflow-y-auto">
+          <div classNome="bg-surface-1/30 rounded p-4 max-h-96 overflow-y-auto">
             {content ? (
-              <pre className="text-foreground whitespace-pre-wrap text-sm">{content}</pre>
+              <pre classNome="text-foreground whitespace-pre-wrap text-sm">{content}</pre>
             ) : (
-              <p className="text-muted-foreground italic">No working memory content</p>
+              <p classNome="text-muted-foreground italic">No working memory content</p>
             )}
           </div>
         )}
       </div>
 
-      {/* Actions */}
+      {/* Ações */}
       {editing && (
-        <div className="flex gap-3">
+        <div classNome="flex gap-3">
           <button
             onClick={handleSave}
-            className="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
+            classNome="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
           >
-            {appendMode ? 'Add Entry' : 'Save Memory'}
+            {appendMode ? 'Add Entry' : 'Save Memória'}
           </button>
           <button
             onClick={() => {
               setEditing(false)
               setAppendMode(false)
-              setContent(workingMemory)
+              setContent(workingMemória)
               setNewEntry('')
             }}
-            className="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
+            classNome="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
           >
             Cancel
           </button>
           {!appendMode && (
             <button
               onClick={handleClear}
-              className="px-4 py-2 bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md hover:bg-[#9e5c50]/30 transition-smooth"
+              classNome="px-4 py-2 bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md hover:bg-[#9e5c50]/30 transition-smooth"
             >
               Clear All
             </button>
@@ -637,48 +637,48 @@ export function TasksTab({ agent }: { agent: Agent }) {
 
   if (loading) {
     return (
-      <div className="p-6">
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          <span className="ml-2 text-muted-foreground">Loading tasks...</span>
+      <div classNome="p-6">
+        <div classNome="flex items-center justify-center py-8">
+          <div classNome="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <span classNome="ml-2 text-muted-foreground">Loading tasks...</span>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="p-6 space-y-4">
-      <h4 className="text-lg font-medium text-foreground">Assigned Tasks</h4>
+    <div classNome="p-6 space-y-4">
+      <h4 classNome="text-lg font-medium text-foreground">Assigned Tasks</h4>
       
       {tasks.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
-          <div className="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center mb-2">
+        <div classNome="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
+          <div classNome="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center mb-2">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               <rect x="3" y="2" width="10" height="12" rx="1" />
               <path d="M6 6h4M6 9h3" />
             </svg>
           </div>
-          <p className="text-sm">No tasks assigned</p>
+          <p classNome="text-sm">No tasks assigned</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div classNome="space-y-3">
           {tasks.map(task => (
-            <div key={task.id} className="bg-surface-1/50 rounded-lg p-4">
-              <div className="flex items-start justify-between">
+            <div key={task.id} classNome="bg-surface-1/50 rounded-lg p-4">
+              <div classNome="flex items-start justify-between">
                 <div>
-                  <Link href={`/tasks?taskId=${task.id}`} className="font-medium text-foreground hover:text-primary transition-colors">
+                  <Link href={`/tasks?taskId=${task.id}`} classNome="font-medium text-foreground hover:text-primary transition-colors">
                     {task.title}
                   </Link>
-                  <div className="text-xs text-muted-foreground mt-1">
+                  <div classNome="text-xs text-muted-foreground mt-1">
                     {task.ticket_ref || `Task #${task.id}`}
                     {task.project_name ? ` · ${task.project_name}` : ''}
                   </div>
                   {task.description && (
-                    <p className="text-foreground/80 text-sm mt-1">{task.description}</p>
+                    <p classNome="text-foreground/80 text-sm mt-1">{task.description}</p>
                   )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className={`px-2 py-1 text-xs rounded-md font-medium ${
+                <div classNome="flex items-center gap-2">
+                  <span classNome={`px-2 py-1 text-xs rounded-md font-medium ${
                     task.status === 'in_progress' ? 'bg-yellow-500/20 text-yellow-400' :
                     task.status === 'done' ? 'bg-[#b4a68c]/20 text-[#b4a68c]' :
                     task.status === 'review' ? 'bg-blue-500/20 text-blue-400' :
@@ -687,7 +687,7 @@ export function TasksTab({ agent }: { agent: Agent }) {
                   }`}>
                     {task.status}
                   </span>
-                  <span className={`px-2 py-1 text-xs rounded-md font-medium ${
+                  <span classNome={`px-2 py-1 text-xs rounded-md font-medium ${
                     task.priority === 'urgent' ? 'bg-[#9e5c50]/20 text-[#9e5c50]' :
                     task.priority === 'high' ? 'bg-orange-500/20 text-orange-400' :
                     task.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
@@ -699,7 +699,7 @@ export function TasksTab({ agent }: { agent: Agent }) {
               </div>
               
               {task.due_date && (
-                <div className="text-xs text-muted-foreground mt-2">
+                <div classNome="text-xs text-muted-foreground mt-2">
                   Due: {new Date(task.due_date * 1000).toLocaleDateString()}
                 </div>
               )}
@@ -736,10 +736,10 @@ export function ActivityTab({ agent }: { agent: Agent }) {
 
   if (loading) {
     return (
-      <div className="p-6">
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          <span className="ml-2 text-muted-foreground">Loading activity...</span>
+      <div classNome="p-6">
+        <div classNome="flex items-center justify-center py-8">
+          <div classNome="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <span classNome="ml-2 text-muted-foreground">Loading activity...</span>
         </div>
       </div>
     )
@@ -759,27 +759,27 @@ export function ActivityTab({ agent }: { agent: Agent }) {
   }
 
   return (
-    <div className="p-6 space-y-4">
-      <h4 className="text-lg font-medium text-foreground">Recent Activity</h4>
+    <div classNome="p-6 space-y-4">
+      <h4 classNome="text-lg font-medium text-foreground">Atividade Recente</h4>
       
       {activities.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
-          <div className="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center mb-2">
+        <div classNome="flex flex-col items-center justify-center py-8 text-muted-foreground/50">
+          <div classNome="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center mb-2">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               <path d="M2 4h12M2 8h8M2 12h10" />
             </svg>
           </div>
-          <p className="text-sm">No recent activity</p>
+          <p classNome="text-sm">No recent activity</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div classNome="space-y-3">
           {activities.map(activity => (
-            <div key={activity.id} className="bg-surface-1/50 rounded-lg p-4">
-              <div className="flex items-start gap-3">
-                <div className="text-2xl">{getActivityIcon(activity.type)}</div>
-                <div className="flex-1">
-                  <p className="text-foreground">{activity.description}</p>
-                  <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+            <div key={activity.id} classNome="bg-surface-1/50 rounded-lg p-4">
+              <div classNome="flex items-start gap-3">
+                <div classNome="text-2xl">{getActivityIcon(activity.type)}</div>
+                <div classNome="flex-1">
+                  <p classNome="text-foreground">{activity.description}</p>
+                  <div classNome="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
                     <span>{activity.type}</span>
                     <span>•</span>
                     <span>{new Date(activity.created_at * 1000).toLocaleString()}</span>
@@ -829,10 +829,10 @@ const DEFAULT_MODEL_BY_TIER: Record<'opus' | 'sonnet' | 'haiku', string> = {
 // Enhanced Create Agent Modal with Template Wizard
 export function CreateAgentModal({
   onClose,
-  onCreated
+  onCriado
 }: {
   onClose: () => void
-  onCreated: () => void
+  onCriado: () => void
 }) {
   const [step, setStep] = useState<1 | 2 | 3>(1)
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
@@ -857,7 +857,7 @@ export function CreateAgentModal({
   const selectedTemplateData = TEMPLATES.find(t => t.type === selectedTemplate)
 
   // Auto-generate kebab-case ID from name
-  const updateName = (name: string) => {
+  const updateNome = (name: string) => {
     const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
     setFormData(prev => ({ ...prev, name, id }))
   }
@@ -902,7 +902,7 @@ export function CreateAgentModal({
 
   const handleCreate = async () => {
     if (!formData.name.trim()) {
-      setError('Name is required')
+      setError('Nome is required')
       return
     }
     setIsCreating(true)
@@ -911,7 +911,7 @@ export function CreateAgentModal({
       const primaryModel = formData.modelPrimary.trim() || DEFAULT_MODEL_BY_TIER[formData.modelTier]
       const response = await fetch('/api/agents', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           openclaw_id: formData.id || undefined,
@@ -937,7 +937,7 @@ export function CreateAgentModal({
         const data = await response.json()
         throw new Error(data.error || 'Failed to create agent')
       }
-      onCreated()
+      onCriado()
       onClose()
     } catch (err: any) {
       setError(err.message)
@@ -947,63 +947,63 @@ export function CreateAgentModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-card border border-border rounded-lg max-w-2xl w-full max-h-[85vh] flex flex-col">
+    <div classNome="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div classNome="bg-card border border-border rounded-lg max-w-2xl w-full max-h-[85vh] flex flex-col">
         {/* Header */}
-        <div className="p-6 border-b border-border flex-shrink-0">
-          <div className="flex justify-between items-center">
+        <div classNome="p-6 border-b border-border flex-shrink-0">
+          <div classNome="flex justify-between items-center">
             <div>
-              <h3 className="text-xl font-bold text-foreground">Create New Agent</h3>
-              <div className="flex gap-3 mt-2">
+              <h3 classNome="text-xl font-bold text-foreground">Create New Agent</h3>
+              <div classNome="flex gap-3 mt-2">
                 {[1, 2, 3].map(s => (
-                  <div key={s} className="flex items-center gap-1.5">
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+                  <div key={s} classNome="flex items-center gap-1.5">
+                    <div classNome={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                       step === s ? 'bg-primary text-primary-foreground' :
                       step > s ? 'bg-[#b4a68c]/20 text-[#b4a68c]' :
                       'bg-surface-2 text-muted-foreground'
                     }`}>
                       {step > s ? '\u2713' : s}
                     </div>
-                    <span className={`text-xs ${step === s ? 'text-foreground' : 'text-muted-foreground'}`}>
+                    <span classNome={`text-xs ${step === s ? 'text-foreground' : 'text-muted-foreground'}`}>
                       {s === 1 ? 'Template' : s === 2 ? 'Configure' : 'Review'}
                     </span>
                   </div>
                 ))}
               </div>
             </div>
-            <button onClick={onClose} className="text-muted-foreground hover:text-foreground text-2xl">x</button>
+            <button onClick={onClose} classNome="text-muted-foreground hover:text-foreground text-2xl">x</button>
           </div>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div classNome="flex-1 overflow-y-auto p-6">
           {error && (
-            <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 mb-4 rounded-lg text-sm">
+            <div classNome="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 mb-4 rounded-lg text-sm">
               {error}
             </div>
           )}
 
           {/* Step 1: Choose Template */}
           {step === 1 && (
-            <div className="grid grid-cols-2 gap-3">
+            <div classNome="grid grid-cols-2 gap-3">
               {TEMPLATES.map(tmpl => (
                 <button
                   key={tmpl.type}
                   onClick={() => { selectTemplate(tmpl.type); setStep(2) }}
-                  className={`p-4 rounded-lg border text-left transition-smooth hover:bg-surface-1 ${
+                  classNome={`p-4 rounded-lg border text-left transition-smooth hover:bg-surface-1 ${
                     selectedTemplate === tmpl.type ? 'border-primary bg-primary/5' : 'border-border'
                   }`}
                 >
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">{tmpl.emoji}</span>
-                    <span className="font-semibold text-foreground">{tmpl.label}</span>
+                  <div classNome="flex items-center gap-2 mb-2">
+                    <span classNome="text-2xl">{tmpl.emoji}</span>
+                    <span classNome="font-semibold text-foreground">{tmpl.label}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground mb-2">{tmpl.description}</p>
-                  <div className="flex gap-2">
-                    <span className={`px-2 py-0.5 text-xs rounded border ${MODEL_TIER_COLORS[tmpl.modelTier]}`}>
+                  <p classNome="text-xs text-muted-foreground mb-2">{tmpl.description}</p>
+                  <div classNome="flex gap-2">
+                    <span classNome={`px-2 py-0.5 text-xs rounded border ${MODEL_TIER_COLORS[tmpl.modelTier]}`}>
                       {MODEL_TIER_LABELS[tmpl.modelTier]}
                     </span>
-                    <span className="px-2 py-0.5 text-xs rounded bg-surface-2 text-muted-foreground">
+                    <span classNome="px-2 py-0.5 text-xs rounded bg-surface-2 text-muted-foreground">
                       {tmpl.toolCount} tools
                     </span>
                   </div>
@@ -1012,72 +1012,72 @@ export function CreateAgentModal({
               {/* Custom option */}
               <button
                 onClick={() => { selectTemplate(null); setStep(2) }}
-                className={`p-4 rounded-lg border text-left transition-smooth hover:bg-surface-1 border-dashed ${
+                classNome={`p-4 rounded-lg border text-left transition-smooth hover:bg-surface-1 border-dashed ${
                   selectedTemplate === null ? 'border-primary' : 'border-border'
                 }`}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">+</span>
-                  <span className="font-semibold text-foreground">Custom</span>
+                <div classNome="flex items-center gap-2 mb-2">
+                  <span classNome="text-2xl">+</span>
+                  <span classNome="font-semibold text-foreground">Custom</span>
                 </div>
-                <p className="text-xs text-muted-foreground">Start from scratch with blank config</p>
+                <p classNome="text-xs text-muted-foreground">Start from scratch with blank config</p>
               </button>
             </div>
           )}
 
           {/* Step 2: Configure */}
           {step === 2 && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div classNome="space-y-4">
+              <div classNome="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Display Name *</label>
+                  <label classNome="block text-sm text-muted-foreground mb-1">Display Nome *</label>
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => updateName(e.target.value)}
-                    className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    onChange={(e) => updateNome(e.target.value)}
+                    classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                     placeholder="e.g., Frontend Dev"
                     autoFocus
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Agent ID</label>
+                  <label classNome="block text-sm text-muted-foreground mb-1">Agent ID</label>
                   <input
                     type="text"
                     value={formData.id}
                     onChange={(e) => setFormData(prev => ({ ...prev, id: e.target.value }))}
-                    className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono text-sm"
+                    classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono text-sm"
                     placeholder="frontend-dev"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div classNome="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Role / Theme</label>
+                  <label classNome="block text-sm text-muted-foreground mb-1">Role / Tema</label>
                   <input
                     type="text"
                     value={formData.role}
                     onChange={(e) => setFormData(prev => ({ ...prev, role: e.target.value }))}
-                    className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                     placeholder="builder engineer"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Emoji</label>
+                  <label classNome="block text-sm text-muted-foreground mb-1">Emoji</label>
                   <input
                     type="text"
                     value={formData.emoji}
                     onChange={(e) => setFormData(prev => ({ ...prev, emoji: e.target.value }))}
-                    className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                     placeholder="e.g. \ud83d\udee0\ufe0f"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm text-muted-foreground mb-1">Model Tier</label>
-                <div className="flex gap-2">
+                <label classNome="block text-sm text-muted-foreground mb-1">Model Tier</label>
+                <div classNome="flex gap-2">
                   {(['opus', 'sonnet', 'haiku'] as const).map(tier => (
                     <button
                       key={tier}
@@ -1086,7 +1086,7 @@ export function CreateAgentModal({
                         modelTier: tier,
                         modelPrimary: DEFAULT_MODEL_BY_TIER[tier],
                       }))}
-                      className={`flex-1 px-3 py-2 text-sm rounded-md border transition-smooth ${
+                      classNome={`flex-1 px-3 py-2 text-sm rounded-md border transition-smooth ${
                         formData.modelTier === tier ? MODEL_TIER_COLORS[tier] + ' border' : 'bg-surface-1 text-muted-foreground border-border'
                       }`}
                     >
@@ -1097,13 +1097,13 @@ export function CreateAgentModal({
               </div>
 
               <div>
-                <label className="block text-sm text-muted-foreground mb-1">Primary Model</label>
+                <label classNome="block text-sm text-muted-foreground mb-1">Primary Model</label>
                 <input
                   type="text"
                   value={formData.modelPrimary}
                   onChange={(e) => setFormData(prev => ({ ...prev, modelPrimary: e.target.value }))}
                   list="create-agent-model-suggestions"
-                  className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono text-sm"
+                  classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50 font-mono text-sm"
                   placeholder={DEFAULT_MODEL_BY_TIER[formData.modelTier]}
                 />
                 <datalist id="create-agent-model-suggestions">
@@ -1113,13 +1113,13 @@ export function CreateAgentModal({
                 </datalist>
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div classNome="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Workspace</label>
+                  <label classNome="block text-sm text-muted-foreground mb-1">Workspace</label>
                   <select
                     value={formData.workspaceAccess}
                     onChange={(e) => setFormData(prev => ({ ...prev, workspaceAccess: e.target.value as any }))}
-                    className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                   >
                     <option value="rw">Read/Write</option>
                     <option value="ro">Read Only</option>
@@ -1127,22 +1127,22 @@ export function CreateAgentModal({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Sandbox</label>
+                  <label classNome="block text-sm text-muted-foreground mb-1">Sandbox</label>
                   <select
                     value={formData.sandboxMode}
                     onChange={(e) => setFormData(prev => ({ ...prev, sandboxMode: e.target.value as any }))}
-                    className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                   >
                     <option value="all">All (Docker)</option>
                     <option value="non-main">Non-main</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-muted-foreground mb-1">Network</label>
+                  <label classNome="block text-sm text-muted-foreground mb-1">Network</label>
                   <select
                     value={formData.dockerNetwork}
                     onChange={(e) => setFormData(prev => ({ ...prev, dockerNetwork: e.target.value as any }))}
-                    className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                   >
                     <option value="none">None (isolated)</option>
                     <option value="bridge">Bridge (internet)</option>
@@ -1151,12 +1151,12 @@ export function CreateAgentModal({
               </div>
 
               <div>
-                <label className="block text-sm text-muted-foreground mb-1">Session Key (optional)</label>
+                <label classNome="block text-sm text-muted-foreground mb-1">Session Key (optional)</label>
                 <input
                   type="text"
                   value={formData.session_key}
                   onChange={(e) => setFormData(prev => ({ ...prev, session_key: e.target.value }))}
-                  className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                   placeholder="OpenClaw session identifier"
                 />
               </div>
@@ -1165,70 +1165,70 @@ export function CreateAgentModal({
 
           {/* Step 3: Review */}
           {step === 3 && (
-            <div className="space-y-4">
-              <div className="bg-surface-1/50 rounded-lg p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl">{formData.emoji || (selectedTemplateData?.emoji || '?')}</span>
+            <div classNome="space-y-4">
+              <div classNome="bg-surface-1/50 rounded-lg p-4 space-y-3">
+                <div classNome="flex items-center gap-3">
+                  <span classNome="text-3xl">{formData.emoji || (selectedTemplateData?.emoji || '?')}</span>
                   <div>
-                    <h4 className="text-lg font-bold text-foreground">{formData.name || 'Unnamed'}</h4>
-                    <p className="text-muted-foreground text-sm">{formData.role}</p>
+                    <h4 classNome="text-lg font-bold text-foreground">{formData.name || 'Unnamed'}</h4>
+                    <p classNome="text-muted-foreground text-sm">{formData.role}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div><span className="text-muted-foreground">ID:</span> <span className="text-foreground font-mono">{formData.id}</span></div>
-                  <div><span className="text-muted-foreground">Template:</span> <span className="text-foreground">{selectedTemplateData?.label || 'Custom'}</span></div>
-                  <div><span className="text-muted-foreground">Model:</span> <span className={`px-2 py-0.5 rounded text-xs ${MODEL_TIER_COLORS[formData.modelTier]}`}>{MODEL_TIER_LABELS[formData.modelTier]}</span></div>
-                  <div><span className="text-muted-foreground">Tools:</span> <span className="text-foreground">{selectedTemplateData?.toolCount || 'Custom'}</span></div>
-                  <div className="col-span-2"><span className="text-muted-foreground">Primary Model:</span> <span className="text-foreground font-mono">{formData.modelPrimary || DEFAULT_MODEL_BY_TIER[formData.modelTier]}</span></div>
-                  <div><span className="text-muted-foreground">Workspace:</span> <span className="text-foreground">{formData.workspaceAccess}</span></div>
-                  <div><span className="text-muted-foreground">Sandbox:</span> <span className="text-foreground">{formData.sandboxMode}</span></div>
-                  <div><span className="text-muted-foreground">Network:</span> <span className="text-foreground">{formData.dockerNetwork}</span></div>
+                <div classNome="grid grid-cols-2 gap-2 text-sm">
+                  <div><span classNome="text-muted-foreground">ID:</span> <span classNome="text-foreground font-mono">{formData.id}</span></div>
+                  <div><span classNome="text-muted-foreground">Template:</span> <span classNome="text-foreground">{selectedTemplateData?.label || 'Custom'}</span></div>
+                  <div><span classNome="text-muted-foreground">Model:</span> <span classNome={`px-2 py-0.5 rounded text-xs ${MODEL_TIER_COLORS[formData.modelTier]}`}>{MODEL_TIER_LABELS[formData.modelTier]}</span></div>
+                  <div><span classNome="text-muted-foreground">Tools:</span> <span classNome="text-foreground">{selectedTemplateData?.toolCount || 'Custom'}</span></div>
+                  <div classNome="col-span-2"><span classNome="text-muted-foreground">Primary Model:</span> <span classNome="text-foreground font-mono">{formData.modelPrimary || DEFAULT_MODEL_BY_TIER[formData.modelTier]}</span></div>
+                  <div><span classNome="text-muted-foreground">Workspace:</span> <span classNome="text-foreground">{formData.workspaceAccess}</span></div>
+                  <div><span classNome="text-muted-foreground">Sandbox:</span> <span classNome="text-foreground">{formData.sandboxMode}</span></div>
+                  <div><span classNome="text-muted-foreground">Network:</span> <span classNome="text-foreground">{formData.dockerNetwork}</span></div>
                   {formData.session_key && (
-                    <div><span className="text-muted-foreground">Session:</span> <span className="text-foreground font-mono">{formData.session_key}</span></div>
+                    <div><span classNome="text-muted-foreground">Session:</span> <span classNome="text-foreground font-mono">{formData.session_key}</span></div>
                   )}
                 </div>
               </div>
 
-              <label className="flex items-center gap-2 cursor-pointer">
+              <label classNome="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.write_to_gateway}
                   onChange={(e) => setFormData(prev => ({ ...prev, write_to_gateway: e.target.checked }))}
-                  className="w-4 h-4 rounded border-border"
+                  classNome="w-4 h-4 rounded border-border"
                 />
-                <span className="text-sm text-foreground">Add to gateway config (openclaw.json)</span>
+                <span classNome="text-sm text-foreground">Add to gateway config (openclaw.json)</span>
               </label>
 
-              <label className="flex items-center gap-2 cursor-pointer">
+              <label classNome="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.provision_openclaw_workspace}
                   onChange={(e) => setFormData(prev => ({ ...prev, provision_openclaw_workspace: e.target.checked }))}
-                  className="w-4 h-4 rounded border-border"
+                  classNome="w-4 h-4 rounded border-border"
                 />
-                <span className="text-sm text-foreground">Provision full OpenClaw workspace (`openclaw agents add`)</span>
+                <span classNome="text-sm text-foreground">Provision full OpenClaw workspace (`openclaw agents add`)</span>
               </label>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-border flex gap-3 flex-shrink-0">
+        <div classNome="p-6 border-t border-border flex gap-3 flex-shrink-0">
           {step > 1 && (
             <button
               onClick={() => setStep((step - 1) as 1 | 2)}
-              className="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth"
+              classNome="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth"
             >
               Back
             </button>
           )}
-          <div className="flex-1" />
+          <div classNome="flex-1" />
           {step < 3 ? (
             <button
               onClick={() => setStep((step + 1) as 2 | 3)}
               disabled={step === 2 && !formData.name.trim()}
-              className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
+              classNome="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
             >
               Next
             </button>
@@ -1236,12 +1236,12 @@ export function CreateAgentModal({
             <button
               onClick={handleCreate}
               disabled={isCreating || !formData.name.trim()}
-              className="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
+              classNome="px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
             >
               {isCreating ? 'Creating...' : 'Create Agent'}
             </button>
           )}
-          <button onClick={onClose} className="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth">
+          <button onClick={onClose} classNome="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth">
             Cancel
           </button>
         </div>
@@ -1260,7 +1260,7 @@ export function ConfigTab({
 }) {
   const [config, setConfig] = useState<any>(agent.config || {})
   const [editing, setEditing] = useState(false)
-  const [showJson, setShowJson] = useState(false)
+  const [showJson, setMostrarJson] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [jsonInput, setJsonInput] = useState('')
@@ -1362,7 +1362,7 @@ export function ConfigTab({
       }
       const response = await fetch(`/api/agents/${agent.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           gateway_config: showJson ? JSON.parse(jsonInput) : config,
           write_to_gateway: true,
@@ -1388,8 +1388,8 @@ export function ConfigTab({
   const sandboxMode = sandbox.mode || sandbox.sandboxMode || sandbox.sandbox_mode || config.sandboxMode || 'not configured'
   const sandboxWorkspace = sandbox.workspaceAccess || sandbox.workspace_access || sandbox.workspace || config.workspaceAccess || 'not configured'
   const sandboxNetwork = sandbox?.docker?.network || sandbox.network || sandbox.dockerNetwork || sandbox.docker_network || 'none'
-  const identityName = identity.name || agent.name || 'not configured'
-  const identityTheme = identity.theme || agent.role || 'not configured'
+  const identityNome = identity.name || agent.name || 'not configured'
+  const identityTema = identity.theme || agent.role || 'not configured'
   const identityEmoji = identity.emoji || '?'
   const identityPreview = identity.content || ''
   const toolAllow = Array.isArray(tools.allow) ? tools.allow : []
@@ -1399,20 +1399,20 @@ export function ConfigTab({
   const modelFallbacks = Array.isArray(model.fallbacks) ? model.fallbacks : []
 
   return (
-    <div className="p-6 space-y-4">
-      <div className="flex justify-between items-center">
-        <h4 className="text-lg font-medium text-foreground">OpenClaw Config</h4>
-        <div className="flex gap-2">
+    <div classNome="p-6 space-y-4">
+      <div classNome="flex justify-between items-center">
+        <h4 classNome="text-lg font-medium text-foreground">OpenClaw Config</h4>
+        <div classNome="flex gap-2">
           <button
-            onClick={() => setShowJson(!showJson)}
-            className="px-3 py-1 text-xs bg-surface-2 text-muted-foreground rounded-md hover:bg-surface-1 transition-smooth"
+            onClick={() => setMostrarJson(!showJson)}
+            classNome="px-3 py-1 text-xs bg-surface-2 text-muted-foreground rounded-md hover:bg-surface-1 transition-smooth"
           >
             {showJson ? 'Structured' : 'JSON'}
           </button>
           {!editing && (
             <button
               onClick={() => setEditing(true)}
-              className="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
+              classNome="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth"
             >
               Edit
             </button>
@@ -1421,15 +1421,15 @@ export function ConfigTab({
       </div>
 
       {error && (
-        <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 rounded-lg text-sm">
+        <div classNome="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 rounded-lg text-sm">
           {error}
         </div>
       )}
 
       {config.openclawId && (
-        <div className="text-xs text-muted-foreground">
-          OpenClaw ID: <span className="font-mono text-foreground">{config.openclawId}</span>
-          {config.isDefault && <span className="ml-2 px-1.5 py-0.5 bg-primary/20 text-primary rounded text-xs">Default</span>}
+        <div classNome="text-xs text-muted-foreground">
+          OpenClaw ID: <span classNome="font-mono text-foreground">{config.openclawId}</span>
+          {config.isDefault && <span classNome="ml-2 px-1.5 py-0.5 bg-primary/20 text-primary rounded text-xs">Default</span>}
         </div>
       )}
 
@@ -1441,30 +1441,30 @@ export function ConfigTab({
               value={jsonInput}
               onChange={(e) => setJsonInput(e.target.value)}
               rows={20}
-              className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+              classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
             />
           ) : (
-            <pre className="bg-surface-1/30 rounded p-4 text-xs text-foreground/90 overflow-auto max-h-96 font-mono">
+            <pre classNome="bg-surface-1/30 rounded p-4 text-xs text-foreground/90 overflow-auto max-h-96 font-mono">
               {JSON.stringify(config, null, 2)}
             </pre>
           )}
         </div>
       ) : (
         /* Structured view */
-        <div className="space-y-4">
+        <div classNome="space-y-4">
           {/* Model */}
-          <div className="bg-surface-1/50 rounded-lg p-4">
-            <h5 className="text-sm font-medium text-foreground mb-2">Model</h5>
+          <div classNome="bg-surface-1/50 rounded-lg p-4">
+            <h5 classNome="text-sm font-medium text-foreground mb-2">Model</h5>
             {editing ? (
-              <div className="space-y-3">
+              <div classNome="space-y-3">
                 <div>
-                  <label className="block text-xs text-muted-foreground mb-1">Primary model</label>
+                  <label classNome="block text-xs text-muted-foreground mb-1">Primary model</label>
                   <input
                     value={modelPrimary}
                     onChange={(e) => updateModelConfig((current) => ({ ...current, primary: e.target.value }))}
                     list="agent-model-suggestions"
                     placeholder="anthropic/claude-sonnet-4-20250514"
-                    className="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm font-mono focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm font-mono focus:outline-none focus:ring-1 focus:ring-primary/50"
                   />
                   <datalist id="agent-model-suggestions">
                     {availableModels.map((name) => (
@@ -1473,10 +1473,10 @@ export function ConfigTab({
                   </datalist>
                 </div>
                 <div>
-                  <label className="block text-xs text-muted-foreground mb-1">Fallback models</label>
-                  <div className="space-y-2">
+                  <label classNome="block text-xs text-muted-foreground mb-1">Fallback models</label>
+                  <div classNome="space-y-2">
                     {modelFallbacks.map((fallback: string, index: number) => (
-                      <div key={`${fallback}-${index}`} className="flex gap-2">
+                      <div key={`${fallback}-${index}`} classNome="flex gap-2">
                         <input
                           value={fallback}
                           onChange={(e) => {
@@ -1485,30 +1485,30 @@ export function ConfigTab({
                             updateModelConfig((current) => ({ ...current, fallbacks: next }))
                           }}
                           list="agent-model-suggestions"
-                          className="flex-1 bg-surface-1 text-foreground rounded px-3 py-2 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary/50"
+                          classNome="flex-1 bg-surface-1 text-foreground rounded px-3 py-2 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary/50"
                         />
                         <button
                           onClick={() => {
                             const next = modelFallbacks.filter((_: string, i: number) => i !== index)
                             updateModelConfig((current) => ({ ...current, fallbacks: next }))
                           }}
-                          className="px-3 py-2 text-xs bg-[#9e5c50]/10 text-[#9e5c50] border border-[#9e5c50]/30 rounded hover:bg-[#9e5c50]/20 transition-smooth"
+                          classNome="px-3 py-2 text-xs bg-[#9e5c50]/10 text-[#9e5c50] border border-[#9e5c50]/30 rounded hover:bg-[#9e5c50]/20 transition-smooth"
                         >
                           Remove
                         </button>
                       </div>
                     ))}
-                    <div className="flex gap-2">
+                    <div classNome="flex gap-2">
                       <input
                         value={newFallbackModel}
                         onChange={(e) => setNewFallbackModel(e.target.value)}
                         list="agent-model-suggestions"
                         placeholder="Add fallback model"
-                        className="flex-1 bg-surface-1 text-foreground rounded px-3 py-2 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary/50"
+                        classNome="flex-1 bg-surface-1 text-foreground rounded px-3 py-2 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary/50"
                       />
                       <button
                         onClick={addFallbackModel}
-                        className="px-3 py-2 text-xs bg-secondary text-foreground rounded hover:bg-surface-2 transition-smooth"
+                        classNome="px-3 py-2 text-xs bg-secondary text-foreground rounded hover:bg-surface-2 transition-smooth"
                       >
                         Add
                       </button>
@@ -1517,14 +1517,14 @@ export function ConfigTab({
                 </div>
               </div>
             ) : (
-              <div className="text-sm">
-                <div><span className="text-muted-foreground">Primary:</span> <span className="text-foreground font-mono">{modelPrimary || 'not configured'}</span></div>
+              <div classNome="text-sm">
+                <div><span classNome="text-muted-foreground">Primary:</span> <span classNome="text-foreground font-mono">{modelPrimary || 'not configured'}</span></div>
                 {modelFallbacks.length > 0 && (
-                  <div className="mt-1">
-                    <span className="text-muted-foreground">Fallbacks:</span>
-                    <div className="flex flex-wrap gap-1 mt-1">
+                  <div classNome="mt-1">
+                    <span classNome="text-muted-foreground">Fallbacks:</span>
+                    <div classNome="flex flex-wrap gap-1 mt-1">
                       {modelFallbacks.map((fb: string, i: number) => (
-                        <span key={i} className="px-2 py-0.5 text-xs bg-surface-2 rounded text-muted-foreground font-mono">{fb.split('/').pop()}</span>
+                        <span key={i} classNome="px-2 py-0.5 text-xs bg-surface-2 rounded text-muted-foreground font-mono">{fb.split('/').pop()}</span>
                       ))}
                     </div>
                   </div>
@@ -1534,61 +1534,61 @@ export function ConfigTab({
           </div>
 
           {/* Identity */}
-          <div className="bg-surface-1/50 rounded-lg p-4">
-            <h5 className="text-sm font-medium text-foreground mb-2">Identity</h5>
+          <div classNome="bg-surface-1/50 rounded-lg p-4">
+            <h5 classNome="text-sm font-medium text-foreground mb-2">Identity</h5>
             {editing ? (
-              <div className="space-y-3">
-                <div className="grid grid-cols-3 gap-3">
+              <div classNome="space-y-3">
+                <div classNome="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Emoji</label>
+                    <label classNome="block text-xs text-muted-foreground mb-1">Emoji</label>
                     <input
                       value={identityEmoji}
                       onChange={(e) => updateIdentityField('emoji', e.target.value)}
-                      className="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm text-center focus:outline-none focus:ring-1 focus:ring-primary/50"
+                      classNome="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm text-center focus:outline-none focus:ring-1 focus:ring-primary/50"
                       placeholder="🤖"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Name</label>
+                    <label classNome="block text-xs text-muted-foreground mb-1">Nome</label>
                     <input
                       value={identity.name || ''}
                       onChange={(e) => updateIdentityField('name', e.target.value)}
-                      className="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                      classNome="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
                       placeholder="Agent name"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-muted-foreground mb-1">Theme / Role</label>
+                    <label classNome="block text-xs text-muted-foreground mb-1">Tema / Role</label>
                     <input
                       value={identity.theme || ''}
                       onChange={(e) => updateIdentityField('theme', e.target.value)}
-                      className="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                      classNome="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
                       placeholder="e.g. backend engineer"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs text-muted-foreground mb-1">Identity content</label>
+                  <label classNome="block text-xs text-muted-foreground mb-1">Identity content</label>
                   <textarea
                     value={identity.content || ''}
                     onChange={(e) => updateIdentityField('content', e.target.value)}
                     rows={4}
-                    className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 font-mono text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
                     placeholder="Describe the agent's identity and personality..."
                   />
                 </div>
               </div>
             ) : (
               <>
-                <div className="flex items-center gap-3 text-sm">
-                  <span className="text-2xl">{identityEmoji}</span>
+                <div classNome="flex items-center gap-3 text-sm">
+                  <span classNome="text-2xl">{identityEmoji}</span>
                   <div>
-                    <div className="text-foreground font-medium">{identityName}</div>
-                    <div className="text-muted-foreground">{identityTheme}</div>
+                    <div classNome="text-foreground font-medium">{identityNome}</div>
+                    <div classNome="text-muted-foreground">{identityTema}</div>
                   </div>
                 </div>
                 {identityPreview && (
-                  <pre className="mt-3 text-xs text-muted-foreground bg-surface-1 rounded p-2 overflow-auto whitespace-pre-wrap">
+                  <pre classNome="mt-3 text-xs text-muted-foreground bg-surface-1 rounded p-2 overflow-auto whitespace-pre-wrap">
                     {identityPreview}
                   </pre>
                 )}
@@ -1597,16 +1597,16 @@ export function ConfigTab({
           </div>
 
           {/* Sandbox */}
-          <div className="bg-surface-1/50 rounded-lg p-4">
-            <h5 className="text-sm font-medium text-foreground mb-2">Sandbox</h5>
+          <div classNome="bg-surface-1/50 rounded-lg p-4">
+            <h5 classNome="text-sm font-medium text-foreground mb-2">Sandbox</h5>
             {editing ? (
-              <div className="grid grid-cols-3 gap-3">
+              <div classNome="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs text-muted-foreground mb-1">Mode</label>
+                  <label classNome="block text-xs text-muted-foreground mb-1">Mode</label>
                   <select
                     value={sandbox.mode || ''}
                     onChange={(e) => updateSandboxField('mode', e.target.value)}
-                    className="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
                   >
                     <option value="">Not configured</option>
                     <option value="all">All</option>
@@ -1615,11 +1615,11 @@ export function ConfigTab({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs text-muted-foreground mb-1">Workspace Access</label>
+                  <label classNome="block text-xs text-muted-foreground mb-1">Workspace Access</label>
                   <select
                     value={sandbox.workspaceAccess || ''}
                     onChange={(e) => updateSandboxField('workspaceAccess', e.target.value)}
-                    className="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
                   >
                     <option value="">Not configured</option>
                     <option value="rw">Read-write</option>
@@ -1628,76 +1628,76 @@ export function ConfigTab({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs text-muted-foreground mb-1">Network</label>
+                  <label classNome="block text-xs text-muted-foreground mb-1">Network</label>
                   <input
                     value={sandbox.network || ''}
                     onChange={(e) => updateSandboxField('network', e.target.value)}
-                    className="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                    classNome="w-full bg-surface-1 text-foreground rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
                     placeholder="none"
                   />
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-3 gap-2 text-sm">
-                <div><span className="text-muted-foreground">Mode:</span> <span className="text-foreground">{sandboxMode}</span></div>
-                <div><span className="text-muted-foreground">Workspace:</span> <span className="text-foreground">{sandboxWorkspace}</span></div>
-                <div><span className="text-muted-foreground">Network:</span> <span className="text-foreground">{sandboxNetwork}</span></div>
+              <div classNome="grid grid-cols-3 gap-2 text-sm">
+                <div><span classNome="text-muted-foreground">Mode:</span> <span classNome="text-foreground">{sandboxMode}</span></div>
+                <div><span classNome="text-muted-foreground">Workspace:</span> <span classNome="text-foreground">{sandboxWorkspace}</span></div>
+                <div><span classNome="text-muted-foreground">Network:</span> <span classNome="text-foreground">{sandboxNetwork}</span></div>
               </div>
             )}
           </div>
 
           {/* Tools */}
-          <div className="bg-surface-1/50 rounded-lg p-4">
-            <h5 className="text-sm font-medium text-foreground mb-2">Tools</h5>
+          <div classNome="bg-surface-1/50 rounded-lg p-4">
+            <h5 classNome="text-sm font-medium text-foreground mb-2">Tools</h5>
             {editing ? (
-              <div className="space-y-3">
+              <div classNome="space-y-3">
                 <div>
-                  <label className="block text-xs text-[#b4a68c] font-medium mb-1">Allow list</label>
-                  <div className="flex flex-wrap gap-1 mb-2">
+                  <label classNome="block text-xs text-[#b4a68c] font-medium mb-1">Allow list</label>
+                  <div classNome="flex flex-wrap gap-1 mb-2">
                     {toolAllow.map((tool: string, i: number) => (
-                      <span key={`${tool}-${i}`} className="px-2 py-0.5 text-xs bg-[#b4a68c]/10 text-[#b4a68c] rounded border border-[#b4a68c]/20 flex items-center gap-1">
+                      <span key={`${tool}-${i}`} classNome="px-2 py-0.5 text-xs bg-[#b4a68c]/10 text-[#b4a68c] rounded border border-[#b4a68c]/20 flex items-center gap-1">
                         {tool}
-                        <button onClick={() => removeTool('allow', i)} className="text-[#b4a68c]/60 hover:text-[#b4a68c] ml-1">&times;</button>
+                        <button onClick={() => removeTool('allow', i)} classNome="text-[#b4a68c]/60 hover:text-[#b4a68c] ml-1">&times;</button>
                       </span>
                     ))}
                   </div>
-                  <div className="flex gap-2">
+                  <div classNome="flex gap-2">
                     <input
                       value={newAllowTool}
                       onChange={(e) => setNewAllowTool(e.target.value)}
                       onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTool('allow', newAllowTool); setNewAllowTool('') } }}
                       placeholder="Add allowed tool name"
-                      className="flex-1 bg-surface-1 text-foreground rounded px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+                      classNome="flex-1 bg-surface-1 text-foreground rounded px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
                     />
                     <button
                       onClick={() => { addTool('allow', newAllowTool); setNewAllowTool('') }}
-                      className="px-3 py-2 text-xs bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded hover:bg-[#b4a68c]/30 transition-smooth"
+                      classNome="px-3 py-2 text-xs bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded hover:bg-[#b4a68c]/30 transition-smooth"
                     >
                       Add
                     </button>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs text-[#9e5c50] font-medium mb-1">Deny list</label>
-                  <div className="flex flex-wrap gap-1 mb-2">
+                  <label classNome="block text-xs text-[#9e5c50] font-medium mb-1">Deny list</label>
+                  <div classNome="flex flex-wrap gap-1 mb-2">
                     {toolDeny.map((tool: string, i: number) => (
-                      <span key={`${tool}-${i}`} className="px-2 py-0.5 text-xs bg-[#9e5c50]/10 text-[#9e5c50] rounded border border-[#9e5c50]/20 flex items-center gap-1">
+                      <span key={`${tool}-${i}`} classNome="px-2 py-0.5 text-xs bg-[#9e5c50]/10 text-[#9e5c50] rounded border border-[#9e5c50]/20 flex items-center gap-1">
                         {tool}
-                        <button onClick={() => removeTool('deny', i)} className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-1">&times;</button>
+                        <button onClick={() => removeTool('deny', i)} classNome="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-1">&times;</button>
                       </span>
                     ))}
                   </div>
-                  <div className="flex gap-2">
+                  <div classNome="flex gap-2">
                     <input
                       value={newDenyTool}
                       onChange={(e) => setNewDenyTool(e.target.value)}
                       onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTool('deny', newDenyTool); setNewDenyTool('') } }}
                       placeholder="Add denied tool name"
-                      className="flex-1 bg-surface-1 text-foreground rounded px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+                      classNome="flex-1 bg-surface-1 text-foreground rounded px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
                     />
                     <button
                       onClick={() => { addTool('deny', newDenyTool); setNewDenyTool('') }}
-                      className="px-3 py-2 text-xs bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded hover:bg-[#9e5c50]/30 transition-smooth"
+                      classNome="px-3 py-2 text-xs bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded hover:bg-[#9e5c50]/30 transition-smooth"
                     >
                       Add
                     </button>
@@ -1707,30 +1707,30 @@ export function ConfigTab({
             ) : (
               <>
                 {toolAllow.length > 0 && (
-                  <div className="mb-2">
-                    <span className="text-xs text-[#b4a68c] font-medium">Allow ({toolAllow.length}):</span>
-                    <div className="flex flex-wrap gap-1 mt-1">
+                  <div classNome="mb-2">
+                    <span classNome="text-xs text-[#b4a68c] font-medium">Allow ({toolAllow.length}):</span>
+                    <div classNome="flex flex-wrap gap-1 mt-1">
                       {toolAllow.map((tool: string) => (
-                        <span key={tool} className="px-2 py-0.5 text-xs bg-[#b4a68c]/10 text-[#b4a68c] rounded border border-[#b4a68c]/20">{tool}</span>
+                        <span key={tool} classNome="px-2 py-0.5 text-xs bg-[#b4a68c]/10 text-[#b4a68c] rounded border border-[#b4a68c]/20">{tool}</span>
                       ))}
                     </div>
                   </div>
                 )}
                 {toolDeny.length > 0 && (
                   <div>
-                    <span className="text-xs text-[#9e5c50] font-medium">Deny ({toolDeny.length}):</span>
-                    <div className="flex flex-wrap gap-1 mt-1">
+                    <span classNome="text-xs text-[#9e5c50] font-medium">Deny ({toolDeny.length}):</span>
+                    <div classNome="flex flex-wrap gap-1 mt-1">
                       {toolDeny.map((tool: string) => (
-                        <span key={tool} className="px-2 py-0.5 text-xs bg-[#9e5c50]/10 text-[#9e5c50] rounded border border-[#9e5c50]/20">{tool}</span>
+                        <span key={tool} classNome="px-2 py-0.5 text-xs bg-[#9e5c50]/10 text-[#9e5c50] rounded border border-[#9e5c50]/20">{tool}</span>
                       ))}
                     </div>
                   </div>
                 )}
                 {toolAllow.length === 0 && toolDeny.length === 0 && !toolRawPreview && (
-                  <div className="text-xs text-muted-foreground">No tools configured</div>
+                  <div classNome="text-xs text-muted-foreground">No tools configured</div>
                 )}
                 {toolRawPreview && (
-                  <pre className="mt-3 text-xs text-muted-foreground bg-surface-1 rounded p-2 overflow-auto whitespace-pre-wrap">
+                  <pre classNome="mt-3 text-xs text-muted-foreground bg-surface-1 rounded p-2 overflow-auto whitespace-pre-wrap">
                     {toolRawPreview}
                   </pre>
                 )}
@@ -1740,26 +1740,26 @@ export function ConfigTab({
 
           {/* Subagents */}
           {subagents.allowAgents && subagents.allowAgents.length > 0 && (
-            <div className="bg-surface-1/50 rounded-lg p-4">
-              <h5 className="text-sm font-medium text-foreground mb-2">Subagents</h5>
-              <div className="flex flex-wrap gap-1">
+            <div classNome="bg-surface-1/50 rounded-lg p-4">
+              <h5 classNome="text-sm font-medium text-foreground mb-2">Subagents</h5>
+              <div classNome="flex flex-wrap gap-1">
                 {subagents.allowAgents.map((a: string) => (
-                  <span key={a} className="px-2 py-0.5 text-xs bg-blue-500/10 text-blue-400 rounded border border-blue-500/20">{a}</span>
+                  <span key={a} classNome="px-2 py-0.5 text-xs bg-blue-500/10 text-blue-400 rounded border border-blue-500/20">{a}</span>
                 ))}
               </div>
               {subagents.model && (
-                <div className="text-xs text-muted-foreground mt-1">Model: {subagents.model}</div>
+                <div classNome="text-xs text-muted-foreground mt-1">Model: {subagents.model}</div>
               )}
             </div>
           )}
 
-          {/* Memory Search */}
+          {/* Memória Search */}
           {memorySearch.sources && (
-            <div className="bg-surface-1/50 rounded-lg p-4">
-              <h5 className="text-sm font-medium text-foreground mb-2">Memory Search</h5>
-              <div className="flex gap-1">
+            <div classNome="bg-surface-1/50 rounded-lg p-4">
+              <h5 classNome="text-sm font-medium text-foreground mb-2">Memória Search</h5>
+              <div classNome="flex gap-1">
                 {memorySearch.sources.map((s: string) => (
-                  <span key={s} className="px-2 py-0.5 text-xs bg-cyan-500/10 text-cyan-400 rounded">{s}</span>
+                  <span key={s} classNome="px-2 py-0.5 text-xs bg-cyan-500/10 text-cyan-400 rounded">{s}</span>
                 ))}
               </div>
             </div>
@@ -1767,13 +1767,13 @@ export function ConfigTab({
         </div>
       )}
 
-      {/* Actions */}
+      {/* Ações */}
       {editing && (
-        <div className="flex gap-3 pt-2">
+        <div classNome="flex gap-3 pt-2">
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
+            classNome="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
           >
             {saving ? 'Saving...' : 'Save'}
           </button>
@@ -1783,7 +1783,7 @@ export function ConfigTab({
               setConfig(agent.config || {})
               setJsonInput(JSON.stringify(agent.config || {}, null, 2))
             }}
-            className="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth"
+            classNome="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth"
           >
             Cancel
           </button>

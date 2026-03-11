@@ -26,7 +26,7 @@ interface StandupReport {
       last_seen?: number
       last_activity?: string
     }
-    completedToday: Array<{
+    completedHoje: Array<{
       id: number
       title: string
       status: string
@@ -112,7 +112,7 @@ export function StandupPanel() {
 
       const response = await fetch('/api/standup', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({ date: date || selectedDate })
       })
 
@@ -180,12 +180,12 @@ export function StandupPanel() {
     if (!standupReport) return
 
     const lines = [
-      `# Daily Standup - ${formatDate(standupReport.date)}`,
+      `# Standup Diário - ${formatDate(standupReport.date)}`,
       `Generated: ${new Date(standupReport.generatedAt).toLocaleString()}`,
       '',
       '## Summary',
       `- **Agents Active:** ${standupReport.summary.totalAgents}`,
-      `- **Completed Today:** ${standupReport.summary.totalCompleted}`,
+      `- **Completed Hoje:** ${standupReport.summary.totalCompleted}`,
       `- **In Progress:** ${standupReport.summary.totalInProgress}`,
       `- **Assigned:** ${standupReport.summary.totalAssigned}`,
       `- **In Review:** ${standupReport.summary.totalReview}`,
@@ -217,9 +217,9 @@ export function StandupPanel() {
     standupReport.agentReports.forEach(report => {
       lines.push(`### ${report.agent.name} (${report.agent.role})`)
       
-      if (report.completedToday.length > 0) {
-        lines.push('**Completed Today:**')
-        report.completedToday.forEach(task => {
+      if (report.completedHoje.length > 0) {
+        lines.push('**Completed Hoje:**')
+        report.completedHoje.forEach(task => {
           lines.push(`- ${task.title}`)
         })
       }
@@ -254,17 +254,17 @@ export function StandupPanel() {
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div classNome="h-full flex flex-col">
       {/* Header */}
-      <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
-        <h2 className="text-xl font-bold text-foreground">Daily Standup</h2>
+      <div classNome="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
+        <h2 classNome="text-xl font-bold text-foreground">Standup Diário</h2>
 
-        <div className="flex items-center gap-3">
+        <div classNome="flex items-center gap-3">
           {/* View Toggle */}
-          <div className="flex bg-secondary rounded-lg p-1">
+          <div classNome="flex bg-secondary rounded-lg p-1">
             <button
               onClick={() => setView('current')}
-              className={`px-3 py-1 text-sm rounded-md transition-smooth ${
+              classNome={`px-3 py-1 text-sm rounded-md transition-smooth ${
                 view === 'current' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -272,7 +272,7 @@ export function StandupPanel() {
             </button>
             <button
               onClick={() => setView('history')}
-              className={`px-3 py-1 text-sm rounded-md transition-smooth ${
+              classNome={`px-3 py-1 text-sm rounded-md transition-smooth ${
                 view === 'history' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -286,22 +286,22 @@ export function StandupPanel() {
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="bg-surface-1 text-foreground rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
+                classNome="bg-surface-1 text-foreground rounded-md px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50 border border-border"
               />
 
               <button
                 onClick={() => generateStandup()}
                 disabled={loading}
-                className="px-3 py-1.5 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth flex items-center gap-2"
+                classNome="px-3 py-1.5 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth flex items-center gap-2"
               >
-                {loading && <div className="animate-spin rounded-full h-3.5 w-3.5 border-2 border-primary-foreground/30 border-t-primary-foreground" />}
+                {loading && <div classNome="animate-spin rounded-full h-3.5 w-3.5 border-2 border-primary-foreground/30 border-t-primary-foreground" />}
                 {loading ? 'Generating...' : 'Generate'}
               </button>
 
               {standupReport && (
                 <button
                   onClick={exportStandup}
-                  className="px-3 py-1.5 text-sm bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 transition-smooth"
+                  classNome="px-3 py-1.5 text-sm bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 transition-smooth"
                 >
                   Export
                 </button>
@@ -313,57 +313,57 @@ export function StandupPanel() {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
+        <div classNome="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
           <span>{error}</span>
-          <button onClick={() => setError(null)} className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2">×</button>
+          <button onClick={() => setError(null)} classNome="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2">×</button>
         </div>
       )}
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div classNome="flex-1 overflow-y-auto">
         {view === 'current' ? (
           // Current Standup View
           standupReport ? (
-            <div className="p-4 space-y-6">
+            <div classNome="p-4 space-y-6">
               {/* Report Header */}
-              <div className="bg-card rounded-lg p-4 border border-border">
-                <h3 className="text-lg font-semibold text-foreground mb-2">
+              <div classNome="bg-card rounded-lg p-4 border border-border">
+                <h3 classNome="text-lg font-semibold text-foreground mb-2">
                   Standup for {formatDate(standupReport.date)}
                 </h3>
-                <p className="text-muted-foreground text-sm">
+                <p classNome="text-muted-foreground text-sm">
                   Generated on {new Date(standupReport.generatedAt).toLocaleString()}
                 </p>
               </div>
 
               {/* Summary Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-card rounded-lg p-4 border border-border text-center">
-                  <div className="text-2xl font-bold text-foreground">{standupReport.summary.totalCompleted}</div>
-                  <div className="text-sm text-[#b4a68c]">Completed</div>
+              <div classNome="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div classNome="bg-card rounded-lg p-4 border border-border text-center">
+                  <div classNome="text-2xl font-bold text-foreground">{standupReport.summary.totalCompleted}</div>
+                  <div classNome="text-sm text-[#b4a68c]">Concluído</div>
                 </div>
-                <div className="bg-card rounded-lg p-4 border border-border text-center">
-                  <div className="text-2xl font-bold text-foreground">{standupReport.summary.totalInProgress}</div>
-                  <div className="text-sm text-yellow-400">In Progress</div>
+                <div classNome="bg-card rounded-lg p-4 border border-border text-center">
+                  <div classNome="text-2xl font-bold text-foreground">{standupReport.summary.totalInProgress}</div>
+                  <div classNome="text-sm text-yellow-400">In Progress</div>
                 </div>
-                <div className="bg-card rounded-lg p-4 border border-border text-center">
-                  <div className="text-2xl font-bold text-foreground">{standupReport.summary.totalBlocked}</div>
-                  <div className="text-sm text-[#9e5c50]">Blocked</div>
+                <div classNome="bg-card rounded-lg p-4 border border-border text-center">
+                  <div classNome="text-2xl font-bold text-foreground">{standupReport.summary.totalBlocked}</div>
+                  <div classNome="text-sm text-[#9e5c50]">Blocked</div>
                 </div>
-                <div className="bg-card rounded-lg p-4 border border-border text-center">
-                  <div className="text-2xl font-bold text-foreground">{standupReport.summary.overdue}</div>
-                  <div className="text-sm text-orange-400">Overdue</div>
+                <div classNome="bg-card rounded-lg p-4 border border-border text-center">
+                  <div classNome="text-2xl font-bold text-foreground">{standupReport.summary.overdue}</div>
+                  <div classNome="text-sm text-orange-400">Overdue</div>
                 </div>
               </div>
 
               {/* Team Accomplishments */}
               {standupReport.teamAccomplishments.length > 0 && (
-                <div className="bg-card rounded-lg p-4 border border-border">
-                  <h4 className="text-lg font-semibold text-foreground mb-3">🎉 Team Accomplishments</h4>
-                  <div className="space-y-2">
+                <div classNome="bg-card rounded-lg p-4 border border-border">
+                  <h4 classNome="text-lg font-semibold text-foreground mb-3">🎉 Team Accomplishments</h4>
+                  <div classNome="space-y-2">
                     {standupReport.teamAccomplishments.map(task => (
-                      <div key={task.id} className="flex justify-between items-center p-2 bg-green-900/20 rounded border-l-4 border-[#b4a68c]">
-                        <span className="text-foreground">{task.title}</span>
-                        <span className="text-[#b4a68c] text-sm">{task.agent}</span>
+                      <div key={task.id} classNome="flex justify-between items-center p-2 bg-green-900/20 rounded border-l-4 border-[#b4a68c]">
+                        <span classNome="text-foreground">{task.title}</span>
+                        <span classNome="text-[#b4a68c] text-sm">{task.agent}</span>
                       </div>
                     ))}
                   </div>
@@ -372,18 +372,18 @@ export function StandupPanel() {
 
               {/* Team Blockers */}
               {standupReport.teamBlockers.length > 0 && (
-                <div className="bg-card rounded-lg p-4 border border-border">
-                  <h4 className="text-lg font-semibold text-foreground mb-3">🚫 Team Blockers</h4>
-                  <div className="space-y-2">
+                <div classNome="bg-card rounded-lg p-4 border border-border">
+                  <h4 classNome="text-lg font-semibold text-foreground mb-3">🚫 Team Blockers</h4>
+                  <div classNome="space-y-2">
                     {standupReport.teamBlockers.map(task => (
-                      <div key={task.id} className="flex justify-between items-center p-2 bg-[#3d2520]/20 rounded border-l-4 border-[#9e5c50]">
+                      <div key={task.id} classNome="flex justify-between items-center p-2 bg-[#3d2520]/20 rounded border-l-4 border-[#9e5c50]">
                         <div>
-                          <span className="text-foreground">{task.title}</span>
-                          <span className={`ml-2 text-sm ${getPriorityColor(task.priority)}`}>
+                          <span classNome="text-foreground">{task.title}</span>
+                          <span classNome={`ml-2 text-sm ${getPriorityColor(task.priority)}`}>
                             [{task.priority.toUpperCase()}]
                           </span>
                         </div>
-                        <span className="text-[#9e5c50] text-sm">{task.agent}</span>
+                        <span classNome="text-[#9e5c50] text-sm">{task.agent}</span>
                       </div>
                     ))}
                   </div>
@@ -392,18 +392,18 @@ export function StandupPanel() {
 
               {/* Overdue Tasks */}
               {standupReport.overdueTasks.length > 0 && (
-                <div className="bg-card rounded-lg p-4 border border-border">
-                  <h4 className="text-lg font-semibold text-foreground mb-3">⏰ Overdue Tasks</h4>
-                  <div className="space-y-2">
+                <div classNome="bg-card rounded-lg p-4 border border-border">
+                  <h4 classNome="text-lg font-semibold text-foreground mb-3">⏰ Overdue Tasks</h4>
+                  <div classNome="space-y-2">
                     {standupReport.overdueTasks.map(task => (
-                      <div key={task.id} className="flex justify-between items-center p-2 bg-orange-900/20 rounded border-l-4 border-orange-500">
+                      <div key={task.id} classNome="flex justify-between items-center p-2 bg-orange-900/20 rounded border-l-4 border-orange-500">
                         <div>
-                          <span className="text-foreground">{task.title}</span>
-                          <span className="text-orange-400 text-sm ml-2">
+                          <span classNome="text-foreground">{task.title}</span>
+                          <span classNome="text-orange-400 text-sm ml-2">
                             (Due: {new Date(task.due_date * 1000).toLocaleDateString()})
                           </span>
                         </div>
-                        <span className="text-orange-400 text-sm">{task.agent_name || 'Unassigned'}</span>
+                        <span classNome="text-orange-400 text-sm">{task.agent_name || 'Unassigned'}</span>
                       </div>
                     ))}
                   </div>
@@ -411,86 +411,86 @@ export function StandupPanel() {
               )}
 
               {/* Individual Agent Reports */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-foreground">👥 Individual Reports</h4>
+              <div classNome="space-y-4">
+                <h4 classNome="text-lg font-semibold text-foreground">👥 Individual Reports</h4>
                 {standupReport.agentReports.map(report => (
-                  <div key={report.agent.name} className="bg-card rounded-lg p-4 border border-border">
-                    <div className="flex justify-between items-start mb-4">
+                  <div key={report.agent.name} classNome="bg-card rounded-lg p-4 border border-border">
+                    <div classNome="flex justify-between items-start mb-4">
                       <div>
-                        <h5 className="font-semibold text-foreground">{report.agent.name}</h5>
-                        <p className="text-muted-foreground text-sm">{report.agent.role}</p>
+                        <h5 classNome="font-semibold text-foreground">{report.agent.name}</h5>
+                        <p classNome="text-muted-foreground text-sm">{report.agent.role}</p>
                       </div>
-                      <div className="text-right text-sm">
-                        <div className="text-muted-foreground">Activity: {report.activity.actionCount} actions, {report.activity.commentsCount} comments</div>
+                      <div classNome="text-right text-sm">
+                        <div classNome="text-muted-foreground">Activity: {report.activity.actionCount} actions, {report.activity.commentsCount} comments</div>
                         {report.agent.last_activity && (
-                          <div className="text-muted-foreground/50">{report.agent.last_activity}</div>
+                          <div classNome="text-muted-foreground/50">{report.agent.last_activity}</div>
                         )}
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {/* Completed Today */}
+                    <div classNome="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {/* Completed Hoje */}
                       <div>
-                        <h6 className="text-[#b4a68c] font-medium mb-2">✅ Completed ({report.completedToday.length})</h6>
-                        <div className="space-y-1">
-                          {report.completedToday.map(task => (
-                            <div key={task.id} className="text-sm text-foreground/80 truncate" title={task.title}>
+                        <h6 classNome="text-[#b4a68c] font-medium mb-2">✅ Completed ({report.completedHoje.length})</h6>
+                        <div classNome="space-y-1">
+                          {report.completedHoje.map(task => (
+                            <div key={task.id} classNome="text-sm text-foreground/80 truncate" title={task.title}>
                               {task.title}
                             </div>
                           ))}
-                          {report.completedToday.length === 0 && (
-                            <div className="text-sm text-muted-foreground/50 italic">None</div>
+                          {report.completedHoje.length === 0 && (
+                            <div classNome="text-sm text-muted-foreground/50 italic">None</div>
                           )}
                         </div>
                       </div>
 
                       {/* In Progress */}
                       <div>
-                        <h6 className="text-yellow-400 font-medium mb-2">🔄 In Progress ({report.inProgress.length})</h6>
-                        <div className="space-y-1">
+                        <h6 classNome="text-yellow-400 font-medium mb-2">🔄 In Progress ({report.inProgress.length})</h6>
+                        <div classNome="space-y-1">
                           {report.inProgress.map(task => (
-                            <div key={task.id} className="text-sm text-foreground/80 truncate" title={task.title}>
+                            <div key={task.id} classNome="text-sm text-foreground/80 truncate" title={task.title}>
                               {task.title}
                             </div>
                           ))}
                           {report.inProgress.length === 0 && (
-                            <div className="text-sm text-muted-foreground/50 italic">None</div>
+                            <div classNome="text-sm text-muted-foreground/50 italic">None</div>
                           )}
                         </div>
                       </div>
 
                       {/* Assigned */}
                       <div>
-                        <h6 className="text-blue-400 font-medium mb-2">📋 Assigned ({report.assigned.length})</h6>
-                        <div className="space-y-1">
+                        <h6 classNome="text-blue-400 font-medium mb-2">📋 Assigned ({report.assigned.length})</h6>
+                        <div classNome="space-y-1">
                           {report.assigned.map(task => (
-                            <div key={task.id} className="text-sm text-foreground/80">
-                              <div className="truncate" title={task.title}>{task.title}</div>
-                              <div className={`text-xs ${getPriorityColor(task.priority)}`}>
+                            <div key={task.id} classNome="text-sm text-foreground/80">
+                              <div classNome="truncate" title={task.title}>{task.title}</div>
+                              <div classNome={`text-xs ${getPriorityColor(task.priority)}`}>
                                 [{task.priority}]
                               </div>
                             </div>
                           ))}
                           {report.assigned.length === 0 && (
-                            <div className="text-sm text-muted-foreground/50 italic">None</div>
+                            <div classNome="text-sm text-muted-foreground/50 italic">None</div>
                           )}
                         </div>
                       </div>
 
                       {/* Blocked */}
                       <div>
-                        <h6 className="text-[#9e5c50] font-medium mb-2">🚫 Blocked ({report.blocked.length})</h6>
-                        <div className="space-y-1">
+                        <h6 classNome="text-[#9e5c50] font-medium mb-2">🚫 Blocked ({report.blocked.length})</h6>
+                        <div classNome="space-y-1">
                           {report.blocked.map(task => (
-                            <div key={task.id} className="text-sm text-foreground/80">
-                              <div className="truncate" title={task.title}>{task.title}</div>
-                              <div className={`text-xs ${getPriorityColor(task.priority)}`}>
+                            <div key={task.id} classNome="text-sm text-foreground/80">
+                              <div classNome="truncate" title={task.title}>{task.title}</div>
+                              <div classNome={`text-xs ${getPriorityColor(task.priority)}`}>
                                 [{task.priority}]
                               </div>
                             </div>
                           ))}
                           {report.blocked.length === 0 && (
-                            <div className="text-sm text-muted-foreground/50 italic">None</div>
+                            <div classNome="text-sm text-muted-foreground/50 italic">None</div>
                           )}
                         </div>
                       </div>
@@ -501,52 +501,52 @@ export function StandupPanel() {
             </div>
           ) : (
             // Empty state for current view
-            <div className="flex flex-col items-center justify-center h-full text-center">
-              <div className="w-14 h-14 rounded-xl bg-surface-2 flex items-center justify-center mx-auto mb-4">
-                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-muted-foreground/40">
+            <div classNome="flex flex-col items-center justify-center h-full text-center">
+              <div classNome="w-14 h-14 rounded-xl bg-surface-2 flex items-center justify-center mx-auto mb-4">
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" classNome="text-muted-foreground/40">
                   <path d="M2 12V4h3l2-2h2l2 2h3v8H2z" />
                   <path d="M5 8h6M8 5v6" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">No Standup Generated</h3>
-              <p className="text-sm text-muted-foreground mb-4">Select a date and generate a report</p>
+              <h3 classNome="text-lg font-semibold text-foreground mb-2">No Standup Generated</h3>
+              <p classNome="text-sm text-muted-foreground mb-4">Select a date and generate a report</p>
               <button
                 onClick={() => generateStandup()}
                 disabled={loading}
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
+                classNome="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 transition-smooth"
               >
-                Generate Today&apos;s Standup
+                Generate Hoje&apos;s Standup
               </button>
             </div>
           )
         ) : (
           // History View
-          <div className="p-4">
+          <div classNome="p-4">
             {standupHistory.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-muted-foreground/50">
-                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="mb-2">
+              <div classNome="flex flex-col items-center justify-center py-12 text-muted-foreground/50">
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" classNome="mb-2">
                   <rect x="3" y="2" width="10" height="12" rx="1" />
                   <path d="M6 5h4M6 8h4M6 11h2" />
                 </svg>
-                <p className="text-sm">No standup history found</p>
+                <p classNome="text-sm">No standup history found</p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div classNome="space-y-4">
                 {standupHistory.map(history => (
-                  <div key={history.id} className="bg-card rounded-lg p-4 border border-border hover:bg-surface-1 transition-smooth">
-                    <div className="flex justify-between items-start">
+                  <div key={history.id} classNome="bg-card rounded-lg p-4 border border-border hover:bg-surface-1 transition-smooth">
+                    <div classNome="flex justify-between items-start">
                       <div>
-                        <h4 className="text-foreground font-medium">{formatDate(history.date)}</h4>
-                        <p className="text-muted-foreground text-sm">
+                        <h4 classNome="text-foreground font-medium">{formatDate(history.date)}</h4>
+                        <p classNome="text-muted-foreground text-sm">
                           Generated: {new Date(history.generatedAt).toLocaleString()}
                         </p>
-                        <p className="text-muted-foreground text-sm">
+                        <p classNome="text-muted-foreground text-sm">
                           {history.agentCount} agents participated
                         </p>
                       </div>
-                      <div className="text-right">
+                      <div classNome="text-right">
                         {history.summary && (
-                          <div className="text-sm text-muted-foreground">
+                          <div classNome="text-sm text-muted-foreground">
                             <div>Completed: {history.summary.completed || 0}</div>
                             <div>In Progress: {history.summary.inProgress || 0}</div>
                             <div>Blocked: {history.summary.blocked || 0}</div>

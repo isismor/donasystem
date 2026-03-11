@@ -36,7 +36,7 @@ function AgentNode({ data }: { data: any }) {
     }
   }
 
-  const getTypeIcon = () => {
+  const getTipoIcon = () => {
     switch (agent.type) {
       case 'main': return '👑'
       case 'subagent': return '🤖'
@@ -63,34 +63,34 @@ function AgentNode({ data }: { data: any }) {
   const isWorking = status === 'active'
 
   return (
-    <div className={`px-3 py-3 shadow-lg rounded-lg border-2 ${getStatusColor()} bg-background min-w-[140px]`}>
-      <div className="flex items-start justify-between">
-        <span className={`text-lg ${isWorking ? 'working-indicator' : ''}`}>
-          {getTypeIcon()}
+    <div classNome={`px-3 py-3 shadow-lg rounded-lg border-2 ${getStatusColor()} bg-background min-w-[140px]`}>
+      <div classNome="flex items-start justify-between">
+        <span classNome={`text-lg ${isWorking ? 'working-indicator' : ''}`}>
+          {getTipoIcon()}
         </span>
         {isWorking && (
-          <span className="px-1.5 py-0.5 text-xs font-bold bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-full animate-pulse">
+          <span classNome="px-1.5 py-0.5 text-xs font-bold bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-full animate-pulse">
             WORKING
           </span>
         )}
       </div>
       
-      <div className="mt-2">
-        <div className="flex items-center space-x-1 mb-1">
-          <div className="font-medium text-foreground text-sm truncate">
+      <div classNome="mt-2">
+        <div classNome="flex items-center space-x-1 mb-1">
+          <div classNome="font-medium text-foreground text-sm truncate">
             {agent.name}
           </div>
-          <span className={`px-1.5 py-0.5 text-xs font-bold border rounded-full ${roleBadge.color}`}>
+          <span classNome={`px-1.5 py-0.5 text-xs font-bold border rounded-full ${roleBadge.color}`}>
             {roleBadge.label}
           </span>
         </div>
         
-        <div className="text-xs text-muted-foreground truncate">
+        <div classNome="text-xs text-muted-foreground truncate">
           {(typeof agent.model === 'string' ? agent.model : '').split('/').pop() || 'unknown'}
         </div>
         
         {agent.session && (
-          <div className="text-xs text-muted-foreground/70 mt-1 truncate">
+          <div classNome="text-xs text-muted-foreground/70 mt-1 truncate">
             {agent.session.key.split(':').pop()}
           </div>
         )}
@@ -99,7 +99,7 @@ function AgentNode({ data }: { data: any }) {
   )
 }
 
-const nodeTypes = {
+const nodeTipos = {
   agent: AgentNode,
 }
 
@@ -180,35 +180,35 @@ export function AgentNetwork({ agents, sessions }: AgentNetworkProps) {
 
   if (sessions.length === 0) {
     return (
-      <div className="bg-card rounded-lg border border-border h-96 flex items-center justify-center">
-        <div className="text-center text-muted-foreground">
-          <div className="text-4xl mb-2">🕸️</div>
+      <div classNome="bg-card rounded-lg border border-border h-96 flex items-center justify-center">
+        <div classNome="text-center text-muted-foreground">
+          <div classNome="text-4xl mb-2">🕸️</div>
           <p>No agent network to display</p>
-          <p className="text-xs">Agent connections will appear here</p>
+          <p classNome="text-xs">Agent connections will appear here</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="bg-card rounded-lg border border-border">
-      <div className="p-4 border-b border-border">
-        <h3 className="font-semibold text-foreground">Agent Network</h3>
-        <p className="text-sm text-muted-foreground">
+    <div classNome="bg-card rounded-lg border border-border">
+      <div classNome="p-4 border-b border-border">
+        <h3 classNome="font-semibold text-foreground">Agent Network</h3>
+        <p classNome="text-sm text-muted-foreground">
           Visual representation of agent relationships
         </p>
       </div>
       
-      <div className="h-96 bg-secondary/20">
+      <div classNome="h-96 bg-secondary/20">
         <ReactFlow
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          nodeTypes={nodeTypes}
+          nodeTipos={nodeTipos}
           fitView
-          className="bg-secondary/10"
+          classNome="bg-secondary/10"
         >
           <Controls 
             style={{

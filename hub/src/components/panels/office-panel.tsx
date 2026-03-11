@@ -44,7 +44,7 @@ interface MovingWorker {
   destinationTile: string
 }
 
-type SidebarFilter = 'all' | 'working' | 'idle' | 'attention'
+type SidebarFiltrar = 'all' | 'working' | 'idle' | 'attention'
 
 interface MapRoom {
   id: string
@@ -73,7 +73,7 @@ interface LaunchToast {
 }
 
 type OfficeAction = 'focus' | 'pair' | 'break'
-type TimeTheme = 'dawn' | 'day' | 'dusk' | 'night'
+type TimeTema = 'dawn' | 'day' | 'dusk' | 'night'
 
 type HotspotKind = 'room' | 'desk'
 
@@ -94,7 +94,7 @@ interface OfficeEvent {
   severity: 'info' | 'warn' | 'good'
 }
 
-interface ThemePalette {
+interface TemaPalette {
   shell: string
   gridLine: string
   haze: string
@@ -103,8 +103,8 @@ interface ThemePalette {
   corridorStripe: string
   atmosphere: string
   shadowVeil: string
-  floorFilter: string
-  spriteFilter: string
+  floorFiltrar: string
+  spriteFiltrar: string
   roomTone: string
   floorOpacityA: number
   floorOpacityB: number
@@ -114,11 +114,11 @@ interface ThemePalette {
 interface PersistedOfficePrefs {
   version: 1
   viewMode: ViewMode
-  sidebarFilter: SidebarFilter
-  localSessionFilter?: 'running' | 'not-running'
+  sidebarFiltrar: SidebarFiltrar
+  localSessionFiltrar?: 'running' | 'not-running'
   mapZoom: number
   mapPan: { x: number; y: number }
-  timeTheme: TimeTheme
+  timeTema: TimeTema
   showSidebar: boolean
   showMinimap: boolean
   showEvents: boolean
@@ -188,10 +188,10 @@ function formatLastSeen(ts?: number): string {
   const diff = Date.now() - ts * 1000
   const m = Math.floor(diff / 60000)
   if (m < 1) return 'Just now'
-  if (m < 60) return `${m}m ago`
+  if (m < 60) return `${m}m atrás`
   const h = Math.floor(m / 60)
-  if (h < 24) return `${h}h ago`
-  return `${Math.floor(h / 24)}d ago`
+  if (h < 24) return `${h}h atrás`
+  return `${Math.floor(h / 24)}d atrás`
 }
 
 function easeInOut(progress: number): number {
@@ -472,8 +472,8 @@ export function OfficePanel() {
   const [viewMode, setViewMode] = useState<ViewMode>('office')
   const [orgSegmentMode, setOrgSegmentMode] = useState<OrgSegmentMode>('category')
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null)
-  const [showFlightDeckModal, setShowFlightDeckModal] = useState(false)
-  const [flightDeckDownloadUrl, setFlightDeckDownloadUrl] = useState('https://flightdeck.example.com/download')
+  const [showFlightDeckModal, setMostrarFlightDeckModal] = useState(false)
+  const [flightDeckBaixarUrl, setFlightDeckBaixarUrl] = useState('https://flightdeck.example.com/download')
   const [flightDeckLaunching, setFlightDeckLaunching] = useState(false)
   const [launchToast, setLaunchToast] = useState<LaunchToast | null>(null)
   const [selectedHotspot, setSelectedHotspot] = useState<OfficeHotspot | null>(null)
@@ -481,15 +481,15 @@ export function OfficePanel() {
   const [officeEvents, setOfficeEvents] = useState<OfficeEvent[]>([])
   const [roomLayoutState, setRoomLayoutState] = useState<MapRoom[]>(() => ROOM_LAYOUT.map((room) => ({ ...room })))
   const [mapPropsState, setMapPropsState] = useState<MapProp[]>(() => MAP_PROPS.map((prop) => ({ ...prop })))
-  const [showSidebar, setShowSidebar] = useState(true)
-  const [showMinimap, setShowMinimap] = useState(true)
-  const [showEvents, setShowEvents] = useState(true)
-  const [localSessionFilter, setLocalSessionFilter] = useState<'running' | 'not-running'>('running')
+  const [showSidebar, setMostrarSidebar] = useState(true)
+  const [showMinimap, setMostrarMinimap] = useState(true)
+  const [showEvents, setMostrarEvents] = useState(true)
+  const [localSessionFiltrar, setLocalSessionFiltrar] = useState<'running' | 'not-running'>('running')
   const [loading, setLoading] = useState(true)
   const [localBootstrapping, setLocalBootstrapping] = useState(isLocalMode)
-  const [sidebarFilter, setSidebarFilter] = useState<SidebarFilter>('all')
+  const [sidebarFiltrar, setSidebarFiltrar] = useState<SidebarFiltrar>('all')
   const [spriteFrame, setSpriteFrame] = useState(0)
-  const [timeTheme, setTimeTheme] = useState<TimeTheme>('night')
+  const [timeTema, setTimeTema] = useState<TimeTema>('night')
   const [mapZoom, setMapZoom] = useState(1)
   const [mapPan, setMapPan] = useState({ x: 0, y: 0 })
   const mapViewportRef = useRef<HTMLDivElement | null>(null)
@@ -498,9 +498,9 @@ export function OfficePanel() {
   const mapDragOriginRef = useRef({ x: 0, y: 0 })
   const mapPanStartRef = useRef({ x: 0, y: 0 })
   const prevStatusRef = useRef<Map<number, Agent['status']>>(new Map())
-  const transitionTimersRef = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map())
-  const launchToastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const roamReturnTimersRef = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map())
+  const transitionTimersRef = useRef<Map<number, ReturnTipo<typeof setTimeout>>>(new Map())
+  const launchToastTimerRef = useRef<ReturnTipo<typeof setTimeout> | null>(null)
+  const roamReturnTimersRef = useRef<Map<number, ReturnTipo<typeof setTimeout>>>(new Map())
   const movingAgentIdsRef = useRef<Set<number>>(new Set())
   const movingWorkersRef = useRef<MovingWorker[]>([])
   const renderedWorkersRef = useRef<Array<{ agent: Agent; x: number; y: number; zoneLabel: string; seatLabel: string; isMoving: boolean; direction: { dx: number; dy: number }; variant: WorkerVariant }>>([])
@@ -644,11 +644,11 @@ export function OfficePanel() {
 
   const visibleDisplayAgents = useMemo(() => {
     if (!isLocalMode) return displayAgents
-    if (localSessionFilter === 'not-running') {
+    if (localSessionFiltrar === 'not-running') {
       return displayAgents.filter((agent) => isInactiveLocalSession(agent))
     }
     return displayAgents.filter((agent) => !isInactiveLocalSession(agent))
-  }, [displayAgents, isLocalMode, localSessionFilter])
+  }, [displayAgents, isLocalMode, localSessionFiltrar])
 
   const counts = useMemo(() => {
     const c = { idle: 0, busy: 0, error: 0, offline: 0 }
@@ -811,19 +811,19 @@ export function OfficePanel() {
       const prefs = JSON.parse(raw) as PersistedOfficePrefs
       if (!prefs || prefs.version !== 1) return
       setViewMode(prefs.viewMode || 'office')
-      setSidebarFilter(prefs.sidebarFilter || 'all')
-      setLocalSessionFilter(
-        prefs.localSessionFilter === 'not-running' ? 'not-running' : 'running',
+      setSidebarFiltrar(prefs.sidebarFiltrar || 'all')
+      setLocalSessionFiltrar(
+        prefs.localSessionFiltrar === 'not-running' ? 'not-running' : 'running',
       )
       setMapZoom(Number.isFinite(prefs.mapZoom) ? clamp(prefs.mapZoom, 0.8, 2.2) : 1)
       setMapPan({
         x: Number.isFinite(prefs.mapPan?.x) ? prefs.mapPan.x : 0,
         y: Number.isFinite(prefs.mapPan?.y) ? prefs.mapPan.y : 0,
       })
-      setTimeTheme(prefs.timeTheme || 'night')
-      setShowSidebar(prefs.showSidebar !== false)
-      setShowMinimap(prefs.showMinimap !== false)
-      setShowEvents(prefs.showEvents !== false)
+      setTimeTema(prefs.timeTema || 'night')
+      setMostrarSidebar(prefs.showSidebar !== false)
+      setMostrarMinimap(prefs.showMinimap !== false)
+      setMostrarEvents(prefs.showEvents !== false)
       if (Array.isArray(prefs.roomLayout) && prefs.roomLayout.length > 0) {
         setRoomLayoutState(prefs.roomLayout.map((room) => ({ ...room })))
       }
@@ -840,11 +840,11 @@ export function OfficePanel() {
     const payload: PersistedOfficePrefs = {
       version: 1,
       viewMode,
-      sidebarFilter,
-      localSessionFilter,
+      sidebarFiltrar,
+      localSessionFiltrar,
       mapZoom,
       mapPan,
-      timeTheme,
+      timeTema,
       showSidebar,
       showMinimap,
       showEvents,
@@ -861,31 +861,31 @@ export function OfficePanel() {
     mapPan,
     mapPropsState,
     mapZoom,
-    localSessionFilter,
+    localSessionFiltrar,
     roomLayoutState,
     showEvents,
     showMinimap,
     showSidebar,
-    sidebarFilter,
-    timeTheme,
+    sidebarFiltrar,
+    timeTema,
     viewMode,
   ])
 
   useEffect(() => {
-    const updateThemeFromClock = () => {
+    const updateTemaFromClock = () => {
       const hour = new Date().getHours()
-      if (hour >= 6 && hour < 11) setTimeTheme('dawn')
-      else if (hour >= 11 && hour < 17) setTimeTheme('day')
-      else if (hour >= 17 && hour < 20) setTimeTheme('dusk')
-      else setTimeTheme('night')
+      if (hour >= 6 && hour < 11) setTimeTema('dawn')
+      else if (hour >= 11 && hour < 17) setTimeTema('day')
+      else if (hour >= 17 && hour < 20) setTimeTema('dusk')
+      else setTimeTema('night')
     }
-    updateThemeFromClock()
-    const interval = setInterval(updateThemeFromClock, 60_000)
+    updateTemaFromClock()
+    const interval = setInterval(updateTemaFromClock, 60_000)
     return () => clearInterval(interval)
   }, [])
 
-  const themePalette = useMemo<ThemePalette>(() => {
-    if (timeTheme === 'dawn') {
+  const themePalette = useMemo<TemaPalette>(() => {
+    if (timeTema === 'dawn') {
       return {
         shell: 'radial-gradient(circle at 20% 10%, rgba(255,177,108,0.52) 0, rgba(78,82,132,0.9) 48%, rgba(19,24,41,1) 100%)',
         gridLine: 'rgba(255,212,166,0.2)',
@@ -895,15 +895,15 @@ export function OfficePanel() {
         corridorStripe: '#ffca95',
         atmosphere: 'radial-gradient(circle at 15% 8%, rgba(255,191,122,0.34), transparent 46%), radial-gradient(circle at 82% 18%, rgba(255,224,184,0.18), transparent 40%)',
         shadowVeil: 'linear-gradient(to bottom, rgba(27,22,35,0.15), rgba(13,17,33,0.38))',
-        floorFilter: 'hue-rotate(-8deg) saturate(1.02) brightness(1.1) contrast(1.03)',
-        spriteFilter: 'hue-rotate(-4deg) saturate(1.04) brightness(1.05)',
+        floorFiltrar: 'hue-rotate(-8deg) saturate(1.02) brightness(1.1) contrast(1.03)',
+        spriteFiltrar: 'hue-rotate(-4deg) saturate(1.04) brightness(1.05)',
         roomTone: 'linear-gradient(to bottom right, rgba(255,219,167,0.2), rgba(82,67,96,0.12))',
         floorOpacityA: 0.95,
         floorOpacityB: 0.8,
         accentGlow: 'rgba(255,183,120,0.32)',
       }
     }
-    if (timeTheme === 'day') {
+    if (timeTema === 'day') {
       return {
         shell: 'radial-gradient(circle at 20% 12%, rgba(164,203,255,0.48) 0, rgba(41,76,128,0.88) 46%, rgba(16,26,46,1) 100%)',
         gridLine: 'rgba(183,218,255,0.24)',
@@ -913,15 +913,15 @@ export function OfficePanel() {
         corridorStripe: '#b8d5ff',
         atmosphere: 'radial-gradient(circle at 18% 5%, rgba(183,230,255,0.3), transparent 45%), radial-gradient(circle at 84% 16%, rgba(216,241,255,0.2), transparent 42%)',
         shadowVeil: 'linear-gradient(to bottom, rgba(16,30,49,0.08), rgba(9,18,35,0.24))',
-        floorFilter: 'hue-rotate(6deg) saturate(1.08) brightness(1.2) contrast(1.04)',
-        spriteFilter: 'hue-rotate(4deg) saturate(1.08) brightness(1.08)',
+        floorFiltrar: 'hue-rotate(6deg) saturate(1.08) brightness(1.2) contrast(1.04)',
+        spriteFiltrar: 'hue-rotate(4deg) saturate(1.08) brightness(1.08)',
         roomTone: 'linear-gradient(to bottom right, rgba(196,236,255,0.18), rgba(81,116,171,0.08))',
         floorOpacityA: 0.98,
         floorOpacityB: 0.86,
         accentGlow: 'rgba(176,232,255,0.3)',
       }
     }
-    if (timeTheme === 'dusk') {
+    if (timeTema === 'dusk') {
       return {
         shell: 'radial-gradient(circle at 20% 10%, rgba(222,129,187,0.44) 0, rgba(45,44,91,0.92) 47%, rgba(12,14,30,1) 100%)',
         gridLine: 'rgba(224,169,255,0.2)',
@@ -931,8 +931,8 @@ export function OfficePanel() {
         corridorStripe: '#d7b0ff',
         atmosphere: 'radial-gradient(circle at 14% 10%, rgba(255,160,198,0.27), transparent 44%), radial-gradient(circle at 85% 18%, rgba(198,150,255,0.18), transparent 40%)',
         shadowVeil: 'linear-gradient(to bottom, rgba(29,20,46,0.18), rgba(9,9,24,0.42))',
-        floorFilter: 'hue-rotate(20deg) saturate(1.05) brightness(0.95) contrast(1.05)',
-        spriteFilter: 'hue-rotate(18deg) saturate(1.08) brightness(0.98)',
+        floorFiltrar: 'hue-rotate(20deg) saturate(1.05) brightness(0.95) contrast(1.05)',
+        spriteFiltrar: 'hue-rotate(18deg) saturate(1.08) brightness(0.98)',
         roomTone: 'linear-gradient(to bottom right, rgba(244,164,209,0.17), rgba(88,62,126,0.16))',
         floorOpacityA: 0.9,
         floorOpacityB: 0.75,
@@ -948,14 +948,14 @@ export function OfficePanel() {
       corridorStripe: '#9cc2ff',
       atmosphere: 'radial-gradient(circle at 16% 7%, rgba(93,141,255,0.26), transparent 45%), radial-gradient(circle at 82% 15%, rgba(133,169,255,0.16), transparent 42%)',
       shadowVeil: 'linear-gradient(to bottom, rgba(8,13,25,0.34), rgba(5,8,18,0.56))',
-      floorFilter: 'hue-rotate(26deg) saturate(0.9) brightness(0.72) contrast(1.1)',
-      spriteFilter: 'hue-rotate(18deg) saturate(0.94) brightness(0.84)',
+      floorFiltrar: 'hue-rotate(26deg) saturate(0.9) brightness(0.72) contrast(1.1)',
+      spriteFiltrar: 'hue-rotate(18deg) saturate(0.94) brightness(0.84)',
       roomTone: 'linear-gradient(to bottom right, rgba(94,133,207,0.17), rgba(19,27,52,0.24))',
       floorOpacityA: 0.84,
       floorOpacityB: 0.66,
       accentGlow: 'rgba(116,152,255,0.26)',
     }
-  }, [timeTheme])
+  }, [timeTema])
 
   const nightSparkles = useMemo(
     () =>
@@ -1004,11 +1004,11 @@ export function OfficePanel() {
   }, [gameWorkers, isLocalMode])
 
   const filteredRosterRows = useMemo(() => {
-    if (sidebarFilter === 'all') return rosterRows
-    if (sidebarFilter === 'working') return rosterRows.filter((row) => row.agent.status === 'busy')
-    if (sidebarFilter === 'idle') return rosterRows.filter((row) => row.agent.status === 'idle')
+    if (sidebarFiltrar === 'all') return rosterRows
+    if (sidebarFiltrar === 'working') return rosterRows.filter((row) => row.agent.status === 'busy')
+    if (sidebarFiltrar === 'idle') return rosterRows.filter((row) => row.agent.status === 'idle')
     return rosterRows.filter((row) => row.needsAttention)
-  }, [rosterRows, sidebarFilter])
+  }, [rosterRows, sidebarFiltrar])
 
   const pathEdges = useMemo(() => {
     const edges: Array<{ x1: number; y1: number; x2: number; y2: number }> = []
@@ -1283,7 +1283,7 @@ export function OfficePanel() {
     try {
       const res = await fetch('/api/local/flight-deck', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           agent: agent.name,
           session: agent.session_key || '',
@@ -1292,9 +1292,9 @@ export function OfficePanel() {
       const json = await res.json().catch(() => ({}))
       if (!res.ok || json?.installed === false) {
         if (typeof json?.downloadUrl === 'string' && json.downloadUrl) {
-          setFlightDeckDownloadUrl(json.downloadUrl)
+          setFlightDeckBaixarUrl(json.downloadUrl)
         }
-        setShowFlightDeckModal(true)
+        setMostrarFlightDeckModal(true)
         showLaunchToast({
           kind: 'info',
           title: 'Flight Deck not installed',
@@ -1326,7 +1326,7 @@ export function OfficePanel() {
         detail: 'Launched native Flight Deck app for this session.',
       })
     } catch {
-      setShowFlightDeckModal(true)
+      setMostrarFlightDeckModal(true)
       showLaunchToast({
         kind: 'error',
         title: 'Flight Deck request failed',
@@ -1436,9 +1436,9 @@ export function OfficePanel() {
     setMapPropsState(MAP_PROPS.map((prop) => ({ ...prop })))
     setMapZoom(1)
     setMapPan({ x: 0, y: 0 })
-    setShowSidebar(true)
-    setShowMinimap(true)
-    setShowEvents(true)
+    setMostrarSidebar(true)
+    setMostrarMinimap(true)
+    setMostrarEvents(true)
     setSelectedHotspot(null)
     pushOfficeEvent({ kind: 'room', severity: 'info', message: 'Office layout reset to defaults.' })
   }, [pushOfficeEvent])
@@ -1503,9 +1503,9 @@ export function OfficePanel() {
 
   if ((loading || (isLocalMode && localBootstrapping)) && visibleDisplayAgents.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary" />
-        <span className="ml-3 text-muted-foreground">
+      <div classNome="flex items-center justify-center h-64">
+        <div classNome="animate-spin rounded-full h-6 w-6 border-b-2 border-primary" />
+        <span classNome="ml-3 text-muted-foreground">
           {isLocalMode ? 'Scanning local sessions...' : 'Loading office...'}
         </span>
       </div>
@@ -1513,35 +1513,35 @@ export function OfficePanel() {
   }
 
   return (
-    <div className="p-6 space-y-4">
-      <div className="border-b border-border pb-4">
-        <div className="flex items-center justify-between">
+    <div classNome="p-6 space-y-4">
+      <div classNome="border-b border-border pb-4">
+        <div classNome="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Virtual Office</h1>
-            <p className="text-muted-foreground mt-1">See your agents at work in real time</p>
+            <h1 classNome="text-3xl font-bold text-foreground">Virtual Office</h1>
+            <p classNome="text-muted-foreground mt-1">See your agents at work in real time</p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-3 text-xs text-muted-foreground mr-4">
-              {counts.busy > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-500" />{counts.busy} working</span>}
-              {counts.idle > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#b4a68c]" />{counts.idle} idle</span>}
-              {counts.error > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#9e5c50]" />{counts.error} error</span>}
-              {counts.offline > 0 && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-gray-500" />{counts.offline} away</span>}
+          <div classNome="flex items-center gap-3">
+            <div classNome="flex items-center gap-3 text-xs text-muted-foreground mr-4">
+              {counts.busy > 0 && <span classNome="flex items-center gap-1"><span classNome="w-2 h-2 rounded-full bg-yellow-500" />{counts.busy} working</span>}
+              {counts.idle > 0 && <span classNome="flex items-center gap-1"><span classNome="w-2 h-2 rounded-full bg-[#b4a68c]" />{counts.idle} idle</span>}
+              {counts.error > 0 && <span classNome="flex items-center gap-1"><span classNome="w-2 h-2 rounded-full bg-[#9e5c50]" />{counts.error} error</span>}
+              {counts.offline > 0 && <span classNome="flex items-center gap-1"><span classNome="w-2 h-2 rounded-full bg-gray-500" />{counts.offline} away</span>}
             </div>
-            <div className="flex rounded-md overflow-hidden border border-border">
+            <div classNome="flex rounded-md overflow-hidden border border-border">
               <button
                 onClick={() => setViewMode('office')}
-                className={`px-3 py-1 text-sm transition-smooth ${viewMode === 'office' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
+                classNome={`px-3 py-1 text-sm transition-smooth ${viewMode === 'office' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
               >
                 Office
               </button>
               <button
                 onClick={() => setViewMode('org-chart')}
-                className={`px-3 py-1 text-sm transition-smooth ${viewMode === 'org-chart' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
+                classNome={`px-3 py-1 text-sm transition-smooth ${viewMode === 'org-chart' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
               >
                 Org Chart
               </button>
             </div>
-            <button onClick={fetchAgents} className="px-3 py-1.5 text-sm bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth">
+            <button onClick={fetchAgents} classNome="px-3 py-1.5 text-sm bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth">
               Refresh
             </button>
           </div>
@@ -1549,31 +1549,31 @@ export function OfficePanel() {
       </div>
 
       {visibleDisplayAgents.length === 0 ? (
-        <div className="text-center py-16 text-muted-foreground">
-          <div className="text-5xl mb-3">🏢</div>
-          <p className="text-lg">The office is empty</p>
-          <p className="text-sm mt-1">Add agents to see them appear here</p>
+        <div classNome="text-center py-16 text-muted-foreground">
+          <div classNome="text-5xl mb-3">🏢</div>
+          <p classNome="text-lg">The office is empty</p>
+          <p classNome="text-sm mt-1">Add agents to see them appear here</p>
         </div>
       ) : viewMode === 'office' ? (
-        <div className={`grid grid-cols-1 ${showSidebar ? 'xl:grid-cols-[220px_1fr]' : 'xl:grid-cols-1'} gap-4`}>
+        <div classNome={`grid grid-cols-1 ${showSidebar ? 'xl:grid-cols-[220px_1fr]' : 'xl:grid-cols-1'} gap-4`}>
           {showSidebar && (
-          <div className="rounded-xl border border-border bg-[#1a1f2d] text-slate-100 p-3 h-fit">
-            <div className="flex items-center justify-between mb-2">
-              <div className="text-xs font-semibold tracking-wider">TEAMY</div>
-              <div className="text-[10px] text-slate-300">{visibleDisplayAgents.length} online</div>
+          <div classNome="rounded-xl border border-border bg-[#1a1f2d] text-slate-100 p-3 h-fit">
+            <div classNome="flex items-center justify-between mb-2">
+              <div classNome="text-xs font-semibold tracking-wider">TEAMY</div>
+              <div classNome="text-[10px] text-slate-300">{visibleDisplayAgents.length} online</div>
             </div>
-            <div className="mb-2 flex flex-wrap gap-1.5">
+            <div classNome="mb-2 flex flex-wrap gap-1.5">
               {([
                 { key: 'all', label: 'All' },
                 { key: 'working', label: 'Working' },
                 { key: 'idle', label: 'Idle' },
                 { key: 'attention', label: 'Needs Attention' },
-              ] as Array<{ key: SidebarFilter; label: string }>).map((item) => (
+              ] as Array<{ key: SidebarFiltrar; label: string }>).map((item) => (
                 <button
                   key={item.key}
-                  onClick={() => setSidebarFilter(item.key)}
-                  className={`px-2 py-1 rounded text-[10px] border transition-smooth ${
-                    sidebarFilter === item.key
+                  onClick={() => setSidebarFiltrar(item.key)}
+                  classNome={`px-2 py-1 rounded text-[10px] border transition-smooth ${
+                    sidebarFiltrar === item.key
                       ? 'bg-primary/25 border-primary/40 text-primary-foreground'
                       : 'bg-black/20 border-white/10 text-slate-300 hover:bg-black/35'
                   }`}
@@ -1583,11 +1583,11 @@ export function OfficePanel() {
               ))}
             </div>
             {isLocalMode && (
-              <div className="mb-2 flex gap-1.5">
+              <div classNome="mb-2 flex gap-1.5">
                 <button
-                  onClick={() => setLocalSessionFilter('running')}
-                  className={`flex-1 rounded border px-2 py-1 text-[10px] transition-smooth ${
-                    localSessionFilter === 'running'
+                  onClick={() => setLocalSessionFiltrar('running')}
+                  classNome={`flex-1 rounded border px-2 py-1 text-[10px] transition-smooth ${
+                    localSessionFiltrar === 'running'
                       ? 'bg-primary/25 border-primary/40 text-primary-foreground'
                       : 'bg-black/20 border-white/10 text-slate-300 hover:bg-black/35'
                   }`}
@@ -1595,9 +1595,9 @@ export function OfficePanel() {
                   Running
                 </button>
                 <button
-                  onClick={() => setLocalSessionFilter('not-running')}
-                  className={`flex-1 rounded border px-2 py-1 text-[10px] transition-smooth ${
-                    localSessionFilter === 'not-running'
+                  onClick={() => setLocalSessionFiltrar('not-running')}
+                  classNome={`flex-1 rounded border px-2 py-1 text-[10px] transition-smooth ${
+                    localSessionFiltrar === 'not-running'
                       ? 'bg-[#c49a6c]/15 border-[#c49a6c]/60 text-[#c49a6c]'
                       : 'bg-black/20 border-white/10 text-slate-300 hover:bg-black/35'
                   }`}
@@ -1606,7 +1606,7 @@ export function OfficePanel() {
                 </button>
               </div>
             )}
-            <div className="space-y-2 max-h-[560px] overflow-y-auto pr-1">
+            <div classNome="space-y-2 max-h-[560px] overflow-y-auto pr-1">
               {filteredRosterRows.map(({ agent, minutesIdle, needsAttention }) => (
                 <button
                   key={agent.id}
@@ -1615,32 +1615,32 @@ export function OfficePanel() {
                     const worker = renderedWorkers.find((item) => item.agent.id === agent.id)
                     if (worker) focusMapPoint(worker.x, worker.y)
                   }}
-                  className={`w-full flex items-center gap-2 rounded-lg p-2 text-left transition-smooth ${
+                  classNome={`w-full flex items-center gap-2 rounded-lg p-2 text-left transition-smooth ${
                     needsAttention
                       ? 'bg-[#c49a6c]/12 border border-[#c49a6c]/60 hover:bg-[#c49a6c]/20'
                       : 'bg-black/20 border border-white/5 hover:bg-black/35'
                   }`}
                 >
-                  <span className={`w-6 h-6 rounded ${hashColor(agent.name)} flex items-center justify-center text-[10px] font-bold text-white`}>
+                  <span classNome={`w-6 h-6 rounded ${hashColor(agent.name)} flex items-center justify-center text-[10px] font-bold text-white`}>
                     {getInitials(agent.name)}
                   </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-xs font-medium truncate">{agent.name}</span>
-                    <span className="block text-[10px] text-slate-300 truncate">{agent.role}</span>
-                    <span className="block text-[9px] text-slate-400 truncate">
+                  <span classNome="min-w-0 flex-1">
+                    <span classNome="block text-xs font-medium truncate">{agent.name}</span>
+                    <span classNome="block text-[10px] text-slate-300 truncate">{agent.role}</span>
+                    <span classNome="block text-[9px] text-slate-400 truncate">
                       {agent.last_activity || 'No recent activity'}
                     </span>
                   </span>
-                  <span className="flex flex-col items-end gap-1">
-                    <span className={`w-2 h-2 rounded-full ${statusDot[agent.status]}`} />
-                    <span className={`text-[9px] ${needsAttention ? 'text-[#c49a6c] font-semibold' : 'text-slate-400'}`}>
+                  <span classNome="flex flex-col items-end gap-1">
+                    <span classNome={`w-2 h-2 rounded-full ${statusDot[agent.status]}`} />
+                    <span classNome={`text-[9px] ${needsAttention ? 'text-[#c49a6c] font-semibold' : 'text-slate-400'}`}>
                       {agent.status === 'busy' ? 'active' : `${minutesIdle}m idle`}
                     </span>
                   </span>
                 </button>
               ))}
               {filteredRosterRows.length === 0 && (
-                <div className="text-[11px] text-slate-400 px-1 py-2">No workers in this filter.</div>
+                <div classNome="text-[11px] text-slate-400 px-1 py-2">No workers in this filter.</div>
               )}
             </div>
           </div>
@@ -1648,7 +1648,7 @@ export function OfficePanel() {
 
           <div
             ref={mapViewportRef}
-            className="relative rounded-xl border border-slate-700/70 overflow-hidden min-h-[560px] cursor-grab active:cursor-grabbing shadow-[0_20px_60px_rgba(0,0,0,0.55)]"
+            classNome="relative rounded-xl border border-slate-700/70 overflow-hidden min-h-[560px] cursor-grab active:cursor-grabbing shadow-[0_20px_60px_rgba(0,0,0,0.55)]"
             style={{
               backgroundColor: '#0b1220',
               backgroundImage: `${themePalette.shell}, linear-gradient(90deg, ${themePalette.gridLine} 1px, transparent 1px), linear-gradient(${themePalette.gridLine} 1px, transparent 1px)`,
@@ -1660,13 +1660,13 @@ export function OfficePanel() {
             onMouseUp={endMapDrag}
             onMouseLeave={endMapDrag}
           >
-            <div className="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.haze }} />
-            <div className="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.glow }} />
-            <div className="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.atmosphere, mixBlendMode: 'screen', opacity: 0.9 }} />
-            <div className="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.shadowVeil }} />
-            {timeTheme === 'dawn' && (
+            <div classNome="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.haze }} />
+            <div classNome="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.glow }} />
+            <div classNome="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.atmosphere, mixBlendMode: 'screen', opacity: 0.9 }} />
+            <div classNome="absolute inset-0 pointer-events-none z-0" style={{ backgroundImage: themePalette.shadowVeil }} />
+            {timeTema === 'dawn' && (
               <div
-                className="absolute inset-0 pointer-events-none z-[2]"
+                classNome="absolute inset-0 pointer-events-none z-[2]"
                 style={{
                   background: `linear-gradient(115deg, transparent 8%, ${themePalette.accentGlow} 24%, transparent 42%)`,
                   mixBlendMode: 'screen',
@@ -1674,10 +1674,10 @@ export function OfficePanel() {
                 }}
               />
             )}
-            {timeTheme === 'day' && (
+            {timeTema === 'day' && (
               <>
                 <div
-                  className="absolute inset-0 pointer-events-none z-[2]"
+                  classNome="absolute inset-0 pointer-events-none z-[2]"
                   style={{
                     background: `linear-gradient(112deg, transparent 10%, ${themePalette.accentGlow} 24%, transparent 44%)`,
                     mixBlendMode: 'screen',
@@ -1685,7 +1685,7 @@ export function OfficePanel() {
                   }}
                 />
                 <div
-                  className="absolute inset-0 pointer-events-none z-[2]"
+                  classNome="absolute inset-0 pointer-events-none z-[2]"
                   style={{
                     background: 'linear-gradient(96deg, transparent 24%, rgba(255,255,255,0.15) 38%, transparent 58%)',
                     mixBlendMode: 'screen',
@@ -1694,9 +1694,9 @@ export function OfficePanel() {
                 />
               </>
             )}
-            {timeTheme === 'dusk' && (
+            {timeTema === 'dusk' && (
               <div
-                className="absolute inset-0 pointer-events-none z-[2]"
+                classNome="absolute inset-0 pointer-events-none z-[2]"
                 style={{
                   background: `radial-gradient(circle at 50% 22%, ${themePalette.accentGlow} 0, transparent 56%)`,
                   mixBlendMode: 'screen',
@@ -1704,10 +1704,10 @@ export function OfficePanel() {
                 }}
               />
             )}
-            {timeTheme === 'night' && (
+            {timeTema === 'night' && (
               <>
                 <div
-                  className="absolute inset-0 pointer-events-none z-[2]"
+                  classNome="absolute inset-0 pointer-events-none z-[2]"
                   style={{
                     background: `radial-gradient(circle at 18% 12%, ${themePalette.accentGlow} 0, transparent 44%), radial-gradient(circle at 82% 16%, rgba(138,178,255,0.2) 0, transparent 42%)`,
                     mixBlendMode: 'screen',
@@ -1717,7 +1717,7 @@ export function OfficePanel() {
                 {nightSparkles.map((spark) => (
                   <div
                     key={`spark-${spark.id}`}
-                    className="absolute pointer-events-none z-[2] rounded-full bg-white/80"
+                    classNome="absolute pointer-events-none z-[2] rounded-full bg-white/80"
                     style={{
                       left: `${spark.x}%`,
                       top: `${spark.y}%`,
@@ -1731,42 +1731,42 @@ export function OfficePanel() {
               </>
             )}
 
-            <div className="absolute left-[8%] top-[8%] rounded-md bg-black/55 border border-white/10 text-slate-100 text-xs px-2 py-1 font-mono z-30">
+            <div classNome="absolute left-[8%] top-[8%] rounded-md bg-black/55 border border-white/10 text-slate-100 text-xs px-2 py-1 font-mono z-30">
               MAIN FLOOR
             </div>
-            <div className="absolute right-3 top-3 z-30 flex items-center gap-1 rounded-md bg-black/50 border border-white/10 text-white/90 px-2 py-1">
-              <button onClick={() => setMapZoom((z) => Math.max(0.8, Number((z - 0.1).toFixed(2))))} className="text-xs px-1.5 py-0.5 hover:bg-white/10 rounded">-</button>
-              <span className="text-[11px] w-10 text-center">{Math.round(mapZoom * 100)}%</span>
-              <button onClick={() => setMapZoom((z) => Math.min(2.2, Number((z + 0.1).toFixed(2))))} className="text-xs px-1.5 py-0.5 hover:bg-white/10 rounded">+</button>
-              <button onClick={resetMapView} className="text-[11px] px-1.5 py-0.5 hover:bg-white/10 rounded">Reset</button>
+            <div classNome="absolute right-3 top-3 z-30 flex items-center gap-1 rounded-md bg-black/50 border border-white/10 text-white/90 px-2 py-1">
+              <button onClick={() => setMapZoom((z) => Math.max(0.8, Number((z - 0.1).toFixed(2))))} classNome="text-xs px-1.5 py-0.5 hover:bg-white/10 rounded">-</button>
+              <span classNome="text-[11px] w-10 text-center">{Math.round(mapZoom * 100)}%</span>
+              <button onClick={() => setMapZoom((z) => Math.min(2.2, Number((z + 0.1).toFixed(2))))} classNome="text-xs px-1.5 py-0.5 hover:bg-white/10 rounded">+</button>
+              <button onClick={resetMapView} classNome="text-[11px] px-1.5 py-0.5 hover:bg-white/10 rounded">Reset</button>
             </div>
-            <div className="absolute right-3 top-12 z-30 flex items-center gap-1 rounded-md bg-black/50 border border-white/10 text-white/90 px-2 py-1">
-              {(['dawn', 'day', 'dusk', 'night'] as TimeTheme[]).map((item) => (
+            <div classNome="absolute right-3 top-12 z-30 flex items-center gap-1 rounded-md bg-black/50 border border-white/10 text-white/90 px-2 py-1">
+              {(['dawn', 'day', 'dusk', 'night'] as TimeTema[]).map((item) => (
                 <button
                   key={item}
-                  onClick={() => setTimeTheme(item)}
-                  className={`text-[10px] px-1.5 py-0.5 rounded uppercase ${timeTheme === item ? 'bg-white/20 text-white' : 'hover:bg-white/10 text-slate-300'}`}
+                  onClick={() => setTimeTema(item)}
+                  classNome={`text-[10px] px-1.5 py-0.5 rounded uppercase ${timeTema === item ? 'bg-white/20 text-white' : 'hover:bg-white/10 text-slate-300'}`}
                 >
                   {item}
                 </button>
               ))}
             </div>
-            <div className="absolute left-3 top-3 z-30 flex items-center gap-1 rounded-md bg-black/50 border border-white/10 text-white/90 px-2 py-1">
-              <button onClick={() => setShowSidebar((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showSidebar ? 'Hide Sidebar' : 'Show Sidebar'}</button>
-              <button onClick={() => setShowMinimap((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showMinimap ? 'Hide Minimap' : 'Show Minimap'}</button>
-              <button onClick={() => setShowEvents((v) => !v)} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showEvents ? 'Hide Events' : 'Show Events'}</button>
-              <button onClick={resetOfficeLayout} className="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">Reset Layout</button>
+            <div classNome="absolute left-3 top-3 z-30 flex items-center gap-1 rounded-md bg-black/50 border border-white/10 text-white/90 px-2 py-1">
+              <button onClick={() => setMostrarSidebar((v) => !v)} classNome="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showSidebar ? 'Ocultar Sidebar' : 'Mostrar Sidebar'}</button>
+              <button onClick={() => setMostrarMinimap((v) => !v)} classNome="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showMinimap ? 'Ocultar Minimap' : 'Mostrar Minimap'}</button>
+              <button onClick={() => setMostrarEvents((v) => !v)} classNome="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">{showEvents ? 'Ocultar Events' : 'Mostrar Events'}</button>
+              <button onClick={resetOfficeLayout} classNome="text-[10px] px-1.5 py-0.5 rounded hover:bg-white/10">Reset Layout</button>
             </div>
 
             <div
-              className="absolute inset-0 origin-top-left"
+              classNome="absolute inset-0 origin-top-left"
               style={{ transform: `translate(${mapPan.x}px, ${mapPan.y}px) scale(${mapZoom})` }}
             >
-              <div className="absolute inset-0 z-0">
+              <div classNome="absolute inset-0 z-0">
                 {floorTiles.map((tile) => (
                   <div
                     key={tile.id}
-                    className="absolute border border-[#7fa4ff]/[0.06]"
+                    classNome="absolute border border-[#7fa4ff]/[0.06]"
                     style={{
                       left: `${tile.x}%`,
                       top: `${tile.y}%`,
@@ -1775,21 +1775,21 @@ export function OfficePanel() {
                       backgroundImage: `url('/office-sprites/kenney/floorFull.png')`,
                       backgroundSize: '100% 100%',
                       opacity: tile.sprite ? themePalette.floorOpacityA : themePalette.floorOpacityB,
-                      filter: themePalette.floorFilter,
+                      filter: themePalette.floorFiltrar,
                     }}
                   />
                 ))}
               </div>
 
               {/* Corridor base */}
-              <div className="absolute left-[14%] top-[45%] w-[72%] h-[6%] border-y border-[#95b8ff]/25 shadow-[0_0_30px_rgba(61,139,255,0.25)]" style={{ backgroundColor: themePalette.corridor }} />
-              <div className="absolute left-[14%] top-[47.6%] w-[72%] h-[0.7%]" style={{ backgroundColor: themePalette.corridorStripe }} />
+              <div classNome="absolute left-[14%] top-[45%] w-[72%] h-[6%] border-y border-[#95b8ff]/25 shadow-[0_0_30px_rgba(61,139,255,0.25)]" style={{ backgroundColor: themePalette.corridor }} />
+              <div classNome="absolute left-[14%] top-[47.6%] w-[72%] h-[0.7%]" style={{ backgroundColor: themePalette.corridorStripe }} />
 
-              <div className="absolute inset-0 pointer-events-none z-[1]">
+              <div classNome="absolute inset-0 pointer-events-none z-[1]">
                 {heatmapPoints.map((point) => (
                   <div
                     key={`heat-${point.id}`}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl"
+                    classNome="absolute -translate-x-1/2 -translate-y-1/2 rounded-full blur-xl"
                     style={{
                       left: `${point.x}%`,
                       top: `${point.y}%`,
@@ -1805,7 +1805,7 @@ export function OfficePanel() {
               {roomLayoutState.map((room) => (
                 <div
                   key={room.id}
-                  className={`absolute border border-[#8ea6d9]/35 ${room.style} shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04),0_8px_24px_rgba(0,0,0,0.3)]`}
+                  classNome={`absolute border border-[#8ea6d9]/35 ${room.style} shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04),0_8px_24px_rgba(0,0,0,0.3)]`}
                   style={{
                     left: `${room.x}%`,
                     top: `${room.y}%`,
@@ -1813,7 +1813,7 @@ export function OfficePanel() {
                     height: `${room.h}%`,
                     backgroundImage: `linear-gradient(to bottom right, rgba(255,255,255,0.04), rgba(0,0,0,0.1)), url('/office-sprites/kenney/floorFull.png')`,
                     backgroundSize: 'auto, 22% 22%',
-                    filter: themePalette.floorFilter,
+                    filter: themePalette.floorFiltrar,
                   }}
                   onClick={(event) => {
                     event.stopPropagation()
@@ -1837,8 +1837,8 @@ export function OfficePanel() {
                     })
                   }}
                 >
-                  <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: `${themePalette.roomTone}, linear-gradient(to bottom right, rgba(255,255,255,0.08), transparent 45%)` }} />
-                  <div className="absolute left-2 top-1 rounded bg-black/55 border border-white/10 text-white text-[9px] px-1.5 py-0.5 font-mono uppercase tracking-wide">
+                  <div classNome="absolute inset-0 pointer-events-none" style={{ backgroundImage: `${themePalette.roomTone}, linear-gradient(to bottom right, rgba(255,255,255,0.08), transparent 45%)` }} />
+                  <div classNome="absolute left-2 top-1 rounded bg-black/55 border border-white/10 text-white text-[9px] px-1.5 py-0.5 font-mono uppercase tracking-wide">
                     {room.label}
                   </div>
                 </div>
@@ -1848,7 +1848,7 @@ export function OfficePanel() {
               {mapPropsState.map((prop) => (
                 <div
                   key={prop.id}
-                  className={`absolute relative border ${prop.style} ${prop.border} shadow-[0_0_12px_rgba(108,164,255,0.18)] overflow-hidden`}
+                  classNome={`absolute relative border ${prop.style} ${prop.border} shadow-[0_0_12px_rgba(108,164,255,0.18)] overflow-hidden`}
                   style={{ left: `${prop.x}%`, top: `${prop.y}%`, width: `${prop.w}%`, height: `${prop.h}%` }}
                   onClick={(event) => {
                     event.stopPropagation()
@@ -1880,14 +1880,14 @@ export function OfficePanel() {
                     aria-hidden="true"
                     fill
                     unoptimized
-                    className="object-contain opacity-95"
-                    style={{ imageRendering: 'pixelated', filter: themePalette.spriteFilter }}
+                    classNome="object-contain opacity-95"
+                    style={{ imageRendering: 'pixelated', filter: themePalette.spriteFiltrar }}
                     draggable={false}
                   />
                 </div>
               ))}
 
-              <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
+              <svg classNome="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
                 {pathEdges.map((edge, idx) => (
                   <line
                     key={`edge-${idx}`}
@@ -1905,7 +1905,7 @@ export function OfficePanel() {
               {renderedWorkers.map(({ agent, x, y, zoneLabel, seatLabel, isMoving, direction }) => (
                 <div key={agent.id}>
                   <div
-                    className="absolute -translate-x-1/2 pointer-events-none"
+                    classNome="absolute -translate-x-1/2 pointer-events-none"
                     style={{ left: `${x}%`, top: `calc(${y}% - 14px)` }}
                   >
                     <Image
@@ -1915,16 +1915,16 @@ export function OfficePanel() {
                       width={22}
                       height={21}
                       unoptimized
-                      className="w-6 h-6 object-contain opacity-90"
+                      classNome="w-6 h-6 object-contain opacity-90"
                       style={{ imageRendering: 'pixelated' }}
                       draggable={false}
                     />
                   </div>
                   <div
-                    className="absolute -translate-x-1/2 pointer-events-none"
+                    classNome="absolute -translate-x-1/2 pointer-events-none"
                     style={{ left: `${x}%`, top: `calc(${y}% - 56px)` }}
                   >
-                    <div className="relative w-16 h-9">
+                    <div classNome="relative w-16 h-9">
                       <Image
                         src="/office-sprites/kenney/desk.png"
                         alt=""
@@ -1932,8 +1932,8 @@ export function OfficePanel() {
                         width={64}
                         height={32}
                         unoptimized
-                        className="w-16 h-9 object-contain opacity-95"
-                        style={{ imageRendering: 'pixelated', filter: themePalette.spriteFilter }}
+                        classNome="w-16 h-9 object-contain opacity-95"
+                        style={{ imageRendering: 'pixelated', filter: themePalette.spriteFiltrar }}
                         draggable={false}
                       />
                       <Image
@@ -1943,8 +1943,8 @@ export function OfficePanel() {
                         width={20}
                         height={6}
                         unoptimized
-                        className="absolute left-1/2 -translate-x-1/2 top-[6px] w-7 h-2 object-contain opacity-95"
-                        style={{ imageRendering: 'pixelated', filter: themePalette.spriteFilter }}
+                        classNome="absolute left-1/2 -translate-x-1/2 top-[6px] w-7 h-2 object-contain opacity-95"
+                        style={{ imageRendering: 'pixelated', filter: themePalette.spriteFiltrar }}
                         draggable={false}
                       />
                     </div>
@@ -1952,19 +1952,19 @@ export function OfficePanel() {
 
                   <button
                     onClick={() => setSelectedAgent(agent)}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-500 hover:scale-110"
+                    classNome="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-500 hover:scale-110"
                     style={{ left: `${x}%`, top: `${y}%` }}
                   >
-                    <div className="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/70 border border-white/10 text-white text-[11px] px-2 py-0.5 shadow-[0_0_12px_rgba(0,0,0,0.4)]">
-                      <span className={`inline-block w-2 h-2 rounded-full ${statusDot[agent.status]} mr-1`} />
+                    <div classNome="absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/70 border border-white/10 text-white text-[11px] px-2 py-0.5 shadow-[0_0_12px_rgba(0,0,0,0.4)]">
+                      <span classNome={`inline-block w-2 h-2 rounded-full ${statusDot[agent.status]} mr-1`} />
                       {agent.name}
                     </div>
-                    <div className="absolute -top-12 left-1/2 -translate-x-1/2 text-sm">
-                      <span className={`${agent.status === 'busy' ? 'animate-bounce' : 'animate-pulse'}`}>{getStatusEmote(agent.status)}</span>
+                    <div classNome="absolute -top-12 left-1/2 -translate-x-1/2 text-sm">
+                      <span classNome={`${agent.status === 'busy' ? 'animate-bounce' : 'animate-pulse'}`}>{getStatusEmote(agent.status)}</span>
                     </div>
-                    <div className="relative w-8 h-12 mx-auto">
+                    <div classNome="relative w-8 h-12 mx-auto">
                       <div
-                        className={`absolute inset-0 ${transitioningAgentIds.has(agent.id) || isMoving ? 'animate-pulse' : ''}`}
+                        classNome={`absolute inset-0 ${transitioningAgentIds.has(agent.id) || isMoving ? 'animate-pulse' : ''}`}
                         style={{
                           backgroundImage: `url('/office-sprites/cc0-hero/player_full_animation.png')`,
                           backgroundRepeat: 'no-repeat',
@@ -1976,19 +1976,19 @@ export function OfficePanel() {
                             return `${xPct}% ${yPct}%`
                           })(),
                           imageRendering: 'pixelated',
-                          filter: themePalette.spriteFilter,
+                          filter: themePalette.spriteFiltrar,
                           transform: isMoving && Math.abs(direction.dx) > Math.abs(direction.dy) && direction.dx < 0 ? 'scaleX(-1)' : undefined,
                           transformOrigin: 'center',
                         }}
                       />
-                      <div className={`absolute left-[8px] top-[14px] w-4 h-3 ${hashColor(agent.name)} border border-black/60`} />
+                      <div classNome={`absolute left-[8px] top-[14px] w-4 h-3 ${hashColor(agent.name)} border border-black/60`} />
                     </div>
-                    {!isMoving && <div className="text-[9px] text-slate-300 font-mono mt-0.5">#{seatLabel}</div>}
+                    {!isMoving && <div classNome="text-[9px] text-slate-300 font-mono mt-0.5">#{seatLabel}</div>}
                   </button>
 
                   {agentActionOverrides.has(agent.id) && (
                     <div
-                      className="absolute -translate-x-1/2 text-[9px] px-1.5 py-0.5 rounded bg-black/70 border border-white/15 text-cyan-200"
+                      classNome="absolute -translate-x-1/2 text-[9px] px-1.5 py-0.5 rounded bg-black/70 border border-white/15 text-cyan-200"
                       style={{ left: `${x}%`, top: `calc(${y}% - 24px)` }}
                     >
                       {agentActionOverrides.get(agent.id)}
@@ -1997,7 +1997,7 @@ export function OfficePanel() {
 
                   {(transitioningAgentIds.has(agent.id) || isMoving) && (
                     <div
-                      className="absolute -translate-x-1/2 text-[9px] text-slate-200/85 font-medium px-1.5 py-0.5 rounded bg-black/45 border border-white/10"
+                      classNome="absolute -translate-x-1/2 text-[9px] text-slate-200/85 font-medium px-1.5 py-0.5 rounded bg-black/45 border border-white/10"
                       style={{ left: `${x}%`, top: `calc(${y}% + 22px)` }}
                     >
                       moving
@@ -2005,7 +2005,7 @@ export function OfficePanel() {
                   )}
 
                   <div
-                    className="absolute text-[9px] text-slate-500/70 font-mono pointer-events-none"
+                    classNome="absolute text-[9px] text-slate-500/70 font-mono pointer-events-none"
                     style={{ left: `${x}%`, top: `calc(${y}% + 38px)` }}
                   >
                     {zoneLabel}
@@ -2016,7 +2016,7 @@ export function OfficePanel() {
 
             {showMinimap && (
             <div
-              className="absolute right-3 bottom-3 z-30 w-44 h-28 rounded-md border border-white/15 bg-[#0b1220]/85 backdrop-blur-sm p-1.5"
+              classNome="absolute right-3 bottom-3 z-30 w-44 h-28 rounded-md border border-white/15 bg-[#0b1220]/85 backdrop-blur-sm p-1.5"
               onMouseDown={(event) => event.stopPropagation()}
               onClick={(event) => {
                 event.stopPropagation()
@@ -2027,20 +2027,20 @@ export function OfficePanel() {
                 focusMapPoint(x, y)
               }}
             >
-              <div className="text-[9px] text-slate-300 uppercase tracking-wider mb-1">Minimap</div>
-              <div className="relative w-full h-[calc(100%-16px)] rounded-sm overflow-hidden border border-white/10 bg-[#111a2f]">
+              <div classNome="text-[9px] text-slate-300 uppercase tracking-wider mb-1">Minimap</div>
+              <div classNome="relative w-full h-[calc(100%-16px)] rounded-sm overflow-hidden border border-white/10 bg-[#111a2f]">
                 {roomLayoutState.map((room) => (
                   <div
                     key={`mini-${room.id}`}
-                    className="absolute border border-white/15 bg-white/10"
+                    classNome="absolute border border-white/15 bg-white/10"
                     style={{ left: `${room.x}%`, top: `${room.y}%`, width: `${room.w}%`, height: `${room.h}%` }}
                   />
                 ))}
-                <div className="absolute left-[14%] top-[47%] w-[72%] h-[4%] bg-[#6f80a7]" />
+                <div classNome="absolute left-[14%] top-[47%] w-[72%] h-[4%] bg-[#6f80a7]" />
                 {renderedWorkers.map((worker) => (
                   <button
                     key={`mini-worker-${worker.agent.id}`}
-                    className={`absolute w-2.5 h-2.5 rounded-full -translate-x-1/2 -translate-y-1/2 ${hashColor(worker.agent.name)} border border-black/40`}
+                    classNome={`absolute w-2.5 h-2.5 rounded-full -translate-x-1/2 -translate-y-1/2 ${hashColor(worker.agent.name)} border border-black/40`}
                     style={{ left: `${worker.x}%`, top: `${worker.y}%` }}
                     onClick={(event) => {
                       event.stopPropagation()
@@ -2056,24 +2056,24 @@ export function OfficePanel() {
 
             {showEvents && (
             <div
-              className="absolute left-3 bottom-3 z-30 w-72 rounded-md border border-white/15 bg-[#0b1220]/88 backdrop-blur-sm p-2.5 space-y-2"
+              classNome="absolute left-3 bottom-3 z-30 w-72 rounded-md border border-white/15 bg-[#0b1220]/88 backdrop-blur-sm p-2.5 space-y-2"
               onWheel={(event) => event.stopPropagation()}
             >
-              <div className="text-[10px] text-slate-300 uppercase tracking-wider">Office Events</div>
-              <div className="flex items-center gap-2 text-[10px] text-slate-400">
-                <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-300" />Busy Heat</span>
-                <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-300" />Idle Heat</span>
-                <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-sky-300" />Other</span>
+              <div classNome="text-[10px] text-slate-300 uppercase tracking-wider">Office Events</div>
+              <div classNome="flex items-center gap-2 text-[10px] text-slate-400">
+                <span classNome="inline-flex items-center gap-1"><span classNome="w-2 h-2 rounded-full bg-amber-300" />Busy Heat</span>
+                <span classNome="inline-flex items-center gap-1"><span classNome="w-2 h-2 rounded-full bg-emerald-300" />Idle Heat</span>
+                <span classNome="inline-flex items-center gap-1"><span classNome="w-2 h-2 rounded-full bg-sky-300" />Other</span>
               </div>
-              <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1" onWheel={(event) => event.stopPropagation()}>
+              <div classNome="space-y-1.5 max-h-36 overflow-y-auto pr-1" onWheel={(event) => event.stopPropagation()}>
                 {officeEvents.length === 0 && (
-                  <div className="text-[11px] text-slate-500">No events yet. Click a room/desk or run an action.</div>
+                  <div classNome="text-[11px] text-slate-500">No events yet. Click a room/desk or run an action.</div>
                 )}
                 {officeEvents.map((event) => (
-                  <div key={event.id} className="text-[11px] rounded px-2 py-1 bg-black/35 border border-white/10">
-                    <div className="flex items-center justify-between gap-2">
+                  <div key={event.id} classNome="text-[11px] rounded px-2 py-1 bg-black/35 border border-white/10">
+                    <div classNome="flex items-center justify-between gap-2">
                       <span
-                        className={`uppercase text-[9px] ${
+                        classNome={`uppercase text-[9px] ${
                           event.severity === 'good'
                             ? 'text-emerald-300'
                             : event.severity === 'warn'
@@ -2083,37 +2083,37 @@ export function OfficePanel() {
                       >
                         {event.kind}
                       </span>
-                      <span className="text-slate-500 text-[9px]">{formatLastSeen(Math.floor(event.at / 1000))}</span>
+                      <span classNome="text-slate-500 text-[9px]">{formatLastSeen(Math.floor(event.at / 1000))}</span>
                     </div>
-                    <div className="text-slate-200">{event.message}</div>
+                    <div classNome="text-slate-200">{event.message}</div>
                   </div>
                 ))}
               </div>
               {selectedHotspot && (
-                <div className="rounded border border-white/10 bg-black/35 p-2">
-                  <div className="flex items-center justify-between">
-                    <div className="text-[11px] font-semibold text-white">{selectedHotspot.label}</div>
-                    <div className="text-[9px] uppercase text-slate-400">{selectedHotspot.kind}</div>
+                <div classNome="rounded border border-white/10 bg-black/35 p-2">
+                  <div classNome="flex items-center justify-between">
+                    <div classNome="text-[11px] font-semibold text-white">{selectedHotspot.label}</div>
+                    <div classNome="text-[9px] uppercase text-slate-400">{selectedHotspot.kind}</div>
                   </div>
-                  <div className="mt-1.5 space-y-1">
+                  <div classNome="mt-1.5 space-y-1">
                     {selectedHotspot.stats.map((line) => (
-                      <div key={line} className="text-[10px] text-slate-300">{line}</div>
+                      <div key={line} classNome="text-[10px] text-slate-300">{line}</div>
                     ))}
                   </div>
-                  <div className="mt-2 grid grid-cols-3 gap-1">
-                    <button onClick={() => nudgeSelectedHotspot(0, -1)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Up</button>
-                    <button onClick={() => nudgeSelectedHotspot(-1, 0)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Left</button>
-                    <button onClick={() => nudgeSelectedHotspot(1, 0)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Right</button>
-                    <button onClick={() => nudgeSelectedHotspot(0, 1)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Down</button>
-                    <button onClick={() => nudgeSelectedHotspot(-0.5, 0)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Fine -X</button>
-                    <button onClick={() => nudgeSelectedHotspot(0.5, 0)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Fine +X</button>
+                  <div classNome="mt-2 grid grid-cols-3 gap-1">
+                    <button onClick={() => nudgeSelectedHotspot(0, -1)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Up</button>
+                    <button onClick={() => nudgeSelectedHotspot(-1, 0)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Left</button>
+                    <button onClick={() => nudgeSelectedHotspot(1, 0)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Right</button>
+                    <button onClick={() => nudgeSelectedHotspot(0, 1)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Down</button>
+                    <button onClick={() => nudgeSelectedHotspot(-0.5, 0)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Fine -X</button>
+                    <button onClick={() => nudgeSelectedHotspot(0.5, 0)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Fine +X</button>
                   </div>
                   {selectedHotspot.kind === 'room' && (
-                    <div className="mt-1.5 grid grid-cols-2 gap-1">
-                      <button onClick={() => resizeSelectedRoom(1, 0)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Wider</button>
-                      <button onClick={() => resizeSelectedRoom(-1, 0)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Narrower</button>
-                      <button onClick={() => resizeSelectedRoom(0, 1)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Taller</button>
-                      <button onClick={() => resizeSelectedRoom(0, -1)} className="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Shorter</button>
+                    <div classNome="mt-1.5 grid grid-cols-2 gap-1">
+                      <button onClick={() => resizeSelectedRoom(1, 0)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Wider</button>
+                      <button onClick={() => resizeSelectedRoom(-1, 0)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Narrower</button>
+                      <button onClick={() => resizeSelectedRoom(0, 1)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Taller</button>
+                      <button onClick={() => resizeSelectedRoom(0, -1)} classNome="text-[10px] rounded border border-white/10 py-1 hover:bg-white/10">Shorter</button>
                     </div>
                   )}
                 </div>
@@ -2123,30 +2123,30 @@ export function OfficePanel() {
           </div>
         </div>
       ) : (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-muted-foreground">
+        <div classNome="space-y-6">
+          <div classNome="flex items-center justify-between">
+            <div classNome="text-sm text-muted-foreground">
               Segmented by{' '}
-              <span className="font-medium text-foreground">
+              <span classNome="font-medium text-foreground">
                 {orgSegmentMode === 'category' ? 'category' : orgSegmentMode}
               </span>
             </div>
-            <div className="flex rounded-md overflow-hidden border border-border">
+            <div classNome="flex rounded-md overflow-hidden border border-border">
               <button
                 onClick={() => setOrgSegmentMode('category')}
-                className={`px-3 py-1 text-sm transition-smooth ${orgSegmentMode === 'category' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
+                classNome={`px-3 py-1 text-sm transition-smooth ${orgSegmentMode === 'category' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
               >
                 Category
               </button>
               <button
                 onClick={() => setOrgSegmentMode('role')}
-                className={`px-3 py-1 text-sm transition-smooth ${orgSegmentMode === 'role' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
+                classNome={`px-3 py-1 text-sm transition-smooth ${orgSegmentMode === 'role' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
               >
                 Role
               </button>
               <button
                 onClick={() => setOrgSegmentMode('status')}
-                className={`px-3 py-1 text-sm transition-smooth ${orgSegmentMode === 'status' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
+                classNome={`px-3 py-1 text-sm transition-smooth ${orgSegmentMode === 'status' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'}`}
               >
                 Status
               </button>
@@ -2154,27 +2154,27 @@ export function OfficePanel() {
           </div>
 
           {[...orgGroups.entries()].map(([segment, members]) => (
-            <div key={segment} className="bg-card border border-border rounded-xl p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-1 h-6 bg-primary rounded-full" />
-                <h3 className="font-semibold text-foreground">{segment}</h3>
-                <span className="text-xs text-muted-foreground ml-1">({members.length})</span>
+            <div key={segment} classNome="bg-card border border-border rounded-xl p-5">
+              <div classNome="flex items-center gap-2 mb-4">
+                <div classNome="w-1 h-6 bg-primary rounded-full" />
+                <h3 classNome="font-semibold text-foreground">{segment}</h3>
+                <span classNome="text-xs text-muted-foreground ml-1">({members.length})</span>
               </div>
-              <div className="flex flex-wrap gap-3">
+              <div classNome="flex flex-wrap gap-3">
                 {members.map(agent => (
                   <div
                     key={agent.id}
                     onClick={() => setSelectedAgent(agent)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer transition-all hover:scale-[1.02] ${statusGlow[agent.status]}`}
+                    classNome={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer transition-all hover:scale-[1.02] ${statusGlow[agent.status]}`}
                     style={{ background: 'var(--card)' }}
                   >
-                    <div className={`w-8 h-8 rounded-full ${hashColor(agent.name)} flex items-center justify-center text-white font-bold text-xs`}>
+                    <div classNome={`w-8 h-8 rounded-full ${hashColor(agent.name)} flex items-center justify-center text-white font-bold text-xs`}>
                       {getInitials(agent.name)}
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-foreground">{agent.name}</div>
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <span className={`w-1.5 h-1.5 rounded-full ${statusDot[agent.status]}`} />
+                      <div classNome="text-sm font-medium text-foreground">{agent.name}</div>
+                      <div classNome="flex items-center gap-1 text-xs text-muted-foreground">
+                        <span classNome={`w-1.5 h-1.5 rounded-full ${statusDot[agent.status]}`} />
                         {statusLabel[agent.status]}
                       </div>
                     </div>
@@ -2187,80 +2187,80 @@ export function OfficePanel() {
       )}
 
       {selectedAgent && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedAgent(null)}>
-          <div className="bg-card border border-border rounded-xl max-w-sm w-full p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex items-center gap-3">
-                <div className={`w-14 h-14 rounded-full ${hashColor(selectedAgent.name)} flex items-center justify-center text-white font-bold text-lg ring-2 ring-offset-2 ring-offset-card ${selectedAgent.status === 'busy' ? 'ring-yellow-500' : selectedAgent.status === 'idle' ? 'ring-green-500' : selectedAgent.status === 'error' ? 'ring-red-500' : 'ring-gray-600'}`}>
+        <div classNome="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedAgent(null)}>
+          <div classNome="bg-card border border-border rounded-xl max-w-sm w-full p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div classNome="flex justify-between items-start mb-4">
+              <div classNome="flex items-center gap-3">
+                <div classNome={`w-14 h-14 rounded-full ${hashColor(selectedAgent.name)} flex items-center justify-center text-white font-bold text-lg ring-2 ring-offset-2 ring-offset-card ${selectedAgent.status === 'busy' ? 'ring-yellow-500' : selectedAgent.status === 'idle' ? 'ring-green-500' : selectedAgent.status === 'error' ? 'ring-red-500' : 'ring-gray-600'}`}>
                   {getInitials(selectedAgent.name)}
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">{selectedAgent.name}</h3>
-                  <p className="text-sm text-muted-foreground">{selectedAgent.role}</p>
+                  <h3 classNome="text-lg font-bold text-foreground">{selectedAgent.name}</h3>
+                  <p classNome="text-sm text-muted-foreground">{selectedAgent.role}</p>
                 </div>
               </div>
-              <button onClick={() => setSelectedAgent(null)} className="text-muted-foreground hover:text-foreground text-xl">×</button>
+              <button onClick={() => setSelectedAgent(null)} classNome="text-muted-foreground hover:text-foreground text-xl">×</button>
             </div>
 
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center gap-2">
-                <span className={`w-3 h-3 rounded-full ${statusDot[selectedAgent.status]}`} />
-                <span className="font-medium text-foreground">{statusLabel[selectedAgent.status]}</span>
-                <span className="text-muted-foreground ml-auto">{formatLastSeen(selectedAgent.last_seen)}</span>
+            <div classNome="space-y-3 text-sm">
+              <div classNome="flex items-center gap-2">
+                <span classNome={`w-3 h-3 rounded-full ${statusDot[selectedAgent.status]}`} />
+                <span classNome="font-medium text-foreground">{statusLabel[selectedAgent.status]}</span>
+                <span classNome="text-muted-foreground ml-auto">{formatLastSeen(selectedAgent.last_seen)}</span>
               </div>
 
               {selectedAgent.last_activity && (
-                <div className="bg-secondary rounded-lg p-3">
-                  <span className="text-xs text-muted-foreground block mb-1">Current Activity</span>
-                  <span className="text-foreground text-sm">{selectedAgent.last_activity}</span>
+                <div classNome="bg-secondary rounded-lg p-3">
+                  <span classNome="text-xs text-muted-foreground block mb-1">Current Activity</span>
+                  <span classNome="text-foreground text-sm">{selectedAgent.last_activity}</span>
                 </div>
               )}
 
               {selectedAgent.taskStats && (
-                <div className="grid grid-cols-4 gap-2">
-                  <div className="text-center bg-secondary rounded-lg p-2">
-                    <div className="text-lg font-bold text-foreground">{selectedAgent.taskStats.total}</div>
-                    <div className="text-[10px] text-muted-foreground">Total</div>
+                <div classNome="grid grid-cols-4 gap-2">
+                  <div classNome="text-center bg-secondary rounded-lg p-2">
+                    <div classNome="text-lg font-bold text-foreground">{selectedAgent.taskStats.total}</div>
+                    <div classNome="text-[10px] text-muted-foreground">Total</div>
                   </div>
-                  <div className="text-center bg-secondary rounded-lg p-2">
-                    <div className="text-lg font-bold text-blue-400">{selectedAgent.taskStats.assigned}</div>
-                    <div className="text-[10px] text-muted-foreground">Assigned</div>
+                  <div classNome="text-center bg-secondary rounded-lg p-2">
+                    <div classNome="text-lg font-bold text-blue-400">{selectedAgent.taskStats.assigned}</div>
+                    <div classNome="text-[10px] text-muted-foreground">Assigned</div>
                   </div>
-                  <div className="text-center bg-secondary rounded-lg p-2">
-                    <div className="text-lg font-bold text-yellow-400">{selectedAgent.taskStats.in_progress}</div>
-                    <div className="text-[10px] text-muted-foreground">Active</div>
+                  <div classNome="text-center bg-secondary rounded-lg p-2">
+                    <div classNome="text-lg font-bold text-yellow-400">{selectedAgent.taskStats.in_progress}</div>
+                    <div classNome="text-[10px] text-muted-foreground">Ativo</div>
                   </div>
-                  <div className="text-center bg-secondary rounded-lg p-2">
-                    <div className="text-lg font-bold text-[#b4a68c]">{selectedAgent.taskStats.completed}</div>
-                    <div className="text-[10px] text-muted-foreground">Done</div>
+                  <div classNome="text-center bg-secondary rounded-lg p-2">
+                    <div classNome="text-lg font-bold text-[#b4a68c]">{selectedAgent.taskStats.completed}</div>
+                    <div classNome="text-[10px] text-muted-foreground">Done</div>
                   </div>
                 </div>
               )}
 
               {selectedAgent.session_key && (
-                <div className="text-xs text-muted-foreground">
-                  <span className="font-medium">Session:</span> <code className="font-mono">{selectedAgent.session_key}</code>
+                <div classNome="text-xs text-muted-foreground">
+                  <span classNome="font-medium">Session:</span> <code classNome="font-mono">{selectedAgent.session_key}</code>
                 </div>
               )}
 
-              <div className="pt-1">
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Quick Actions</div>
-                <div className="grid grid-cols-3 gap-1.5">
+              <div classNome="pt-1">
+                <div classNome="text-[10px] uppercase tracking-wider text-muted-foreground mb-1.5">Ações Rápidas</div>
+                <div classNome="grid grid-cols-3 gap-1.5">
                   <button
                     onClick={() => executeAgentAction(selectedAgent, 'focus')}
-                    className="h-8 px-2 rounded border border-border bg-secondary text-[11px] hover:bg-surface-2"
+                    classNome="h-8 px-2 rounded border border-border bg-secondary text-[11px] hover:bg-surface-2"
                   >
                     Focus
                   </button>
                   <button
                     onClick={() => executeAgentAction(selectedAgent, 'pair')}
-                    className="h-8 px-2 rounded border border-border bg-secondary text-[11px] hover:bg-surface-2"
+                    classNome="h-8 px-2 rounded border border-border bg-secondary text-[11px] hover:bg-surface-2"
                   >
                     Pair
                   </button>
                   <button
                     onClick={() => executeAgentAction(selectedAgent, 'break')}
-                    className="h-8 px-2 rounded border border-border bg-secondary text-[11px] hover:bg-surface-2"
+                    classNome="h-8 px-2 rounded border border-border bg-secondary text-[11px] hover:bg-surface-2"
                   >
                     Break
                   </button>
@@ -2268,15 +2268,15 @@ export function OfficePanel() {
               </div>
 
               {isLocalMode && (
-                <div className="pt-1">
+                <div classNome="pt-1">
                   <button
                     onClick={() => openFlightDeck(selectedAgent)}
                     disabled={flightDeckLaunching}
-                    className="w-full h-9 px-3 rounded-md border border-border bg-secondary text-foreground text-xs hover:bg-surface-2 transition-smooth"
+                    classNome="w-full h-9 px-3 rounded-md border border-border bg-secondary text-foreground text-xs hover:bg-surface-2 transition-smooth"
                   >
                     {flightDeckLaunching ? 'Opening Flight Deck...' : 'Open in Flight Deck'}
                   </button>
-                  <div className="text-[10px] text-muted-foreground mt-1">
+                  <div classNome="text-[10px] text-muted-foreground mt-1">
                     Private/pro companion app for session deep-dive
                   </div>
                 </div>
@@ -2287,42 +2287,42 @@ export function OfficePanel() {
       )}
 
       {showFlightDeckModal && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[60] p-4" onClick={() => setShowFlightDeckModal(false)}>
-          <div className="bg-card border border-border rounded-xl max-w-md w-full p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-start justify-between gap-3">
+        <div classNome="fixed inset-0 bg-black/60 flex items-center justify-center z-[60] p-4" onClick={() => setMostrarFlightDeckModal(false)}>
+          <div classNome="bg-card border border-border rounded-xl max-w-md w-full p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div classNome="flex items-start justify-between gap-3">
               <div>
-                <h3 className="text-lg font-semibold text-foreground">Flight Deck Required</h3>
-                <p className="text-sm text-muted-foreground mt-1">
+                <h3 classNome="text-lg font-semibold text-foreground">Flight Deck Required</h3>
+                <p classNome="text-sm text-muted-foreground mt-1">
                   Flight Deck is the private/pro companion app for Mission Control.
                 </p>
               </div>
               <button
-                onClick={() => setShowFlightDeckModal(false)}
-                className="text-muted-foreground hover:text-foreground text-xl"
+                onClick={() => setMostrarFlightDeckModal(false)}
+                classNome="text-muted-foreground hover:text-foreground text-xl"
               >
                 ×
               </button>
             </div>
 
-            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-3 text-sm text-muted-foreground">
+            <div classNome="mt-4 rounded-lg border border-border bg-secondary/40 p-3 text-sm text-muted-foreground">
               It looks like Flight Deck is not installed on this machine.
               Install it to open agent sessions with richer controls and diagnostics.
             </div>
 
-            <div className="mt-5 flex items-center justify-end gap-2">
+            <div classNome="mt-5 flex items-center justify-end gap-2">
               <button
-                onClick={() => setShowFlightDeckModal(false)}
-                className="h-9 px-3 rounded-md border border-border text-sm text-foreground hover:bg-secondary/60 transition-smooth"
+                onClick={() => setMostrarFlightDeckModal(false)}
+                classNome="h-9 px-3 rounded-md border border-border text-sm text-foreground hover:bg-secondary/60 transition-smooth"
               >
                 Maybe Later
               </button>
               <a
-                href={flightDeckDownloadUrl}
+                href={flightDeckBaixarUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="h-9 px-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth inline-flex items-center"
+                classNome="h-9 px-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth inline-flex items-center"
               >
-                Download Flight Deck
+                Baixar Flight Deck
               </a>
             </div>
           </div>
@@ -2330,10 +2330,10 @@ export function OfficePanel() {
       )}
 
       {launchToast && (
-        <div className="fixed right-4 bottom-4 z-[70] max-w-sm rounded-lg border border-border bg-card/95 backdrop-blur px-4 py-3 shadow-2xl">
-          <div className="flex items-start gap-2">
+        <div classNome="fixed right-4 bottom-4 z-[70] max-w-sm rounded-lg border border-border bg-card/95 backdrop-blur px-4 py-3 shadow-2xl">
+          <div classNome="flex items-start gap-2">
             <span
-              className={`mt-1 inline-block h-2.5 w-2.5 rounded-full ${
+              classNome={`mt-1 inline-block h-2.5 w-2.5 rounded-full ${
                 launchToast.kind === 'success'
                   ? 'bg-[#b4a68c]'
                   : launchToast.kind === 'info'
@@ -2342,8 +2342,8 @@ export function OfficePanel() {
               }`}
             />
             <div>
-              <div className="text-sm font-semibold text-foreground">{launchToast.title}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">{launchToast.detail}</div>
+              <div classNome="text-sm font-semibold text-foreground">{launchToast.title}</div>
+              <div classNome="text-xs text-muted-foreground mt-0.5">{launchToast.detail}</div>
             </div>
           </div>
         </div>

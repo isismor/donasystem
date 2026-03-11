@@ -100,15 +100,15 @@ export function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="p-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div classNome="p-6">
+        <div classNome="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-24 rounded-lg shimmer" />
+            <div key={i} classNome="h-24 rounded-lg shimmer" />
           ))}
         </div>
-        <div className="grid lg:grid-cols-3 gap-4">
+        <div classNome="grid lg:grid-cols-3 gap-4">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-40 rounded-lg shimmer" />
+            <div key={i} classNome="h-40 rounded-lg shimmer" />
           ))}
         </div>
       </div>
@@ -120,21 +120,21 @@ export function Dashboard() {
     : null
 
   return (
-    <div className="p-5 space-y-5">
+    <div classNome="p-5 space-y-5">
       {/* Top Metric Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div classNome="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {isLocal ? (
           <>
-            <div className="cursor-pointer" onClick={() => navigateToPanel('sessions')}>
+            <div classNome="cursor-pointer" onClick={() => navigateToPanel('sessions')}>
               <MetricCard
-                label="Active Sessions"
+                label="Sessões Ativas"
                 value={claudeStats?.active_sessions ?? activeSessions}
                 total={claudeStats?.total_sessions ?? sessions.length}
                 icon={<SessionIcon />}
                 color="blue"
               />
             </div>
-            <div className="cursor-pointer" onClick={() => navigateToPanel('sessions')}>
+            <div classNome="cursor-pointer" onClick={() => navigateToPanel('sessions')}>
               <MetricCard
                 label="Projects"
                 value={claudeStats?.unique_projects ?? 0}
@@ -142,7 +142,7 @@ export function Dashboard() {
                 color="green"
               />
             </div>
-            <div className="cursor-pointer" onClick={() => navigateToPanel('tokens')}>
+            <div classNome="cursor-pointer" onClick={() => navigateToPanel('tokens')}>
               <MetricCard
                 label="Tokens Used"
                 value={formatTokensShort((claudeStats?.total_input_tokens ?? 0) + (claudeStats?.total_output_tokens ?? 0))}
@@ -151,7 +151,7 @@ export function Dashboard() {
                 color="purple"
               />
             </div>
-            <div className="cursor-pointer" onClick={() => navigateToPanel('tokens')}>
+            <div classNome="cursor-pointer" onClick={() => navigateToPanel('tokens')}>
               <MetricCard
                 label="Est. Cost"
                 value={subscriptionLabel ? `Included` : `$${(claudeStats?.total_estimated_cost ?? 0).toFixed(2)}`}
@@ -163,16 +163,16 @@ export function Dashboard() {
           </>
         ) : (
           <>
-            <div className="cursor-pointer" onClick={() => navigateToPanel('history')}>
+            <div classNome="cursor-pointer" onClick={() => navigateToPanel('history')}>
               <MetricCard
-                label="Active Sessions"
+                label="Sessões Ativas"
                 value={activeSessions}
                 total={sessions.length}
                 icon={<SessionIcon />}
                 color="blue"
               />
             </div>
-            <div className="cursor-pointer" onClick={() => navigateToPanel('agents')}>
+            <div classNome="cursor-pointer" onClick={() => navigateToPanel('agents')}>
               <MetricCard
                 label="Agents Online"
                 value={onlineAgents}
@@ -181,7 +181,7 @@ export function Dashboard() {
                 color="green"
               />
             </div>
-            <div className="cursor-pointer" onClick={() => navigateToPanel('tasks')}>
+            <div classNome="cursor-pointer" onClick={() => navigateToPanel('tasks')}>
               <MetricCard
                 label="Tasks Running"
                 value={runningTasks}
@@ -190,7 +190,7 @@ export function Dashboard() {
                 color="purple"
               />
             </div>
-            <div className="cursor-pointer" onClick={() => navigateToPanel('logs')}>
+            <div classNome="cursor-pointer" onClick={() => navigateToPanel('logs')}>
               <MetricCard
                 label="Errors (24h)"
                 value={errorCount}
@@ -203,33 +203,33 @@ export function Dashboard() {
       </div>
 
       {/* Three-column layout */}
-      <div className="grid lg:grid-cols-3 gap-4">
-        {/* System Health */}
-        <div className="panel">
-          <div className="panel-header">
-            <h3 className="text-sm font-semibold text-foreground">System Health</h3>
+      <div classNome="grid lg:grid-cols-3 gap-4">
+        {/* Saúde do Sistema */}
+        <div classNome="panel">
+          <div classNome="panel-header">
+            <h3 classNome="text-sm font-semibold text-foreground">Saúde do Sistema</h3>
             {isLocal ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+              <span classNome="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                <span classNome="w-1.5 h-1.5 rounded-full bg-blue-400" />
                 Local
               </span>
             ) : (
               <StatusBadge connected={connection.isConnected} />
             )}
           </div>
-          <div className="panel-body space-y-3">
+          <div classNome="panel-body space-y-3">
             {isLocal ? (
               <HealthRow label="Mode" value="Local" status="good" />
             ) : (
               <HealthRow
                 label="Gateway"
-                value={connection.isConnected ? 'Connected' : 'Disconnected'}
+                value={connection.isConnected ? 'Conectado' : 'Desconectado'}
                 status={connection.isConnected ? 'good' : 'bad'}
               />
             )}
             {memPct != null && (
               <HealthRow
-                label="Memory"
+                label="Memória"
                 value={`${memPct}%`}
                 status={memPct > 90 ? 'bad' : memPct > 70 ? 'warn' : 'good'}
                 bar={memPct}
@@ -243,7 +243,7 @@ export function Dashboard() {
               />
             )}
             {systemStats?.uptime != null && (
-              <HealthRow label="Uptime" value={formatUptime(systemStats.uptime)} status="good" />
+              <HealthRow label="Tempo ativo" value={formatTempo ativo(systemStats.uptime)} status="good" />
             )}
             {dbStats && (
               <HealthRow
@@ -262,40 +262,40 @@ export function Dashboard() {
 
         {/* Middle panel: Claude Stats (local) or Security & Audit (full) */}
         {isLocal ? (
-          <div className="panel cursor-pointer hover:border-primary/30 transition-smooth" onClick={() => navigateToPanel('sessions')}>
-            <div className="panel-header">
-              <h3 className="text-sm font-semibold text-foreground">Claude Code Stats</h3>
-              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-2xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+          <div classNome="panel cursor-pointer hover:border-primary/30 transition-smooth" onClick={() => navigateToPanel('sessions')}>
+            <div classNome="panel-header">
+              <h3 classNome="text-sm font-semibold text-foreground">Claude Code Stats</h3>
+              <span classNome="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-2xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
                 {claudeStats?.total_sessions ?? 0} sessions
               </span>
             </div>
-            <div className="panel-body space-y-3">
+            <div classNome="panel-body space-y-3">
               <StatRow label="Total sessions" value={claudeStats?.total_sessions ?? 0} />
               <StatRow label="Active now" value={claudeStats?.active_sessions ?? 0} />
               <StatRow label="Unique projects" value={claudeStats?.unique_projects ?? 0} />
-              <div className="pt-1 border-t border-border/50 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Input tokens</span>
-                  <span className="text-xs font-medium font-mono-tight text-muted-foreground">
+              <div classNome="pt-1 border-t border-border/50 space-y-2">
+                <div classNome="flex items-center justify-between">
+                  <span classNome="text-xs text-muted-foreground">Input tokens</span>
+                  <span classNome="text-xs font-medium font-mono-tight text-muted-foreground">
                     {formatTokensShort(claudeStats?.total_input_tokens ?? 0)}
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Output tokens</span>
-                  <span className="text-xs font-medium font-mono-tight text-muted-foreground">
+                <div classNome="flex items-center justify-between">
+                  <span classNome="text-xs text-muted-foreground">Output tokens</span>
+                  <span classNome="text-xs font-medium font-mono-tight text-muted-foreground">
                     {formatTokensShort(claudeStats?.total_output_tokens ?? 0)}
                   </span>
                 </div>
               </div>
-              <div className="pt-1 border-t border-border/50">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Estimated cost</span>
+              <div classNome="pt-1 border-t border-border/50">
+                <div classNome="flex items-center justify-between">
+                  <span classNome="text-xs text-muted-foreground">Estimated cost</span>
                   {subscriptionLabel ? (
-                    <span className="text-xs font-medium font-mono-tight text-[#b4a68c]">
+                    <span classNome="text-xs font-medium font-mono-tight text-[#b4a68c]">
                       Included ({subscriptionLabel})
                     </span>
                   ) : (
-                    <span className={`text-xs font-medium font-mono-tight ${
+                    <span classNome={`text-xs font-medium font-mono-tight ${
                       (claudeStats?.total_estimated_cost ?? 0) > 10 ? 'text-[#c49a6c]' : 'text-[#b4a68c]'
                     }`}>
                       ${(claudeStats?.total_estimated_cost ?? 0).toFixed(2)}
@@ -306,16 +306,16 @@ export function Dashboard() {
             </div>
           </div>
         ) : (
-          <div className="panel cursor-pointer hover:border-primary/30 transition-smooth" onClick={() => navigateToPanel('audit')}>
-            <div className="panel-header">
-              <h3 className="text-sm font-semibold text-foreground">Security & Audit</h3>
+          <div classNome="panel cursor-pointer hover:border-primary/30 transition-smooth" onClick={() => navigateToPanel('audit')}>
+            <div classNome="panel-header">
+              <h3 classNome="text-sm font-semibold text-foreground">Security & Audit</h3>
               {dbStats && dbStats.audit.loginFailures > 0 && (
-                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-2xs font-medium bg-[#9e5c50]/10 text-[#9e5c50] border border-[#9e5c50]/20">
+                <span classNome="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-2xs font-medium bg-[#9e5c50]/10 text-[#9e5c50] border border-[#9e5c50]/20">
                   {dbStats.audit.loginFailures} failed login{dbStats.audit.loginFailures > 1 ? 's' : ''}
                 </span>
               )}
             </div>
-            <div className="panel-body space-y-3">
+            <div classNome="panel-body space-y-3">
               <StatRow label="Audit events (24h)" value={dbStats?.audit.day ?? 0} />
               <StatRow label="Audit events (7d)" value={dbStats?.audit.week ?? 0} />
               <StatRow
@@ -325,10 +325,10 @@ export function Dashboard() {
               />
               <StatRow label="Activities (24h)" value={dbStats?.activities.day ?? 0} />
               <StatRow label="Webhooks configured" value={dbStats?.webhookCount ?? 0} />
-              <div className="pt-1 border-t border-border/50">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Unread notifications</span>
-                  <span className={`text-xs font-medium font-mono-tight ${
+              <div classNome="pt-1 border-t border-border/50">
+                <div classNome="flex items-center justify-between">
+                  <span classNome="text-xs text-muted-foreground">Unread notifications</span>
+                  <span classNome={`text-xs font-medium font-mono-tight ${
                     (dbStats?.notifications.unread ?? 0) > 0 ? 'text-[#c49a6c]' : 'text-muted-foreground'
                   }`}>
                     {dbStats?.notifications.unread ?? 0}
@@ -341,34 +341,34 @@ export function Dashboard() {
 
         {/* Third column: GitHub (local) or Backup & Pipelines (full) */}
         {isLocal ? (
-          <div className="panel">
-            <div className="panel-header">
-              <h3 className="text-sm font-semibold text-foreground">GitHub</h3>
+          <div classNome="panel">
+            <div classNome="panel-header">
+              <h3 classNome="text-sm font-semibold text-foreground">GitHub</h3>
               {githubStats?.user && (
-                <span className="text-2xs text-muted-foreground font-mono-tight">@{githubStats.user.login}</span>
+                <span classNome="text-2xs text-muted-foreground font-mono-tight">@{githubStats.user.login}</span>
               )}
             </div>
-            <div className="panel-body space-y-3">
+            <div classNome="panel-body space-y-3">
               {githubStats ? (
                 <>
                   <StatRow label="Active repos" value={githubStats.repos.total} />
                   <StatRow label="Public" value={githubStats.repos.public} />
                   <StatRow label="Private" value={githubStats.repos.private} />
-                  <div className="pt-1 border-t border-border/50 space-y-2">
+                  <div classNome="pt-1 border-t border-border/50 space-y-2">
                     <StatRow label="Total stars" value={githubStats.repos.total_stars} />
                     <StatRow label="Total forks" value={githubStats.repos.total_forks} />
                     <StatRow label="Open issues" value={githubStats.repos.total_open_issues} />
                   </div>
                   {githubStats.topLanguages.length > 0 && (
-                    <div className="pt-1 border-t border-border/50">
-                      <div className="text-xs text-muted-foreground mb-1.5">Top languages</div>
-                      <div className="flex flex-wrap gap-1.5">
+                    <div classNome="pt-1 border-t border-border/50">
+                      <div classNome="text-xs text-muted-foreground mb-1.5">Top languages</div>
+                      <div classNome="flex flex-wrap gap-1.5">
                         {githubStats.topLanguages.map((lang: { name: string; count: number }) => (
                           <span
                             key={lang.name}
-                            className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-mono-tight bg-secondary text-muted-foreground"
+                            classNome="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-mono-tight bg-secondary text-muted-foreground"
                           >
-                            <span className={`w-1.5 h-1.5 rounded-full ${langColor(lang.name)}`} />
+                            <span classNome={`w-1.5 h-1.5 rounded-full ${langColor(lang.name)}`} />
                             {lang.name}
                           </span>
                         ))}
@@ -377,65 +377,65 @@ export function Dashboard() {
                   )}
                 </>
               ) : (
-                <div className="text-center py-4">
-                  <p className="text-xs text-muted-foreground">No GitHub token configured</p>
-                  <p className="text-2xs text-muted-foreground/60 mt-1">Set GITHUB_TOKEN in .env.local</p>
+                <div classNome="text-center py-4">
+                  <p classNome="text-xs text-muted-foreground">No GitHub token configured</p>
+                  <p classNome="text-2xs text-muted-foreground/60 mt-1">Set GITHUB_TOKEN in .env.local</p>
                 </div>
               )}
             </div>
           </div>
         ) : (
-          <div className="panel">
-            <div className="panel-header">
-              <h3 className="text-sm font-semibold text-foreground">Backup & Pipelines</h3>
+          <div classNome="panel">
+            <div classNome="panel-header">
+              <h3 classNome="text-sm font-semibold text-foreground">Backup & Pipelines</h3>
             </div>
-            <div className="panel-body space-y-3">
+            <div classNome="panel-body space-y-3">
               {dbStats?.backup ? (
                 <>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">Latest backup</span>
-                    <span className={`text-xs font-medium font-mono-tight ${
+                  <div classNome="flex items-center justify-between">
+                    <span classNome="text-xs text-muted-foreground">Latest backup</span>
+                    <span classNome={`text-xs font-medium font-mono-tight ${
                       dbStats.backup.age_hours > 48 ? 'text-[#9e5c50]' :
                       dbStats.backup.age_hours > 24 ? 'text-[#c49a6c]' : 'text-[#b4a68c]'
                     }`}>
-                      {dbStats.backup.age_hours < 1 ? '<1h ago' : `${dbStats.backup.age_hours}h ago`}
+                      {dbStats.backup.age_hours < 1 ? '<1h atrás' : `${dbStats.backup.age_hours}h atrás`}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">Backup size</span>
-                    <span className="text-xs font-mono-tight text-muted-foreground">
+                  <div classNome="flex items-center justify-between">
+                    <span classNome="text-xs text-muted-foreground">Backup size</span>
+                    <span classNome="text-xs font-mono-tight text-muted-foreground">
                       {formatBytes(dbStats.backup.size)}
                     </span>
                   </div>
                 </>
               ) : (
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Latest backup</span>
-                  <span className="text-xs font-medium text-[#c49a6c]">None</span>
+                <div classNome="flex items-center justify-between">
+                  <span classNome="text-xs text-muted-foreground">Latest backup</span>
+                  <span classNome="text-xs font-medium text-[#c49a6c]">None</span>
                 </div>
               )}
-              <div className="pt-1 border-t border-border/50 space-y-2">
+              <div classNome="pt-1 border-t border-border/50 space-y-2">
                 <StatRow label="Active pipelines" value={dbStats?.pipelines.active ?? 0} />
                 <StatRow label="Pipeline runs (24h)" value={dbStats?.pipelines.recentDay ?? 0} />
               </div>
-              <div className="pt-1 border-t border-border/50 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Tasks by status</span>
+              <div classNome="pt-1 border-t border-border/50 space-y-2">
+                <div classNome="flex items-center justify-between">
+                  <span classNome="text-xs text-muted-foreground">Tasks by status</span>
                 </div>
                 {dbStats?.tasks.total ? (
-                  <div className="flex flex-wrap gap-1.5">
+                  <div classNome="flex flex-wrap gap-1.5">
                     {Object.entries(dbStats.tasks.byStatus).map(([status, count]) => (
                       <span
                         key={status}
-                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-mono-tight bg-secondary text-muted-foreground"
+                        classNome="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-mono-tight bg-secondary text-muted-foreground"
                       >
-                        <span className={`w-1.5 h-1.5 rounded-full ${taskStatusColor(status)}`} />
+                        <span classNome={`w-1.5 h-1.5 rounded-full ${taskStatusColor(status)}`} />
                         {status}: {count}
                       </span>
                     ))}
                   </div>
                 ) : (
-                  <span className="text-2xs text-muted-foreground">No tasks</span>
+                  <span classNome="text-2xs text-muted-foreground">No tasks</span>
                 )}
               </div>
             </div>
@@ -444,31 +444,31 @@ export function Dashboard() {
       </div>
 
       {/* Bottom two-column: Sessions + Logs */}
-      <div className="grid lg:grid-cols-2 gap-4">
+      <div classNome="grid lg:grid-cols-2 gap-4">
         {/* Sessions */}
-        <div className="panel">
-          <div className="panel-header">
-            <h3 className="text-sm font-semibold text-foreground">Sessions</h3>
-            <span className="text-2xs text-muted-foreground font-mono-tight">{sessions.length}</span>
+        <div classNome="panel">
+          <div classNome="panel-header">
+            <h3 classNome="text-sm font-semibold text-foreground">Sessions</h3>
+            <span classNome="text-2xs text-muted-foreground font-mono-tight">{sessions.length}</span>
           </div>
-          <div className="divide-y divide-border/50 max-h-56 overflow-y-auto">
+          <div classNome="divide-y divide-border/50 max-h-56 overflow-y-auto">
             {sessions.length === 0 ? (
-              <div className="px-4 py-8 text-center"><p className="text-xs text-muted-foreground">No active sessions</p><p className="text-2xs text-muted-foreground/60 mt-1">{isLocal ? 'Sessions appear when Claude Code or Codex CLI are running' : 'Sessions appear when agents connect via gateway'}</p></div>
+              <div classNome="px-4 py-8 text-center"><p classNome="text-xs text-muted-foreground">No active sessions</p><p classNome="text-2xs text-muted-foreground/60 mt-1">{isLocal ? 'Sessions appear when Claude Code or Codex CLI are running' : 'Sessions appear when agents connect via gateway'}</p></div>
             ) : (
               sessions.slice(0, 8).map((session) => (
-                <div key={session.id} className="px-4 py-2.5 flex items-center gap-3 hover:bg-secondary/30 transition-smooth">
-                  <div className={`w-2 h-2 rounded-full shrink-0 ${session.active ? 'bg-[#b4a68c]' : 'bg-muted-foreground/30'}`} />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium text-foreground truncate font-mono-tight">
+                <div key={session.id} classNome="px-4 py-2.5 flex items-center gap-3 hover:bg-secondary/30 transition-smooth">
+                  <div classNome={`w-2 h-2 rounded-full shrink-0 ${session.active ? 'bg-[#b4a68c]' : 'bg-muted-foreground/30'}`} />
+                  <div classNome="flex-1 min-w-0">
+                    <div classNome="text-xs font-medium text-foreground truncate font-mono-tight">
                       {session.key || session.id}
                     </div>
-                    <div className="text-2xs text-muted-foreground">
+                    <div classNome="text-2xs text-muted-foreground">
                       {session.kind} · {session.model?.split('/').pop() || 'unknown'}
                     </div>
                   </div>
-                  <div className="text-right shrink-0">
-                    <div className="text-2xs font-mono-tight text-muted-foreground">{session.tokens}</div>
-                    <div className="text-2xs text-muted-foreground">{session.age}</div>
+                  <div classNome="text-right shrink-0">
+                    <div classNome="text-2xs font-mono-tight text-muted-foreground">{session.tokens}</div>
+                    <div classNome="text-2xs text-muted-foreground">{session.age}</div>
                   </div>
                 </div>
               ))
@@ -477,48 +477,48 @@ export function Dashboard() {
         </div>
 
         {/* Recent Logs */}
-        <div className="panel">
-          <div className="panel-header">
-            <h3 className="text-sm font-semibold text-foreground">Recent Logs</h3>
+        <div classNome="panel">
+          <div classNome="panel-header">
+            <h3 classNome="text-sm font-semibold text-foreground">Recent Logs</h3>
           </div>
-          <div className="divide-y divide-border/50 max-h-56 overflow-y-auto">
+          <div classNome="divide-y divide-border/50 max-h-56 overflow-y-auto">
             {logs.slice(0, 8).map((log) => (
-              <div key={log.id} className="px-4 py-2 hover:bg-secondary/30 transition-smooth">
-                <div className="flex items-start gap-2">
-                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${
+              <div key={log.id} classNome="px-4 py-2 hover:bg-secondary/30 transition-smooth">
+                <div classNome="flex items-start gap-2">
+                  <div classNome={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${
                     log.level === 'error' ? 'bg-[#9e5c50]' :
                     log.level === 'warn' ? 'bg-[#c49a6c]' :
                     log.level === 'debug' ? 'bg-gray-500' :
                     'bg-blue-500/50'
                   }`} />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-foreground/80 break-words">
+                  <div classNome="flex-1 min-w-0">
+                    <p classNome="text-xs text-foreground/80 break-words">
                       {log.message.length > 80 ? log.message.slice(0, 80) + '...' : log.message}
                     </p>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="text-2xs text-muted-foreground font-mono-tight">{log.source}</span>
-                      <span className="text-2xs text-muted-foreground/40">·</span>
-                      <span className="text-2xs text-muted-foreground">{new Date(log.timestamp).toLocaleTimeString()}</span>
+                    <div classNome="flex items-center gap-1.5 mt-0.5">
+                      <span classNome="text-2xs text-muted-foreground font-mono-tight">{log.source}</span>
+                      <span classNome="text-2xs text-muted-foreground/40">·</span>
+                      <span classNome="text-2xs text-muted-foreground">{new Date(log.timestamp).toLocaleTimeString()}</span>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
             {logs.length === 0 && (
-              <div className="px-4 py-8 text-center"><p className="text-xs text-muted-foreground">No logs yet</p><p className="text-2xs text-muted-foreground/60 mt-1">Logs stream here when agents run</p></div>
+              <div classNome="px-4 py-8 text-center"><p classNome="text-xs text-muted-foreground">No logs yet</p><p classNome="text-2xs text-muted-foreground/60 mt-1">Logs stream here when agents run</p></div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
+      {/* Ações Rápidas */}
+      <div classNome="grid grid-cols-2 lg:grid-cols-5 gap-2">
         {!isLocal && (
-          <QuickAction label="Spawn Agent" desc="Launch sub-agent" tab="spawn" icon={<SpawnActionIcon />} onNavigate={navigateToPanel} />
+          <QuickAction label="Iniciar Agente" desc="Launch sub-agent" tab="spawn" icon={<SpawnActionIcon />} onNavigate={navigateToPanel} />
         )}
         <QuickAction label="View Logs" desc="Real-time viewer" tab="logs" icon={<LogActionIcon />} onNavigate={navigateToPanel} />
-        <QuickAction label="Task Board" desc="Kanban view" tab="tasks" icon={<TaskActionIcon />} onNavigate={navigateToPanel} />
-        <QuickAction label="Memory" desc="Knowledge base" tab="memory" icon={<MemoryActionIcon />} onNavigate={navigateToPanel} />
+        <QuickAction label="Tarefas" desc="Kanban view" tab="tasks" icon={<TaskActionIcon />} onNavigate={navigateToPanel} />
+        <QuickAction label="Memória" desc="Knowledge base" tab="memory" icon={<MemóriaActionIcon />} onNavigate={navigateToPanel} />
         {isLocal ? (
           <QuickAction label="Sessions" desc="Claude Code sessions" tab="sessions" icon={<SessionIcon />} onNavigate={navigateToPanel} />
         ) : (
@@ -547,19 +547,19 @@ function MetricCard({ label, value, total, subtitle, icon, color }: {
   }
 
   return (
-    <div className={`rounded-lg border p-3.5 ${colorMap[color]}`}>
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-medium opacity-80">{label}</span>
-        <div className="w-5 h-5 opacity-60">{icon}</div>
+    <div classNome={`rounded-lg border p-3.5 ${colorMap[color]}`}>
+      <div classNome="flex items-center justify-between mb-2">
+        <span classNome="text-xs font-medium opacity-80">{label}</span>
+        <div classNome="w-5 h-5 opacity-60">{icon}</div>
       </div>
-      <div className="flex items-baseline gap-1">
-        <span className="text-2xl font-bold font-mono-tight">{value}</span>
+      <div classNome="flex items-baseline gap-1">
+        <span classNome="text-2xl font-bold font-mono-tight">{value}</span>
         {total != null && (
-          <span className="text-xs opacity-50 font-mono-tight">/ {total}</span>
+          <span classNome="text-xs opacity-50 font-mono-tight">/ {total}</span>
         )}
       </div>
       {subtitle && (
-        <div className="text-2xs opacity-50 font-mono-tight mt-0.5">{subtitle}</div>
+        <div classNome="text-2xs opacity-50 font-mono-tight mt-0.5">{subtitle}</div>
       )}
     </div>
   )
@@ -574,15 +574,15 @@ function HealthRow({ label, value, status, bar }: {
   const statusColor = status === 'good' ? 'text-[#b4a68c]' : status === 'warn' ? 'text-[#c49a6c]' : 'text-[#9e5c50]'
 
   return (
-    <div className="space-y-1">
-      <div className="flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">{label}</span>
-        <span className={`text-xs font-medium font-mono-tight ${statusColor}`}>{value}</span>
+    <div classNome="space-y-1">
+      <div classNome="flex items-center justify-between">
+        <span classNome="text-xs text-muted-foreground">{label}</span>
+        <span classNome={`text-xs font-medium font-mono-tight ${statusColor}`}>{value}</span>
       </div>
       {bar != null && (
-        <div className="h-1 rounded-full bg-secondary overflow-hidden">
+        <div classNome="h-1 rounded-full bg-secondary overflow-hidden">
           <div
-            className={`h-full rounded-full transition-all duration-500 ${
+            classNome={`h-full rounded-full transition-all duration-500 ${
               bar > 90 ? 'bg-[#9e5c50]' : bar > 70 ? 'bg-[#c49a6c]' : 'bg-[#b4a68c]'
             }`}
             style={{ width: `${Math.min(bar, 100)}%` }}
@@ -595,9 +595,9 @@ function HealthRow({ label, value, status, bar }: {
 
 function StatRow({ label, value, alert }: { label: string; value: number; alert?: boolean }) {
   return (
-    <div className="flex items-center justify-between">
-      <span className="text-xs text-muted-foreground">{label}</span>
-      <span className={`text-xs font-medium font-mono-tight ${
+    <div classNome="flex items-center justify-between">
+      <span classNome="text-xs text-muted-foreground">{label}</span>
+      <span classNome={`text-xs font-medium font-mono-tight ${
         alert ? 'text-[#9e5c50]' : 'text-muted-foreground'
       }`}>
         {value}
@@ -608,10 +608,10 @@ function StatRow({ label, value, alert }: { label: string; value: number; alert?
 
 function StatusBadge({ connected }: { connected: boolean }) {
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xs font-medium ${
+    <span classNome={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xs font-medium ${
       connected ? 'badge-success' : 'badge-error'
     }`}>
-      <span className={`w-1.5 h-1.5 rounded-full ${connected ? 'bg-[#b4a68c]' : 'bg-[#9e5c50]'}`} />
+      <span classNome={`w-1.5 h-1.5 rounded-full ${connected ? 'bg-[#b4a68c]' : 'bg-[#9e5c50]'}`} />
       {connected ? 'Online' : 'Offline'}
     </span>
   )
@@ -624,14 +624,14 @@ function QuickAction({ label, desc, tab, icon, onNavigate }: {
   return (
     <button
       onClick={() => onNavigate(tab)}
-      className="flex items-center gap-3 p-3 rounded-lg border border-border hover:border-primary/30 hover:bg-primary/5 transition-smooth text-left group"
+      classNome="flex items-center gap-3 p-3 rounded-lg border border-border hover:border-primary/30 hover:bg-primary/5 transition-smooth text-left group"
     >
-      <div className="w-8 h-8 rounded-md bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-smooth">
-        <div className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-smooth">{icon}</div>
+      <div classNome="w-8 h-8 rounded-md bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-smooth">
+        <div classNome="w-4 h-4 text-muted-foreground group-hover:text-primary transition-smooth">{icon}</div>
       </div>
       <div>
-        <div className="text-xs font-medium text-foreground">{label}</div>
-        <div className="text-2xs text-muted-foreground">{desc}</div>
+        <div classNome="text-xs font-medium text-foreground">{label}</div>
+        <div classNome="text-2xs text-muted-foreground">{desc}</div>
       </div>
     </button>
   )
@@ -639,7 +639,7 @@ function QuickAction({ label, desc, tab, icon, onNavigate }: {
 
 // --- Utility functions ---
 
-function formatUptime(ms: number): string {
+function formatTempo ativo(ms: number): string {
   const hours = Math.floor(ms / (1000 * 60 * 60))
   const days = Math.floor(hours / 24)
   if (days > 0) return `${days}d ${hours % 24}h`
@@ -662,7 +662,7 @@ function formatBytes(bytes: number): string {
 
 function langColor(lang: string): string {
   const colors: Record<string, string> = {
-    TypeScript: 'bg-blue-500',
+    TipoScript: 'bg-blue-500',
     JavaScript: 'bg-yellow-500',
     Python: 'bg-[#b4a68c]',
     Rust: 'bg-orange-500',
@@ -749,7 +749,7 @@ function TaskActionIcon() {
     </svg>
   )
 }
-function MemoryActionIcon() {
+function MemóriaActionIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
       <ellipse cx="8" cy="8" rx="6" ry="3" />

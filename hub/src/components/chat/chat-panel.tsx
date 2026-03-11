@@ -27,7 +27,7 @@ export function ChatPanel() {
 
   const pendingIdRef = useRef(-1)
 
-  const [showConversations, setShowConversations] = useState(true)
+  const [showConversations, setMostrarConversations] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
 
@@ -42,7 +42,7 @@ export function ChatPanel() {
   // On mobile, hide conversations when a conversation is selected
   useEffect(() => {
     if (isMobile && activeConversation) {
-      setShowConversations(false)
+      setMostrarConversations(false)
     }
   }, [isMobile, activeConversation])
 
@@ -121,13 +121,13 @@ export function ChatPanel() {
       pendingStatus: 'sending' as const,
     }
 
-    // Show immediately
+    // Mostrar immediately
     addChatMessage(optimisticMessage)
 
     try {
       const res = await fetch('/api/chat/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           from: 'human',
           to,
@@ -153,14 +153,14 @@ export function ChatPanel() {
     }
   }
 
-  const handleNewConversation = (agentName: string) => {
-    const convId = `agent_${agentName}`
+  const handleNewConversation = (agentNome: string) => {
+    const convId = `agent_${agentNome}`
     setActiveConversation(convId)
-    if (isMobile) setShowConversations(false)
+    if (isMobile) setMostrarConversations(false)
   }
 
   const handleBackToList = () => {
-    setShowConversations(true)
+    setMostrarConversations(true)
     if (isMobile) setActiveConversation(null)
   }
 
@@ -170,47 +170,47 @@ export function ChatPanel() {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:bg-black/20"
+        classNome="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:bg-black/20"
         onClick={() => setChatPanelOpen(false)}
       />
 
       {/* Panel */}
       <div
         ref={panelRef}
-        className="fixed inset-0 md:inset-auto md:right-0 md:top-0 md:bottom-0 md:w-[480px] lg:w-[560px] z-50 flex flex-col bg-card border-l border-border shadow-2xl slide-in-right"
+        classNome="fixed inset-0 md:inset-auto md:right-0 md:top-0 md:bottom-0 md:w-[480px] lg:w-[560px] z-50 flex flex-col bg-card border-l border-border shadow-2xl slide-in-right"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 h-12 border-b border-border glass-strong flex-shrink-0">
-          <div className="flex items-center gap-3">
+        <div classNome="flex items-center justify-between px-4 h-12 border-b border-border glass-strong flex-shrink-0">
+          <div classNome="flex items-center gap-3">
             {/* Back button on mobile when in chat view */}
             {isMobile && !showConversations && (
               <button
                 onClick={handleBackToList}
-                className="text-muted-foreground hover:text-foreground transition-smooth"
+                classNome="text-muted-foreground hover:text-foreground transition-smooth"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M10 12L6 8l4-4" />
                 </svg>
               </button>
             )}
-            <div className="flex items-center gap-2">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+            <div classNome="flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" classNome="text-primary">
                 <path d="M14 10c0 .37-.1.7-.28 1-.53.87-2.2 3-5.72 3-4.42 0-6-3-6-4V4a2 2 0 012-2h8a2 2 0 012 2v6z" />
                 <path d="M6 7h.01M10 7h.01" />
               </svg>
-              <span className="text-sm font-semibold text-foreground">Agent Chat</span>
+              <span classNome="text-sm font-semibold text-foreground">Agent Chat</span>
             </div>
-            <span className="text-xs text-muted-foreground hidden sm:inline">
+            <span classNome="text-xs text-muted-foreground hidden sm:inline">
               {agents.filter(a => a.status === 'busy' || a.status === 'idle').length} online
             </span>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div classNome="flex items-center gap-1">
             {/* Toggle conversations sidebar (desktop) */}
             <button
-              onClick={() => setShowConversations(!showConversations)}
-              className="hidden md:flex w-7 h-7 items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
-              title={showConversations ? 'Hide conversations' : 'Show conversations'}
+              onClick={() => setMostrarConversations(!showConversations)}
+              classNome="hidden md:flex w-7 h-7 items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
+              title={showConversations ? 'Ocultar conversations' : 'Mostrar conversations'}
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                 <path d="M2 4h12M2 8h12M2 12h12" />
@@ -218,7 +218,7 @@ export function ChatPanel() {
             </button>
             <button
               onClick={() => setChatPanelOpen(false)}
-              className="w-7 h-7 flex items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
+              classNome="w-7 h-7 flex items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth"
               title="Close chat (Esc)"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -229,26 +229,26 @@ export function ChatPanel() {
         </div>
 
         {/* Body */}
-        <div className="flex-1 flex overflow-hidden">
+        <div classNome="flex-1 flex overflow-hidden">
           {/* Conversations sidebar */}
           {showConversations && (
-            <div className={`${isMobile ? 'w-full' : 'w-56 border-r border-border'} flex-shrink-0`}>
+            <div classNome={`${isMobile ? 'w-full' : 'w-56 border-r border-border'} flex-shrink-0`}>
               <ConversationList onNewConversation={handleNewConversation} />
             </div>
           )}
 
           {/* Message area */}
           {(!isMobile || !showConversations) && (
-            <div className="flex-1 flex flex-col min-w-0">
+            <div classNome="flex-1 flex flex-col min-w-0">
               {/* Conversation header */}
               {activeConversation && (
-                <div className="px-4 py-2 border-b border-border/50 bg-surface-1 flex items-center gap-2 flex-shrink-0">
+                <div classNome="px-4 py-2 border-b border-border/50 bg-surface-1 flex items-center gap-2 flex-shrink-0">
                   <AgentAvatar name={activeConversation.replace('agent_', '')} size="sm" />
-                  <div className="min-w-0">
-                    <div className="text-sm font-medium text-foreground truncate">
+                  <div classNome="min-w-0">
+                    <div classNome="text-sm font-medium text-foreground truncate">
                       {activeConversation.replace('agent_', '')}
                     </div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div classNome="text-[10px] text-muted-foreground">
                       {getAgentStatus(agents, activeConversation)}
                     </div>
                   </div>
@@ -285,7 +285,7 @@ function AgentAvatar({ name, size = 'md' }: { name: string; size?: 'sm' | 'md' }
   const sizeClass = size === 'sm' ? 'w-6 h-6 text-[10px]' : 'w-8 h-8 text-xs'
 
   return (
-    <div className={`${sizeClass} ${colorClass} rounded-full flex items-center justify-center font-bold flex-shrink-0`}>
+    <div classNome={`${sizeClass} ${colorClass} rounded-full flex items-center justify-center font-bold flex-shrink-0`}>
       {name.charAt(0).toUpperCase()}
     </div>
   )

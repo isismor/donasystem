@@ -61,7 +61,7 @@ function formatTime(value: number): string {
   return new Date(value).toLocaleString()
 }
 
-export function DocumentsPanel() {
+export function DocumentosPanel() {
   const [tree, setTree] = useState<DocsTreeNode[]>([])
   const [roots, setRoots] = useState<string[]>([])
   const [loadingTree, setLoadingTree] = useState(true)
@@ -75,7 +75,7 @@ export function DocumentsPanel() {
   const [searchResults, setSearchResults] = useState<DocsSearchResult[]>([])
   const [searching, setSearching] = useState(false)
   const [searchError, setSearchError] = useState<string | null>(null)
-  const [expandedDirs, setExpandedDirs] = useState<Set<string>>(new Set())
+  const [expandedDirs, setExpandiredDirs] = useState<Set<string>>(new Set())
 
   const loadTree = useCallback(async () => {
     setLoadingTree(true)
@@ -87,8 +87,8 @@ export function DocumentsPanel() {
 
       setTree(data.tree || [])
       setRoots(data.roots || [])
-      const defaultExpanded = new Set<string>((data.roots || []).filter(Boolean))
-      setExpandedDirs(defaultExpanded)
+      const defaultExpandired = new Set<string>((data.roots || []).filter(Boolean))
+      setExpandiredDirs(defaultExpandired)
     } catch (error) {
       setTree([])
       setRoots([])
@@ -157,10 +157,10 @@ export function DocumentsPanel() {
     return () => clearTimeout(handle)
   }, [searchQuery])
 
-  const isShowingSearch = searchQuery.trim().length >= 2
+  const isMostraringSearch = searchQuery.trim().length >= 2
 
   const toggleDir = (path: string) => {
-    setExpandedDirs((prev) => {
+    setExpandiredDirs((prev) => {
       const next = new Set(prev)
       if (next.has(path)) next.delete(path)
       else next.add(path)
@@ -175,11 +175,11 @@ export function DocumentsPanel() {
         <div key={node.path}>
           <button
             onClick={() => toggleDir(node.path)}
-            className="w-full flex items-center gap-2 py-1.5 px-2 rounded-md hover:bg-secondary text-left"
+            classNome="w-full flex items-center gap-2 py-1.5 px-2 rounded-md hover:bg-secondary text-left"
             style={{ paddingLeft: `${depth * 16 + 8}px` }}
           >
-            <span className="text-xs text-muted-foreground">{isOpen ? '▾' : '▸'}</span>
-            <span className="text-sm text-foreground">{node.name}</span>
+            <span classNome="text-xs text-muted-foreground">{isOpen ? '▾' : '▸'}</span>
+            <span classNome="text-sm text-foreground">{node.name}</span>
           </button>
           {isOpen && node.children && (
             <div>
@@ -195,7 +195,7 @@ export function DocumentsPanel() {
       <button
         key={node.path}
         onClick={() => void loadDoc(node.path)}
-        className={`w-full text-left py-1.5 px-2 rounded-md text-sm ${
+        classNome={`w-full text-left py-1.5 px-2 rounded-md text-sm ${
           active ? 'bg-primary/15 text-primary' : 'text-foreground hover:bg-secondary'
         }`}
         style={{ paddingLeft: `${depth * 16 + 26}px` }}
@@ -206,74 +206,74 @@ export function DocumentsPanel() {
   }
 
   return (
-    <div className="h-full p-4 md:p-6">
-      <div className="h-full min-h-[600px] rounded-xl border border-border bg-card overflow-hidden grid grid-cols-1 lg:grid-cols-[340px_1fr]">
-        <aside className="border-r border-border p-4 space-y-3 overflow-y-auto">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-foreground">Documents</h2>
+    <div classNome="h-full p-4 md:p-6">
+      <div classNome="h-full min-h-[600px] rounded-xl border border-border bg-card overflow-hidden grid grid-cols-1 lg:grid-cols-[340px_1fr]">
+        <aside classNome="border-r border-border p-4 space-y-3 overflow-y-auto">
+          <div classNome="flex items-center justify-between">
+            <h2 classNome="text-sm font-semibold text-foreground">Documentos</h2>
             <button
               onClick={() => void loadTree()}
-              className="text-xs px-2 py-1 rounded-md border border-border text-muted-foreground hover:text-foreground hover:bg-secondary"
+              classNome="text-xs px-2 py-1 rounded-md border border-border text-muted-foreground hover:text-foreground hover:bg-secondary"
             >
               Refresh
             </button>
           </div>
 
-          <div className="space-y-1">
-            <label htmlFor="docs-search" className="text-xs text-muted-foreground">Search docs</label>
+          <div classNome="space-y-1">
+            <label htmlFor="docs-search" classNome="text-xs text-muted-foreground">Search docs</label>
             <input
               id="docs-search"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Type at least 2 characters..."
-              className="w-full h-9 px-3 rounded-md bg-background border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
+              placeholder="Tipo at least 2 characters..."
+              classNome="w-full h-9 px-3 rounded-md bg-background border border-border text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
             />
           </div>
 
           {roots.length > 0 && (
-            <div className="text-xs text-muted-foreground">
+            <div classNome="text-xs text-muted-foreground">
               Roots: {roots.join(', ')}
             </div>
           )}
 
           {loadingTree && (
-            <div className="text-sm text-muted-foreground">Loading documents...</div>
+            <div classNome="text-sm text-muted-foreground">Loading documents...</div>
           )}
 
           {treeError && (
-            <div className="text-sm text-[#9e5c50]">{treeError}</div>
+            <div classNome="text-sm text-[#9e5c50]">{treeError}</div>
           )}
 
-          {!loadingTree && !treeError && isShowingSearch && (
-            <div className="space-y-1">
-              {searching && <div className="text-sm text-muted-foreground">Searching...</div>}
-              {searchError && <div className="text-sm text-[#9e5c50]">{searchError}</div>}
+          {!loadingTree && !treeError && isMostraringSearch && (
+            <div classNome="space-y-1">
+              {searching && <div classNome="text-sm text-muted-foreground">Searching...</div>}
+              {searchError && <div classNome="text-sm text-[#9e5c50]">{searchError}</div>}
               {!searching && !searchError && searchResults.length === 0 && (
-                <div className="text-sm text-muted-foreground">No matches.</div>
+                <div classNome="text-sm text-muted-foreground">No matches.</div>
               )}
               {!searching && !searchError && searchResults.map((result) => (
                 <button
                   key={result.path}
                   onClick={() => void loadDoc(result.path)}
-                  className={`w-full text-left p-2 rounded-md border ${
+                  classNome={`w-full text-left p-2 rounded-md border ${
                     selectedPath === result.path
                       ? 'border-primary/40 bg-primary/10'
                       : 'border-border hover:bg-secondary'
                   }`}
                 >
-                  <div className="text-sm text-foreground truncate">{result.name}</div>
-                  <div className="text-xs text-muted-foreground truncate">{result.path}</div>
-                  <div className="text-2xs text-muted-foreground mt-0.5">{result.matches} matches</div>
+                  <div classNome="text-sm text-foreground truncate">{result.name}</div>
+                  <div classNome="text-xs text-muted-foreground truncate">{result.path}</div>
+                  <div classNome="text-2xs text-muted-foreground mt-0.5">{result.matches} matches</div>
                 </button>
               ))}
             </div>
           )}
 
-          {!loadingTree && !treeError && !isShowingSearch && (
-            <div className="space-y-1">
+          {!loadingTree && !treeError && !isMostraringSearch && (
+            <div classNome="space-y-1">
               {tree.length === 0 && (
-                <div className="text-sm text-muted-foreground">
-                  No supported docs roots found. Add one of: <code className="font-mono">docs</code>, <code className="font-mono">knowledge-base</code>, <code className="font-mono">knowledge</code>, <code className="font-mono">memory</code>.
+                <div classNome="text-sm text-muted-foreground">
+                  No supported docs roots found. Add one of: <code classNome="font-mono">docs</code>, <code classNome="font-mono">knowledge-base</code>, <code classNome="font-mono">knowledge</code>, <code classNome="font-mono">memory</code>.
                 </div>
               )}
               {tree.map((node) => renderNode(node))}
@@ -281,34 +281,34 @@ export function DocumentsPanel() {
           )}
         </aside>
 
-        <section className="p-4 md:p-6 overflow-y-auto">
-          <div className="mb-4">
-            <h3 className="text-base md:text-lg font-semibold text-foreground">Document Viewer</h3>
-            <p className="text-xs text-muted-foreground mt-1">
+        <section classNome="p-4 md:p-6 overflow-y-auto">
+          <div classNome="mb-4">
+            <h3 classNome="text-base md:text-lg font-semibold text-foreground">Document Viewer</h3>
+            <p classNome="text-xs text-muted-foreground mt-1">
               Browse and inspect workspace docs from allowed roots.
             </p>
           </div>
 
           {!selectedPath && (
-            <div className="text-sm text-muted-foreground">Select a file to view its contents.</div>
+            <div classNome="text-sm text-muted-foreground">Select a file to view its contents.</div>
           )}
 
           {selectedPath && (
-            <div className="space-y-3">
-              <div className="rounded-md border border-border bg-secondary/30 px-3 py-2">
-                <div className="text-sm text-foreground font-medium break-all">{selectedPath}</div>
+            <div classNome="space-y-3">
+              <div classNome="rounded-md border border-border bg-secondary/30 px-3 py-2">
+                <div classNome="text-sm text-foreground font-medium break-all">{selectedPath}</div>
                 {docMeta && (
-                  <div className="mt-1 text-xs text-muted-foreground">
-                    {formatBytes(docMeta.size)} • Updated {formatTime(docMeta.modified)}
+                  <div classNome="mt-1 text-xs text-muted-foreground">
+                    {formatBytes(docMeta.size)} • Atualizado {formatTime(docMeta.modified)}
                   </div>
                 )}
               </div>
 
-              {loadingDoc && <div className="text-sm text-muted-foreground">Loading document...</div>}
-              {docError && <div className="text-sm text-[#9e5c50]">{docError}</div>}
+              {loadingDoc && <div classNome="text-sm text-muted-foreground">Loading document...</div>}
+              {docError && <div classNome="text-sm text-[#9e5c50]">{docError}</div>}
 
               {!loadingDoc && !docError && (
-                <div className="rounded-md border border-border bg-background p-4">
+                <div classNome="rounded-md border border-border bg-background p-4">
                   <MarkdownRenderer content={docContent} />
                 </div>
               )}

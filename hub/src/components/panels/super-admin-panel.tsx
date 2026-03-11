@@ -63,7 +63,7 @@ interface GatewayOption {
   is_primary?: number
 }
 
-interface SchedulerTask {
+interface AgendarTask {
   id: string
   name: string
   enabled: boolean
@@ -95,15 +95,15 @@ export function SuperAdminPanel() {
   const [busyJobId, setBusyJobId] = useState<number | null>(null)
 
   const [activeTab, setActiveTab] = useState<SuperTab>('tenants')
-  const [createExpanded, setCreateExpanded] = useState(false)
+  const [createExpandired, setCreateExpandired] = useState(false)
 
   const [tenantSearch, setTenantSearch] = useState('')
-  const [tenantStatusFilter, setTenantStatusFilter] = useState('all')
+  const [tenantStatusFiltrar, setTenantStatusFiltrar] = useState('all')
   const [tenantPage, setTenantPage] = useState(1)
 
   const [jobSearch, setJobSearch] = useState('')
-  const [jobStatusFilter, setJobStatusFilter] = useState('all')
-  const [jobTypeFilter, setJobTypeFilter] = useState('all')
+  const [jobStatusFiltrar, setJobStatusFiltrar] = useState('all')
+  const [jobTipoFiltrar, setJobTipoFiltrar] = useState('all')
   const [jobPage, setJobPage] = useState(1)
 
   const [openActionMenu, setOpenActionMenu] = useState<string | null>(null)
@@ -157,7 +157,7 @@ export function SuperAdminPanel() {
       let tenantRows = Array.isArray(tenantsJson?.tenants) ? tenantsJson.tenants : []
       let jobRows = Array.isArray(jobsJson?.jobs) ? jobsJson.jobs : []
       const gatewayRows = Array.isArray(gatewaysJson?.gateways) ? gatewaysJson.gateways : []
-      const schedulerTasks: SchedulerTask[] = Array.isArray(schedulerJson?.tasks) ? schedulerJson.tasks : []
+      const schedulerTasks: AgendarTask[] = Array.isArray(schedulerJson?.tasks) ? schedulerJson.tasks : []
       const localEvents: Record<number, ProvisionEvent[]> = {}
 
       if (isLocal) {
@@ -201,7 +201,7 @@ export function SuperAdminPanel() {
               id: id * -10 + 1,
               level: 'info',
               step_key: task.id,
-              message: `Next run: ${new Date(task.nextRun).toLocaleString()}`,
+              message: `Próxima execução: ${new Date(task.nextRun).toLocaleString()}`,
               created_at: Math.floor(Date.now() / 1000),
             })
             localEvents[id] = eventRows
@@ -267,11 +267,11 @@ export function SuperAdminPanel() {
 
   useEffect(() => {
     setTenantPage(1)
-  }, [tenantSearch, tenantStatusFilter])
+  }, [tenantSearch, tenantStatusFiltrar])
 
   useEffect(() => {
     setJobPage(1)
-  }, [jobSearch, jobStatusFilter, jobTypeFilter])
+  }, [jobSearch, jobStatusFiltrar, jobTipoFiltrar])
 
   useEffect(() => {
     setOpenActionMenu(null)
@@ -295,7 +295,7 @@ export function SuperAdminPanel() {
     return ['all', ...values]
   }, [jobs])
 
-  const jobTypeOptions = useMemo(() => {
+  const jobTipoOptions = useMemo(() => {
     const values = Array.from(new Set(jobs.map((j) => j.job_type))).sort()
     return ['all', ...values]
   }, [jobs])
@@ -303,11 +303,11 @@ export function SuperAdminPanel() {
   const filteredTenants = useMemo(() => {
     const q = tenantSearch.trim().toLowerCase()
     return tenants.filter((tenant) => {
-      if (tenantStatusFilter !== 'all' && tenant.status !== tenantStatusFilter) return false
+      if (tenantStatusFiltrar !== 'all' && tenant.status !== tenantStatusFiltrar) return false
       if (!q) return true
       return [tenant.display_name, tenant.slug, tenant.linux_user, tenant.created_by || '', tenant.owner_gateway || '', tenant.status].join(' ').toLowerCase().includes(q)
     })
-  }, [tenants, tenantSearch, tenantStatusFilter])
+  }, [tenants, tenantSearch, tenantStatusFiltrar])
 
   const tenantPages = Math.max(1, Math.ceil(filteredTenants.length / TENANT_PAGE_SIZE))
   const pagedTenants = filteredTenants.slice((tenantPage - 1) * TENANT_PAGE_SIZE, tenantPage * TENANT_PAGE_SIZE)
@@ -315,12 +315,12 @@ export function SuperAdminPanel() {
   const filteredJobs = useMemo(() => {
     const q = jobSearch.trim().toLowerCase()
     return jobs.filter((job) => {
-      if (jobStatusFilter !== 'all' && job.status !== jobStatusFilter) return false
-      if (jobTypeFilter !== 'all' && job.job_type !== jobTypeFilter) return false
+      if (jobStatusFiltrar !== 'all' && job.status !== jobStatusFiltrar) return false
+      if (jobTipoFiltrar !== 'all' && job.job_type !== jobTipoFiltrar) return false
       if (!q) return true
       return [String(job.id), job.tenant_slug || '', String(job.tenant_id), job.requested_by, job.approved_by || '', job.status, job.job_type].join(' ').toLowerCase().includes(q)
     })
-  }, [jobs, jobSearch, jobStatusFilter, jobTypeFilter])
+  }, [jobs, jobSearch, jobStatusFiltrar, jobTipoFiltrar])
 
   const jobPages = Math.max(1, Math.ceil(filteredJobs.length / JOB_PAGE_SIZE))
   const pagedJobs = filteredJobs.slice((jobPage - 1) * JOB_PAGE_SIZE, jobPage * JOB_PAGE_SIZE)
@@ -342,7 +342,7 @@ export function SuperAdminPanel() {
     try {
       const res = await fetch('/api/super/tenants', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           slug: form.slug.trim().toLowerCase(),
           display_name: form.display_name.trim(),
@@ -400,7 +400,7 @@ export function SuperAdminPanel() {
     try {
       const approveRes = await fetch(`/api/super/provision-jobs/${jobId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({ action: 'approve' }),
       })
       const approveJson = await approveRes.json().catch(() => ({}))
@@ -446,7 +446,7 @@ export function SuperAdminPanel() {
     if (!tenant) return
 
     if (!decommissionDialog.dryRun && decommissionDialog.confirmText.trim() !== tenant.slug) {
-      showFeedback(false, `Type ${tenant.slug} to confirm live decommission`)
+      showFeedback(false, `Tipo ${tenant.slug} to confirm live decommission`)
       return
     }
 
@@ -455,7 +455,7 @@ export function SuperAdminPanel() {
     try {
       const res = await fetch(`/api/super/tenants/${tenant.id}/decommission`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           dry_run: decommissionDialog.dryRun,
           remove_linux_user: decommissionDialog.removeLinuxUser,
@@ -483,7 +483,7 @@ export function SuperAdminPanel() {
     try {
       const res = await fetch(`/api/super/provision-jobs/${jobId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({ action, reason }),
       })
       const json = await res.json().catch(() => ({}))
@@ -506,70 +506,70 @@ export function SuperAdminPanel() {
 
   if (currentUser?.role !== 'admin') {
     return (
-      <div className="p-8 text-center">
-        <div className="text-lg font-semibold text-foreground mb-2">Access Denied</div>
-        <p className="text-sm text-muted-foreground">Super Mission Control requires admin privileges.</p>
+      <div classNome="p-8 text-center">
+        <div classNome="text-lg font-semibold text-foreground mb-2">Access Denied</div>
+        <p classNome="text-sm text-muted-foreground">Super Mission Control requires admin privileges.</p>
       </div>
     )
   }
 
   if (loading) {
     return (
-      <div className="p-8 text-center">
-        <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse mx-auto mb-2" />
-        <span className="text-sm text-muted-foreground">Loading super admin data...</span>
+      <div classNome="p-8 text-center">
+        <div classNome="w-1.5 h-1.5 rounded-full bg-primary animate-pulse mx-auto mb-2" />
+        <span classNome="text-sm text-muted-foreground">Loading super admin data...</span>
       </div>
     )
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-5">
-      <div className="flex items-start justify-between gap-4">
+    <div classNome="p-6 max-w-7xl mx-auto space-y-5">
+      <div classNome="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Super Mission Control</h2>
-          <p className="text-sm text-muted-foreground">
+          <h2 classNome="text-lg font-semibold text-foreground">Super Mission Control</h2>
+          <p classNome="text-sm text-muted-foreground">
             {isLocal
               ? 'Local control plane view over scheduler automations and runtime state.'
               : 'Multi-tenant provisioning control plane with approval gates and safer destructive actions.'}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div classNome="flex items-center gap-2">
           <button
-            onClick={() => setCreateExpanded(true)}
-            className="h-8 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth"
+            onClick={() => setCreateExpandired(true)}
+            classNome="h-8 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth"
           >
             + Add Workspace
           </button>
           <button
             onClick={load}
-            className="h-8 px-3 rounded-md border border-border text-sm text-foreground hover:bg-secondary/60 transition-smooth"
+            classNome="h-8 px-3 rounded-md border border-border text-sm text-foreground hover:bg-secondary/60 transition-smooth"
           >
             Refresh
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="rounded-lg border border-border bg-card px-4 py-3">
-          <div className="text-xs text-muted-foreground">Active Tenants</div>
-          <div className="text-xl font-semibold text-foreground mt-1">{kpis.active}</div>
+      <div classNome="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div classNome="rounded-lg border border-border bg-card px-4 py-3">
+          <div classNome="text-xs text-muted-foreground">Active Tenants</div>
+          <div classNome="text-xl font-semibold text-foreground mt-1">{kpis.active}</div>
         </div>
-        <div className="rounded-lg border border-border bg-card px-4 py-3">
-          <div className="text-xs text-muted-foreground">Pending / In Progress</div>
-          <div className="text-xl font-semibold text-foreground mt-1">{kpis.pending}</div>
+        <div classNome="rounded-lg border border-border bg-card px-4 py-3">
+          <div classNome="text-xs text-muted-foreground">Pending / In Progress</div>
+          <div classNome="text-xl font-semibold text-foreground mt-1">{kpis.pending}</div>
         </div>
-        <div className="rounded-lg border border-border bg-card px-4 py-3">
-          <div className="text-xs text-muted-foreground">Errored Tenants</div>
-          <div className="text-xl font-semibold text-[#9e5c50] mt-1">{kpis.errored}</div>
+        <div classNome="rounded-lg border border-border bg-card px-4 py-3">
+          <div classNome="text-xs text-muted-foreground">Errored Tenants</div>
+          <div classNome="text-xl font-semibold text-[#9e5c50] mt-1">{kpis.errored}</div>
         </div>
-        <div className="rounded-lg border border-border bg-card px-4 py-3">
-          <div className="text-xs text-muted-foreground">Queued Approvals</div>
-          <div className="text-xl font-semibold text-[#c49a6c] mt-1">{kpis.queuedApprovals}</div>
+        <div classNome="rounded-lg border border-border bg-card px-4 py-3">
+          <div classNome="text-xs text-muted-foreground">Queued Approvals</div>
+          <div classNome="text-xl font-semibold text-[#c49a6c] mt-1">{kpis.queuedApprovals}</div>
         </div>
       </div>
 
       {feedback && (
-        <div className={`px-3 py-2 rounded-md text-sm border ${
+        <div classNome={`px-3 py-2 rounded-md text-sm border ${
           feedback.ok
             ? 'bg-[#b4a68c]/10 text-[#b4a68c] border-[#b4a68c]/20'
             : 'bg-[#9e5c50]/10 text-[#9e5c50] border-[#9e5c50]/20'
@@ -579,55 +579,55 @@ export function SuperAdminPanel() {
       )}
 
       {error && (
-        <div className="px-3 py-2 rounded-md text-sm border bg-[#9e5c50]/10 text-[#9e5c50] border-[#9e5c50]/20">
+        <div classNome="px-3 py-2 rounded-md text-sm border bg-[#9e5c50]/10 text-[#9e5c50] border-[#9e5c50]/20">
           {error}
         </div>
       )}
 
-      {createExpanded && (
-      <div className="rounded-lg border border-primary/30 bg-card overflow-hidden">
-        <div className="px-4 py-3 border-b border-border flex items-center justify-between">
-          <h3 className="text-sm font-medium text-foreground">Create New Workspace</h3>
+      {createExpandired && (
+      <div classNome="rounded-lg border border-primary/30 bg-card overflow-hidden">
+        <div classNome="px-4 py-3 border-b border-border flex items-center justify-between">
+          <h3 classNome="text-sm font-medium text-foreground">Create New Workspace</h3>
           <button
-            onClick={() => setCreateExpanded(false)}
-            className="text-muted-foreground hover:text-foreground text-lg leading-none transition-smooth"
+            onClick={() => setCreateExpandired(false)}
+            classNome="text-muted-foreground hover:text-foreground text-lg leading-none transition-smooth"
             aria-label="Close create form"
           >
             ×
           </button>
         </div>
-          <div className="p-4 space-y-3">
-            <div className="text-xs text-muted-foreground">
-              Fill in the workspace details below and click <span className="text-foreground font-medium">Create + Queue</span> to provision a new client instance.
+          <div classNome="p-4 space-y-3">
+            <div classNome="text-xs text-muted-foreground">
+              Fill in the workspace details below and click <span classNome="text-foreground font-medium">Create + Queue</span> to provision a new client instance.
             </div>
             {gatewayLoadError && (
-              <div className="px-3 py-2 rounded-md text-xs border bg-[#c49a6c]/10 text-[#c49a6c] border-[#c49a6c]/20">
+              <div classNome="px-3 py-2 rounded-md text-xs border bg-[#c49a6c]/10 text-[#c49a6c] border-[#c49a6c]/20">
                 Gateway list unavailable: {gatewayLoadError}. Using fallback owner value.
               </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div classNome="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               <input
                 value={form.slug}
                 onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
                 placeholder="Slug (e.g. acme)"
-                className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
+                classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
               />
               <input
                 value={form.display_name}
                 onChange={(e) => setForm((f) => ({ ...f, display_name: e.target.value }))}
                 placeholder="Display name"
-                className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
+                classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
               />
               <input
                 value={form.linux_user}
                 onChange={(e) => setForm((f) => ({ ...f, linux_user: e.target.value }))}
                 placeholder="Linux user (optional)"
-                className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
+                classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
               />
               <select
                 value={form.owner_gateway}
                 onChange={(e) => setForm((f) => ({ ...f, owner_gateway: e.target.value }))}
-                className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
+                classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
               >
                 {gatewayOptions.length === 0 ? (
                   <option value={form.owner_gateway || 'openclaw-main'}>{form.owner_gateway || 'openclaw-main'}</option>
@@ -642,7 +642,7 @@ export function SuperAdminPanel() {
               <select
                 value={form.plan_tier}
                 onChange={(e) => setForm((f) => ({ ...f, plan_tier: e.target.value }))}
-                className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
+                classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
               >
                 <option value="standard">Standard</option>
                 <option value="pro">Pro</option>
@@ -652,15 +652,15 @@ export function SuperAdminPanel() {
                 value={form.gateway_port}
                 onChange={(e) => setForm((f) => ({ ...f, gateway_port: e.target.value }))}
                 placeholder="Gateway port"
-                className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
+                classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
               />
               <input
                 value={form.dashboard_port}
                 onChange={(e) => setForm((f) => ({ ...f, dashboard_port: e.target.value }))}
                 placeholder="Dashboard port"
-                className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
+                classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground"
               />
-              <label className="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground flex items-center gap-2">
+              <label classNome="h-9 px-3 rounded-md bg-secondary border border-border text-sm text-foreground flex items-center gap-2">
                 <input
                   type="checkbox"
                   checked={form.dry_run}
@@ -670,7 +670,7 @@ export function SuperAdminPanel() {
               </label>
               <button
                 onClick={createTenant}
-                className="h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth"
+                classNome="h-9 px-4 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-smooth"
               >
                 Create + Queue
               </button>
@@ -679,13 +679,13 @@ export function SuperAdminPanel() {
       </div>
       )}
 
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
-        <div className="px-3 py-2 border-b border-border flex items-center gap-2">
+      <div classNome="rounded-lg border border-border bg-card overflow-hidden">
+        <div classNome="px-3 py-2 border-b border-border flex items-center gap-2">
           {(['tenants', 'jobs', 'events'] as SuperTab[]).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`h-8 px-3 rounded-md text-sm capitalize ${
+              classNome={`h-8 px-3 rounded-md text-sm capitalize ${
                 activeTab === tab
                   ? 'bg-primary/20 text-primary border border-primary/30'
                   : 'text-muted-foreground border border-transparent hover:bg-secondary/40'
@@ -697,41 +697,41 @@ export function SuperAdminPanel() {
         </div>
 
         {activeTab === 'tenants' && (
-          <div className="p-3 space-y-3">
-            <div className="flex flex-col md:flex-row gap-2 md:items-center md:justify-between">
-              <div className="flex items-center gap-2">
+          <div classNome="p-3 space-y-3">
+            <div classNome="flex flex-col md:flex-row gap-2 md:items-center md:justify-between">
+              <div classNome="flex items-center gap-2">
                 <input
                   value={tenantSearch}
                   onChange={(e) => setTenantSearch(e.target.value)}
                   placeholder="Search tenants"
-                  className="h-8 w-56 px-3 rounded-md bg-secondary border border-border text-xs text-foreground"
+                  classNome="h-8 w-56 px-3 rounded-md bg-secondary border border-border text-xs text-foreground"
                 />
                 <select
-                  value={tenantStatusFilter}
-                  onChange={(e) => setTenantStatusFilter(e.target.value)}
-                  className="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
+                  value={tenantStatusFiltrar}
+                  onChange={(e) => setTenantStatusFiltrar(e.target.value)}
+                  classNome="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
                 >
                   {statusOptions.map((opt) => (
                     <option key={opt} value={opt}>{opt}</option>
                   ))}
                 </select>
               </div>
-              <div className="text-xs text-muted-foreground">
-                Showing {pagedTenants.length} of {filteredTenants.length}
+              <div classNome="text-xs text-muted-foreground">
+                Mostraring {pagedTenants.length} of {filteredTenants.length}
               </div>
             </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <caption className="sr-only">Tenant list</caption>
+            <div classNome="overflow-x-auto">
+              <table classNome="w-full text-sm">
+                <caption classNome="sr-only">Tenant list</caption>
                 <thead>
-                  <tr className="bg-secondary/30 border-b border-border">
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">Tenant</th>
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">System User</th>
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">Owner</th>
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">Status</th>
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">Latest Job</th>
-                    <th scope="col" className="text-right px-3 py-2 text-xs text-muted-foreground">Action</th>
+                  <tr classNome="bg-secondary/30 border-b border-border">
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">Tenant</th>
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">System User</th>
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">Owner</th>
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">Status</th>
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">Latest Job</th>
+                    <th scope="col" classNome="text-right px-3 py-2 text-xs text-muted-foreground">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -739,18 +739,18 @@ export function SuperAdminPanel() {
                     const latest = latestByTenant.get(tenant.id)
                     const menuKey = `tenant-${tenant.id}`
                     return (
-                      <tr key={tenant.id} className="border-b border-border/50 last:border-0 hover:bg-secondary/20">
-                        <td className="px-3 py-2">
-                          <div className="font-medium text-foreground">{tenant.display_name}</div>
-                          <div className="text-xs text-muted-foreground">{tenant.slug}</div>
+                      <tr key={tenant.id} classNome="border-b border-border/50 last:border-0 hover:bg-secondary/20">
+                        <td classNome="px-3 py-2">
+                          <div classNome="font-medium text-foreground">{tenant.display_name}</div>
+                          <div classNome="text-xs text-muted-foreground">{tenant.slug}</div>
                         </td>
-                        <td className="px-3 py-2 text-muted-foreground text-xs">{tenant.linux_user}</td>
-                        <td className="px-3 py-2 text-muted-foreground text-xs">
-                          <div className="text-foreground">{tenant.owner_gateway || 'unassigned'}</div>
-                          <div className="text-[11px] text-muted-foreground">by {tenant.created_by || 'unknown'}</div>
+                        <td classNome="px-3 py-2 text-muted-foreground text-xs">{tenant.linux_user}</td>
+                        <td classNome="px-3 py-2 text-muted-foreground text-xs">
+                          <div classNome="text-foreground">{tenant.owner_gateway || 'unassigned'}</div>
+                          <div classNome="text-[11px] text-muted-foreground">by {tenant.created_by || 'unknown'}</div>
                         </td>
-                        <td className="px-3 py-2 text-xs">
-                          <span className={`px-2 py-0.5 rounded border ${
+                        <td classNome="px-3 py-2 text-xs">
+                          <span classNome={`px-2 py-0.5 rounded border ${
                             tenant.status === 'active' ? 'border-[#b4a68c]/30 text-[#b4a68c]' :
                             tenant.status === 'error' ? 'border-[#9e5c50]/30 text-[#9e5c50]' :
                             tenant.status === 'decommissioning' ? 'border-[#c49a6c]/30 text-[#c49a6c]' :
@@ -759,31 +759,31 @@ export function SuperAdminPanel() {
                             {tenant.status}
                           </span>
                         </td>
-                        <td className="px-3 py-2 text-xs">
+                        <td classNome="px-3 py-2 text-xs">
                           {latest ? (
-                            <button onClick={() => loadJobDetail(latest.id)} className="text-primary hover:underline">
+                            <button onClick={() => loadJobDetail(latest.id)} classNome="text-primary hover:underline">
                               #{latest.id} · {latest.status}
                             </button>
                           ) : (
-                            <span className="text-muted-foreground">-</span>
+                            <span classNome="text-muted-foreground">-</span>
                           )}
                         </td>
-                        <td className="px-3 py-2 text-right relative">
+                        <td classNome="px-3 py-2 text-right relative">
                           {isLocal && tenant.id < 0 ? (
-                            <span className="text-[11px] text-muted-foreground">Local read-only</span>
+                            <span classNome="text-[11px] text-muted-foreground">Local read-only</span>
                           ) : (
                             <>
                               <button
                                 onClick={() => setOpenActionMenu((cur) => (cur === menuKey ? null : menuKey))}
-                                className="h-7 px-2 rounded border border-border text-xs hover:bg-secondary/60"
+                                classNome="h-7 px-2 rounded border border-border text-xs hover:bg-secondary/60"
                               >
-                                Actions
+                                Ações
                               </button>
                               {openActionMenu === menuKey && (
-                                <div className="absolute right-3 top-10 z-20 w-44 rounded-md border border-border bg-card shadow-xl text-left">
+                                <div classNome="absolute right-3 top-10 z-20 w-44 rounded-md border border-border bg-card shadow-xl text-left">
                                   <button
                                     onClick={() => openDecommissionDialog(tenant)}
-                                    className="w-full px-3 py-2 text-xs text-[#9e5c50] hover:bg-[#9e5c50]/10"
+                                    classNome="w-full px-3 py-2 text-xs text-[#9e5c50] hover:bg-[#9e5c50]/10"
                                   >
                                     Queue Decommission
                                   </button>
@@ -797,26 +797,26 @@ export function SuperAdminPanel() {
                   })}
                   {pagedTenants.length === 0 && (
                     <tr>
-                      <td colSpan={6} className="px-3 py-6 text-center text-xs text-muted-foreground">No matching tenants.</td>
+                      <td colSpan={6} classNome="px-3 py-6 text-center text-xs text-muted-foreground">No matching tenants.</td>
                     </tr>
                   )}
                 </tbody>
               </table>
             </div>
 
-            <div className="flex items-center justify-end gap-2 text-xs">
+            <div classNome="flex items-center justify-end gap-2 text-xs">
               <button
                 disabled={tenantPage <= 1}
                 onClick={() => setTenantPage((p) => Math.max(1, p - 1))}
-                className="h-7 px-2 rounded border border-border disabled:opacity-50"
+                classNome="h-7 px-2 rounded border border-border disabled:opacity-50"
               >
                 Prev
               </button>
-              <span className="text-muted-foreground">Page {tenantPage} / {tenantPages}</span>
+              <span classNome="text-muted-foreground">Page {tenantPage} / {tenantPages}</span>
               <button
                 disabled={tenantPage >= tenantPages}
                 onClick={() => setTenantPage((p) => Math.min(tenantPages, p + 1))}
-                className="h-7 px-2 rounded border border-border disabled:opacity-50"
+                classNome="h-7 px-2 rounded border border-border disabled:opacity-50"
               >
                 Next
               </button>
@@ -825,73 +825,73 @@ export function SuperAdminPanel() {
         )}
 
         {activeTab === 'jobs' && (
-          <div className="p-3 space-y-3">
-            <div className="flex flex-col md:flex-row gap-2 md:items-center md:justify-between">
-              <div className="flex flex-wrap items-center gap-2">
+          <div classNome="p-3 space-y-3">
+            <div classNome="flex flex-col md:flex-row gap-2 md:items-center md:justify-between">
+              <div classNome="flex flex-wrap items-center gap-2">
                 <input
                   value={jobSearch}
                   onChange={(e) => setJobSearch(e.target.value)}
                   placeholder="Search jobs"
-                  className="h-8 w-56 px-3 rounded-md bg-secondary border border-border text-xs text-foreground"
+                  classNome="h-8 w-56 px-3 rounded-md bg-secondary border border-border text-xs text-foreground"
                 />
                 <select
-                  value={jobStatusFilter}
-                  onChange={(e) => setJobStatusFilter(e.target.value)}
-                  className="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
+                  value={jobStatusFiltrar}
+                  onChange={(e) => setJobStatusFiltrar(e.target.value)}
+                  classNome="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
                 >
                   {jobStatusOptions.map((opt) => (
                     <option key={opt} value={opt}>{opt}</option>
                   ))}
                 </select>
                 <select
-                  value={jobTypeFilter}
-                  onChange={(e) => setJobTypeFilter(e.target.value)}
-                  className="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
+                  value={jobTipoFiltrar}
+                  onChange={(e) => setJobTipoFiltrar(e.target.value)}
+                  classNome="h-8 px-2 rounded-md bg-secondary border border-border text-xs text-foreground"
                 >
-                  {jobTypeOptions.map((opt) => (
+                  {jobTipoOptions.map((opt) => (
                     <option key={opt} value={opt}>{opt}</option>
                   ))}
                 </select>
               </div>
-              <div className="text-xs text-muted-foreground">
-                Showing {pagedJobs.length} of {filteredJobs.length}
+              <div classNome="text-xs text-muted-foreground">
+                Mostraring {pagedJobs.length} of {filteredJobs.length}
               </div>
             </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <caption className="sr-only">Provisioning jobs</caption>
+            <div classNome="overflow-x-auto">
+              <table classNome="w-full text-sm">
+                <caption classNome="sr-only">Provisioning jobs</caption>
                 <thead>
-                  <tr className="bg-secondary/30 border-b border-border">
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">Job</th>
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">Tenant</th>
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">Status</th>
-                    <th scope="col" className="text-left px-3 py-2 text-xs text-muted-foreground">Requested/Approved</th>
-                    <th scope="col" className="text-right px-3 py-2 text-xs text-muted-foreground">Action</th>
+                  <tr classNome="bg-secondary/30 border-b border-border">
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">Job</th>
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">Tenant</th>
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">Status</th>
+                    <th scope="col" classNome="text-left px-3 py-2 text-xs text-muted-foreground">Requested/Approved</th>
+                    <th scope="col" classNome="text-right px-3 py-2 text-xs text-muted-foreground">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {pagedJobs.map((job) => {
                     const menuKey = `job-${job.id}`
                     return (
-                      <tr key={job.id} className={`border-b border-border/50 last:border-0 ${selectedJobId === job.id ? 'bg-primary/10' : 'hover:bg-secondary/20'}`}>
-                        <td className="px-3 py-2">
-                          <button onClick={() => loadJobDetail(job.id)} className="text-primary hover:underline text-xs">
+                      <tr key={job.id} classNome={`border-b border-border/50 last:border-0 ${selectedJobId === job.id ? 'bg-primary/10' : 'hover:bg-secondary/20'}`}>
+                        <td classNome="px-3 py-2">
+                          <button onClick={() => loadJobDetail(job.id)} classNome="text-primary hover:underline text-xs">
                             #{job.id}
                           </button>
-                          <div className="text-[11px] text-muted-foreground">{job.job_type} {job.dry_run ? '(dry)' : '(live)'}</div>
+                          <div classNome="text-[11px] text-muted-foreground">{job.job_type} {job.dry_run ? '(dry)' : '(live)'}</div>
                         </td>
-                        <td className="px-3 py-2 text-muted-foreground text-xs">{job.tenant_slug || job.tenant_id}</td>
-                        <td className="px-3 py-2 text-xs">{job.status}</td>
-                        <td className="px-3 py-2 text-[11px] text-muted-foreground">
+                        <td classNome="px-3 py-2 text-muted-foreground text-xs">{job.tenant_slug || job.tenant_id}</td>
+                        <td classNome="px-3 py-2 text-xs">{job.status}</td>
+                        <td classNome="px-3 py-2 text-[11px] text-muted-foreground">
                           <div>Req: {job.requested_by}</div>
                           <div>Appr: {job.approved_by || '-'}</div>
                         </td>
-                        <td className="px-3 py-2 text-right relative">
+                        <td classNome="px-3 py-2 text-right relative">
                           {isLocal && job.id < 0 ? (
                             <button
                               onClick={() => loadJobDetail(job.id)}
-                              className="h-7 px-2 rounded border border-border text-xs hover:bg-secondary/60"
+                              classNome="h-7 px-2 rounded border border-border text-xs hover:bg-secondary/60"
                             >
                               View
                             </button>
@@ -899,36 +899,36 @@ export function SuperAdminPanel() {
                             <>
                               <button
                                 onClick={() => setOpenActionMenu((cur) => (cur === menuKey ? null : menuKey))}
-                                className="h-7 px-2 rounded border border-border text-xs hover:bg-secondary/60"
+                                classNome="h-7 px-2 rounded border border-border text-xs hover:bg-secondary/60"
                               >
-                                Actions
+                                Ações
                               </button>
                               {openActionMenu === menuKey && (
-                                <div className="absolute right-3 top-10 z-20 w-40 rounded-md border border-border bg-card shadow-xl text-left">
+                                <div classNome="absolute right-3 top-10 z-20 w-40 rounded-md border border-border bg-card shadow-xl text-left">
                                   <button
                                     onClick={() => loadJobDetail(job.id)}
-                                    className="w-full px-3 py-2 text-xs text-foreground hover:bg-secondary/40"
+                                    classNome="w-full px-3 py-2 text-xs text-foreground hover:bg-secondary/40"
                                   >
                                     View events
                                   </button>
                                   <button
                                     onClick={() => Number(job.dry_run) === 1 ? approveAndRunJob(job.id) : setJobState(job.id, 'approve')}
                                     disabled={busyJobId === job.id || !['queued', 'rejected', 'failed'].includes(job.status)}
-                                    className="w-full px-3 py-2 text-xs text-emerald-400 hover:bg-emerald-500/10 disabled:opacity-40"
+                                    classNome="w-full px-3 py-2 text-xs text-emerald-400 hover:bg-emerald-500/10 disabled:opacity-40"
                                   >
                                     {Number(job.dry_run) === 1 ? 'Approve + Run' : 'Approve'}
                                   </button>
                                   <button
                                     onClick={() => setJobState(job.id, 'reject')}
                                     disabled={busyJobId === job.id || !['queued', 'approved', 'failed'].includes(job.status)}
-                                    className="w-full px-3 py-2 text-xs text-[#c49a6c] hover:bg-[#c49a6c]/10 disabled:opacity-40"
+                                    classNome="w-full px-3 py-2 text-xs text-[#c49a6c] hover:bg-[#c49a6c]/10 disabled:opacity-40"
                                   >
                                     Reject
                                   </button>
                                   <button
                                     onClick={() => runJob(job.id)}
                                     disabled={busyJobId === job.id || job.status !== 'approved'}
-                                    className="w-full px-3 py-2 text-xs text-primary hover:bg-primary/10 disabled:opacity-40"
+                                    classNome="w-full px-3 py-2 text-xs text-primary hover:bg-primary/10 disabled:opacity-40"
                                   >
                                     {busyJobId === job.id ? 'Running...' : 'Run'}
                                   </button>
@@ -942,26 +942,26 @@ export function SuperAdminPanel() {
                   })}
                   {pagedJobs.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="px-3 py-6 text-center text-xs text-muted-foreground">No matching jobs.</td>
+                      <td colSpan={5} classNome="px-3 py-6 text-center text-xs text-muted-foreground">No matching jobs.</td>
                     </tr>
                   )}
                 </tbody>
               </table>
             </div>
 
-            <div className="flex items-center justify-end gap-2 text-xs">
+            <div classNome="flex items-center justify-end gap-2 text-xs">
               <button
                 disabled={jobPage <= 1}
                 onClick={() => setJobPage((p) => Math.max(1, p - 1))}
-                className="h-7 px-2 rounded border border-border disabled:opacity-50"
+                classNome="h-7 px-2 rounded border border-border disabled:opacity-50"
               >
                 Prev
               </button>
-              <span className="text-muted-foreground">Page {jobPage} / {jobPages}</span>
+              <span classNome="text-muted-foreground">Page {jobPage} / {jobPages}</span>
               <button
                 disabled={jobPage >= jobPages}
                 onClick={() => setJobPage((p) => Math.min(jobPages, p + 1))}
-                className="h-7 px-2 rounded border border-border disabled:opacity-50"
+                classNome="h-7 px-2 rounded border border-border disabled:opacity-50"
               >
                 Next
               </button>
@@ -970,20 +970,20 @@ export function SuperAdminPanel() {
         )}
 
         {activeTab === 'events' && (
-          <div className="p-3 space-y-2">
-            <div className="text-xs text-muted-foreground px-1">
-              {selectedJobId ? `Showing events for job #${selectedJobId}` : 'Select a job to inspect provisioning event log.'}
+          <div classNome="p-3 space-y-2">
+            <div classNome="text-xs text-muted-foreground px-1">
+              {selectedJobId ? `Mostraring events for job #${selectedJobId}` : 'Select a job to inspect provisioning event log.'}
             </div>
-            <div className="max-h-[420px] overflow-y-auto space-y-2">
+            <div classNome="max-h-[420px] overflow-y-auto space-y-2">
               {selectedJobId && selectedJobEvents.length === 0 && (
-                <div className="text-xs text-muted-foreground">No events for this job yet.</div>
+                <div classNome="text-xs text-muted-foreground">No events for this job yet.</div>
               )}
               {selectedJobEvents.map((ev) => (
-                <div key={ev.id} className="rounded border border-border/60 bg-secondary/20 px-3 py-2">
-                  <div className="text-[11px] text-muted-foreground mb-0.5">
+                <div key={ev.id} classNome="rounded border border-border/60 bg-secondary/20 px-3 py-2">
+                  <div classNome="text-[11px] text-muted-foreground mb-0.5">
                     {new Date(ev.created_at * 1000).toLocaleString()} · {ev.level}{ev.step_key ? ` · ${ev.step_key}` : ''}
                   </div>
-                  <div className="text-sm text-foreground">{ev.message}</div>
+                  <div classNome="text-sm text-foreground">{ev.message}</div>
                 </div>
               ))}
             </div>
@@ -992,41 +992,41 @@ export function SuperAdminPanel() {
       </div>
 
       {decommissionDialog.open && decommissionDialog.tenant && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
-          <div className="w-full max-w-2xl rounded-lg border border-border bg-card shadow-xl">
-            <div className="px-4 py-3 border-b border-border">
-              <h3 className="text-sm font-semibold text-foreground">Queue Decommission: {decommissionDialog.tenant.display_name}</h3>
-              <p className="text-xs text-muted-foreground mt-1">Review impact before creating the job.</p>
+        <div classNome="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+          <div classNome="w-full max-w-2xl rounded-lg border border-border bg-card shadow-xl">
+            <div classNome="px-4 py-3 border-b border-border">
+              <h3 classNome="text-sm font-semibold text-foreground">Queue Decommission: {decommissionDialog.tenant.display_name}</h3>
+              <p classNome="text-xs text-muted-foreground mt-1">Review impact before creating the job.</p>
             </div>
 
-            <div className="p-4 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <label className="rounded-md border border-border bg-secondary/20 p-3 text-xs text-foreground flex items-start gap-2">
+            <div classNome="p-4 space-y-4">
+              <div classNome="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label classNome="rounded-md border border-border bg-secondary/20 p-3 text-xs text-foreground flex items-start gap-2">
                   <input
                     type="radio"
                     checked={decommissionDialog.dryRun}
                     onChange={() => setDecommissionDialog((prev) => ({ ...prev, dryRun: true, confirmText: '' }))}
                   />
                   <span>
-                    <span className="block font-medium">Dry-run (recommended)</span>
-                    <span className="text-muted-foreground">No system changes, validates commands and logs a full plan execution.</span>
+                    <span classNome="block font-medium">Dry-run (recommended)</span>
+                    <span classNome="text-muted-foreground">No system changes, validates commands and logs a full plan execution.</span>
                   </span>
                 </label>
-                <label className="rounded-md border border-[#9e5c50]/30 bg-[#9e5c50]/10 p-3 text-xs text-[#9e5c50] flex items-start gap-2">
+                <label classNome="rounded-md border border-[#9e5c50]/30 bg-[#9e5c50]/10 p-3 text-xs text-[#9e5c50] flex items-start gap-2">
                   <input
                     type="radio"
                     checked={!decommissionDialog.dryRun}
                     onChange={() => setDecommissionDialog((prev) => ({ ...prev, dryRun: false }))}
                   />
                   <span>
-                    <span className="block font-medium">Live execution</span>
-                    <span className="text-red-200/80">Will stop services and apply teardown changes after approval + run.</span>
+                    <span classNome="block font-medium">Live execution</span>
+                    <span classNome="text-red-200/80">Will stop services and apply teardown changes after approval + run.</span>
                   </span>
                 </label>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <label className="rounded-md border border-border bg-secondary/20 p-3 text-xs text-foreground flex items-start gap-2">
+              <div classNome="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label classNome="rounded-md border border-border bg-secondary/20 p-3 text-xs text-foreground flex items-start gap-2">
                   <input
                     type="checkbox"
                     checked={decommissionDialog.removeLinuxUser}
@@ -1037,11 +1037,11 @@ export function SuperAdminPanel() {
                     }))}
                   />
                   <span>
-                    <span className="block font-medium">Remove Linux user</span>
-                    <span className="text-muted-foreground">Runs `userdel -r` and removes home directory.</span>
+                    <span classNome="block font-medium">Remove Linux user</span>
+                    <span classNome="text-muted-foreground">Runs `userdel -r` and removes home directory.</span>
                   </span>
                 </label>
-                <label className="rounded-md border border-border bg-secondary/20 p-3 text-xs text-foreground flex items-start gap-2">
+                <label classNome="rounded-md border border-border bg-secondary/20 p-3 text-xs text-foreground flex items-start gap-2">
                   <input
                     type="checkbox"
                     checked={decommissionDialog.removeStateDirs}
@@ -1049,56 +1049,56 @@ export function SuperAdminPanel() {
                     onChange={(e) => setDecommissionDialog((prev) => ({ ...prev, removeStateDirs: e.target.checked }))}
                   />
                   <span>
-                    <span className="block font-medium">Remove state/workspace dirs</span>
-                    <span className="text-muted-foreground">Deletes `.openclaw` and `workspace` paths when user is kept.</span>
+                    <span classNome="block font-medium">Remove state/workspace dirs</span>
+                    <span classNome="text-muted-foreground">Deletes `.openclaw` and `workspace` paths when user is kept.</span>
                   </span>
                 </label>
               </div>
 
-              <div className="rounded-md border border-border bg-secondary/20 p-3 text-xs text-foreground">
-                <div className="font-medium mb-1">Impact summary</div>
-                <ul className="space-y-1 text-muted-foreground">
+              <div classNome="rounded-md border border-border bg-secondary/20 p-3 text-xs text-foreground">
+                <div classNome="font-medium mb-1">Impact summary</div>
+                <ul classNome="space-y-1 text-muted-foreground">
                   <li>• Stops and disables `openclaw-gateway@{decommissionDialog.tenant.linux_user}.service`.</li>
                   <li>• Removes `/etc/openclaw-tenants/{decommissionDialog.tenant.linux_user}.env`.</li>
                   <li>• {decommissionDialog.removeLinuxUser ? 'Linux user will be removed.' : (decommissionDialog.removeStateDirs ? 'State/workspace directories will be removed.' : 'Linux user and directories are retained.')}</li>
                 </ul>
               </div>
 
-              <div className="space-y-2">
+              <div classNome="space-y-2">
                 <textarea
                   value={decommissionDialog.reason}
                   onChange={(e) => setDecommissionDialog((prev) => ({ ...prev, reason: e.target.value }))}
                   placeholder="Reason (optional)"
-                  className="w-full min-h-[72px] rounded-md bg-secondary border border-border px-3 py-2 text-sm text-foreground"
+                  classNome="w-full min-h-[72px] rounded-md bg-secondary border border-border px-3 py-2 text-sm text-foreground"
                 />
 
                 {!decommissionDialog.dryRun && (
                   <div>
-                    <label className="block text-xs text-muted-foreground mb-1">
-                      Type <span className="font-mono text-foreground">{decommissionDialog.tenant.slug}</span> to confirm live decommission
+                    <label classNome="block text-xs text-muted-foreground mb-1">
+                      Tipo <span classNome="font-mono text-foreground">{decommissionDialog.tenant.slug}</span> to confirm live decommission
                     </label>
                     <input
                       value={decommissionDialog.confirmText}
                       onChange={(e) => setDecommissionDialog((prev) => ({ ...prev, confirmText: e.target.value }))}
-                      className="w-full h-9 rounded-md bg-secondary border border-border px-3 text-sm text-foreground font-mono"
+                      classNome="w-full h-9 rounded-md bg-secondary border border-border px-3 text-sm text-foreground font-mono"
                     />
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="px-4 py-3 border-t border-border flex items-center justify-end gap-2">
+            <div classNome="px-4 py-3 border-t border-border flex items-center justify-end gap-2">
               <button
                 onClick={closeDecommissionDialog}
                 disabled={decommissionDialog.submitting}
-                className="h-8 px-3 rounded-md border border-border text-sm text-foreground hover:bg-secondary/60 disabled:opacity-50"
+                classNome="h-8 px-3 rounded-md border border-border text-sm text-foreground hover:bg-secondary/60 disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={queueDecommissionFromDialog}
                 disabled={!canSubmitDecommission || decommissionDialog.submitting}
-                className="h-8 px-3 rounded-md border border-[#9e5c50]/40 bg-[#9e5c50]/20 text-[#9e5c50] text-sm disabled:opacity-50 hover:bg-[#9e5c50]/30"
+                classNome="h-8 px-3 rounded-md border border-[#9e5c50]/40 bg-[#9e5c50]/20 text-[#9e5c50] text-sm disabled:opacity-50 hover:bg-[#9e5c50]/30"
               >
                 {decommissionDialog.submitting
                   ? 'Queueing...'

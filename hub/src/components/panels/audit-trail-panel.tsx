@@ -21,12 +21,12 @@ const actionLabels: Record<string, string> = {
   login_failed: 'Failed login',
   logout: 'Logged out',
   password_change: 'Changed password',
-  profile_update: 'Updated profile',
-  user_create: 'Created user',
-  user_update: 'Updated user',
+  profile_update: 'Atualizado profile',
+  user_create: 'Criado user',
+  user_update: 'Atualizado user',
   user_delete: 'Deleted user',
   role_denied: 'Access denied',
-  backup_create: 'Created backup',
+  backup_create: 'Criado backup',
   backup_delete: 'Deleted backup',
 }
 
@@ -63,7 +63,7 @@ export function AuditTrailPanel() {
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [filter, setFilter] = useState({ action: '', actor: '' })
+  const [filter, setFiltrar] = useState({ action: '', actor: '' })
   const [page, setPage] = useState(0)
   const limit = 50
 
@@ -122,8 +122,8 @@ export function AuditTrailPanel() {
 
   if (error) {
     return (
-      <div className="p-6">
-        <div className="rounded-lg bg-[#9e5c50]/10 border border-[#9e5c50]/20 p-4 text-sm text-[#9e5c50]">
+      <div classNome="p-6">
+        <div classNome="rounded-lg bg-[#9e5c50]/10 border border-[#9e5c50]/20 p-4 text-sm text-[#9e5c50]">
           {error}
         </div>
       </div>
@@ -131,32 +131,32 @@ export function AuditTrailPanel() {
   }
 
   return (
-    <div className="p-5 space-y-4">
+    <div classNome="p-5 space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div classNome="flex items-center justify-between">
         <div>
-          <h2 className="text-base font-semibold text-foreground">Audit Trail</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">{total} event{total !== 1 ? 's' : ''} logged</p>
+          <h2 classNome="text-base font-semibold text-foreground">Auditoria</h2>
+          <p classNome="text-xs text-muted-foreground mt-0.5">{total} event{total !== 1 ? 's' : ''} logged</p>
         </div>
         <button
           onClick={() => { setPage(0); fetchEvents() }}
-          className="h-7 px-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-smooth"
+          classNome="h-7 px-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-smooth"
         >
           Refresh
         </button>
       </div>
 
-      {/* Filters */}
-      <div className="flex gap-2">
+      {/* Filtrars */}
+      <div classNome="flex gap-2">
         <select
           value={filter.action}
-          onChange={e => { setFilter(f => ({ ...f, action: e.target.value })); setPage(0) }}
-          className="h-8 px-2 text-xs rounded-md bg-secondary border border-border text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+          onChange={e => { setFiltrar(f => ({ ...f, action: e.target.value })); setPage(0) }}
+          classNome="h-8 px-2 text-xs rounded-md bg-secondary border border-border text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
         >
           <option value="">All actions</option>
           <option value="login">Login</option>
           <option value="login_failed">Failed login</option>
-          <option value="logout">Logout</option>
+          <option value="logout">Sair</option>
           <option value="password_change">Password change</option>
           <option value="profile_update">Profile update</option>
           <option value="user_create">User created</option>
@@ -169,63 +169,63 @@ export function AuditTrailPanel() {
         <input
           type="text"
           value={filter.actor}
-          onChange={e => { setFilter(f => ({ ...f, actor: e.target.value })); setPage(0) }}
-          placeholder="Filter by actor..."
-          className="h-8 px-2.5 text-xs rounded-md bg-secondary border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary w-40"
+          onChange={e => { setFiltrar(f => ({ ...f, actor: e.target.value })); setPage(0) }}
+          placeholder="Filtrar by actor..."
+          classNome="h-8 px-2.5 text-xs rounded-md bg-secondary border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary w-40"
         />
       </div>
 
       {/* Event List */}
       {loading ? (
-        <div className="space-y-2">
+        <div classNome="space-y-2">
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="h-12 rounded-lg shimmer" />
+            <div key={i} classNome="h-12 rounded-lg shimmer" />
           ))}
         </div>
       ) : events.length === 0 ? (
-        <div className="py-12 text-center">
-          <div className="text-2xl text-muted-foreground/30 mb-2">
-            <svg className="w-10 h-10 mx-auto" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
+        <div classNome="py-12 text-center">
+          <div classNome="text-2xl text-muted-foreground/30 mb-2">
+            <svg classNome="w-10 h-10 mx-auto" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round">
               <rect x="2" y="1" width="12" height="14" rx="1.5" />
               <path d="M5 4h6M5 7h6M5 10h3" />
             </svg>
           </div>
-          <p className="text-xs text-muted-foreground">No audit events found</p>
+          <p classNome="text-xs text-muted-foreground">No audit events found</p>
         </div>
       ) : (
-        <div className="space-y-1">
+        <div classNome="space-y-1">
           {events.map(event => {
             const detail = formatDetail(event)
             return (
-              <div key={event.id} className="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-secondary/50 transition-smooth group">
+              <div key={event.id} classNome="flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-secondary/50 transition-smooth group">
                 {/* Icon */}
-                <span className={`w-6 h-6 rounded-md bg-secondary flex items-center justify-center text-xs font-mono font-bold shrink-0 mt-0.5 ${actionColors[event.action] || 'text-muted-foreground'}`}>
+                <span classNome={`w-6 h-6 rounded-md bg-secondary flex items-center justify-center text-xs font-mono font-bold shrink-0 mt-0.5 ${actionColors[event.action] || 'text-muted-foreground'}`}>
                   {actionIcons[event.action] || '?'}
                 </span>
 
                 {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-sm font-medium text-foreground">{event.actor}</span>
-                    <span className={`text-xs ${actionColors[event.action] || 'text-muted-foreground'}`}>
+                <div classNome="flex-1 min-w-0">
+                  <div classNome="flex items-baseline gap-2">
+                    <span classNome="text-sm font-medium text-foreground">{event.actor}</span>
+                    <span classNome={`text-xs ${actionColors[event.action] || 'text-muted-foreground'}`}>
                       {actionLabels[event.action] || event.action}
                     </span>
                     {event.target_id && event.target_type === 'user' && (
-                      <span className="text-xs text-muted-foreground">
+                      <span classNome="text-xs text-muted-foreground">
                         user #{event.target_id}
                       </span>
                     )}
                   </div>
                   {detail && (
-                    <p className="text-xs text-muted-foreground mt-0.5 font-mono-tight">{detail}</p>
+                    <p classNome="text-xs text-muted-foreground mt-0.5 font-mono-tight">{detail}</p>
                   )}
                 </div>
 
                 {/* Meta */}
-                <div className="text-right shrink-0">
-                  <p className="text-2xs text-muted-foreground font-mono-tight">{formatTime(event.created_at)}</p>
+                <div classNome="text-right shrink-0">
+                  <p classNome="text-2xs text-muted-foreground font-mono-tight">{formatTime(event.created_at)}</p>
                   {event.ip_address && (
-                    <p className="text-2xs text-muted-foreground/60 font-mono-tight opacity-0 group-hover:opacity-100 transition-opacity">{event.ip_address}</p>
+                    <p classNome="text-2xs text-muted-foreground/60 font-mono-tight opacity-0 group-hover:opacity-100 transition-opacity">{event.ip_address}</p>
                   )}
                 </div>
               </div>
@@ -236,21 +236,21 @@ export function AuditTrailPanel() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between pt-2">
+        <div classNome="flex items-center justify-between pt-2">
           <button
             onClick={() => setPage(p => Math.max(0, p - 1))}
             disabled={page === 0}
-            className="h-7 px-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-smooth disabled:opacity-30"
+            classNome="h-7 px-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-smooth disabled:opacity-30"
           >
             Previous
           </button>
-          <span className="text-xs text-muted-foreground">
+          <span classNome="text-xs text-muted-foreground">
             Page {page + 1} of {totalPages}
           </span>
           <button
             onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
             disabled={page >= totalPages - 1}
-            className="h-7 px-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-smooth disabled:opacity-30"
+            classNome="h-7 px-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-smooth disabled:opacity-30"
           >
             Next
           </button>

@@ -8,7 +8,7 @@ interface NavItem {
   id: string
   label: string
   icon: React.ReactNode
-  priority: boolean // Show in mobile bottom bar
+  priority: boolean // Mostrar in mobile bottom bar
   requiresGateway?: boolean
 }
 
@@ -27,7 +27,7 @@ const navGroups: NavGroup[] = [
       { id: 'tasks', label: 'Tasks', icon: <TasksIcon />, priority: true },
       { id: 'sessions', label: 'Sessions', icon: <SessionsIcon />, priority: false },
       { id: 'office', label: 'Office', icon: <OfficeIcon />, priority: false },
-      { id: 'documents', label: 'Documents', icon: <DocumentsIcon />, priority: false },
+      { id: 'documents', label: 'Documentos', icon: <DocumentosIcon />, priority: false },
     ],
   },
   {
@@ -38,7 +38,7 @@ const navGroups: NavGroup[] = [
       { id: 'logs', label: 'Logs', icon: <LogsIcon />, priority: false },
       { id: 'tokens', label: 'Tokens', icon: <TokensIcon />, priority: false },
       { id: 'agent-costs', label: 'Agent Costs', icon: <AgentCostsIcon />, priority: false },
-      { id: 'memory', label: 'Memory', icon: <MemoryIcon />, priority: false },
+      { id: 'memory', label: 'Memória', icon: <MemóriaIcon />, priority: false },
     ],
   },
   {
@@ -56,7 +56,7 @@ const navGroups: NavGroup[] = [
     id: 'admin',
     label: 'ADMINISTRAR',
     items: [
-      { id: 'users', label: 'Users', icon: <UsersIcon />, priority: false },
+      { id: 'users', label: 'Usuários', icon: <UsuáriosIcon />, priority: false },
       { id: 'audit', label: 'Audit', icon: <AuditIcon />, priority: false },
       { id: 'history', label: 'History', icon: <HistoryIcon />, priority: false },
       { id: 'gateways', label: 'Gateways', icon: <GatewaysIcon />, priority: false },
@@ -64,7 +64,7 @@ const navGroups: NavGroup[] = [
       { id: 'integrations', label: 'Integrations', icon: <IntegrationsIcon />, priority: false },
       { id: 'workspaces', label: 'Workspaces', icon: <SuperAdminIcon />, priority: false },
       { id: 'super-admin', label: 'Super Admin', icon: <SuperAdminIcon />, priority: false },
-      { id: 'settings', label: 'Settings', icon: <SettingsIcon />, priority: false },
+      { id: 'settings', label: 'Configurações', icon: <ConfiguraçõesIcon />, priority: false },
     ],
   },
 ]
@@ -73,7 +73,7 @@ const navGroups: NavGroup[] = [
 const allNavItems = navGroups.flatMap(g => g.items)
 
 export function NavRail() {
-  const { activeTab, connection, dashboardMode, sidebarExpanded, collapsedGroups, toggleSidebar, toggleGroup } = useMissionControl()
+  const { activeTab, connection, dashboardMode, sidebarExpandired, collapsedGroups, toggleSidebar, toggleGroup } = useMissionControl()
   const navigateToPanel = useNavigateToPanel()
   const isLocal = dashboardMode === 'local'
 
@@ -96,26 +96,26 @@ export function NavRail() {
         role="navigation"
         aria-label="Main navigation"
         style={{ background: 'hsl(var(--sidebar))', borderRight: '1px solid hsl(var(--sidebar-border))' }}
-        className={`hidden md:flex flex-col shrink-0 transition-all duration-200 ease-in-out ${
-          sidebarExpanded ? 'w-[220px]' : 'w-14'
+        classNome={`hidden md:flex flex-col shrink-0 transition-all duration-200 ease-in-out ${
+          sidebarExpandired ? 'w-[220px]' : 'w-14'
         }`}
       >
         {/* Header: Logo + toggle */}
-        <div className={`flex items-center shrink-0 ${sidebarExpanded ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'hsl(var(--sidebar-active))' }}>
-            <span className="font-bold text-xs" style={{ color: 'hsl(var(--sidebar))' }}>TD</span>
+        <div classNome={`flex items-center shrink-0 ${sidebarExpandired ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
+          <div classNome="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'hsl(var(--sidebar-active))' }}>
+            <span classNome="font-bold text-xs" style={{ color: 'hsl(var(--sidebar))' }}>TD</span>
           </div>
-          {sidebarExpanded && (
-            <span className="text-sm font-semibold truncate flex-1" style={{ color: 'hsl(var(--sidebar-foreground))' }}>Torre Dona</span>
+          {sidebarExpandired && (
+            <span classNome="text-sm font-semibold truncate flex-1" style={{ color: 'hsl(var(--sidebar-foreground))' }}>Torre Dona</span>
           )}
           <button
             onClick={toggleSidebar}
-            title={sidebarExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
-            className="w-7 h-7 rounded-md flex items-center justify-center transition-smooth shrink-0"
+            title={sidebarExpandired ? 'Recolher sidebar' : 'Expandir sidebar'}
+            classNome="w-7 h-7 rounded-md flex items-center justify-center transition-smooth shrink-0"
             style={{ color: 'hsl(var(--sidebar-muted))' }}
           >
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-              {sidebarExpanded ? (
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" classNome="w-4 h-4">
+              {sidebarExpandired ? (
                 <polyline points="10,3 5,8 10,13" />
               ) : (
                 <polyline points="6,3 11,8 6,13" />
@@ -125,21 +125,21 @@ export function NavRail() {
         </div>
 
         {/* Nav groups */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden py-1">
+        <div classNome="flex-1 overflow-y-auto overflow-x-hidden py-1">
           {navGroups.map((group, groupIndex) => (
             <div key={group.id}>
               {/* Divider between groups (not before first) */}
               {groupIndex > 0 && (
-                <div className={`my-1.5 ${sidebarExpanded ? 'mx-3' : 'mx-2'}`} style={{ borderTop: '1px solid hsl(var(--sidebar-border))' }} />
+                <div classNome={`my-1.5 ${sidebarExpandired ? 'mx-3' : 'mx-2'}`} style={{ borderTop: '1px solid hsl(var(--sidebar-border))' }} />
               )}
 
               {/* Group header (expanded mode, only for groups with labels) */}
-              {sidebarExpanded && group.label && (
+              {sidebarExpandired && group.label && (
                 <button
                   onClick={() => toggleGroup(group.id)}
-                  className="w-full flex items-center justify-between px-3 mt-3 mb-1 group/header"
+                  classNome="w-full flex items-center justify-between px-3 mt-3 mb-1 group/header"
                 >
-                  <span className="text-[10px] tracking-wider font-semibold select-none" style={{ color: 'hsl(var(--sidebar-muted) / 0.6)' }}>
+                  <span classNome="text-[10px] tracking-wider font-semibold select-none" style={{ color: 'hsl(var(--sidebar-muted) / 0.6)' }}>
                     {group.label}
                   </span>
                   <svg
@@ -149,7 +149,7 @@ export function NavRail() {
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={`w-3 h-3 text-muted-foreground/40 group-hover/header:text-muted-foreground transition-transform duration-150 ${
+                    classNome={`w-3 h-3 text-muted-foreground/40 group-hover/header:text-muted-foreground transition-transform duration-150 ${
                       collapsedGroups.includes(group.id) ? '-rotate-90' : ''
                     }`}
                   >
@@ -160,11 +160,11 @@ export function NavRail() {
 
               {/* Group items */}
               <div
-                className={`overflow-hidden transition-all duration-150 ease-in-out ${
-                  sidebarExpanded && collapsedGroups.includes(group.id) ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
+                classNome={`overflow-hidden transition-all duration-150 ease-in-out ${
+                  sidebarExpandired && collapsedGroups.includes(group.id) ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
                 }`}
               >
-                <div className={`flex flex-col ${sidebarExpanded ? 'gap-0.5 px-2' : 'items-center gap-1'}`}>
+                <div classNome={`flex flex-col ${sidebarExpandired ? 'gap-0.5 px-2' : 'items-center gap-1'}`}>
                   {group.items.map((item) => {
                     const disabled = isLocal && item.requiresGateway
                     return (
@@ -172,7 +172,7 @@ export function NavRail() {
                         key={item.id}
                         item={item}
                         active={activeTab === item.id}
-                        expanded={sidebarExpanded}
+                        expanded={sidebarExpandired}
                         disabled={disabled}
                         onClick={() => { if (!disabled) navigateToPanel(item.id) }}
                       />
@@ -185,17 +185,17 @@ export function NavRail() {
         </div>
 
         {/* Connection indicator */}
-        <div className={`shrink-0 py-3 flex ${sidebarExpanded ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
+        <div classNome={`shrink-0 py-3 flex ${sidebarExpandired ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
           <div
-            className={`w-2.5 h-2.5 rounded-full shrink-0 ${
+            classNome={`w-2.5 h-2.5 rounded-full shrink-0 ${
               isLocal
                 ? 'bg-blue-500'
                 : connection.isConnected ? 'bg-[#b4a68c] pulse-dot' : 'bg-[#9e5c50]'
             }`}
             title={isLocal ? 'Modo Local' : connection.isConnected ? 'Gateway conectado' : 'Gateway desconectado'}
           />
-          {sidebarExpanded && (
-            <span className="text-xs truncate" style={{ color: 'hsl(var(--sidebar-muted))' }}>
+          {sidebarExpandired && (
+            <span classNome="text-xs truncate" style={{ color: 'hsl(var(--sidebar-muted))' }}>
               {isLocal ? 'Modo Local' : connection.isConnected ? 'Conectado' : 'Desconectado'}
             </span>
           )}
@@ -224,17 +224,17 @@ function NavButton({ item, active, expanded, disabled, onClick }: {
         onClick={onClick}
         aria-current={active ? 'page' : undefined}
         aria-disabled={disabled || undefined}
-        className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left transition-smooth relative ${disabledClass}`}
+        classNome={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left transition-smooth relative ${disabledClass}`}
         style={{
           color: active ? 'hsl(var(--sidebar-active))' : 'hsl(var(--sidebar-muted))',
           background: active ? 'hsl(var(--sidebar-active) / 0.15)' : 'transparent',
         }}
       >
         {active && (
-          <span className="absolute left-0 w-0.5 h-5 rounded-r" style={{ background: 'hsl(var(--sidebar-active))' }} />
+          <span classNome="absolute left-0 w-0.5 h-5 rounded-r" style={{ background: 'hsl(var(--sidebar-active))' }} />
         )}
-        <div className="w-5 h-5 shrink-0">{item.icon}</div>
-        <span className="text-sm truncate">{item.label}</span>
+        <div classNome="w-5 h-5 shrink-0">{item.icon}</div>
+        <span classNome="text-sm truncate">{item.label}</span>
       </button>
     )
   }
@@ -245,20 +245,20 @@ function NavButton({ item, active, expanded, disabled, onClick }: {
       title={tooltipLabel}
       aria-current={active ? 'page' : undefined}
       aria-disabled={disabled || undefined}
-      className={`w-10 h-10 rounded-lg flex items-center justify-center transition-smooth group relative ${disabledClass}`}
+      classNome={`w-10 h-10 rounded-lg flex items-center justify-center transition-smooth group relative ${disabledClass}`}
       style={{
         color: active ? 'hsl(var(--sidebar-active))' : 'hsl(var(--sidebar-muted))',
         background: active ? 'hsl(var(--sidebar-active) / 0.15)' : 'transparent',
       }}
     >
-      <div className="w-5 h-5">{item.icon}</div>
+      <div classNome="w-5 h-5">{item.icon}</div>
       {/* Tooltip */}
-      <span className="absolute left-full ml-2 px-2 py-1 text-xs font-medium bg-popover text-popover-foreground border border-border rounded-md opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
+      <span classNome="absolute left-full ml-2 px-2 py-1 text-xs font-medium bg-popover text-popover-foreground border border-border rounded-md opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
         {tooltipLabel}
       </span>
       {/* Active indicator */}
       {active && (
-        <span className="absolute left-0 w-0.5 h-5 rounded-r" style={{ background: 'hsl(var(--sidebar-active))' }} />
+        <span classNome="absolute left-0 w-0.5 h-5 rounded-r" style={{ background: 'hsl(var(--sidebar-active))' }} />
       )}
     </button>
   )
@@ -275,39 +275,39 @@ function MobileBottomBar({ activeTab, navigateToPanel }: {
 
   return (
     <>
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border safe-area-bottom">
-        <div className="flex items-center justify-around px-1 h-14">
+      <nav classNome="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border safe-area-bottom">
+        <div classNome="flex items-center justify-around px-1 h-14">
           {priorityItems.map((item) => (
             <button
               key={item.id}
               onClick={() => navigateToPanel(item.id)}
-              className={`flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-lg transition-smooth min-w-[48px] min-h-[48px] ${
+              classNome={`flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-lg transition-smooth min-w-[48px] min-h-[48px] ${
                 activeTab === item.id
                   ? 'text-primary'
                   : 'text-muted-foreground'
               }`}
             >
-              <div className="w-5 h-5">{item.icon}</div>
-              <span className="text-[10px] font-medium truncate">{item.label}</span>
+              <div classNome="w-5 h-5">{item.icon}</div>
+              <span classNome="text-[10px] font-medium truncate">{item.label}</span>
             </button>
           ))}
           {/* More button */}
           <button
             onClick={() => setSheetOpen(true)}
-            className={`flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-lg transition-smooth min-w-[48px] min-h-[48px] relative ${
+            classNome={`flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-lg transition-smooth min-w-[48px] min-h-[48px] relative ${
               moreIsActive ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <div className="w-5 h-5">
+            <div classNome="w-5 h-5">
               <svg viewBox="0 0 16 16" fill="currentColor">
                 <circle cx="4" cy="8" r="1.5" />
                 <circle cx="8" cy="8" r="1.5" />
                 <circle cx="12" cy="8" r="1.5" />
               </svg>
             </div>
-            <span className="text-[10px] font-medium">More</span>
+            <span classNome="text-[10px] font-medium">More</span>
             {moreIsActive && (
-              <span className="absolute top-1.5 right-2.5 w-1.5 h-1.5 rounded-full bg-primary" />
+              <span classNome="absolute top-1.5 right-2.5 w-1.5 h-1.5 rounded-full bg-primary" />
             )}
           </button>
         </div>
@@ -353,10 +353,10 @@ function MobileBottomSheet({ open, onClose, activeTab, navigateToPanel }: {
   if (!open) return null
 
   return (
-    <div className="md:hidden fixed inset-0 z-[60]">
+    <div classNome="md:hidden fixed inset-0 z-[60]">
       {/* Backdrop */}
       <div
-        className={`absolute inset-0 bg-black/40 transition-opacity duration-200 ${
+        classNome={`absolute inset-0 bg-black/40 transition-opacity duration-200 ${
           visible ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={handleClose}
@@ -364,30 +364,30 @@ function MobileBottomSheet({ open, onClose, activeTab, navigateToPanel }: {
 
       {/* Sheet */}
       <div
-        className={`absolute bottom-0 left-0 right-0 bg-card rounded-t-2xl max-h-[70vh] overflow-y-auto safe-area-bottom transition-transform duration-200 ease-out ${
+        classNome={`absolute bottom-0 left-0 right-0 bg-card rounded-t-2xl max-h-[70vh] overflow-y-auto safe-area-bottom transition-transform duration-200 ease-out ${
           visible ? 'translate-y-0' : 'translate-y-full'
         }`}
       >
         {/* Drag handle */}
-        <div className="flex justify-center pt-3 pb-2">
-          <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+        <div classNome="flex justify-center pt-3 pb-2">
+          <div classNome="w-10 h-1 rounded-full bg-muted-foreground/30" />
         </div>
 
         {/* Grouped navigation */}
-        <div className="px-4 pb-6">
+        <div classNome="px-4 pb-6">
           {navGroups.map((group, groupIndex) => (
             <div key={group.id}>
-              {groupIndex > 0 && <div className="my-3 border-t border-border" />}
+              {groupIndex > 0 && <div classNome="my-3 border-t border-border" />}
 
               {/* Group header */}
-              <div className="px-1 pt-1 pb-2">
-                <span className="text-[10px] tracking-wider text-muted-foreground/60 font-semibold">
+              <div classNome="px-1 pt-1 pb-2">
+                <span classNome="text-[10px] tracking-wider text-muted-foreground/60 font-semibold">
                   {group.label || 'CORE'}
                 </span>
               </div>
 
               {/* 2-column grid */}
-              <div className="grid grid-cols-2 gap-1.5">
+              <div classNome="grid grid-cols-2 gap-1.5">
                 {group.items.map((item) => (
                   <button
                     key={item.id}
@@ -395,14 +395,14 @@ function MobileBottomSheet({ open, onClose, activeTab, navigateToPanel }: {
                       navigateToPanel(item.id)
                       handleClose()
                     }}
-                    className={`flex items-center gap-2.5 px-3 min-h-[48px] rounded-xl transition-smooth ${
+                    classNome={`flex items-center gap-2.5 px-3 min-h-[48px] rounded-xl transition-smooth ${
                       activeTab === item.id
                         ? 'bg-primary/15 text-primary'
                         : 'text-foreground hover:bg-secondary'
                     }`}
                   >
-                    <div className="w-5 h-5 shrink-0">{item.icon}</div>
-                    <span className="text-xs font-medium truncate">{item.label}</span>
+                    <div classNome="w-5 h-5 shrink-0">{item.icon}</div>
+                    <span classNome="text-xs font-medium truncate">{item.label}</span>
                   </button>
                 ))}
               </div>
@@ -487,7 +487,7 @@ function CronIcon() {
   )
 }
 
-function MemoryIcon() {
+function MemóriaIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <ellipse cx="8" cy="8" rx="6" ry="3" />
@@ -506,7 +506,7 @@ function TokensIcon() {
   )
 }
 
-function UsersIcon() {
+function UsuáriosIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="6" cy="5" r="2.5" />
@@ -620,7 +620,7 @@ function GitHubIcon() {
   )
 }
 
-function SettingsIcon() {
+function ConfiguraçõesIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="8" cy="8" r="2" />
@@ -641,7 +641,7 @@ function OfficeIcon() {
   )
 }
 
-function DocumentsIcon() {
+function DocumentosIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 1.5h7l3 3V14a1 1 0 01-1 1H3a1 1 0 01-1-1V2.5a1 1 0 011-1z" />

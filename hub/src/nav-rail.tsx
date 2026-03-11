@@ -7,7 +7,7 @@ interface NavItem {
   id: string
   label: string
   icon: React.ReactNode
-  priority: boolean // Show in mobile bottom bar
+  priority: boolean // Mostrar in mobile bottom bar
 }
 
 interface NavGroup {
@@ -33,7 +33,7 @@ const navGroups: NavGroup[] = [
       { id: 'activity', label: 'Activity', icon: <ActivityIcon />, priority: true },
       { id: 'logs', label: 'Logs', icon: <LogsIcon />, priority: true },
       { id: 'tokens', label: 'Tokens', icon: <TokensIcon />, priority: false },
-      { id: 'memory', label: 'Memory', icon: <MemoryIcon />, priority: false },
+      { id: 'memory', label: 'Memória', icon: <MemóriaIcon />, priority: false },
     ],
   },
   {
@@ -50,12 +50,12 @@ const navGroups: NavGroup[] = [
     id: 'admin',
     label: 'ADMIN',
     items: [
-      { id: 'users', label: 'Users', icon: <UsersIcon />, priority: false },
+      { id: 'users', label: 'Usuários', icon: <UsuáriosIcon />, priority: false },
       { id: 'audit', label: 'Audit', icon: <AuditIcon />, priority: false },
       { id: 'history', label: 'History', icon: <HistoryIcon />, priority: false },
       { id: 'gateways', label: 'Gateways', icon: <GatewaysIcon />, priority: false },
       { id: 'gateway-config', label: 'Config', icon: <GatewayConfigIcon />, priority: false },
-      { id: 'settings', label: 'Settings', icon: <SettingsIcon />, priority: false },
+      { id: 'settings', label: 'Configurações', icon: <ConfiguraçõesIcon />, priority: false },
     ],
   },
 ]
@@ -64,7 +64,7 @@ const navGroups: NavGroup[] = [
 const allNavItems = navGroups.flatMap(g => g.items)
 
 export function NavRail() {
-  const { activeTab, setActiveTab, connection, sidebarExpanded, collapsedGroups, toggleSidebar, toggleGroup } = useMissionControl()
+  const { activeTab, setActiveTab, connection, sidebarExpandired, collapsedGroups, toggleSidebar, toggleGroup } = useMissionControl()
 
   // Keyboard shortcut: [ to toggle sidebar
   useEffect(() => {
@@ -82,25 +82,25 @@ export function NavRail() {
     <>
       {/* Desktop: Grouped sidebar */}
       <nav
-        className={`hidden md:flex flex-col bg-card border-r border-border shrink-0 transition-all duration-200 ease-in-out ${
-          sidebarExpanded ? 'w-[220px]' : 'w-14'
+        classNome={`hidden md:flex flex-col bg-card border-r border-border shrink-0 transition-all duration-200 ease-in-out ${
+          sidebarExpandired ? 'w-[220px]' : 'w-14'
         }`}
       >
         {/* Header: Logo + toggle */}
-        <div className={`flex items-center shrink-0 ${sidebarExpanded ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0">
-            <span className="text-primary-foreground font-bold text-xs">MC</span>
+        <div classNome={`flex items-center shrink-0 ${sidebarExpandired ? 'px-3 py-3 gap-2.5' : 'flex-col py-3 gap-2'}`}>
+          <div classNome="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0">
+            <span classNome="text-primary-foreground font-bold text-xs">MC</span>
           </div>
-          {sidebarExpanded && (
-            <span className="text-sm font-semibold text-foreground truncate flex-1">Mission Control</span>
+          {sidebarExpandired && (
+            <span classNome="text-sm font-semibold text-foreground truncate flex-1">Mission Control</span>
           )}
           <button
             onClick={toggleSidebar}
-            title={sidebarExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
-            className="w-7 h-7 rounded-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth shrink-0"
+            title={sidebarExpandired ? 'Recolher sidebar' : 'Expandir sidebar'}
+            classNome="w-7 h-7 rounded-md flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary transition-smooth shrink-0"
           >
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-              {sidebarExpanded ? (
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" classNome="w-4 h-4">
+              {sidebarExpandired ? (
                 <polyline points="10,3 5,8 10,13" />
               ) : (
                 <polyline points="6,3 11,8 6,13" />
@@ -110,21 +110,21 @@ export function NavRail() {
         </div>
 
         {/* Nav groups */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden py-1">
+        <div classNome="flex-1 overflow-y-auto overflow-x-hidden py-1">
           {navGroups.map((group, groupIndex) => (
             <div key={group.id}>
               {/* Divider between groups (not before first) */}
               {groupIndex > 0 && (
-                <div className={`my-1.5 border-t border-border ${sidebarExpanded ? 'mx-3' : 'mx-2'}`} />
+                <div classNome={`my-1.5 border-t border-border ${sidebarExpandired ? 'mx-3' : 'mx-2'}`} />
               )}
 
               {/* Group header (expanded mode, only for groups with labels) */}
-              {sidebarExpanded && group.label && (
+              {sidebarExpandired && group.label && (
                 <button
                   onClick={() => toggleGroup(group.id)}
-                  className="w-full flex items-center justify-between px-3 mt-3 mb-1 group/header"
+                  classNome="w-full flex items-center justify-between px-3 mt-3 mb-1 group/header"
                 >
-                  <span className="text-[10px] tracking-wider text-muted-foreground/60 font-semibold select-none">
+                  <span classNome="text-[10px] tracking-wider text-muted-foreground/60 font-semibold select-none">
                     {group.label}
                   </span>
                   <svg
@@ -134,7 +134,7 @@ export function NavRail() {
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={`w-3 h-3 text-muted-foreground/40 group-hover/header:text-muted-foreground transition-transform duration-150 ${
+                    classNome={`w-3 h-3 text-muted-foreground/40 group-hover/header:text-muted-foreground transition-transform duration-150 ${
                       collapsedGroups.includes(group.id) ? '-rotate-90' : ''
                     }`}
                   >
@@ -145,17 +145,17 @@ export function NavRail() {
 
               {/* Group items */}
               <div
-                className={`overflow-hidden transition-all duration-150 ease-in-out ${
-                  sidebarExpanded && collapsedGroups.includes(group.id) ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
+                classNome={`overflow-hidden transition-all duration-150 ease-in-out ${
+                  sidebarExpandired && collapsedGroups.includes(group.id) ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
                 }`}
               >
-                <div className={`flex flex-col ${sidebarExpanded ? 'gap-0.5 px-2' : 'items-center gap-1'}`}>
+                <div classNome={`flex flex-col ${sidebarExpandired ? 'gap-0.5 px-2' : 'items-center gap-1'}`}>
                   {group.items.map((item) => (
                     <NavButton
                       key={item.id}
                       item={item}
                       active={activeTab === item.id}
-                      expanded={sidebarExpanded}
+                      expanded={sidebarExpandired}
                       onClick={() => setActiveTab(item.id)}
                     />
                   ))}
@@ -166,36 +166,36 @@ export function NavRail() {
         </div>
 
         {/* Connection indicator */}
-        <div className={`shrink-0 py-3 flex ${sidebarExpanded ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
+        <div classNome={`shrink-0 py-3 flex ${sidebarExpandired ? 'px-3 items-center gap-2' : 'flex-col items-center'}`}>
           <div
-            className={`w-2.5 h-2.5 rounded-full shrink-0 ${
+            classNome={`w-2.5 h-2.5 rounded-full shrink-0 ${
               connection.isConnected ? 'bg-[#b4a68c] pulse-dot' : 'bg-[#9e5c50]'
             }`}
-            title={connection.isConnected ? 'Gateway connected' : 'Gateway disconnected'}
+            title={connection.isConnected ? 'Gateway conectado' : 'Gateway desconectado'}
           />
-          {sidebarExpanded && (
-            <span className="text-xs text-muted-foreground truncate">
-              {connection.isConnected ? 'Connected' : 'Disconnected'}
+          {sidebarExpandired && (
+            <span classNome="text-xs text-muted-foreground truncate">
+              {connection.isConnected ? 'Conectado' : 'Desconectado'}
             </span>
           )}
         </div>
       </nav>
 
       {/* Mobile: Bottom tab bar (unchanged) */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border safe-area-bottom">
-        <div className="flex items-center justify-around px-2 py-1">
+      <nav classNome="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border safe-area-bottom">
+        <div classNome="flex items-center justify-around px-2 py-1">
           {allNavItems.filter(i => i.priority).map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-lg transition-smooth min-w-0 ${
+              classNome={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-lg transition-smooth min-w-0 ${
                 activeTab === item.id
                   ? 'text-primary'
                   : 'text-muted-foreground'
               }`}
             >
-              <div className="w-5 h-5">{item.icon}</div>
-              <span className="text-2xs font-medium truncate">{item.label}</span>
+              <div classNome="w-5 h-5">{item.icon}</div>
+              <span classNome="text-2xs font-medium truncate">{item.label}</span>
             </button>
           ))}
           {/* More menu for non-priority items */}
@@ -216,17 +216,17 @@ function NavButton({ item, active, expanded, onClick }: {
     return (
       <button
         onClick={onClick}
-        className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left transition-smooth relative ${
+        classNome={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left transition-smooth relative ${
           active
             ? 'bg-primary/15 text-primary'
             : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
         }`}
       >
         {active && (
-          <span className="absolute left-0 w-0.5 h-5 bg-primary rounded-r" />
+          <span classNome="absolute left-0 w-0.5 h-5 bg-primary rounded-r" />
         )}
-        <div className="w-5 h-5 shrink-0">{item.icon}</div>
-        <span className="text-sm truncate">{item.label}</span>
+        <div classNome="w-5 h-5 shrink-0">{item.icon}</div>
+        <span classNome="text-sm truncate">{item.label}</span>
       </button>
     )
   }
@@ -235,20 +235,20 @@ function NavButton({ item, active, expanded, onClick }: {
     <button
       onClick={onClick}
       title={item.label}
-      className={`w-10 h-10 rounded-lg flex items-center justify-center transition-smooth group relative ${
+      classNome={`w-10 h-10 rounded-lg flex items-center justify-center transition-smooth group relative ${
         active
           ? 'bg-primary/15 text-primary'
           : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
       }`}
     >
-      <div className="w-5 h-5">{item.icon}</div>
+      <div classNome="w-5 h-5">{item.icon}</div>
       {/* Tooltip */}
-      <span className="absolute left-full ml-2 px-2 py-1 text-xs font-medium bg-popover text-popover-foreground border border-border rounded-md opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
+      <span classNome="absolute left-full ml-2 px-2 py-1 text-xs font-medium bg-popover text-popover-foreground border border-border rounded-md opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
         {item.label}
       </span>
       {/* Active indicator */}
       {active && (
-        <span className="absolute left-0 w-0.5 h-5 bg-primary rounded-r" />
+        <span classNome="absolute left-0 w-0.5 h-5 bg-primary rounded-r" />
       )}
     </button>
   )
@@ -262,27 +262,27 @@ function MobileMoreMenu({ items, activeTab, setActiveTab }: {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="relative">
+    <div classNome="relative">
       <button
         onClick={() => setOpen(!open)}
-        className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-lg transition-smooth ${
+        classNome={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-lg transition-smooth ${
           items.some(i => i.id === activeTab) ? 'text-primary' : 'text-muted-foreground'
         }`}
       >
-        <div className="w-5 h-5">
+        <div classNome="w-5 h-5">
           <svg viewBox="0 0 16 16" fill="currentColor">
             <circle cx="4" cy="8" r="1.5" />
             <circle cx="8" cy="8" r="1.5" />
             <circle cx="12" cy="8" r="1.5" />
           </svg>
         </div>
-        <span className="text-2xs font-medium">More</span>
+        <span classNome="text-2xs font-medium">More</span>
       </button>
 
       {open && (
         <>
-          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute bottom-full mb-2 right-0 w-44 bg-popover border border-border rounded-lg shadow-lg z-50 py-1 fade-in">
+          <div classNome="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div classNome="absolute bottom-full mb-2 right-0 w-44 bg-popover border border-border rounded-lg shadow-lg z-50 py-1 fade-in">
             {items.map((item) => (
               <button
                 key={item.id}
@@ -290,13 +290,13 @@ function MobileMoreMenu({ items, activeTab, setActiveTab }: {
                   setActiveTab(item.id)
                   setOpen(false)
                 }}
-                className={`w-full flex items-center gap-2.5 px-3 py-2 text-xs transition-smooth ${
+                classNome={`w-full flex items-center gap-2.5 px-3 py-2 text-xs transition-smooth ${
                   activeTab === item.id
                     ? 'text-primary bg-primary/10'
                     : 'text-foreground hover:bg-secondary'
                 }`}
               >
-                <div className="w-4 h-4">{item.icon}</div>
+                <div classNome="w-4 h-4">{item.icon}</div>
                 {item.label}
               </button>
             ))}
@@ -380,7 +380,7 @@ function CronIcon() {
   )
 }
 
-function MemoryIcon() {
+function MemóriaIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <ellipse cx="8" cy="8" rx="6" ry="3" />
@@ -399,7 +399,7 @@ function TokensIcon() {
   )
 }
 
-function UsersIcon() {
+function UsuáriosIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="6" cy="5" r="2.5" />
@@ -473,7 +473,7 @@ function AlertIcon() {
   )
 }
 
-function SettingsIcon() {
+function ConfiguraçõesIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="8" cy="8" r="2" />

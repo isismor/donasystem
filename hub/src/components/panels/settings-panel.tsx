@@ -23,10 +23,10 @@ const categoryLabels: Record<string, { label: string; icon: string; description:
 
 const categoryOrder = ['general', 'retention', 'gateway', 'custom']
 
-export function SettingsPanel() {
+export function ConfiguraçõesPanel() {
   const { currentUser } = useMissionControl()
   const navigateToPanel = useNavigateToPanel()
-  const [settings, setSettings] = useState<Setting[]>([])
+  const [settings, setConfigurações] = useState<Setting[]>([])
   const [grouped, setGrouped] = useState<Record<string, Setting[]>>({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -42,7 +42,7 @@ export function SettingsPanel() {
     setTimeout(() => setFeedback(null), 3000)
   }
 
-  const fetchSettings = useCallback(async () => {
+  const fetchConfigurações = useCallback(async () => {
     try {
       const res = await fetch('/api/settings')
       if (res.status === 401) {
@@ -59,7 +59,7 @@ export function SettingsPanel() {
         return
       }
       const data = await res.json()
-      setSettings(data.settings || [])
+      setConfigurações(data.settings || [])
       setGrouped(data.grouped || {})
     } catch {
       setError('Failed to load settings')
@@ -68,7 +68,7 @@ export function SettingsPanel() {
     }
   }, [])
 
-  useEffect(() => { fetchSettings() }, [fetchSettings])
+  useEffect(() => { fetchConfigurações() }, [fetchConfigurações])
 
   const handleEdit = (key: string, value: string) => {
     setEdits(prev => ({ ...prev, [key]: value }))
@@ -80,7 +80,7 @@ export function SettingsPanel() {
   })
 
   const handleSave = async () => {
-    // Filter only actual changes
+    // Filtrar only actual changes
     const changes: Record<string, string> = {}
     for (const [key, value] of Object.entries(edits)) {
       const setting = settings.find(s => s.key === key)
@@ -95,14 +95,14 @@ export function SettingsPanel() {
     try {
       const res = await fetch('/api/settings', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({ settings: changes }),
       })
       const data = await res.json()
       if (res.ok) {
         showFeedback(true, `Saved ${data.count} setting${data.count === 1 ? '' : 's'}`)
         setEdits({})
-        fetchSettings()
+        fetchConfigurações()
       } else {
         showFeedback(false, data.error || 'Failed to save')
       }
@@ -124,7 +124,7 @@ export function SettingsPanel() {
           delete next[key]
           return next
         })
-        fetchSettings()
+        fetchConfigurações()
       } else {
         showFeedback(false, data.error || 'Failed to reset')
       }
@@ -139,17 +139,17 @@ export function SettingsPanel() {
 
   if (loading) {
     return (
-      <div className="p-6 flex items-center gap-2">
-        <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        <span className="text-sm text-muted-foreground">Loading settings...</span>
+      <div classNome="p-6 flex items-center gap-2">
+        <div classNome="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        <span classNome="text-sm text-muted-foreground">Loading settings...</span>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="p-6">
-        <div className="bg-destructive/10 text-destructive rounded-lg p-4 text-sm">{error}</div>
+      <div classNome="p-6">
+        <div classNome="bg-destructive/10 text-destructive rounded-lg p-4 text-sm">{error}</div>
       </div>
     )
   }
@@ -157,18 +157,18 @@ export function SettingsPanel() {
   const categories = categoryOrder.filter(c => grouped[c]?.length > 0)
 
   return (
-    <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-6">
+    <div classNome="p-4 md:p-6 max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div classNome="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Settings</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">Configure Mission Control behavior and retention policies</p>
+          <h2 classNome="text-lg font-semibold text-foreground">Configurações</h2>
+          <p classNome="text-xs text-muted-foreground mt-0.5">Configure Mission Control behavior and retention policies</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div classNome="flex items-center gap-2">
           {hasChanges && (
             <button
               onClick={handleDiscard}
-              className="px-3 py-1.5 text-xs rounded-md border border-border text-muted-foreground hover:text-foreground transition-colors"
+              classNome="px-3 py-1.5 text-xs rounded-md border border-border text-muted-foreground hover:text-foreground transition-colors"
             >
               Discard
             </button>
@@ -176,7 +176,7 @@ export function SettingsPanel() {
           <button
             onClick={handleSave}
             disabled={!hasChanges || saving}
-            className={`px-4 py-1.5 text-xs rounded-md font-medium transition-colors ${
+            classNome={`px-4 py-1.5 text-xs rounded-md font-medium transition-colors ${
               hasChanges
                 ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                 : 'bg-muted text-muted-foreground cursor-not-allowed'
@@ -189,12 +189,12 @@ export function SettingsPanel() {
 
       {/* Workspace Info */}
       {currentUser?.role === 'admin' && (
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-xs text-blue-300">
-          <strong className="text-blue-200">Workspace Management:</strong>{' '}
+        <div classNome="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-xs text-blue-300">
+          <strong classNome="text-blue-200">Workspace Management:</strong>{' '}
           To create or manage workspaces (tenant instances), go to the{' '}
           <button
             onClick={() => navigateToPanel('super-admin')}
-            className="text-blue-400 underline hover:text-blue-300 cursor-pointer"
+            classNome="text-blue-400 underline hover:text-blue-300 cursor-pointer"
           >
             Super Admin
           </button>{' '}
@@ -204,7 +204,7 @@ export function SettingsPanel() {
 
       {/* Feedback */}
       {feedback && (
-        <div className={`rounded-lg p-3 text-xs font-medium ${
+        <div classNome={`rounded-lg p-3 text-xs font-medium ${
           feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c]' : 'bg-destructive/10 text-destructive'
         }`}>
           {feedback.text}
@@ -212,7 +212,7 @@ export function SettingsPanel() {
       )}
 
       {/* Category tabs */}
-      <div className="flex gap-1 border-b border-border pb-px">
+      <div classNome="flex gap-1 border-b border-border pb-px">
         {categories.map(cat => {
           const meta = categoryLabels[cat] || { label: cat, icon: '📋', description: '' }
           const changedCount = (grouped[cat] || []).filter(s => edits[s.key] !== undefined && edits[s.key] !== s.value).length
@@ -220,7 +220,7 @@ export function SettingsPanel() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-2 text-xs font-medium rounded-t-md transition-colors relative ${
+              classNome={`px-3 py-2 text-xs font-medium rounded-t-md transition-colors relative ${
                 activeCategory === cat
                   ? 'bg-card text-foreground border border-border border-b-card -mb-px'
                   : 'text-muted-foreground hover:text-foreground'
@@ -228,7 +228,7 @@ export function SettingsPanel() {
             >
               {meta.label}
               {changedCount > 0 && (
-                <span className="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-2xs rounded-full bg-primary text-primary-foreground">
+                <span classNome="ml-1.5 inline-flex items-center justify-center w-4 h-4 text-2xs rounded-full bg-primary text-primary-foreground">
                   {changedCount}
                 </span>
               )}
@@ -237,8 +237,8 @@ export function SettingsPanel() {
         })}
       </div>
 
-      {/* Settings list for active category */}
-      <div className="space-y-3">
+      {/* Configurações list for active category */}
+      <div classNome="space-y-3">
         {(grouped[activeCategory] || []).map(setting => {
           const currentValue = edits[setting.key] ?? setting.value
           const isChanged = edits[setting.key] !== undefined && edits[setting.key] !== setting.value
@@ -249,34 +249,34 @@ export function SettingsPanel() {
           return (
             <div
               key={setting.key}
-              className={`bg-card border rounded-lg p-4 transition-colors ${
+              classNome={`bg-card border rounded-lg p-4 transition-colors ${
                 isChanged ? 'border-primary/50' : 'border-border'
               }`}
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-foreground">{formatLabel(shortKey)}</span>
+              <div classNome="flex items-start justify-between gap-4">
+                <div classNome="flex-1 min-w-0">
+                  <div classNome="flex items-center gap-2">
+                    <span classNome="text-sm font-medium text-foreground">{formatLabel(shortKey)}</span>
                     {setting.is_default && (
-                      <span className="text-2xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground">default</span>
+                      <span classNome="text-2xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground">default</span>
                     )}
                     {isChanged && (
-                      <span className="text-2xs px-1.5 py-0.5 rounded bg-primary/15 text-primary">modified</span>
+                      <span classNome="text-2xs px-1.5 py-0.5 rounded bg-primary/15 text-primary">modified</span>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5">{setting.description}</p>
-                  <p className="text-2xs text-muted-foreground/60 mt-1 font-mono">{setting.key}</p>
+                  <p classNome="text-xs text-muted-foreground mt-0.5">{setting.description}</p>
+                  <p classNome="text-2xs text-muted-foreground/60 mt-1 font-mono">{setting.key}</p>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div classNome="flex items-center gap-2 shrink-0">
                   {isBooleanish ? (
                     <button
                       onClick={() => handleEdit(setting.key, currentValue === 'true' ? 'false' : 'true')}
-                      className={`w-10 h-5 rounded-full relative transition-colors ${
+                      classNome={`w-10 h-5 rounded-full relative transition-colors ${
                         currentValue === 'true' ? 'bg-primary' : 'bg-muted'
                       }`}
                     >
-                      <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${
+                      <span classNome={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${
                         currentValue === 'true' ? 'left-5' : 'left-0.5'
                       }`} />
                     </button>
@@ -285,14 +285,14 @@ export function SettingsPanel() {
                       type="number"
                       value={currentValue}
                       onChange={e => handleEdit(setting.key, e.target.value)}
-                      className="w-24 px-2 py-1 text-sm text-right bg-background border border-border rounded-md focus:border-primary focus:outline-none font-mono"
+                      classNome="w-24 px-2 py-1 text-sm text-right bg-background border border-border rounded-md focus:border-primary focus:outline-none font-mono"
                     />
                   ) : (
                     <input
                       type="text"
                       value={currentValue}
                       onChange={e => handleEdit(setting.key, e.target.value)}
-                      className="w-48 px-2 py-1 text-sm bg-background border border-border rounded-md focus:border-primary focus:outline-none"
+                      classNome="w-48 px-2 py-1 text-sm bg-background border border-border rounded-md focus:border-primary focus:outline-none"
                     />
                   )}
 
@@ -300,9 +300,9 @@ export function SettingsPanel() {
                     <button
                       onClick={() => handleReset(setting.key)}
                       title="Reset to default"
-                      className="text-muted-foreground hover:text-foreground transition-colors p-1"
+                      classNome="text-muted-foreground hover:text-foreground transition-colors p-1"
                     >
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <svg classNome="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                         <path d="M2 8a6 6 0 1111.3-2.8" strokeLinecap="round" />
                         <path d="M14 2v3.5h-3.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -312,8 +312,8 @@ export function SettingsPanel() {
               </div>
 
               {setting.updated_by && setting.updated_at && (
-                <div className="text-2xs text-muted-foreground/50 mt-2">
-                  Last updated by {setting.updated_by} on {new Date(setting.updated_at * 1000).toLocaleDateString()}
+                <div classNome="text-2xs text-muted-foreground/50 mt-2">
+                  Última atualização by {setting.updated_by} on {new Date(setting.updated_at * 1000).toLocaleDateString()}
                 </div>
               )}
             </div>
@@ -323,9 +323,9 @@ export function SettingsPanel() {
 
       {/* Unsaved changes bar */}
       {hasChanges && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-card border border-border rounded-lg shadow-lg px-4 py-2.5 flex items-center gap-3 z-40">
-          <div className="w-2 h-2 rounded-full bg-[#c49a6c] animate-pulse" />
-          <span className="text-xs text-foreground">
+        <div classNome="fixed bottom-4 left-1/2 -translate-x-1/2 bg-card border border-border rounded-lg shadow-lg px-4 py-2.5 flex items-center gap-3 z-40">
+          <div classNome="w-2 h-2 rounded-full bg-[#c49a6c] animate-pulse" />
+          <span classNome="text-xs text-foreground">
             {Object.keys(edits).filter(k => {
               const s = settings.find(s => s.key === k)
               return s && edits[k] !== s.value
@@ -333,14 +333,14 @@ export function SettingsPanel() {
           </span>
           <button
             onClick={handleDiscard}
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            classNome="text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
             Discard
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-3 py-1 text-xs rounded-md bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
+            classNome="px-3 py-1 text-xs rounded-md bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
           >
             {saving ? 'Saving...' : 'Save'}
           </button>

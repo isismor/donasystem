@@ -7,7 +7,7 @@ import { AgentAvatar } from '@/components/ui/agent-avatar'
 import {
   OverviewTab,
   SoulTab,
-  MemoryTab,
+  MemóriaTab,
   TasksTab,
   ActivityTab,
   ConfigTab,
@@ -84,8 +84,8 @@ export function AgentSquadPanelPhase3() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null)
-  const [showCreateModal, setShowCreateModal] = useState(false)
-  const [showQuickSpawnModal, setShowQuickSpawnModal] = useState(false)
+  const [showCreateModal, setMostrarCreateModal] = useState(false)
+  const [showQuickSpawnModal, setMostrarQuickSpawnModal] = useState(false)
   const [autoRefresh, setAutoRefresh] = useState(true)
   const [syncing, setSyncing] = useState(false)
   const [syncToast, setSyncToast] = useState<string | null>(null)
@@ -148,13 +148,13 @@ export function AgentSquadPanelPhase3() {
   useSmartPoll(fetchAgents, 30000, { enabled: autoRefresh, pauseWhenSseConnected: true })
 
   // Update agent status
-  const updateAgentStatus = async (agentName: string, status: Agent['status'], activity?: string) => {
+  const updateAgentStatus = async (agentNome: string, status: Agent['status'], activity?: string) => {
     try {
       const response = await fetch('/api/agents', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
-          name: agentName,
+          name: agentNome,
           status,
           last_activity: activity || `Status changed to ${status}`
         })
@@ -164,7 +164,7 @@ export function AgentSquadPanelPhase3() {
       
       // Update local state
       setAgents(prev => prev.map(agent => 
-        agent.name === agentName 
+        agent.name === agentNome 
           ? { 
               ...agent, 
               status, 
@@ -181,13 +181,13 @@ export function AgentSquadPanelPhase3() {
   }
 
   // Wake agent via session_send
-  const wakeAgent = async (agentName: string, sessionKey: string) => {
+  const wakeAgent = async (agentNome: string, sessionKey: string) => {
     try {
-      const response = await fetch(`/api/agents/${agentName}/wake`, {
+      const response = await fetch(`/api/agents/${agentNome}/wake`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
-          message: `🤖 **Wake Up Call**\n\nAgent ${agentName}, you have been manually woken up.\nCheck Mission Control for any pending tasks or notifications.\n\n⏰ ${new Date().toLocaleString()}`
+          message: `🤖 **Wake Up Call**\n\nAgent ${agentNome}, you have been manually woken up.\nCheck Mission Control for any pending tasks or notifications.\n\n⏰ ${new Date().toLocaleString()}`
         })
       })
 
@@ -196,7 +196,7 @@ export function AgentSquadPanelPhase3() {
         throw new Error(data.error || 'Failed to wake agent')
       }
 
-      await updateAgentStatus(agentName, 'idle', 'Manually woken via session')
+      await updateAgentStatus(agentNome, 'idle', 'Manually woken via session')
     } catch (error) {
       log.error('Failed to wake agent:', error)
       setError('Failed to wake agent')
@@ -214,9 +214,9 @@ export function AgentSquadPanelPhase3() {
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
     if (diffMinutes < 1) return 'Just now'
-    if (diffMinutes < 60) return `${diffMinutes}m ago`
-    if (diffHours < 24) return `${diffHours}h ago`
-    if (diffDays < 7) return `${diffDays}d ago`
+    if (diffMinutes < 60) return `${diffMinutes}m atrás`
+    if (diffHours < 24) return `${diffHours}h atrás`
+    if (diffDays < 7) return `${diffDays}d atrás`
     
     return new Date(timestamp * 1000).toLocaleDateString()
   }
@@ -236,43 +236,43 @@ export function AgentSquadPanelPhase3() {
 
   if (loading && agents.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-        <span className="ml-2 text-muted-foreground">Loading agents...</span>
+      <div classNome="flex items-center justify-center h-64">
+        <div classNome="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        <span classNome="ml-2 text-muted-foreground">Loading agents...</span>
       </div>
     )
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div classNome="h-full flex flex-col">
       {/* Header */}
-      <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
-        <div className="flex items-center gap-4">
-          <h2 className="text-xl font-bold text-foreground">Agent Squad</h2>
+      <div classNome="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
+        <div classNome="flex items-center gap-4">
+          <h2 classNome="text-xl font-bold text-foreground">Agentes</h2>
           
           {/* Status Summary */}
-          <div className="flex gap-2 text-sm">
+          <div classNome="flex gap-2 text-sm">
             {Object.entries(statusCounts).map(([status, count]) => (
-              <div key={status} className="flex items-center gap-1">
-                <div className={`w-2 h-2 rounded-full ${statusColors[status]}`}></div>
-                <span className="text-muted-foreground">{count}</span>
+              <div key={status} classNome="flex items-center gap-1">
+                <div classNome={`w-2 h-2 rounded-full ${statusColors[status]}`}></div>
+                <span classNome="text-muted-foreground">{count}</span>
               </div>
             ))}
           </div>
 
           {/* Active Heartbeats Indicator */}
-          <div className="flex items-center gap-1">
-            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-            <span className="text-sm text-muted-foreground">
+          <div classNome="flex items-center gap-1">
+            <div classNome="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+            <span classNome="text-sm text-muted-foreground">
               {agents.filter(hasRecentHeartbeat).length} active heartbeats
             </span>
           </div>
         </div>
         
-        <div className="flex gap-2">
+        <div classNome="flex gap-2">
           <button
             onClick={() => setAutoRefresh(!autoRefresh)}
-            className={`px-3 py-1.5 text-sm rounded-md transition-smooth ${
+            classNome={`px-3 py-1.5 text-sm rounded-md transition-smooth ${
               autoRefresh
                 ? 'bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30'
                 : 'bg-secondary text-muted-foreground'
@@ -283,19 +283,19 @@ export function AgentSquadPanelPhase3() {
           <button
             onClick={syncFromConfig}
             disabled={syncing}
-            className="px-3 py-2 bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-md hover:bg-cyan-500/30 disabled:opacity-50 transition-smooth text-sm"
+            classNome="px-3 py-2 bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-md hover:bg-cyan-500/30 disabled:opacity-50 transition-smooth text-sm"
           >
             {syncing ? 'Syncing...' : 'Sync from Config'}
           </button>
           <button
-            onClick={() => setShowCreateModal(true)}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth text-sm font-medium"
+            onClick={() => setMostrarCreateModal(true)}
+            classNome="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth text-sm font-medium"
           >
             + Add Agent
           </button>
           <button
             onClick={fetchAgents}
-            className="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth text-sm"
+            classNome="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth text-sm"
           >
             Refresh
           </button>
@@ -304,18 +304,18 @@ export function AgentSquadPanelPhase3() {
 
       {/* Sync Toast */}
       {syncToast && (
-        <div className={`p-3 m-4 rounded-lg text-sm ${syncToast.includes('failed') ? 'bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50]' : 'bg-[#b4a68c]/10 border border-[#b4a68c]/20 text-[#b4a68c]'}`}>
+        <div classNome={`p-3 m-4 rounded-lg text-sm ${syncToast.includes('failed') ? 'bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50]' : 'bg-[#b4a68c]/10 border border-[#b4a68c]/20 text-[#b4a68c]'}`}>
           {syncToast}
         </div>
       )}
 
       {/* Error Display */}
       {error && (
-        <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
+        <div classNome="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
           <span>{error}</span>
           <button
             onClick={() => setError(null)}
-            className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
+            classNome="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
           >
             ×
           </button>
@@ -323,58 +323,58 @@ export function AgentSquadPanelPhase3() {
       )}
 
       {/* Agent Grid */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div classNome="flex-1 p-4 overflow-y-auto">
         {agents.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-muted-foreground/50">
-            <div className="w-12 h-12 rounded-full bg-surface-2 flex items-center justify-center mb-3">
+          <div classNome="flex flex-col items-center justify-center py-12 text-muted-foreground/50">
+            <div classNome="w-12 h-12 rounded-full bg-surface-2 flex items-center justify-center mb-3">
               <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                 <circle cx="8" cy="5" r="3" />
                 <path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" />
               </svg>
             </div>
-            <p className="text-sm font-medium">No agents found</p>
-            <p className="text-xs mt-1">Add your first agent to get started</p>
+            <p classNome="text-sm font-medium">Nenhum agente</p>
+            <p classNome="text-xs mt-1">Add your first agent to get started</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div classNome="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {agents.map(agent => (
               <div
                 key={agent.id}
-                className={`bg-card rounded-lg p-4 border-l-4 hover:bg-surface-1 transition-smooth cursor-pointer ${
+                classNome={`bg-card rounded-lg p-4 border-l-4 hover:bg-surface-1 transition-smooth cursor-pointer ${
                   hasRecentHeartbeat(agent) ? 'border-cyan-400' : 'border-border'
                 }`}
                 onClick={() => setSelectedAgent(agent)}
               >
                 {/* Agent Header */}
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2 min-w-0">
+                <div classNome="flex items-start justify-between mb-3">
+                  <div classNome="flex items-center gap-2 min-w-0">
                     <AgentAvatar name={agent.name} size="md" />
-                    <div className="min-w-0">
-                      <h3 className="font-semibold text-foreground text-lg truncate">{agent.name}</h3>
-                      <p className="text-muted-foreground text-sm truncate">{agent.role}</p>
+                    <div classNome="min-w-0">
+                      <h3 classNome="font-semibold text-foreground text-lg truncate">{agent.name}</h3>
+                      <p classNome="text-muted-foreground text-sm truncate">{agent.role}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2">
+                  <div classNome="flex items-center gap-2">
                     {/* Heartbeat indicator */}
                     {hasRecentHeartbeat(agent) && (
-                      <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" title="Recent heartbeat"></div>
+                      <div classNome="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" title="Recent heartbeat"></div>
                     )}
-                    <div className={`w-3 h-3 rounded-full ${statusColors[agent.status]} animate-pulse`}></div>
-                    <span className="text-xs text-muted-foreground">{agent.status}</span>
+                    <div classNome={`w-3 h-3 rounded-full ${statusColors[agent.status]} animate-pulse`}></div>
+                    <span classNome="text-xs text-muted-foreground">{agent.status}</span>
                   </div>
                 </div>
 
                 {/* Session Info */}
-                <div className="text-xs text-muted-foreground mb-2">
-                  <div className="flex items-center justify-between">
+                <div classNome="text-xs text-muted-foreground mb-2">
+                  <div classNome="flex items-center justify-between">
                     <span>
-                      <span className="font-medium">Session:</span> {agent.session_key || 'Not set'}
+                      <span classNome="font-medium">Session:</span> {agent.session_key || 'Not set'}
                     </span>
                     {agent.session_key && (
-                      <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 rounded-full bg-[#b4a68c]"></div>
-                        <span>Active</span>
+                      <div classNome="flex items-center gap-1">
+                        <div classNome="w-2 h-2 rounded-full bg-[#b4a68c]"></div>
+                        <span>Ativo</span>
                       </div>
                     )}
                   </div>
@@ -382,39 +382,39 @@ export function AgentSquadPanelPhase3() {
 
                 {/* Task Stats */}
                 {agent.taskStats && (
-                  <div className="grid grid-cols-2 gap-2 mb-3">
-                    <div className="bg-surface-1/50 rounded p-2 text-center">
-                      <div className="text-lg font-semibold text-foreground">{agent.taskStats.total}</div>
-                      <div className="text-xs text-muted-foreground">Total Tasks</div>
+                  <div classNome="grid grid-cols-2 gap-2 mb-3">
+                    <div classNome="bg-surface-1/50 rounded p-2 text-center">
+                      <div classNome="text-lg font-semibold text-foreground">{agent.taskStats.total}</div>
+                      <div classNome="text-xs text-muted-foreground">Total Tasks</div>
                     </div>
-                    <div className="bg-surface-1/50 rounded p-2 text-center">
-                      <div className="text-lg font-semibold text-yellow-400">{agent.taskStats.in_progress}</div>
-                      <div className="text-xs text-muted-foreground">In Progress</div>
+                    <div classNome="bg-surface-1/50 rounded p-2 text-center">
+                      <div classNome="text-lg font-semibold text-yellow-400">{agent.taskStats.in_progress}</div>
+                      <div classNome="text-xs text-muted-foreground">In Progress</div>
                     </div>
                   </div>
                 )}
 
                 {/* Last Activity */}
-                <div className="text-xs text-muted-foreground mb-3">
+                <div classNome="text-xs text-muted-foreground mb-3">
                   <div>
-                    <span className="font-medium">Last seen:</span> {formatLastSeen(agent.last_seen)}
+                    <span classNome="font-medium">Last seen:</span> {formatLastSeen(agent.last_seen)}
                   </div>
                   {agent.last_activity && (
-                    <div className="mt-1 truncate" title={agent.last_activity}>
-                      <span className="font-medium">Activity:</span> {agent.last_activity}
+                    <div classNome="mt-1 truncate" title={agent.last_activity}>
+                      <span classNome="font-medium">Activity:</span> {agent.last_activity}
                     </div>
                   )}
                 </div>
 
-                {/* Quick Actions */}
-                <div className="flex gap-1">
+                {/* Ações Rápidas */}
+                <div classNome="flex gap-1">
                   {agent.session_key ? (
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
                         wakeAgent(agent.name, agent.session_key!)
                       }}
-                      className="flex-1 px-2 py-1 text-xs bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-md hover:bg-cyan-500/30 transition-smooth"
+                      classNome="flex-1 px-2 py-1 text-xs bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-md hover:bg-cyan-500/30 transition-smooth"
                       title="Wake agent via session"
                     >
                       Wake Agent
@@ -426,7 +426,7 @@ export function AgentSquadPanelPhase3() {
                         updateAgentStatus(agent.name, 'idle', 'Manually activated')
                       }}
                       disabled={agent.status === 'idle'}
-                      className="flex-1 px-2 py-1 text-xs bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
+                      classNome="flex-1 px-2 py-1 text-xs bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md hover:bg-[#b4a68c]/30 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
                     >
                       Wake
                     </button>
@@ -437,7 +437,7 @@ export function AgentSquadPanelPhase3() {
                       updateAgentStatus(agent.name, 'busy', 'Manually set to busy')
                     }}
                     disabled={agent.status === 'busy'}
-                    className="flex-1 px-2 py-1 text-xs bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-md hover:bg-yellow-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
+                    classNome="flex-1 px-2 py-1 text-xs bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 rounded-md hover:bg-yellow-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
                   >
                     Busy
                   </button>
@@ -445,9 +445,9 @@ export function AgentSquadPanelPhase3() {
                     onClick={(e) => {
                       e.stopPropagation()
                       setSelectedAgent(agent)
-                      setShowQuickSpawnModal(true)
+                      setMostrarQuickSpawnModal(true)
                     }}
-                    className="flex-1 px-2 py-1 text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md hover:bg-blue-500/30 transition-smooth"
+                    classNome="flex-1 px-2 py-1 text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md hover:bg-blue-500/30 transition-smooth"
                   >
                     Spawn
                   </button>
@@ -472,8 +472,8 @@ export function AgentSquadPanelPhase3() {
       {/* Create Agent Modal */}
       {showCreateModal && (
         <CreateAgentModal
-          onClose={() => setShowCreateModal(false)}
-          onCreated={fetchAgents}
+          onClose={() => setMostrarCreateModal(false)}
+          onCriado={fetchAgents}
         />
       )}
 
@@ -482,7 +482,7 @@ export function AgentSquadPanelPhase3() {
         <QuickSpawnModal
           agent={selectedAgent}
           onClose={() => {
-            setShowQuickSpawnModal(false)
+            setMostrarQuickSpawnModal(false)
             setSelectedAgent(null)
           }}
           onSpawned={fetchAgents}
@@ -524,8 +524,8 @@ function AgentDetailModalPhase3({
     const diffMinutes = Math.floor(diffMs / (1000 * 60))
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
     if (diffMinutes < 1) return 'Just now'
-    if (diffMinutes < 60) return `${diffMinutes}m ago`
-    if (diffHours < 24) return `${diffHours}h ago`
+    if (diffMinutes < 60) return `${diffMinutes}m atrás`
+    if (diffHours < 24) return `${diffHours}h atrás`
     return new Date(timestamp * 1000).toLocaleDateString()
   }
 
@@ -570,7 +570,7 @@ function AgentDetailModalPhase3({
     try {
       const response = await fetch('/api/agents', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           name: agent.name,
           ...formData
@@ -586,14 +586,14 @@ function AgentDetailModalPhase3({
     }
   }
 
-  const handleSoulSave = async (content: string, templateName?: string) => {
+  const handleSoulSave = async (content: string, templateNome?: string) => {
     try {
       const response = await fetch(`/api/agents/${agent.name}/soul`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           soul_content: content,
-          template_name: templateName
+          template_name: templateNome
         })
       })
 
@@ -606,11 +606,11 @@ function AgentDetailModalPhase3({
     }
   }
 
-  const handleMemorySave = async (content: string, append: boolean = false) => {
+  const handleMemóriaSave = async (content: string, append: boolean = false) => {
     try {
       const response = await fetch(`/api/agents/${agent.name}/memory`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           working_memory: content,
           append
@@ -630,7 +630,7 @@ function AgentDetailModalPhase3({
   const tabs = [
     { id: 'overview', label: 'Overview', icon: 'O' },
     { id: 'soul', label: 'SOUL', icon: 'S' },
-    { id: 'memory', label: 'Memory', icon: 'M' },
+    { id: 'memory', label: 'Memória', icon: 'M' },
     { id: 'tasks', label: 'Tasks', icon: 'T' },
     { id: 'config', label: 'Config', icon: 'C' },
     { id: 'activity', label: 'Activity', icon: 'A' }
@@ -638,42 +638,42 @@ function AgentDetailModalPhase3({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
+      classNome="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div
-        className="bg-card border border-border/80 rounded-xl shadow-2xl shadow-black/40 max-w-5xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+        classNome="bg-card border border-border/80 rounded-xl shadow-2xl shadow-black/40 max-w-5xl w-full max-h-[90vh] flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-6 border-b border-border bg-gradient-to-r from-surface-1 via-card to-surface-1">
-          <div className="flex justify-between items-start gap-4">
-            <div className="flex items-start gap-3 min-w-0">
+        <div classNome="p-6 border-b border-border bg-gradient-to-r from-surface-1 via-card to-surface-1">
+          <div classNome="flex justify-between items-start gap-4">
+            <div classNome="flex items-start gap-3 min-w-0">
               <AgentAvatar name={agent.name} size="md" />
-              <div className="min-w-0">
-                <h3 className="text-2xl font-bold text-foreground leading-tight truncate">{agent.name}</h3>
-                <p className="text-muted-foreground mt-0.5 truncate">{agent.role}</p>
-                <div className="flex flex-wrap items-center gap-2 mt-3">
-                  <span className={`inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border ${statusBadgeStyles[agent.status]}`}>
-                    <span className={`w-2 h-2 rounded-full ${statusColors[agent.status]}`} />
+              <div classNome="min-w-0">
+                <h3 classNome="text-2xl font-bold text-foreground leading-tight truncate">{agent.name}</h3>
+                <p classNome="text-muted-foreground mt-0.5 truncate">{agent.role}</p>
+                <div classNome="flex flex-wrap items-center gap-2 mt-3">
+                  <span classNome={`inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border ${statusBadgeStyles[agent.status]}`}>
+                    <span classNome={`w-2 h-2 rounded-full ${statusColors[agent.status]}`} />
                     {agent.status}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-border bg-surface-1 text-muted-foreground">
+                  <span classNome="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-border bg-surface-1 text-muted-foreground">
                     Last seen {formatLastSeen(agent.last_seen)}
                   </span>
                   {agent.session_key && (
-                    <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">
+                    <span classNome="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">
                       Session active
                     </span>
                   )}
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div classNome="flex items-center gap-3">
               <button
                 onClick={onClose}
                 aria-label="Close agent details"
-                className="h-9 w-9 inline-flex items-center justify-center rounded-md bg-secondary text-muted-foreground hover:bg-surface-2 hover:text-foreground transition-smooth"
+                classNome="h-9 w-9 inline-flex items-center justify-center rounded-md bg-secondary text-muted-foreground hover:bg-surface-2 hover:text-foreground transition-smooth"
               >
                 ×
               </button>
@@ -681,18 +681,18 @@ function AgentDetailModalPhase3({
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex gap-1.5 mt-5 overflow-x-auto pb-1">
+          <div classNome="flex gap-1.5 mt-5 overflow-x-auto pb-1">
             {tabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-3.5 py-2 text-sm rounded-md border flex items-center gap-2 transition-smooth whitespace-nowrap ${
+                classNome={`px-3.5 py-2 text-sm rounded-md border flex items-center gap-2 transition-smooth whitespace-nowrap ${
                   activeTab === tab.id
                     ? 'bg-primary/90 text-primary-foreground border-primary/60 shadow-[0_0_0_1px_rgba(56,189,248,0.25)]'
                     : 'bg-secondary/70 text-muted-foreground border-border/70 hover:bg-surface-2 hover:text-foreground'
                 }`}
               >
-                <span className="inline-flex h-4 w-4 items-center justify-center rounded-sm bg-black/20 text-[10px] font-semibold">{tab.icon}</span>
+                <span classNome="inline-flex h-4 w-4 items-center justify-center rounded-sm bg-black/20 text-[10px] font-semibold">{tab.icon}</span>
                 {tab.label}
               </button>
             ))}
@@ -700,7 +700,7 @@ function AgentDetailModalPhase3({
         </div>
 
         {/* Tab Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div classNome="flex-1 overflow-y-auto">
           {activeTab === 'overview' && (
             <OverviewTab
               agent={agent}
@@ -728,10 +728,10 @@ function AgentDetailModalPhase3({
           )}
           
           {activeTab === 'memory' && (
-            <MemoryTab
+            <MemóriaTab
               agent={agent}
-              workingMemory={formData.working_memory}
-              onSave={handleMemorySave}
+              workingMemória={formData.working_memory}
+              onSave={handleMemóriaSave}
             />
           )}
           
@@ -790,7 +790,7 @@ function QuickSpawnModal({
     try {
       const response = await fetch('/api/spawn', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           ...spawnData,
           parentAgent: agent.name,
@@ -819,50 +819,50 @@ function QuickSpawnModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-card border border-border rounded-lg max-w-md w-full p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-bold text-foreground">
+    <div classNome="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div classNome="bg-card border border-border rounded-lg max-w-md w-full p-6">
+        <div classNome="flex justify-between items-center mb-4">
+          <h3 classNome="text-lg font-bold text-foreground">
             Quick Spawn for {agent.name}
           </h3>
-          <button onClick={onClose} className="text-muted-foreground hover:text-foreground text-2xl transition-smooth">×</button>
+          <button onClick={onClose} classNome="text-muted-foreground hover:text-foreground text-2xl transition-smooth">×</button>
         </div>
 
         {spawnResult ? (
-          <div className="space-y-4">
-            <div className="bg-[#b4a68c]/10 border border-[#b4a68c]/20 text-[#b4a68c] p-3 rounded-lg text-sm">
+          <div classNome="space-y-4">
+            <div classNome="bg-[#b4a68c]/10 border border-[#b4a68c]/20 text-[#b4a68c] p-3 rounded-lg text-sm">
               Agent spawned successfully!
             </div>
-            <div className="text-sm text-foreground/80">
+            <div classNome="text-sm text-foreground/80">
               <p><strong>Agent ID:</strong> {spawnResult.agentId}</p>
               <p><strong>Session:</strong> {spawnResult.sessionId}</p>
               <p><strong>Model:</strong> {spawnResult.model}</p>
             </div>
           </div>
         ) : (
-          <div className="space-y-4">
-            {/* Task Description */}
+          <div classNome="space-y-4">
+            {/* Task Descrição */}
             <div>
-              <label className="block text-sm font-medium text-foreground/80 mb-2">
-                Task Description *
+              <label classNome="block text-sm font-medium text-foreground/80 mb-2">
+                Task Descrição *
               </label>
               <textarea
                 value={spawnData.task}
                 onChange={(e) => setSpawnData(prev => ({ ...prev, task: e.target.value }))}
                 placeholder={`Delegate a subtask to ${agent.name}...`}
-                className="w-full h-24 px-3 py-2 bg-surface-1 border border-border rounded text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/50 resize-none"
+                classNome="w-full h-24 px-3 py-2 bg-surface-1 border border-border rounded text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/50 resize-none"
               />
             </div>
 
             {/* Model Selection */}
             <div>
-              <label className="block text-sm font-medium text-foreground/80 mb-2">
+              <label classNome="block text-sm font-medium text-foreground/80 mb-2">
                 Model
               </label>
               <select
                 value={spawnData.model}
                 onChange={(e) => setSpawnData(prev => ({ ...prev, model: e.target.value }))}
-                className="w-full px-3 py-2 bg-surface-1 border border-border rounded text-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                classNome="w-full px-3 py-2 bg-surface-1 border border-border rounded text-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
               >
                 {models.map(model => (
                   <option key={model.id} value={model.id}>
@@ -874,20 +874,20 @@ function QuickSpawnModal({
 
             {/* Agent Label */}
             <div>
-              <label className="block text-sm font-medium text-foreground/80 mb-2">
+              <label classNome="block text-sm font-medium text-foreground/80 mb-2">
                 Agent Label
               </label>
               <input
                 type="text"
                 value={spawnData.label}
                 onChange={(e) => setSpawnData(prev => ({ ...prev, label: e.target.value }))}
-                className="w-full px-3 py-2 bg-surface-1 border border-border rounded text-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                classNome="w-full px-3 py-2 bg-surface-1 border border-border rounded text-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
               />
             </div>
 
             {/* Timeout */}
             <div>
-              <label className="block text-sm font-medium text-foreground/80 mb-2">
+              <label classNome="block text-sm font-medium text-foreground/80 mb-2">
                 Timeout (seconds)
               </label>
               <input
@@ -896,22 +896,22 @@ function QuickSpawnModal({
                 onChange={(e) => setSpawnData(prev => ({ ...prev, timeoutSeconds: parseInt(e.target.value) }))}
                 min={30}
                 max={3600}
-                className="w-full px-3 py-2 bg-surface-1 border border-border rounded text-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                classNome="w-full px-3 py-2 bg-surface-1 border border-border rounded text-foreground focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
               />
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3 pt-4">
+            <div classNome="flex gap-3 pt-4">
               <button
                 onClick={handleSpawn}
                 disabled={isSpawning || !spawnData.task.trim()}
-                className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
+                classNome="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-smooth"
               >
-                {isSpawning ? 'Spawning...' : 'Spawn Agent'}
+                {isSpawning ? 'Spawning...' : 'Iniciar Agente'}
               </button>
               <button
                 onClick={onClose}
-                className="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth"
+                classNome="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth"
               >
                 Cancel
               </button>

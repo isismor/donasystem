@@ -121,7 +121,7 @@ function MentionTextarea({
   onChange,
   rows = 3,
   placeholder,
-  className,
+  classNome,
   mentionTargets,
 }: {
   id?: string
@@ -129,7 +129,7 @@ function MentionTextarea({
   onChange: (next: string) => void
   rows?: number
   placeholder?: string
-  className?: string
+  classNome?: string
   mentionTargets: MentionOption[]
 }) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
@@ -192,7 +192,7 @@ function MentionTextarea({
   }, [open, filtered.length])
 
   return (
-    <div className="relative">
+    <div classNome="relative">
       <textarea
         id={id}
         ref={textareaRef}
@@ -227,10 +227,10 @@ function MentionTextarea({
         }}
         rows={rows}
         placeholder={placeholder}
-        className={className}
+        classNome={classNome}
       />
       {open && filtered.length > 0 && (
-        <div className={`absolute z-[60] w-full bg-surface-1 border border-border rounded-md shadow-xl max-h-56 overflow-y-auto ${
+        <div classNome={`absolute z-[60] w-full bg-surface-1 border border-border rounded-md shadow-xl max-h-56 overflow-y-auto ${
           openUpwards ? 'bottom-full mb-1' : 'mt-1'
         }`}>
           {filtered.map((option, index) => (
@@ -241,12 +241,12 @@ function MentionTextarea({
                 e.preventDefault()
                 insertMention(option)
               }}
-              className={`w-full text-left px-3 py-2 text-xs border-b last:border-b-0 border-border/40 ${
+              classNome={`w-full text-left px-3 py-2 text-xs border-b last:border-b-0 border-border/40 ${
                 index === activeIndex ? 'bg-primary/20 text-primary' : 'text-foreground hover:bg-surface-2'
               }`}
             >
-              <div className="font-mono">@{option.handle}</div>
-              <div className="text-muted-foreground">
+              <div classNome="font-mono">@{option.handle}</div>
+              <div classNome="text-muted-foreground">
                 {option.display} • {option.type}{option.role ? ` • ${option.role}` : ''}
               </div>
             </button>
@@ -264,13 +264,13 @@ export function TaskBoardPanel() {
   const searchParams = useSearchParams()
   const [agents, setAgents] = useState<Agent[]>([])
   const [projects, setProjects] = useState<Project[]>([])
-  const [projectFilter, setProjectFilter] = useState<string>('all')
+  const [projectFiltrar, setProjectFiltrar] = useState<string>('all')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [aegisMap, setAegisMap] = useState<Record<number, boolean>>({})
   const [draggedTask, setDraggedTask] = useState<Task | null>(null)
-  const [showCreateModal, setShowCreateModal] = useState(false)
-  const [showProjectManager, setShowProjectManager] = useState(false)
+  const [showCreateModal, setMostrarCreateModal] = useState(false)
+  const [showProjectManager, setMostrarProjectManager] = useState(false)
   const [editingTask, setEditingTask] = useState<Task | null>(null)
   const dragCounter = useRef(0)
   const selectedTaskIdFromUrl = Number.parseInt(searchParams.get('taskId') || '', 10)
@@ -304,8 +304,8 @@ export function TaskBoardPanel() {
       setError(null)
 
       const tasksQuery = new URLSearchParams()
-      if (projectFilter !== 'all') {
-        tasksQuery.set('project_id', projectFilter)
+      if (projectFiltrar !== 'all') {
+        tasksQuery.set('project_id', projectFiltrar)
       }
       const tasksUrl = tasksQuery.toString() ? `/api/tasks?${tasksQuery.toString()}` : '/api/tasks'
 
@@ -354,7 +354,7 @@ export function TaskBoardPanel() {
     } finally {
       setLoading(false)
     }
-  }, [projectFilter, storeSetTasks])
+  }, [projectFiltrar, storeSetTasks])
 
   useEffect(() => {
     fetchData()
@@ -449,7 +449,7 @@ export function TaskBoardPanel() {
       // Update on server
       const response = await fetch('/api/tasks', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           tasks: [{ id: draggedTask.id, status: newStatus }]
         })
@@ -479,10 +479,10 @@ export function TaskBoardPanel() {
     const hours = Math.floor(minutes / 60)
     const days = Math.floor(hours / 24)
     
-    if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`
-    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`
-    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`
-    return 'just now'
+    if (days > 0) return `${days} day${days > 1 ? 's' : ''} atrás`
+    if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} atrás`
+    if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} atrás`
+    return 'atrásra'
   }
 
   const getTagColor = (tag: string) => {
@@ -506,30 +506,30 @@ export function TaskBoardPanel() {
   }
 
   // Get agent name by session key
-  const getAgentName = (sessionKey?: string) => {
+  const getAgentNome = (sessionKey?: string) => {
     const agent = agents.find(a => a.name === sessionKey)
     return agent?.name || sessionKey || 'Unassigned'
   }
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64" role="status" aria-live="polite">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" aria-hidden="true"></div>
-        <span className="ml-2 text-muted-foreground">Loading tasks...</span>
+      <div classNome="flex items-center justify-center h-64" role="status" aria-live="polite">
+        <div classNome="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" aria-hidden="true"></div>
+        <span classNome="ml-2 text-muted-foreground">Loading tasks...</span>
       </div>
     )
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div classNome="h-full flex flex-col">
       {/* Header */}
-      <div className="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <h2 className="text-xl font-bold text-foreground">Task Board</h2>
+      <div classNome="flex justify-between items-center p-4 border-b border-border flex-shrink-0">
+        <div classNome="flex items-center gap-3">
+          <h2 classNome="text-xl font-bold text-foreground">Tarefas</h2>
           <select
-            value={projectFilter}
-            onChange={(e) => setProjectFilter(e.target.value)}
-            className="h-9 px-3 bg-surface-1 text-foreground border border-border rounded-md text-sm"
+            value={projectFiltrar}
+            onChange={(e) => setProjectFiltrar(e.target.value)}
+            classNome="h-9 px-3 bg-surface-1 text-foreground border border-border rounded-md text-sm"
           >
             <option value="all">All Projects</option>
             {projects.map((project) => (
@@ -539,22 +539,22 @@ export function TaskBoardPanel() {
             ))}
           </select>
         </div>
-        <div className="flex gap-2">
+        <div classNome="flex gap-2">
           <button
-            onClick={() => setShowProjectManager(true)}
-            className="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth text-sm font-medium"
+            onClick={() => setMostrarProjectManager(true)}
+            classNome="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth text-sm font-medium"
           >
             Projects
           </button>
           <button
-            onClick={() => setShowCreateModal(true)}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth text-sm font-medium"
+            onClick={() => setMostrarCreateModal(true)}
+            classNome="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth text-sm font-medium"
           >
             + New Task
           </button>
           <button
             onClick={fetchData}
-            className="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth text-sm font-medium"
+            classNome="px-4 py-2 bg-secondary text-muted-foreground rounded-md hover:bg-surface-2 transition-smooth text-sm font-medium"
           >
             Refresh
           </button>
@@ -563,11 +563,11 @@ export function TaskBoardPanel() {
 
       {/* Error Display */}
       {error && (
-        <div role="alert" className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
+        <div role="alert" classNome="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-3 m-4 rounded-lg text-sm flex items-center justify-between">
           <span>{error}</span>
           <button
             onClick={() => setError(null)}
-            className="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
+            classNome="text-[#9e5c50]/60 hover:text-[#9e5c50] ml-2"
             aria-label="Dismiss error"
           >
             ×
@@ -576,28 +576,28 @@ export function TaskBoardPanel() {
       )}
 
       {/* Kanban Board */}
-      <div className="flex-1 flex gap-4 p-4 overflow-x-auto" role="region" aria-label="Task board">
+      <div classNome="flex-1 flex gap-4 p-4 overflow-x-auto" role="region" aria-label="Task board">
         {statusColumns.map(column => (
           <div
             key={column.key}
             role="region"
             aria-label={`${column.title} column, ${tasksByStatus[column.key]?.length || 0} tasks`}
-            className="flex-1 min-w-80 bg-card border border-border rounded-lg flex flex-col"
+            classNome="flex-1 min-w-80 bg-card border border-border rounded-lg flex flex-col"
             onDragEnter={(e) => handleDragEnter(e, column.key)}
             onDragLeave={handleDragLeave}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, column.key)}
           >
             {/* Column Header */}
-            <div className={`${column.color} p-3 rounded-t-lg flex justify-between items-center`}>
-              <h3 className="font-semibold">{column.title}</h3>
-              <span className="text-sm bg-black/20 px-2 py-1 rounded">
+            <div classNome={`${column.color} p-3 rounded-t-lg flex justify-between items-center`}>
+              <h3 classNome="font-semibold">{column.title}</h3>
+              <span classNome="text-sm bg-black/20 px-2 py-1 rounded">
                 {tasksByStatus[column.key]?.length || 0}
               </span>
             </div>
 
             {/* Column Body */}
-            <div className="flex-1 p-3 space-y-3 min-h-32">
+            <div classNome="flex-1 p-3 space-y-3 min-h-32">
               {tasksByStatus[column.key]?.map(task => (
                 <div
                   key={task.id}
@@ -617,26 +617,26 @@ export function TaskBoardPanel() {
                       updateTaskUrl(task.id)
                     }
                   }}
-                  className={`bg-surface-1 rounded-lg p-3 cursor-pointer hover:bg-surface-2 transition-smooth border-l-4 ${priorityColors[task.priority]} ${
+                  classNome={`bg-surface-1 rounded-lg p-3 cursor-pointer hover:bg-surface-2 transition-smooth border-l-4 ${priorityColors[task.priority]} ${
                     draggedTask?.id === task.id ? 'opacity-50' : ''
                   }`}
                 >
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="text-foreground font-medium text-sm leading-tight">
+                  <div classNome="flex justify-between items-start mb-2">
+                    <h4 classNome="text-foreground font-medium text-sm leading-tight">
                       {task.title}
                     </h4>
-                    <div className="flex items-center gap-2">
+                    <div classNome="flex items-center gap-2">
                       {task.ticket_ref && (
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-primary/20 text-primary">
+                        <span classNome="text-[10px] px-2 py-0.5 rounded bg-primary/20 text-primary">
                           {task.ticket_ref}
                         </span>
                       )}
                       {task.aegisApproved && (
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-700 text-emerald-100">
+                        <span classNome="text-[10px] px-2 py-0.5 rounded bg-emerald-700 text-emerald-100">
                           Aegis Approved
                         </span>
                       )}
-                      <span className={`text-xs px-2 py-1 rounded font-medium ${
+                      <span classNome={`text-xs px-2 py-1 rounded font-medium ${
                         task.priority === 'critical' ? 'bg-[#9e5c50]/20 text-[#9e5c50]' :
                         task.priority === 'high' ? 'bg-orange-500/20 text-orange-400' :
                         task.priority === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
@@ -648,57 +648,57 @@ export function TaskBoardPanel() {
                   </div>
                   
                   {task.description && (
-                    <div className="mb-2 line-clamp-3 overflow-hidden">
+                    <div classNome="mb-2 line-clamp-3 overflow-hidden">
                       <MarkdownRenderer content={task.description} preview />
                     </div>
                   )}
 
-                  <div className="flex justify-between items-center text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1.5 min-w-0">
+                  <div classNome="flex justify-between items-center text-xs text-muted-foreground">
+                    <span classNome="flex items-center gap-1.5 min-w-0">
                       {task.assigned_to ? (
                         <>
-                          <AgentAvatar name={getAgentName(task.assigned_to)} size="xs" />
-                          <span className="truncate">{getAgentName(task.assigned_to)}</span>
+                          <AgentAvatar name={getAgentNome(task.assigned_to)} size="xs" />
+                          <span classNome="truncate">{getAgentNome(task.assigned_to)}</span>
                         </>
                       ) : (
                         <span>Unassigned</span>
                       )}
                     </span>
-                    <span className="font-medium">{formatTaskTimestamp(task.created_at)}</span>
+                    <span classNome="font-medium">{formatTaskTimestamp(task.created_at)}</span>
                   </div>
 
                   {task.project_name && (
-                    <div className="text-xs text-muted-foreground mt-1">
+                    <div classNome="text-xs text-muted-foreground mt-1">
                       Project: {task.project_name}
                     </div>
                   )}
 
                   {task.tags && task.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-2">
+                    <div classNome="flex flex-wrap gap-1 mt-2">
                       {task.tags.slice(0, 3).map((tag, index) => (
                         <span
                           key={index}
-                          className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getTagColor(tag)}`}
+                          classNome={`text-xs px-2 py-0.5 rounded-full border font-medium ${getTagColor(tag)}`}
                         >
                           {tag}
                         </span>
                       ))}
                       {task.tags.length > 3 && (
-                        <span className="text-muted-foreground text-xs font-medium">+{task.tags.length - 3}</span>
+                        <span classNome="text-muted-foreground text-xs font-medium">+{task.tags.length - 3}</span>
                       )}
                     </div>
                   )}
 
                   {/* Enhanced timestamp display */}
                   {task.updated_at && task.updated_at !== task.created_at && (
-                    <div className="text-xs text-muted-foreground/70 mt-1">
-                      Updated {formatTaskTimestamp(task.updated_at)}
+                    <div classNome="text-xs text-muted-foreground/70 mt-1">
+                      Atualizado {formatTaskTimestamp(task.updated_at)}
                     </div>
                   )}
 
                   {task.due_date && (
-                    <div className="mt-2 text-xs">
-                      <span className={`${
+                    <div classNome="mt-2 text-xs">
+                      <span classNome={`${
                         task.due_date * 1000 < Date.now() ? 'text-[#9e5c50]' : 'text-yellow-400'
                       }`}>
                         Due: {formatTaskTimestamp(task.due_date)}
@@ -710,7 +710,7 @@ export function TaskBoardPanel() {
 
               {/* Empty State */}
               {tasksByStatus[column.key]?.length === 0 && (
-                <div className="text-center text-muted-foreground/50 py-8 text-sm">
+                <div classNome="text-center text-muted-foreground/50 py-8 text-sm">
                   No tasks in {column.title.toLowerCase()}
                 </div>
               )}
@@ -743,8 +743,8 @@ export function TaskBoardPanel() {
         <CreateTaskModal
           agents={agents}
           projects={projects}
-          onClose={() => setShowCreateModal(false)}
-          onCreated={fetchData}
+          onClose={() => setMostrarCreateModal(false)}
+          onCriado={fetchData}
         />
       )}
 
@@ -755,13 +755,13 @@ export function TaskBoardPanel() {
           agents={agents}
           projects={projects}
           onClose={() => setEditingTask(null)}
-          onUpdated={() => { fetchData(); setEditingTask(null) }}
+          onAtualizado={() => { fetchData(); setEditingTask(null) }}
         />
       )}
 
       {showProjectManager && (
         <ProjectManagerModal
-          onClose={() => setShowProjectManager(false)}
+          onClose={() => setMostrarProjectManager(false)}
           onChanged={fetchData}
         />
       )}
@@ -787,7 +787,7 @@ function TaskDetailModal({
 }) {
   const { currentUser } = useMissionControl()
   const commentAuthor = currentUser?.username || 'system'
-  const resolvedProjectName =
+  const resolvedProjectNome =
     task.project_name ||
     projects.find((project) => project.id === task.project_id)?.name
   const [comments, setComments] = useState<Comment[]>([])
@@ -846,7 +846,7 @@ function TaskDetailModal({
       setCommentError(null)
       const response = await fetch(`/api/tasks/${task.id}/comments`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           author: commentAuthor || 'system',
           content: commentText
@@ -869,7 +869,7 @@ function TaskDetailModal({
       setBroadcastStatus(null)
       const response = await fetch(`/api/tasks/${task.id}/broadcast`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           author: commentAuthor || 'system',
           message: broadcastMessage
@@ -890,7 +890,7 @@ function TaskDetailModal({
       setReviewError(null)
       const response = await fetch('/api/quality-review', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           taskId: task.id,
           reviewer,
@@ -909,14 +909,14 @@ function TaskDetailModal({
   }
 
   const renderComment = (comment: Comment, depth: number = 0) => (
-    <div key={comment.id} className={`border-l-2 border-border pl-3 ${depth > 0 ? 'ml-4' : ''}`}>
-      <div className="flex items-center justify-between text-xs text-muted-foreground">
-        <span className="font-medium text-foreground/80">{comment.author}</span>
+    <div key={comment.id} classNome={`border-l-2 border-border pl-3 ${depth > 0 ? 'ml-4' : ''}`}>
+      <div classNome="flex items-center justify-between text-xs text-muted-foreground">
+        <span classNome="font-medium text-foreground/80">{comment.author}</span>
         <span>{new Date(comment.created_at * 1000).toLocaleString()}</span>
       </div>
-      <div className="text-sm text-foreground/90 mt-1 whitespace-pre-wrap">{comment.content}</div>
+      <div classNome="text-sm text-foreground/90 mt-1 whitespace-pre-wrap">{comment.content}</div>
       {comment.replies && comment.replies.length > 0 && (
-        <div className="mt-3 space-y-3">
+        <div classNome="mt-3 space-y-3">
           {comment.replies.map(reply => renderComment(reply, depth + 1))}
         </div>
       )}
@@ -926,35 +926,35 @@ function TaskDetailModal({
   const dialogRef = useFocusTrap(onClose)
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="task-detail-title" className="bg-card border border-border rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-start mb-4">
-            <h3 id="task-detail-title" className="text-xl font-bold text-foreground">{task.title}</h3>
-            <div className="flex gap-2">
+    <div classNome="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="task-detail-title" classNome="bg-card border border-border rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div classNome="p-6">
+          <div classNome="flex justify-between items-start mb-4">
+            <h3 id="task-detail-title" classNome="text-xl font-bold text-foreground">{task.title}</h3>
+            <div classNome="flex gap-2">
               <button
                 onClick={() => onEdit(task)}
-                className="px-3 py-1.5 bg-primary/20 text-primary hover:bg-primary/30 rounded-md transition-smooth text-sm font-medium"
+                classNome="px-3 py-1.5 bg-primary/20 text-primary hover:bg-primary/30 rounded-md transition-smooth text-sm font-medium"
               >
                 Edit
               </button>
               <button
                 onClick={onClose}
                 aria-label="Close task details"
-                className="text-muted-foreground hover:text-foreground text-2xl transition-smooth"
+                classNome="text-muted-foreground hover:text-foreground text-2xl transition-smooth"
               >
                 ×
               </button>
             </div>
           </div>
           {task.description ? (
-            <div className="mb-4">
+            <div classNome="mb-4">
               <MarkdownRenderer content={task.description} />
             </div>
           ) : (
-            <p className="text-foreground/80 mb-4">No description</p>
+            <p classNome="text-foreground/80 mb-4">No description</p>
           )}
-          <div className="flex gap-2 mt-4" role="tablist" aria-label="Task detail tabs">
+          <div classNome="flex gap-2 mt-4" role="tablist" aria-label="Task detail tabs">
             {(['details', 'comments', 'quality'] as const).map(tab => (
               <button
                 key={tab}
@@ -962,40 +962,40 @@ function TaskDetailModal({
                 aria-selected={activeTab === tab}
                 aria-controls={`tabpanel-${tab}`}
                 onClick={() => setActiveTab(tab)}
-                className={`px-3 py-2 text-sm rounded-md transition-smooth ${
+                classNome={`px-3 py-2 text-sm rounded-md transition-smooth ${
                   activeTab === tab ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:bg-surface-2'
                 }`}
               >
-                {tab === 'details' ? 'Details' : tab === 'comments' ? 'Comments' : 'Quality Review'}
+                {tab === 'details' ? 'Detalhes' : tab === 'comments' ? 'Comments' : 'Quality Review'}
               </button>
             ))}
           </div>
 
           {activeTab === 'details' && (
-            <div id="tabpanel-details" role="tabpanel" aria-label="Details" className="grid grid-cols-2 gap-4 text-sm mt-4">
+            <div id="tabpanel-details" role="tabpanel" aria-label="Detalhes" classNome="grid grid-cols-2 gap-4 text-sm mt-4">
               {task.ticket_ref && (
                 <div>
-                  <span className="text-muted-foreground">Ticket:</span>
-                  <span className="text-foreground ml-2 font-mono">{task.ticket_ref}</span>
+                  <span classNome="text-muted-foreground">Ticket:</span>
+                  <span classNome="text-foreground ml-2 font-mono">{task.ticket_ref}</span>
                 </div>
               )}
-              {resolvedProjectName && (
+              {resolvedProjectNome && (
                 <div>
-                  <span className="text-muted-foreground">Project:</span>
-                  <span className="text-foreground ml-2">{resolvedProjectName}</span>
+                  <span classNome="text-muted-foreground">Project:</span>
+                  <span classNome="text-foreground ml-2">{resolvedProjectNome}</span>
                 </div>
               )}
               <div>
-                <span className="text-muted-foreground">Status:</span>
-                <span className="text-foreground ml-2">{task.status}</span>
+                <span classNome="text-muted-foreground">Status:</span>
+                <span classNome="text-foreground ml-2">{task.status}</span>
               </div>
               <div>
-                <span className="text-muted-foreground">Priority:</span>
-                <span className="text-foreground ml-2">{task.priority}</span>
+                <span classNome="text-muted-foreground">Priority:</span>
+                <span classNome="text-foreground ml-2">{task.priority}</span>
               </div>
               <div>
-                <span className="text-muted-foreground">Assigned to:</span>
-                <span className="text-foreground ml-2 inline-flex items-center gap-1.5">
+                <span classNome="text-muted-foreground">Assigned to:</span>
+                <span classNome="text-foreground ml-2 inline-flex items-center gap-1.5">
                   {task.assigned_to ? (
                     <>
                       <AgentAvatar name={task.assigned_to} size="xs" />
@@ -1007,90 +1007,90 @@ function TaskDetailModal({
                 </span>
               </div>
               <div>
-                <span className="text-muted-foreground">Created:</span>
-                <span className="text-foreground ml-2">{new Date(task.created_at * 1000).toLocaleDateString()}</span>
+                <span classNome="text-muted-foreground">Criado:</span>
+                <span classNome="text-foreground ml-2">{new Date(task.created_at * 1000).toLocaleDateString()}</span>
               </div>
             </div>
           )}
 
           {activeTab === 'comments' && (
-            <div id="tabpanel-comments" role="tabpanel" aria-label="Comments" className="mt-6">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-lg font-semibold text-foreground">Comments</h4>
+            <div id="tabpanel-comments" role="tabpanel" aria-label="Comments" classNome="mt-6">
+            <div classNome="flex items-center justify-between mb-3">
+              <h4 classNome="text-lg font-semibold text-foreground">Comments</h4>
               <button
                 onClick={fetchComments}
-                className="text-xs text-blue-400 hover:text-blue-300"
+                classNome="text-xs text-blue-400 hover:text-blue-300"
               >
                 Refresh
               </button>
             </div>
 
             {commentError && (
-              <div className="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-2 rounded-md text-sm mb-3">
+              <div classNome="bg-[#9e5c50]/10 border border-[#9e5c50]/20 text-[#9e5c50] p-2 rounded-md text-sm mb-3">
                 {commentError}
               </div>
             )}
 
             {loadingComments ? (
-              <div className="text-muted-foreground text-sm">Loading comments...</div>
+              <div classNome="text-muted-foreground text-sm">Loading comments...</div>
             ) : comments.length === 0 ? (
-              <div className="text-muted-foreground/50 text-sm">No comments yet.</div>
+              <div classNome="text-muted-foreground/50 text-sm">No comments yet.</div>
             ) : (
-              <div className="space-y-4">
+              <div classNome="space-y-4">
                 {comments.map(comment => renderComment(comment))}
               </div>
             )}
 
-            <form onSubmit={handleAddComment} className="mt-4 space-y-3">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <form onSubmit={handleAddComment} classNome="mt-4 space-y-3">
+              <div classNome="flex items-center gap-2 text-xs text-muted-foreground">
                 <span>Posting as</span>
-                <span className="font-medium text-foreground">{commentAuthor}</span>
+                <span classNome="font-medium text-foreground">{commentAuthor}</span>
               </div>
               <div>
-                <label className="block text-xs text-muted-foreground mb-1">New Comment</label>
+                <label classNome="block text-xs text-muted-foreground mb-1">New Comment</label>
                 <MentionTextarea
                   value={commentText}
                   onChange={setCommentText}
-                  className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
                   rows={3}
                   mentionTargets={mentionTargets}
                 />
-                <p className="text-[11px] text-muted-foreground mt-1">Use <span className="font-mono">@</span> to mention users and agents.</p>
+                <p classNome="text-[11px] text-muted-foreground mt-1">Use <span classNome="font-mono">@</span> to mention users and agents.</p>
               </div>
-              <div className="flex justify-end">
+              <div classNome="flex justify-end">
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth text-sm"
+                  classNome="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-smooth text-sm"
                 >
                   Add Comment
                 </button>
               </div>
             </form>
 
-            <div className="mt-5 bg-blue-500/5 border border-blue-500/15 rounded-lg p-3 text-xs text-muted-foreground space-y-1">
-              <div className="font-medium text-blue-300">How notifications work</div>
-              <div><strong className="text-foreground">Comments</strong> are persisted on the task and notify all subscribers. Subscribers are auto-added when they: create the task, are assigned to it, comment on it, or are @mentioned.</div>
-              <div><strong className="text-foreground">Broadcasts</strong> send a one-time notification to all current subscribers without creating a comment record.</div>
+            <div classNome="mt-5 bg-blue-500/5 border border-blue-500/15 rounded-lg p-3 text-xs text-muted-foreground space-y-1">
+              <div classNome="font-medium text-blue-300">How notifications work</div>
+              <div><strong classNome="text-foreground">Comments</strong> are persisted on the task and notify all subscribers. Subscribers are auto-added when they: create the task, are assigned to it, comment on it, or are @mentioned.</div>
+              <div><strong classNome="text-foreground">Broadcasts</strong> send a one-time notification to all current subscribers without creating a comment record.</div>
             </div>
 
-            <div className="mt-6 border-t border-border pt-4">
-              <h5 className="text-sm font-medium text-foreground mb-2">Broadcast to Subscribers</h5>
+            <div classNome="mt-6 border-t border-border pt-4">
+              <h5 classNome="text-sm font-medium text-foreground mb-2">Broadcast to Subscribers</h5>
               {broadcastStatus && (
-                <div className="text-xs text-muted-foreground mb-2">{broadcastStatus}</div>
+                <div classNome="text-xs text-muted-foreground mb-2">{broadcastStatus}</div>
               )}
-              <form onSubmit={handleBroadcast} className="space-y-2">
+              <form onSubmit={handleBroadcast} classNome="space-y-2">
                 <MentionTextarea
                   value={broadcastMessage}
                   onChange={setBroadcastMessage}
-                  className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/50"
                   rows={2}
                   placeholder="Send a message to all task subscribers... (use @ to mention)"
                   mentionTargets={mentionTargets}
                 />
-                <div className="flex justify-end">
+                <div classNome="flex justify-end">
                   <button
                     type="submit"
-                    className="px-3 py-2 bg-purple-500/20 text-purple-400 border border-purple-500/30 rounded-md hover:bg-purple-500/30 transition-smooth text-xs"
+                    classNome="px-3 py-2 bg-purple-500/20 text-purple-400 border border-purple-500/30 rounded-md hover:bg-purple-500/30 transition-smooth text-xs"
                   >
                     Broadcast
                   </button>
@@ -1101,39 +1101,39 @@ function TaskDetailModal({
           )}
 
           {activeTab === 'quality' && (
-            <div id="tabpanel-quality" role="tabpanel" aria-label="Quality Review" className="mt-6">
-              <h5 className="text-sm font-medium text-foreground mb-2">Aegis Quality Review</h5>
+            <div id="tabpanel-quality" role="tabpanel" aria-label="Quality Review" classNome="mt-6">
+              <h5 classNome="text-sm font-medium text-foreground mb-2">Aegis Quality Review</h5>
               {reviewError && (
-                <div className="text-xs text-[#9e5c50] mb-2">{reviewError}</div>
+                <div classNome="text-xs text-[#9e5c50] mb-2">{reviewError}</div>
               )}
               {reviews.length > 0 ? (
-                <div className="space-y-2 mb-3">
+                <div classNome="space-y-2 mb-3">
                   {reviews.map((review) => (
-                    <div key={review.id} className="text-xs text-foreground/80 bg-surface-1/40 rounded p-2">
-                      <div className="flex justify-between">
+                    <div key={review.id} classNome="text-xs text-foreground/80 bg-surface-1/40 rounded p-2">
+                      <div classNome="flex justify-between">
                         <span>{review.reviewer} — {review.status}</span>
                         <span>{new Date(review.created_at * 1000).toLocaleString()}</span>
                       </div>
-                      {review.notes && <div className="mt-1">{review.notes}</div>}
+                      {review.notes && <div classNome="mt-1">{review.notes}</div>}
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="text-xs text-muted-foreground mb-3">No reviews yet.</div>
+                <div classNome="text-xs text-muted-foreground mb-3">No reviews yet.</div>
               )}
-              <form onSubmit={handleSubmitReview} className="space-y-2">
-                <div className="flex gap-2">
+              <form onSubmit={handleSubmitReview} classNome="space-y-2">
+                <div classNome="flex gap-2">
                   <input
                     type="text"
                     value={reviewer}
                     onChange={(e) => setReviewer(e.target.value)}
-                    className="bg-surface-1 text-foreground border border-border rounded-md px-2 py-1 text-xs"
+                    classNome="bg-surface-1 text-foreground border border-border rounded-md px-2 py-1 text-xs"
                     placeholder="Reviewer (e.g., aegis)"
                   />
                   <select
                     value={reviewStatus}
                     onChange={(e) => setReviewStatus(e.target.value as 'approved' | 'rejected')}
-                    className="bg-surface-1 text-foreground border border-border rounded-md px-2 py-1 text-xs"
+                    classNome="bg-surface-1 text-foreground border border-border rounded-md px-2 py-1 text-xs"
                   >
                     <option value="approved">approved</option>
                     <option value="rejected">rejected</option>
@@ -1142,12 +1142,12 @@ function TaskDetailModal({
                     type="text"
                     value={reviewNotes}
                     onChange={(e) => setReviewNotes(e.target.value)}
-                    className="flex-1 bg-surface-1 text-foreground border border-border rounded-md px-2 py-1 text-xs"
+                    classNome="flex-1 bg-surface-1 text-foreground border border-border rounded-md px-2 py-1 text-xs"
                     placeholder="Review notes (required)"
                   />
                   <button
                     type="submit"
-                    className="px-3 py-1 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md text-xs"
+                    classNome="px-3 py-1 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md text-xs"
                   >
                     Submit
                   </button>
@@ -1166,12 +1166,12 @@ function CreateTaskModal({
   agents, 
   projects,
   onClose, 
-  onCreated 
+  onCriado 
 }: { 
   agents: Agent[]
   projects: Project[]
   onClose: () => void
-  onCreated: () => void
+  onCriado: () => void
 }) {
   const [formData, setFormData] = useState({
     title: '',
@@ -1191,7 +1191,7 @@ function CreateTaskModal({
     try {
       const response = await fetch('/api/tasks', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           ...formData,
           project_id: formData.project_id ? Number(formData.project_id) : undefined,
@@ -1206,7 +1206,7 @@ function CreateTaskModal({
         throw new Error(errorMsg)
       }
 
-      onCreated()
+      onCriado()
       onClose()
     } catch (error) {
       log.error('Error creating task:', error)
@@ -1216,45 +1216,45 @@ function CreateTaskModal({
   const dialogRef = useFocusTrap(onClose)
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="create-task-title" className="bg-card border border-border rounded-lg max-w-md w-full">
-        <form onSubmit={handleSubmit} className="p-6">
-          <h3 id="create-task-title" className="text-xl font-bold text-foreground mb-4">Create New Task</h3>
+    <div classNome="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="create-task-title" classNome="bg-card border border-border rounded-lg max-w-md w-full">
+        <form onSubmit={handleSubmit} classNome="p-6">
+          <h3 id="create-task-title" classNome="text-xl font-bold text-foreground mb-4">Create New Task</h3>
           
-          <div className="space-y-4">
+          <div classNome="space-y-4">
             <div>
-              <label htmlFor="create-title" className="block text-sm text-muted-foreground mb-1">Title</label>
+              <label htmlFor="create-title" classNome="block text-sm text-muted-foreground mb-1">Title</label>
               <input
                 id="create-title"
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 required
               />
             </div>
             
             <div>
-              <label htmlFor="create-description" className="block text-sm text-muted-foreground mb-1">Description</label>
+              <label htmlFor="create-description" classNome="block text-sm text-muted-foreground mb-1">Descrição</label>
               <MentionTextarea
                 id="create-description"
                 value={formData.description}
                 onChange={(next) => setFormData(prev => ({ ...prev, description: next }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 rows={3}
                 mentionTargets={mentionTargets}
               />
-              <p className="text-[11px] text-muted-foreground mt-1">Tip: type <span className="font-mono">@</span> for mention autocomplete.</p>
+              <p classNome="text-[11px] text-muted-foreground mt-1">Tip: type <span classNome="font-mono">@</span> for mention autocomplete.</p>
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div classNome="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="create-priority" className="block text-sm text-muted-foreground mb-1">Priority</label>
+                <label htmlFor="create-priority" classNome="block text-sm text-muted-foreground mb-1">Priority</label>
                 <select
                   id="create-priority"
                   value={formData.priority}
                   onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as Task['priority'] }))}
-                  className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -1264,12 +1264,12 @@ function CreateTaskModal({
               </div>
 
               <div>
-                <label htmlFor="create-project" className="block text-sm text-muted-foreground mb-1">Project</label>
+                <label htmlFor="create-project" classNome="block text-sm text-muted-foreground mb-1">Project</label>
                 <select
                   id="create-project"
                   value={formData.project_id}
                   onChange={(e) => setFormData(prev => ({ ...prev, project_id: e.target.value }))}
-                  className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 >
                   {projects.map(project => (
                     <option key={project.id} value={String(project.id)}>
@@ -1281,12 +1281,12 @@ function CreateTaskModal({
             </div>
 
             <div>
-              <label htmlFor="create-assignee" className="block text-sm text-muted-foreground mb-1">Assign to</label>
+              <label htmlFor="create-assignee" classNome="block text-sm text-muted-foreground mb-1">Assign to</label>
               <select
                 id="create-assignee"
                 value={formData.assigned_to}
                 onChange={(e) => setFormData(prev => ({ ...prev, assigned_to: e.target.value }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
               >
                 <option value="">Unassigned</option>
                 {agents.map(agent => (
@@ -1298,29 +1298,29 @@ function CreateTaskModal({
             </div>
 
             <div>
-              <label htmlFor="create-tags" className="block text-sm text-muted-foreground mb-1">Tags (comma-separated)</label>
+              <label htmlFor="create-tags" classNome="block text-sm text-muted-foreground mb-1">Tags (comma-separated)</label>
               <input
                 id="create-tags"
                 type="text"
                 value={formData.tags}
                 onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 placeholder="frontend, urgent, bug"
               />
             </div>
           </div>
           
-          <div className="flex gap-3 mt-6">
+          <div classNome="flex gap-3 mt-6">
             <button
               type="submit"
-              className="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
+              classNome="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
             >
               Create Task
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
+              classNome="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
             >
               Cancel
             </button>
@@ -1337,13 +1337,13 @@ function EditTaskModal({
   agents,
   projects,
   onClose,
-  onUpdated
+  onAtualizado
 }: {
   task: Task
   agents: Agent[]
   projects: Project[]
   onClose: () => void
-  onUpdated: () => void
+  onAtualizado: () => void
 }) {
   const [formData, setFormData] = useState({
     title: task.title,
@@ -1364,7 +1364,7 @@ function EditTaskModal({
     try {
       const response = await fetch(`/api/tasks/${task.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           ...formData,
           project_id: formData.project_id ? Number(formData.project_id) : undefined,
@@ -1379,7 +1379,7 @@ function EditTaskModal({
         throw new Error(errorMsg)
       }
 
-      onUpdated()
+      onAtualizado()
     } catch (error) {
       log.error('Error updating task:', error)
     }
@@ -1388,45 +1388,45 @@ function EditTaskModal({
   const dialogRef = useFocusTrap(onClose)
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="edit-task-title" className="bg-card border border-border rounded-lg max-w-md w-full">
-        <form onSubmit={handleSubmit} className="p-6">
-          <h3 id="edit-task-title" className="text-xl font-bold text-foreground mb-4">Edit Task</h3>
+    <div classNome="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="edit-task-title" classNome="bg-card border border-border rounded-lg max-w-md w-full">
+        <form onSubmit={handleSubmit} classNome="p-6">
+          <h3 id="edit-task-title" classNome="text-xl font-bold text-foreground mb-4">Edit Task</h3>
 
-          <div className="space-y-4">
+          <div classNome="space-y-4">
             <div>
-              <label htmlFor="edit-title" className="block text-sm text-muted-foreground mb-1">Title</label>
+              <label htmlFor="edit-title" classNome="block text-sm text-muted-foreground mb-1">Title</label>
               <input
                 id="edit-title"
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="edit-description" className="block text-sm text-muted-foreground mb-1">Description</label>
+              <label htmlFor="edit-description" classNome="block text-sm text-muted-foreground mb-1">Descrição</label>
               <MentionTextarea
                 id="edit-description"
                 value={formData.description}
                 onChange={(next) => setFormData(prev => ({ ...prev, description: next }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 rows={3}
                 mentionTargets={mentionTargets}
               />
-              <p className="text-[11px] text-muted-foreground mt-1">Tip: type <span className="font-mono">@</span> for mention autocomplete.</p>
+              <p classNome="text-[11px] text-muted-foreground mt-1">Tip: type <span classNome="font-mono">@</span> for mention autocomplete.</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div classNome="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="edit-status" className="block text-sm text-muted-foreground mb-1">Status</label>
+                <label htmlFor="edit-status" classNome="block text-sm text-muted-foreground mb-1">Status</label>
                 <select
                   id="edit-status"
                   value={formData.status}
                   onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as Task['status'] }))}
-                  className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 >
                   <option value="inbox">Inbox</option>
                   <option value="assigned">Assigned</option>
@@ -1438,12 +1438,12 @@ function EditTaskModal({
               </div>
 
               <div>
-                <label htmlFor="edit-priority" className="block text-sm text-muted-foreground mb-1">Priority</label>
+                <label htmlFor="edit-priority" classNome="block text-sm text-muted-foreground mb-1">Priority</label>
                 <select
                   id="edit-priority"
                   value={formData.priority}
                   onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as Task['priority'] }))}
-                  className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                  classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -1454,12 +1454,12 @@ function EditTaskModal({
             </div>
 
             <div>
-              <label htmlFor="edit-project" className="block text-sm text-muted-foreground mb-1">Project</label>
+              <label htmlFor="edit-project" classNome="block text-sm text-muted-foreground mb-1">Project</label>
               <select
                 id="edit-project"
                 value={formData.project_id}
                 onChange={(e) => setFormData(prev => ({ ...prev, project_id: e.target.value }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
               >
                 {projects.map(project => (
                   <option key={project.id} value={String(project.id)}>
@@ -1470,12 +1470,12 @@ function EditTaskModal({
             </div>
 
             <div>
-              <label htmlFor="edit-assignee" className="block text-sm text-muted-foreground mb-1">Assign to</label>
+              <label htmlFor="edit-assignee" classNome="block text-sm text-muted-foreground mb-1">Assign to</label>
               <select
                 id="edit-assignee"
                 value={formData.assigned_to}
                 onChange={(e) => setFormData(prev => ({ ...prev, assigned_to: e.target.value }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
               >
                 <option value="">Unassigned</option>
                 {agents.map(agent => (
@@ -1487,29 +1487,29 @@ function EditTaskModal({
             </div>
 
             <div>
-              <label htmlFor="edit-tags" className="block text-sm text-muted-foreground mb-1">Tags (comma-separated)</label>
+              <label htmlFor="edit-tags" classNome="block text-sm text-muted-foreground mb-1">Tags (comma-separated)</label>
               <input
                 id="edit-tags"
                 type="text"
                 value={formData.tags}
                 onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value }))}
-                className="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
+                classNome="w-full bg-surface-1 text-foreground border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary/50"
                 placeholder="frontend, urgent, bug"
               />
             </div>
           </div>
 
-          <div className="flex gap-3 mt-6">
+          <div classNome="flex gap-3 mt-6">
             <button
               type="submit"
-              className="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
+              classNome="flex-1 bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-smooth"
             >
               Save Changes
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
+              classNome="flex-1 bg-secondary text-muted-foreground py-2 rounded-md hover:bg-surface-2 transition-smooth"
             >
               Cancel
             </button>
@@ -1557,7 +1557,7 @@ function ProjectManagerModal({
     try {
       const response = await fetch('/api/projects', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({
           name: form.name,
           ticket_prefix: form.ticket_prefix,
@@ -1578,7 +1578,7 @@ function ProjectManagerModal({
     try {
       const response = await fetch(`/api/projects/${project.id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({ status: project.status === 'active' ? 'archived' : 'active' })
       })
       const data = await response.json()
@@ -1606,23 +1606,23 @@ function ProjectManagerModal({
   const dialogRef = useFocusTrap(onClose)
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="projects-title" className="bg-card border border-border rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 id="projects-title" className="text-xl font-bold text-foreground">Project Management</h3>
-            <button onClick={onClose} className="text-muted-foreground hover:text-foreground text-2xl">×</button>
+    <div classNome="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose() }}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="projects-title" classNome="bg-card border border-border rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div classNome="p-6 space-y-4">
+          <div classNome="flex items-center justify-between">
+            <h3 id="projects-title" classNome="text-xl font-bold text-foreground">Project Management</h3>
+            <button onClick={onClose} classNome="text-muted-foreground hover:text-foreground text-2xl">×</button>
           </div>
 
-          {error && <div className="text-sm text-[#9e5c50] bg-[#9e5c50]/10 border border-[#9e5c50]/20 rounded p-2">{error}</div>}
+          {error && <div classNome="text-sm text-[#9e5c50] bg-[#9e5c50]/10 border border-[#9e5c50]/20 rounded p-2">{error}</div>}
 
-          <form onSubmit={createProject} className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <form onSubmit={createProject} classNome="grid grid-cols-1 md:grid-cols-3 gap-3">
             <input
               type="text"
               value={form.name}
               onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
               placeholder="Project name"
-              className="bg-surface-1 text-foreground border border-border rounded-md px-3 py-2"
+              classNome="bg-surface-1 text-foreground border border-border rounded-md px-3 py-2"
               required
             />
             <input
@@ -1630,42 +1630,42 @@ function ProjectManagerModal({
               value={form.ticket_prefix}
               onChange={(e) => setForm((prev) => ({ ...prev, ticket_prefix: e.target.value }))}
               placeholder="Ticket prefix (e.g. PA)"
-              className="bg-surface-1 text-foreground border border-border rounded-md px-3 py-2"
+              classNome="bg-surface-1 text-foreground border border-border rounded-md px-3 py-2"
             />
-            <button type="submit" className="bg-primary text-primary-foreground rounded-md px-3 py-2 hover:bg-primary/90">
+            <button type="submit" classNome="bg-primary text-primary-foreground rounded-md px-3 py-2 hover:bg-primary/90">
               Add Project
             </button>
             <input
               type="text"
               value={form.description}
               onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-              placeholder="Description (optional)"
-              className="md:col-span-3 bg-surface-1 text-foreground border border-border rounded-md px-3 py-2"
+              placeholder="Descrição (optional)"
+              classNome="md:col-span-3 bg-surface-1 text-foreground border border-border rounded-md px-3 py-2"
             />
           </form>
 
           {loading ? (
-            <div className="text-sm text-muted-foreground">Loading projects...</div>
+            <div classNome="text-sm text-muted-foreground">Loading projects...</div>
           ) : (
-            <div className="space-y-2">
+            <div classNome="space-y-2">
               {projects.map((project) => (
-                <div key={project.id} className="flex items-center justify-between border border-border rounded-md p-3">
+                <div key={project.id} classNome="flex items-center justify-between border border-border rounded-md p-3">
                   <div>
-                    <div className="text-sm font-medium text-foreground">{project.name}</div>
-                    <div className="text-xs text-muted-foreground">{project.ticket_prefix} · {project.slug} · {project.status}</div>
+                    <div classNome="text-sm font-medium text-foreground">{project.name}</div>
+                    <div classNome="text-xs text-muted-foreground">{project.ticket_prefix} · {project.slug} · {project.status}</div>
                   </div>
-                  <div className="flex gap-2">
+                  <div classNome="flex gap-2">
                     {project.slug !== 'general' && (
                       <>
                         <button
                           onClick={() => archiveProject(project)}
-                          className="px-3 py-1 text-xs rounded border border-border hover:bg-secondary"
+                          classNome="px-3 py-1 text-xs rounded border border-border hover:bg-secondary"
                         >
                           {project.status === 'active' ? 'Archive' : 'Activate'}
                         </button>
                         <button
                           onClick={() => deleteProject(project)}
-                          className="px-3 py-1 text-xs rounded border border-[#9e5c50]/30 text-[#9e5c50] hover:bg-[#9e5c50]/10"
+                          classNome="px-3 py-1 text-xs rounded border border-[#9e5c50]/30 text-[#9e5c50] hover:bg-[#9e5c50]/10"
                         >
                           Delete
                         </button>

@@ -26,33 +26,33 @@ export function ConnectionStatus({
 
   const getStatusText = () => {
     if (isConnected) {
-      return 'Connected'
+      return 'Conectado'
     }
     if (connection.reconnectAttempts > 0) {
-      return `Reconnecting... (${connection.reconnectAttempts}/10)`
+      return `Reconectando... (${connection.reconnectAttempts}/10)`
     }
-    return 'Disconnected'
+    return 'Desconectado'
   }
 
   return (
-    <div className="flex items-center space-x-4">
+    <div classNome="flex items-center space-x-4">
       {/* Connection Status Indicator */}
-      <div className="flex items-center space-x-2">
-        <div className={`w-3 h-3 rounded-full ${getStatusColor()}`}></div>
-        <span className="text-sm font-medium">
+      <div classNome="flex items-center space-x-2">
+        <div classNome={`w-3 h-3 rounded-full ${getStatusColor()}`}></div>
+        <span classNome="text-sm font-medium">
           {getStatusText()}
         </span>
-        <span className="text-xs text-muted-foreground">
+        <span classNome="text-xs text-muted-foreground">
           {displayUrl}
         </span>
       </div>
 
       {/* Connection Controls */}
-      <div className="flex items-center space-x-2">
+      <div classNome="flex items-center space-x-2">
         {isConnected ? (
           <button
             onClick={onDisconnect}
-            className="px-3 py-1 bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md text-xs font-medium hover:bg-[#9e5c50]/30 transition-colors"
+            classNome="px-3 py-1 bg-[#9e5c50]/20 text-[#9e5c50] border border-[#9e5c50]/30 rounded-md text-xs font-medium hover:bg-[#9e5c50]/30 transition-colors"
             title="Disconnect from gateway"
           >
             Disconnect
@@ -60,16 +60,16 @@ export function ConnectionStatus({
         ) : connection.reconnectAttempts > 0 ? (
           <button
             onClick={onDisconnect}
-            className="px-3 py-1 bg-gray-500/20 text-gray-400 border border-gray-500/30 rounded-md text-xs font-medium hover:bg-gray-500/30 transition-colors"
+            classNome="px-3 py-1 bg-gray-500/20 text-gray-400 border border-gray-500/30 rounded-md text-xs font-medium hover:bg-gray-500/30 transition-colors"
             title="Cancel reconnection attempts"
           >
             Cancel
           </button>
         ) : (
-          <div className="flex space-x-1">
+          <div classNome="flex space-x-1">
             <button
               onClick={onConnect}
-              className="px-3 py-1 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md text-xs font-medium hover:bg-[#b4a68c]/30 transition-colors"
+              classNome="px-3 py-1 bg-[#b4a68c]/20 text-[#b4a68c] border border-[#b4a68c]/30 rounded-md text-xs font-medium hover:bg-[#b4a68c]/30 transition-colors"
               title="Connect to gateway"
             >
               Connect
@@ -77,7 +77,7 @@ export function ConnectionStatus({
             {onReconnect && (
               <button
                 onClick={onReconnect}
-                className="px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md text-xs font-medium hover:bg-blue-500/30 transition-colors"
+                classNome="px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-md text-xs font-medium hover:bg-blue-500/30 transition-colors"
                 title="Reconnect with fresh session"
               >
                 Reconnect
@@ -88,23 +88,23 @@ export function ConnectionStatus({
       </div>
 
       {/* Real-time Status */}
-      <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+      <div classNome="flex items-center space-x-2 text-xs text-muted-foreground">
         {connection.latency ? (
           <>
             <span>Latency:</span>
-            <span className="font-mono">{connection.latency}ms</span>
+            <span classNome="font-mono">{connection.latency}ms</span>
           </>
         ) : connection.lastConnected ? (
           <>
             <span>Last connected:</span>
-            <span className="font-mono">
+            <span classNome="font-mono">
               {new Date(connection.lastConnected).toLocaleTimeString()}
             </span>
           </>
         ) : (
           <>
             <span>Status:</span>
-            <span className="font-mono">Not connected</span>
+            <span classNome="font-mono">Not connected</span>
           </>
         )}
       </div>

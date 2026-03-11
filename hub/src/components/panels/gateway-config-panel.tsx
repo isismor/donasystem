@@ -11,7 +11,7 @@ export function GatewayConfigPanel() {
   const [configPath, setConfigPath] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['gateway', 'agents']))
+  const [expandedSections, setExpandiredSections] = useState<Set<string>>(new Set(['gateway', 'agents']))
   const [feedback, setFeedback] = useState<{ ok: boolean; text: string } | null>(null)
   const [editingKey, setEditingKey] = useState<string | null>(null)
   const [editValue, setEditValue] = useState('')
@@ -50,7 +50,7 @@ export function GatewayConfigPanel() {
   useEffect(() => { fetchConfig() }, [fetchConfig])
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev => {
+    setExpandiredSections(prev => {
       const next = new Set(prev)
       if (next.has(section)) next.delete(section)
       else next.add(section)
@@ -82,12 +82,12 @@ export function GatewayConfigPanel() {
     try {
       const res = await fetch('/api/gateway-config', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Tipo': 'application/json' },
         body: JSON.stringify({ updates: { [editingKey]: parsedValue } }),
       })
       const data = await res.json()
       if (res.ok) {
-        showFeedback(true, `Updated ${editingKey}`)
+        showFeedback(true, `Atualizado ${editingKey}`)
         setEditingKey(null)
         setEditValue('')
         fetchConfig()
@@ -101,18 +101,18 @@ export function GatewayConfigPanel() {
 
   if (loading) {
     return (
-      <div className="p-6 flex items-center gap-2">
-        <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        <span className="text-sm text-muted-foreground">Loading gateway config...</span>
+      <div classNome="p-6 flex items-center gap-2">
+        <div classNome="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        <span classNome="text-sm text-muted-foreground">Loading gateway config...</span>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="p-6">
-        <div className="bg-destructive/10 text-destructive rounded-lg p-4 text-sm">{error}</div>
-        <p className="text-xs text-muted-foreground mt-2">
+      <div classNome="p-6">
+        <div classNome="bg-destructive/10 text-destructive rounded-lg p-4 text-sm">{error}</div>
+        <p classNome="text-xs text-muted-foreground mt-2">
           Ensure `OPENCLAW_CONFIG_PATH` (or `OPENCLAW_STATE_DIR`) is set and the config file exists.
         </p>
       </div>
@@ -120,18 +120,18 @@ export function GatewayConfigPanel() {
   }
 
   return (
-    <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-4">
+    <div classNome="p-4 md:p-6 max-w-4xl mx-auto space-y-4">
       {/* Header */}
       <div>
-        <h2 className="text-lg font-semibold text-foreground">Gateway Configuration</h2>
-        <p className="text-xs text-muted-foreground mt-0.5">
-          View and edit openclaw.json — <span className="font-mono">{configPath}</span>
+        <h2 classNome="text-lg font-semibold text-foreground">Config do Gatewayuration</h2>
+        <p classNome="text-xs text-muted-foreground mt-0.5">
+          View and edit openclaw.json — <span classNome="font-mono">{configPath}</span>
         </p>
       </div>
 
       {/* Feedback */}
       {feedback && (
-        <div className={`rounded-lg p-3 text-xs font-medium ${
+        <div classNome={`rounded-lg p-3 text-xs font-medium ${
           feedback.ok ? 'bg-[#b4a68c]/10 text-[#b4a68c]' : 'bg-destructive/10 text-destructive'
         }`}>
           {feedback.text}
@@ -140,7 +140,7 @@ export function GatewayConfigPanel() {
 
       {/* Config tree */}
       {config && (
-        <div className="space-y-2">
+        <div classNome="space-y-2">
           {Object.entries(config).map(([key, value]) => (
             <ConfigSection
               key={key}
@@ -182,21 +182,21 @@ function ConfigSection({ sectionKey, value, dotPath, expanded, onToggle, editing
   if (isObject) {
     const childCount = Object.keys(value).length
     return (
-      <div className="bg-card border border-border rounded-lg overflow-hidden">
+      <div classNome="bg-card border border-border rounded-lg overflow-hidden">
         <button
           onClick={onToggle}
-          className="w-full flex items-center justify-between px-4 py-3 hover:bg-secondary/50 transition-colors"
+          classNome="w-full flex items-center justify-between px-4 py-3 hover:bg-secondary/50 transition-colors"
         >
-          <div className="flex items-center gap-2">
-            <svg className={`w-3.5 h-3.5 text-muted-foreground transition-transform ${expanded ? 'rotate-90' : ''}`} viewBox="0 0 16 16" fill="currentColor">
+          <div classNome="flex items-center gap-2">
+            <svg classNome={`w-3.5 h-3.5 text-muted-foreground transition-transform ${expanded ? 'rotate-90' : ''}`} viewBox="0 0 16 16" fill="currentColor">
               <path d="M6 3l5 5-5 5V3z" />
             </svg>
-            <span className="text-sm font-medium text-foreground">{sectionKey}</span>
-            <span className="text-2xs text-muted-foreground">({childCount} {childCount === 1 ? 'key' : 'keys'})</span>
+            <span classNome="text-sm font-medium text-foreground">{sectionKey}</span>
+            <span classNome="text-2xs text-muted-foreground">({childCount} {childCount === 1 ? 'key' : 'keys'})</span>
           </div>
         </button>
         {expanded && (
-          <div className="border-t border-border px-4 py-2 space-y-1">
+          <div classNome="border-t border-border px-4 py-2 space-y-1">
             {Object.entries(value).map(([childKey, childValue]) => {
               const childPath = `${dotPath}.${childKey}`
               const childIsObject = typeof childValue === 'object' && childValue !== null
@@ -270,16 +270,16 @@ function NestedObject({ label, value, dotPath, editingKey, editValue, onStartEdi
   const entries = Object.entries(value)
 
   return (
-    <div className="ml-3 border-l border-border/50 pl-3">
-      <button onClick={() => setOpen(!open)} className="flex items-center gap-1.5 py-1 text-sm hover:text-foreground transition-colors">
-        <svg className={`w-3 h-3 text-muted-foreground transition-transform ${open ? 'rotate-90' : ''}`} viewBox="0 0 16 16" fill="currentColor">
+    <div classNome="ml-3 border-l border-border/50 pl-3">
+      <button onClick={() => setOpen(!open)} classNome="flex items-center gap-1.5 py-1 text-sm hover:text-foreground transition-colors">
+        <svg classNome={`w-3 h-3 text-muted-foreground transition-transform ${open ? 'rotate-90' : ''}`} viewBox="0 0 16 16" fill="currentColor">
           <path d="M6 3l5 5-5 5V3z" />
         </svg>
-        <span className="font-medium text-foreground">{label}</span>
-        <span className="text-2xs text-muted-foreground">({entries.length})</span>
+        <span classNome="font-medium text-foreground">{label}</span>
+        <span classNome="text-2xs text-muted-foreground">({entries.length})</span>
       </button>
       {open && (
-        <div className="space-y-1 mt-1">
+        <div classNome="space-y-1 mt-1">
           {entries.map(([k, v]) => {
             const childPath = `${dotPath}.${k}`
             if (typeof v === 'object' && v !== null && !Array.isArray(v)) {
@@ -341,16 +341,16 @@ function ConfigLeaf({ label, value, dotPath, editingKey, editValue, onStartEdit,
     : 'text-foreground'
 
   return (
-    <div className="flex items-center gap-3 py-1.5 px-2 rounded hover:bg-secondary/30 group">
-      <span className="text-xs text-muted-foreground w-36 shrink-0 truncate" title={dotPath}>{label}</span>
+    <div classNome="flex items-center gap-3 py-1.5 px-2 rounded hover:bg-secondary/30 group">
+      <span classNome="text-xs text-muted-foreground w-36 shrink-0 truncate" title={dotPath}>{label}</span>
 
       {isEditing ? (
-        <div className="flex-1 flex items-center gap-2">
+        <div classNome="flex-1 flex items-center gap-2">
           {editValue.includes('\n') ? (
             <textarea
               value={editValue}
               onChange={e => onEditChange(e.target.value)}
-              className="flex-1 px-2 py-1 text-xs font-mono bg-background border border-primary rounded-md focus:outline-none resize-y min-h-[60px]"
+              classNome="flex-1 px-2 py-1 text-xs font-mono bg-background border border-primary rounded-md focus:outline-none resize-y min-h-[60px]"
               autoFocus
             />
           ) : (
@@ -362,22 +362,22 @@ function ConfigLeaf({ label, value, dotPath, editingKey, editValue, onStartEdit,
                 if (e.key === 'Enter') onSaveEdit()
                 if (e.key === 'Escape') onCancelEdit()
               }}
-              className="flex-1 px-2 py-1 text-xs font-mono bg-background border border-primary rounded-md focus:outline-none"
+              classNome="flex-1 px-2 py-1 text-xs font-mono bg-background border border-primary rounded-md focus:outline-none"
               autoFocus
             />
           )}
-          <button onClick={onSaveEdit} className="text-[#b4a68c] hover:text-[#b4a68c] text-xs">Save</button>
-          <button onClick={onCancelEdit} className="text-muted-foreground hover:text-foreground text-xs">Cancel</button>
+          <button onClick={onSaveEdit} classNome="text-[#b4a68c] hover:text-[#b4a68c] text-xs">Salvar</button>
+          <button onClick={onCancelEdit} classNome="text-muted-foreground hover:text-foreground text-xs">Cancelar</button>
         </div>
       ) : (
         <>
-          <span className={`text-xs font-mono truncate flex-1 ${typeColor}`} title={displayValue}>
+          <span classNome={`text-xs font-mono truncate flex-1 ${typeColor}`} title={displayValue}>
             {displayValue.length > 80 ? displayValue.slice(0, 80) + '...' : displayValue}
           </span>
           {!isRedacted && (
             <button
               onClick={() => onStartEdit(dotPath, value)}
-              className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-foreground transition-opacity"
+              classNome="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-foreground transition-opacity"
             >
               Edit
             </button>

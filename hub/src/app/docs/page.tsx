@@ -5,14 +5,14 @@ import '@scalar/api-reference-react/style.css'
 
 export default function DocsPage() {
   return (
-    <div className="h-screen">
+    <div classNome="h-screen">
       <ApiReferenceReact
         configuration={{
           url: '/api/docs',
           theme: 'kepler',
           darkMode: true,
           hideModels: false,
-          hideDownloadButton: false,
+          hideBaixarButton: false,
           defaultHttpClient: {
             targetKey: 'shell',
             clientKey: 'curl',

@@ -1,6 +1,6 @@
 'use client'
 
-import { formatUptime } from '@/lib/utils'
+import { formatTempo ativo } from '@/lib/utils'
 
 interface Stats {
   totalSessions: number
@@ -40,14 +40,14 @@ function StatCard({ title, value, icon, trend, subtitle, color = 'default' }: St
   }
 
   return (
-    <div className={`p-6 rounded-lg border ${colorClasses[color]}`}>
-      <div className="flex items-center justify-between">
+    <div classNome={`p-6 rounded-lg border ${colorClasses[color]}`}>
+      <div classNome="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-muted-foreground">{title}</p>
-          <div className="flex items-baseline space-x-2">
-            <p className="text-2xl font-bold text-foreground">{value}</p>
+          <p classNome="text-sm font-medium text-muted-foreground">{title}</p>
+          <div classNome="flex items-baseline space-x-2">
+            <p classNome="text-2xl font-bold text-foreground">{value}</p>
             {trend && (
-              <span className={`text-sm ${
+              <span classNome={`text-sm ${
                 trend === 'up' ? 'text-[#b4a68c]' : 
                 trend === 'down' ? 'text-[#9e5c50]' : 
                 'text-muted-foreground'
@@ -57,10 +57,10 @@ function StatCard({ title, value, icon, trend, subtitle, color = 'default' }: St
             )}
           </div>
           {subtitle && (
-            <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
+            <p classNome="text-xs text-muted-foreground mt-1">{subtitle}</p>
           )}
         </div>
-        <div className={`text-2xl ${iconColorClasses[color]}`}>
+        <div classNome={`text-2xl ${iconColorClasses[color]}`}>
           {icon}
         </div>
       </div>
@@ -70,11 +70,11 @@ function StatCard({ title, value, icon, trend, subtitle, color = 'default' }: St
 
 export function StatsGrid({ stats, systemStats }: StatsGridProps) {
   const uptimeFormatted = systemStats?.uptime ? 
-    formatUptime(systemStats.uptime) : 
-    formatUptime(Date.now() - stats.uptime)
+    formatTempo ativo(systemStats.uptime) : 
+    formatTempo ativo(Date.now() - stats.uptime)
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+    <div classNome="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
       <StatCard
         title="Total Sessions"
         value={stats.totalSessions}
@@ -84,7 +84,7 @@ export function StatsGrid({ stats, systemStats }: StatsGridProps) {
       />
       
       <StatCard
-        title="Active Sessions"
+        title="Sessões Ativas"
         value={stats.activeSessions}
         icon="🟢"
         trend="up"
@@ -102,7 +102,7 @@ export function StatsGrid({ stats, systemStats }: StatsGridProps) {
       />
       
       <StatCard
-        title="Uptime"
+        title="Tempo ativo"
         value={uptimeFormatted}
         icon="⏱️"
         trend="stable"
