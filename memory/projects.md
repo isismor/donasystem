@@ -1,92 +1,108 @@
 # Projetos
 
+---
+
 ## Ativos
 
-### Configuração de Skills (OpenClaw)
-- **Status:** em andamento
-- **Próximo passo:** instalar moviepy, configurar Creatomate, ativar OpenAI/Gemini no OpenClaw
-- **Bloqueios:** ElevenLabs bloqueado por pagamento pendente; Manim requer sudo para deps
-
-### Design System ISIS v7
-- **Status:** concluído
-- **Concluído em:** 09/03/2026
-- **Arquivos:** `memory/design-system-isis-v7.html` (fonte da verdade) + `memory/design-system.md` (tokens indexados)
-- **Uso:** obrigatório em todos os materiais visuais gerados por Dona
-
-### Templates de Relatório PDF
-- **Status:** em andamento
-- **Template base:** `relatorio-domingo-v2.html` — reusar para próximos relatórios semanais
-- **Ferramenta:** YakPDF (RapidAPI) com wait.for timeout 4000ms
-- **Próximo passo:** refinar template conforme feedback de Isis
-
-### Infraestrutura de Integrações
-- **Status:** em andamento
-- **Concluído:** RapidAPI (5 APIs), Canva OAuth, GitHub SSH, Coolify deploy, FFmpeg, ElevenLabs (salvo)
-- **Pendente:** moviepy, Creatomate (VSL), Supabase, OpenAI/Gemini no OpenClaw
-
-### Crescimento de Audiência Instagram
-- **Status:** planejamento
-- **Próximo passo:** configurar instagram-analyzer e meta-ads-manager após ter as keys
-- **Meta:** 1 milhão de seguidores em 3 meses (atual: 377k)
-- **Bloqueios:** skills ainda não configuradas
-
-### Escala de Receita
-- **Status:** em andamento
-- **Meta:** R$ 1M/mês (atual: R$ 100k/mês orgânico)
-- **Próximo passo:** funis de produtos (maior potencial que mentorias)
-
-### Material: Time de Agentes do Zero ao Avançado
-- **Status:** aprovado, em produção
-- **Formato:** PDF robusto (base para aula/vídeo)
-- **Público:** leigo a avançado, posicionamento de autoridade
-- **Estrutura:** 6 blocos (Problema > O que são agentes > Framework > Construção > Operação > Resultado)
-- **Sanitização:** nomes e papéis ok, nada de IPs/tokens/configs/paths/vault
-- **Cadeia:** Atlas (plano) > Vega (redação) > Masterson (tom/CTA) > Aurora (design PDF)
-- **Aprovado em:** 10/03/2026
-- **Próximo passo:** Vega inicia redação dos 6 blocos
-
 ### Torre Dona (hub.donasystem.com.br)
-**Status:** Online e conectada ao gateway
+**Status:** Parcialmente online. Migração para local em andamento.
+**Infra atual:** Next.js rodando na porta 3000 do srv1464443. Nginx instalado. DNS apontando para 72.60.241.247.
 **Repo:** isismor/donasystem (branch main, dir /hub)
-**Infra:** Coolify (72.61.63.82) → Application Dockerfile → porta 3000
-**Base:** Mission Control (Next.js + SQLite)
 **Login:** isisalvesmoreira@gmail.com / hub#2027
-**Gateway:** Conectado via controlUi (allowedOrigins: hub.donasystem.com.br, dangerouslyDisableDeviceAuth: true)
-**Visual:** Design System ISIS v7 aplicado (cores e fontes), menu em inglês, conteúdo em português
-**Painéis:** 28 (Tasks, Agents, Crons, Memory, Health, Tokens, Sessions, Activity, etc.)
-**Concluído em:** 11/03/2026
-**Pendente:** Ativar HTTPS, remover flags dangerously*, mover token do Dockerfile para build args
+**Gateway:** Conectado via controlUi.
+**Bloqueio:** Precisa de sudo para nginx reload + certbot SSL.
+**Pendente:** HTTPS, remover flags dangerously*, systemd service, tradução UI para PT-BR.
+**Criado em:** 11/03/2026
 
 ### Framework de Distribuição de Tráfego (Helios)
-**Status:** Estruturado, aguardando token Meta funcional
-**Conta:** act_777100762498033
-**Estratégia:** Teste R$10/dia → Série A (R$30/dia, <R$0,50/seguidor) → Série B (R$10/dia, R$0,50-0,70) → Cortado (>R$0,70)
-**Report:** Diário para Isis (gasto, séries ativas, custo/seguidor)
+**Status:** Operacional. Primeira campanha ativa.
+**Conta:** act_777100762498033 ("Mulher de Negócios"), saldo R$1,49
+**Campanha ativa:** "Distribuição - Teste Posts" (TRAFFIC, desde 12/03, janela até 13/03)
+**Campanhas pausadas:** "Distribuição Série - Março 2026" (ENGAGEMENT), "Distribuição - Teste Posts" (antiga)
 **Documento:** knowledge/helios/framework-distribuicao.md
-**Pendente:** App Meta em modo Live, novo token via Marketing Essencial, conta desbloqueada
 **Criado em:** 10/03/2026
 
 ### Doninha (Agente de Suporte Mentoria Skava)
 **Status:** Em montagem
 **Papel:** Suporte automatizado de alunas nos grupos de WhatsApp da Mentoria Skava
-**Canais:** 2 grupos de WhatsApp da mentoria (acesso pendente)
-**Tom:** Direta, humana, didática
-**Operação:** 24h, responde dúvidas de conteúdo e técnicas com base fechada
-**Limites:** Não vende, não dá dados pessoais, não inventa respostas fora da base
-**Relatório:** PDF diário às 20h com resumo + lacunas
+**Número WhatsApp:** +5511915064046
+**Tom:** Direta, humana, didática. Operação 24h.
 **Base de conhecimento:** knowledge/doninha/ (FAQ, PDO, Helios consolidado)
-**Ciclo de atualização:** Lacunas no relatório > Isis responde > base atualizada > Doninha aprende
-**Integração:** Módulo Doninha na Torre Dona (Atlas vai consolidar escopo)
+**Ciclo:** Lacunas no relatório > Isis responde > base atualizada > Doninha aprende
 **Pendente:**
-- Isis adicionar nos 2 grupos de WhatsApp (amanhã)
-- Definir número de WhatsApp da Doninha
-- Puxar restante dos docs (truncados em 50KB)
-- Eva estruturar identidade completa (IDENTITY.md, SOUL.md)
-- Definir formato do relatório PDF diário
+- [ ] Conectar WhatsApp (QR code scan)
+- [ ] Isis adicionar nos 2 grupos de WhatsApp
+- [ ] Puxar restante dos docs Google (truncados em 50KB)
+- [ ] Eva estruturar identidade completa (IDENTITY.md, SOUL.md)
+- [ ] Definir formato do relatório PDF diário
+- [ ] Atlas consolidar escopo Torre Dona incluindo módulo Doninha
 **Criado em:** 12/03/2026
+
+### Material: Time de Agentes do Zero ao Avançado
+**Status:** Aprovado, em produção
+**Formato:** PDF robusto (base para aula/vídeo)
+**Público:** Leigo a avançado, posicionamento de autoridade
+**Estrutura:** 6 blocos (Problema > O que são agentes > Framework > Construção > Operação > Resultado)
+**Cadeia:** Atlas (plano) > Vega (redação) > Masterson (tom/CTA) > Aurora (design PDF)
+**Sanitização:** Nomes e papéis ok, nada de IPs/tokens/configs/paths/vault
+**Próximo passo:** Vega inicia redação dos 6 blocos
+**Aprovado em:** 10/03/2026
+
+### Crescimento de Audiência Instagram
+**Status:** Planejamento
+**Meta:** 1 milhão de seguidores em 3 meses (atual: 377k)
+**Anomalia:** 4 dias sem publicação (09/03 a 12/03)
+**Bloqueio:** API Instagram (instagram120.p.rapidapi.com) com endpoints quebrados. Precisa atualizar integração.
+**Criado em:** 08/03/2026
+
+### Escala de Receita
+**Status:** Em andamento
+**Meta:** R$ 1M/mês (atual: R$ 100k/mês orgânico)
+**Próximo passo:** Funis de produtos (maior potencial que mentorias)
+**Criado em:** 08/03/2026
+
+### Configuração de Skills (OpenClaw)
+**Status:** Em andamento
+**Pendente:** Instalar moviepy, configurar OpenAI/Gemini no OpenClaw
+**Bloqueios:** ElevenLabs bloqueado por pagamento pendente
+**Criado em:** 08/03/2026
+
+---
+
+## Concluídos
+
+### Design System ISIS v7
+**Concluído em:** 09/03/2026
+**Arquivos:** `memory/design-system-isis-v7.html` + `memory/design-system.md`
+
+### Templates de Relatório PDF
+**Template base:** `relatorio-domingo-v2.html`
+**Ferramenta:** YakPDF (RapidAPI) + Puppeteer local
+**Concluído em:** 10/03/2026
+
+### Infraestrutura de Integrações
+**Concluído:** RapidAPI (5 APIs), Canva OAuth, GitHub SSH, Coolify deploy, FFmpeg, ElevenLabs (salvo), 1Password CLI
+**Concluído em:** 08/03/2026
+
+### Base de Conhecimento Masterson/Vega
+**5 materiais processados e salvos** em knowledge/masterson/ (com symlinks em knowledge/vega/):
+big-black-book.md, how-i-built-my-wealth.md, copy-logic.md, architecture-of-persuasion.md, ideias-que-colam.md
+**Concluído em:** 10/03/2026
+
+### Base de Conhecimento Helios
+**4 materiais compilados** em knowledge/helios/:
+01-especificacoes-criativos.md, 02-estrutura-campanhas.md, 03-politicas-anuncios.md, 04-diagnostico-problemas.md
+**Concluído em:** 10/03/2026
+
+### Palestra Copy Perfeita
+**Output:** output/palestra-copy-perfeita.html + .pdf (15 slides, Design System ISIS v7)
+**Concluído em:** 11/03/2026
+
+---
 
 ## Backlog
 
-- Configurar análise diária automática (08h SP) após ter acesso a dados do Instagram
 - Integrar Cademi para acompanhar vendas e alunas
 - Configurar email para Dona acessar
+- Documento diagnóstico para cliente de Isis (cadeia Masterson + Helios + Aurora, aguardando dados da cliente)
+- Configurar análise diária automática (08h SP) após resolver API Instagram

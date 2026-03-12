@@ -1,63 +1,57 @@
-# Pendencias
+# Pendências
+
+---
 
 ## Aguardando Isis
 
-- [ ] Torre Dona (hub.donasystem.com.br): deploy local no srv1464443. Bloqueado por falta de sudo. Isis precisa rodar 3 comandos sudo (nginx reload + certbot SSL). Detalhes em memory/2026-03-12.md
-- [ ] Coconote: decidir forma de integracao (exportar manual para Telegram, email, ou Notion sync)
+### Infraestrutura
+- [ ] Torre Dona: rodar 3 comandos sudo (nginx reload + certbot SSL) no srv1464443
+- [ ] Conectar WhatsApp da Doninha (QR code scan com câmera pronta, expira em ~20s)
+- [ ] Adicionar Doninha nos 2 grupos de WhatsApp da Mentoria Skava
 
-- [ ] Configurar OpenAI/Gemini no OpenClaw (chaves ja estao no vault, preciso aplicar na config)
-- [ ] Supabase: me mandar URL + anon key quando quiser integrar
-- [ ] Confirmar se usa Twitter/X ativamente (para priorizar ou nao essa integracao)
+### Configurações
+- [ ] Configurar OpenAI/Gemini no OpenClaw (chaves já estão no vault, preciso aplicar na config)
+- [ ] Supabase: URL + anon key quando quiser integrar
+- [ ] Confirmar se usa Twitter/X ativamente
 - [ ] Confirmar se usa Notion ativamente
+- [ ] Coconote: decidir forma de integração (exportar manual para Telegram, email, ou Notion sync)
 
-## Torre Dona — Hub (12/03/2026)
+### Conteúdo
+- [ ] Nexa: ativar billing no Google AI Studio (free tier esgotado, script gerar-fotos.py funciona mas API retorna 429)
+- [ ] Documento diagnóstico para cliente: nome, nicho, problema, métricas
 
-- [x] Confirmar que hub.donasystem.com.br conecta ao gateway → conectou mas firewall bloqueia portas extras
-- [ ] **Control UI nativo do OpenClaw:** testar acesso via http://72.60.241.247:18789 (allowedOrigins corrigido)
-- [ ] Se Control UI nativo não atender: avaliar Tailscale Serve para HTTPS + acesso seguro
-- [ ] Remover flags `dangerouslyDisableDeviceAuth` e `allowInsecureAuth` após configurar HTTPS
-- [ ] Hub custom (Mission Control/Torre Dona): só viável se abrir porta no firewall ou usar proxy na 18789
-- [ ] Refazer tradução da UI para português (só strings visíveis, sem tocar nomes de código) — depende de resolver acesso primeiro
-
-## Pendencias do Sistema (10/03/2026)
-
-- [ ] Mission Control via Google Sheets (aguarda Google OAuth)
-- [ ] Documentos de negocio com a Dona: positioning, products, audience, voice-guide
-- [ ] Skills a instalar: gog, github, sag, summarize, nano-pdf
-- [ ] Credenciais pendentes: Notion, Meta, Google OAuth, Twitter
-- [ ] ElevenLabs: pagar e testar audio
-- [ ] UptimeRobot: monitoramento externo
-- [ ] Canva OAuth expirado — precisa refazer autenticacao
-
-## A Estudar / Melhorias Tecnicas
-
-- [ ] Transcricao de audio lenta — avaliar alternativas ao Whisper local (Whisper API, Deepgram, outros) para reducao de latencia
-
-## A Fazer
-
-- [ ] **Doninha:** criar bot de suporte para o grupo da mentoria. Passos: criar no @BotFather, definir tom/escopo (suporte, FAQ, acolhimento), configurar como segunda instância ou bot separado. Isis decide quando.
+---
 
 ## Aguardando Terceiros
 
-- [ ] Livro "Acorda! Sonhar não Basta" (Isis Moreira) — arquivo digital pendente da editora Gente. Isis vai solicitar. Quando chegar, salvar em knowledge/ (contém toda a história dela)
+- [ ] Livro "Acorda! Sonhar não Basta" (Isis Moreira): arquivo digital pendente da editora Gente. Isis vai solicitar.
 
-## Nexa — Quota Gemini API (10/03/2026)
-- [ ] Free tier esgotado (429 RESOURCE_EXHAUSTED). Script `gerar-fotos.py` funciona mas API bloqueia.
-- [ ] Ativar billing no Google AI Studio ou esperar reset diário da quota
+---
 
-## Documento para cliente (10/03/2026)
-- [ ] Cadeia Masterson + Helios + Aurora para diagnóstico + plano de ação
-- [ ] Aguardando dados: nome da cliente, nicho, problema, métricas
+## Tarefas do Sistema
 
-## Concluido (mover para decisions/lessons se necessario)
+- [ ] Eva: estruturar identidade completa da Doninha (IDENTITY.md, SOUL.md)
+- [ ] Atlas: consolidar escopo da Torre Dona incluindo módulo Doninha
+- [ ] Definir formato do relatório PDF diário da Doninha
+- [ ] Puxar restante dos docs Google da Doninha (truncados em 50KB)
+- [ ] Criar systemd service para Torre Dona (Next.js na porta 3000)
+- [ ] Tradução da UI da Torre Dona para português (só strings visíveis, sem tocar nomes de código)
+- [ ] Atualizar integração API Instagram (endpoints mudaram)
+- [ ] ElevenLabs: pagar e testar áudio
+- [ ] Canva OAuth expirado: refazer autenticação
 
-- [x] 1Password CLI instalado como binario de usuario
-- [x] Service account "Dona Agent" criada com acesso ao vault "Dona"
+---
+
+## Concluído (para referência)
+
+- [x] 1Password CLI instalado
 - [x] RapidAPI configurada (5 endpoints)
-- [ ] Canva OAuth expirado — precisa refazer autenticacao (invalid_grant detectado em 09/03/2026)
 - [x] GitHub deploy key configurada
 - [x] Coolify deploy API testada
-- [x] ElevenLabs salvo (cancelado — sem uso previsto por ora)
-- [x] Creatomate cancelado — sem uso previsto por ora
 - [x] FFmpeg instalado
-- [x] Design System ISIS v7 recebido, salvo e indexado (09/03/2026)
+- [x] Design System ISIS v7 recebido e indexado
+- [x] Meta Ads API configurada (token + system user + contas)
+- [x] Framework distribuição tráfego aprovado
+- [x] Pipeline PDF unificado implementado
+- [x] WhatsApp plugin habilitado no gateway
+- [x] Exec security restaurado (tools.exec.security: full, ask: off) em 12/03/2026

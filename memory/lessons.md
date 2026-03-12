@@ -1,73 +1,13 @@
 # Lições Aprendidas
 
-> Erros, padrões e aprendizados do dia a dia com o agente.
+> Erros, padrões e aprendizados do dia a dia.
 > Estratégicas = permanentes | Táticas = expiram em 30 dias
 
-### 2026-03-12 — Elevated tools não funciona em sessão existente (tática)
-- Adicionar `tools.elevated` via config.patch e reiniciar gateway NÃO habilita elevated na sessão atual
-- Possível causa: sessão precisa ser nova após o config ser carregado, ou elevated tem restrições em grupo Telegram
-- Workaround: pedir para Isis rodar comandos sudo manualmente, ou configurar sudoers do openclaw
+---
 
-### 2026-03-12 — Coolify: variáveis Build vs Runtime (estratégica)
-- No Coolify, variáveis marcadas como "Runtime" NÃO são injetadas no build do Next.js
-- `NEXT_PUBLIC_*` PRECISA estar marcada como "Build" (ou "Build + Runtime")
-- Mesmo adicionando a variável no Coolify, se não estiver como Build, não aparece no container como NEXT_PUBLIC
+## Estratégicas (permanentes)
 
-### 2026-03-12 — Device Identity e Client ID no OpenClaw (estratégica)
-- Gateway só reconhece `client.id === "openclaw-control-ui"` como Control UI. Qualquer outro client ID (ex: `torre-dona`) NÃO recebe o bypass de `dangerouslyDisableDeviceAuth`
-- `dangerouslyDisableDeviceAuth=true` sozinho NÃO resolve. Precisa: client ID correto + token enviado + origin na allowedOrigins
-- Variáveis `NEXT_PUBLIC_*` do Next.js são injetadas no BUILD TIME. Alterar .env sem rebuild não muda nada no browser
-- `NEXT_PUBLIC_GATEWAY_HOST` deve ser o IP/domínio do servidor, NUNCA `127.0.0.1` (senão browser tenta conectar no localhost do usuário)
-- Para depurar: ler `evaluateMissingDeviceIdentity()` em `gateway-cli-*.js` e rastrear cada condition
-
-### 2026-03-11 — Deploy Torre Dona via Coolify (tática)
-- Coolify Service Stack NÃO clona repo Git. Para build de Dockerfile do repo, usar tipo **Application**
-- Servidor OpenClaw (72.60.241.247) não tem Docker. Coolify está em VPS separado (72.61.63.82)
-- `pnpm.onlyBuiltDependencies` bloqueia compilação de nativos. Incluir na lista cada dependência nativa
-- Next.js standalone não copia node_modules nativos. Copiar explicitamente do stage deps
-- basePath só faz sentido em subpath. Em subdomínio próprio, remover
-
-### 2026-03-11 — Tradução de UI NUNCA deve tocar nomes de código (ESTRATÉGICA)
-- Find/replace de "Theme" para "Tema" converte `className`, `useTheme`, nomes de funções, tipos e interfaces
-- Nomes de código em inglês são parte da sintaxe (React props, imports de libs externas, APIs). Traduzir quebra o build
-- A tradução correta toca APENAS strings literais entre aspas/crases: labels, placeholders, títulos, mensagens de erro visíveis ao usuário
-- Nunca traduzir: nomes de variáveis, funções, tipos, interfaces, props, imports, exports
-- Antes de commitar tradução: rodar `pnpm build` localmente para validar que compila
-- Se o build quebra em dezenas de arquivos, é mais seguro reverter tudo e refazer do que corrigir um a um
-
-### 2026-03-11 — NEXT_PUBLIC_ são variáveis de build time (tática)
-- Variáveis `NEXT_PUBLIC_*` do Next.js são injetadas no build, não em runtime
-- Adicionar/alterar essas variáveis exige redeploy (rebuild) no Coolify
-- Se o hub tenta WebSocket via `wss://` mas o gateway não tem SSL, a conexão falha silenciosamente e a UI fica vazia
-- Solução: `NEXT_PUBLIC_GATEWAY_PROTOCOL=ws` quando gateway não tem SSL
-
-### 2026-03-11 — Perda de contexto no restart (ESTRATÉGICA)
-- Dona fez restart durante sessão ativa do Atlas. Toda a conversa anterior foi perdida
-- Sessões de trabalho técnico devem ter checkpoints frequentes em memory/ (a cada milestone, não só no final)
-- Lição: consolidar memória DURANTE o trabalho, não só quando pedido
-
-### 2026-03-12 — Firewall de datacenter bloqueia portas não padrão (ESTRATÉGICA)
-- Servidor 72.60.241.247: apenas portas 18789 (gateway) e SSH estão abertas para tráfego externo
-- Portas 3001, 18790, 80, 443, 8080 são inacessíveis de fora (ERR_CONNECTION_TIMED_OUT)
-- Curl local retorna 200 mas browser externo não chega — o problema é firewall, não código
-- Regra: qualquer serviço novo deve rodar na porta 18789 (gateway) ou atrás de proxy nela
-- Nunca mais gastar tempo debugando código quando o browser mostra timeout — verificar firewall primeiro
-
-### 2026-03-12 — OpenClaw tem Control UI nativo na porta do gateway (ESTRATÉGICA)
-- O gateway já serve um painel web embutido em `http://<host>:18789/`
-- SPA Vite+Lit com: sessões, crons, chat, config, logs, skills, nodes
-- Precisa configurar `gateway.controlUi.allowedOrigins` com o IP/domínio de acesso externo
-- Precisa `allowInsecureAuth: true` e `dangerouslyDisableDeviceAuth: true` para HTTP sem SSL
-- Antes de buildar painéis custom, verificar se o Control UI nativo já atende
-
-### 2026-03-12 — Cookie secure:true quebra login em HTTP (tática)
-- Next.js em NODE_ENV=production seta cookies com `secure: true` por padrão
-- Cookie secure não funciona em HTTP (browser ignora) → redirect loop infinito
-- Fix: `MC_COOKIE_SECURE=false` ou servir via HTTPS. Expira: 2026-04-12
-
-## Estratégicas
-
-### Crons
+### Crons & Gateway
 - SEMPRE usar `isolated + agentTurn + announce`. Nunca `systemEvent + main`. Cron com systemEvent mostra status ok mas durationMs ~0ms e não executa nada.
 - Espaçar crons em pelo menos 15-30 min. Colisão de horários = rate limit = falhas silenciosas.
 - `config.patch` reinicia o gateway e mata crons em execução. Fazer patches em horários sem crons rodando.
@@ -75,79 +15,97 @@
 ### Segurança
 - `dmPolicy: allowlist` desde o Dia 1. Com "open", qualquer pessoa comanda o agente.
 - Credenciais sempre no 1Password. Zero hardcode. Zero texto claro em .bashrc ou .env commitado.
-- Rotação trimestral de API keys. Audit semanal.
 
 ### Contexto e Memória
-- `reserveTokensFloor: 30000` garante que o agente termina o raciocínio antes de compactar.
-- Session initialization leve: carregar só SOUL.md, USER.md, IDENTITY.md, memory/YYYY-MM-DD.md. Usar memory_search() sob demanda. Reduz de 50KB para 8KB.
-- Compactação descarta 80% do contexto. Extrair ANTES é inviolável. Consolidação periódica é o safety net.
+- Compactação descarta 80% do contexto. Extrair ANTES é inviolável.
+- Consolidar memória DURANTE o trabalho, não só quando pedido. Sessões de trabalho técnico devem ter checkpoints frequentes.
+- Session initialization leve: carregar só SOUL.md, USER.md, IDENTITY.md. Usar memory_search() sob demanda.
 
 ### APIs e Plataformas
-- IPs de cloud (Hetzner, DigitalOcean, AWS) são bloqueados por YouTube, Instagram, X. Usar RapidAPI como proxy — já configurado.
+- IPs de cloud (Hetzner, DigitalOcean, AWS) são bloqueados por YouTube, Instagram, X. Usar RapidAPI como proxy.
 - yt-dlp não funciona em VPS por bot detection. Usar Apify ou RapidAPI para transcrições.
 
-### Sub-agents
-- Todo agente novo começa N1 (Junior). Sem confiança automática.
-- Sub-agent travou: retry 2x. Se falhar 2x: alertar Isis. Nunca limbo silencioso.
-- Sub-agents em sandbox isolado não acessam localhost. Fallback manual necessário.
-
-### Handoffs entre agentes
+### Sub-agents & Handoffs
 - Mensagem do bot no próprio tópico NÃO gera trigger de execução. Nunca depender disso para handoffs.
 - Orquestrador deve usar completion events de sessions_spawn como gatilho para spawnar próximo step.
 - Estado da cadeia sempre gravado em projects.md. Se sessão cair, retoma de onde parou.
-- Briefings para Aurora devem ser estruturados (tipo, dimensões, público, referências, hierarquia). Texto solto = output ruim.
-- Todo output: acentuação correta em português. Sem exceções.
 
 ### Modelos e Custo
-- Heartbeat e crons: Haiku. Interação direta: Sonnet. Nunca Opus em automações.
-- Lições estratégicas = permanentes. Táticas = expiram em 30 dias. Revisão mensal.
+- Heartbeat e crons: Haiku. Interação direta: Sonnet/Opus. Nunca Opus em automações.
 
----
-
-### PDF com design system
+### PDF & Design
 - `height: 297mm; overflow: hidden` em cada página é inviolável. Nunca `min-height` em PDF.
-- `break-inside: avoid` + `min-height` = espaços em branco gigantes entre blocos. Bug clássico de impressão CSS.
+- `break-inside: avoid` + `min-height` = espaços em branco gigantes entre blocos.
 - Distribuir conteúdo explicitamente por página. Não depender do algoritmo automático de quebra do browser.
 - YakPDF: `wait.for: "timeout", milliseconds: 4000`. Nunca usar `"navigation"` (erro 400).
 - Google Fonts carregam normalmente no Chromium headless do YakPDF.
-- Template base salvo em `relatorio-domingo-v2.html` — reusar para próximos relatórios.
 
-### Atualizações do OpenClaw (incidente 10/03/2026)
+### Atualizações do OpenClaw
 - NUNCA automatizar update do openclaw via cron. Breaking changes silenciosos derrubam o sistema sem aviso.
 - Encerramento silencioso por token ausente: sobe e morre em ~9s sem mensagem de erro. Inspecionar .service primeiro.
-- `openclaw gateway install --force` pode criar serviço duplicado (`openclaw.service` + `openclaw-gateway.service`). As duas instâncias competem pela porta e geram crash loop infinito.
-- Jobs com `wakeMode: now` e `nextRunAtMs` no passado disparam imediatamente no startup. Ajustar para timestamp futuro antes de reativar após manutenção.
-- Usar `auditd` para identificar origem de SIGTERM quando processo morre sem log: `auditctl -a always,exit -F arch=b64 -S kill -k sigterm_trace`
+- `openclaw gateway install --force` pode criar serviço duplicado. As duas instâncias competem pela porta e geram crash loop infinito.
+- Jobs com `wakeMode: now` e `nextRunAtMs` no passado disparam imediatamente no startup.
 - Rollback deve ser considerado após 30-60 min sem convergência. Não insistir em fix-forward com versão opaca.
-- Parar serviço antes de dormir durante incidente: `systemctl stop` + `disable` evita wear no restart counter.
 
-### Gateway e Workspace
-- Gateway cacheia workspace files (SOUL.md, AGENTS.md, etc). Editar sem restart = modelo usa versão antiga. Sempre reiniciar após mudanças.
-- openclaw config set com valores negativos (ex: chat IDs do Telegram) precisa de "--" antes do valor pra não ser interpretado como flag.
-- Hierarquia de prioridade: System prompt > SOUL.md > AGENTS.md > IDENTITY.md > USER.md/TOOLS.md
-- Se SOUL.md ancora forte numa identidade, modelo resiste a assumir outra mesmo com AGENTS.md. Solução: SOUL.md deve mencionar explicitamente o sistema de identidades.
-- Heartbeat to para Telegram topics: formato "<chatId>:topic:<threadId>".
+### Deploy & Infraestrutura
+- Coolify Service Stack NÃO clona repo Git. Para build de Dockerfile do repo, usar tipo Application.
+- `pnpm.onlyBuiltDependencies` bloqueia compilação de nativos. Incluir cada dependência nativa na lista.
+- Next.js standalone não copia node_modules nativos. Copiar explicitamente do stage deps.
+- Variáveis `NEXT_PUBLIC_*` do Next.js são injetadas no BUILD TIME. Alterar .env sem rebuild não muda nada no browser.
+- `NEXT_PUBLIC_GATEWAY_HOST` deve ser o IP/domínio do servidor, NUNCA `127.0.0.1`.
 
-### PDFs grandes e contexto
-- PDFs de 300+ páginas travam sessões quando enviados pelo chat. O texto extraído inteiro vai pro prompt e estoura o contexto de 200k.
-- Solução: usar ferramenta `pdf` com parâmetro `pages` pra processar em blocos (ex: "1-30", "31-60").
-- Alternativa: gerar resumo em markdown no Claude.com e mandar como arquivo .md.
-- Regra: arquivos grandes NUNCA vão direto no chat. Sempre processados em blocos.
+### Tradução de UI NUNCA deve tocar nomes de código
+- Find/replace de "Theme" para "Tema" converte `className`, `useTheme`, nomes de funções, tipos e interfaces.
+- A tradução correta toca APENAS strings literais. Nunca traduzir variáveis, funções, tipos, interfaces, props, imports, exports.
+
+### Device Identity no OpenClaw
+- Gateway só reconhece `client.id === "openclaw-control-ui"` como Control UI. Qualquer outro client ID NÃO recebe bypass de `dangerouslyDisableDeviceAuth`.
+- HTTP (non-secure context) bloqueia WebCrypto: browser não consegue gerar device identity.
+
+### Firewall de datacenter bloqueia portas não padrão
+- Servidor 72.60.241.247: apenas portas 18789 (gateway) e SSH estão abertas para tráfego externo.
+- Qualquer serviço novo deve rodar na porta 18789 ou atrás de proxy nela.
+- Nunca gastar tempo debugando código quando o browser mostra timeout: verificar firewall primeiro.
+
+### OpenClaw tem Control UI nativo na porta do gateway
+- Gateway serve painel web embutido em `http://<host>:18789/`.
+- Precisa configurar `gateway.controlUi.allowedOrigins` com o IP/domínio de acesso externo.
+
+### PDFs grandes travam sessões
+- PDFs de 300+ páginas travam quando enviados pelo chat (estoura contexto de 200k).
+- Solução: usar ferramenta `pdf` com parâmetro `pages` pra processar em blocos.
+- Regra: arquivos grandes NUNCA vão direto no chat.
 
 ### Arquivos via Telegram
 - HTML grande (75kb+) colado no chat trava a sessão. Sempre enviar como arquivo anexo.
 - Arquivos de até 1,5MB chegam sem problema via Telegram.
 
-## Táticas
+### Elevated tools em sessão de grupo
+- Adicionar `tools.elevated` via config.patch e reiniciar gateway NÃO garante elevated na sessão atual.
+- Sessão pode precisar ser nova, ou elevated tem restrições em grupo Telegram.
 
-### Notion API
-- Retorna só a primeira página por padrão. Sempre implementar paginação (`has_more` + `start_cursor`). Expira: 2026-04-09
+### Coolify: variáveis Build vs Runtime
+- No Coolify, variáveis marcadas como "Runtime" NÃO são injetadas no build do Next.js.
+- `NEXT_PUBLIC_*` PRECISA estar marcada como "Build" (ou "Build + Runtime").
 
-### systemd override
-- Se o gateway rodar via systemd, o arquivo .service sobrescreve o .env. Atualizar AMBOS ao trocar credenciais. Verificar se aplicável ao nosso setup. Expira: 2026-04-09
+### Versões do OpenClaw podem mudar defaults silenciosamente (12/03/2026)
+- Versão 2026.3.2: mudou default de `tools.exec.security` para "allowlist" e `tools.exec.ask` para "on-miss".
+- Sempre definir `tools.exec.security: "full"` e `tools.exec.ask: "off"` explicitamente na config para manter comportamento esperado.
 
-### Brave Search
-- Instabilidade ocasional. Ter fallback com web_fetch direto na URL. Expira: 2026-04-09
+---
+
+## Táticas (expiram em 30 dias)
+
+### Cookie secure:true quebra login em HTTP (12/03/2026, expira 12/04/2026)
+- Next.js em NODE_ENV=production seta cookies com `secure: true` por padrão.
+- Cookie secure não funciona em HTTP (browser ignora) > redirect loop infinito.
+- Fix: `MC_COOKIE_SECURE=false` ou servir via HTTPS.
+
+### Notion API paginação (09/03/2026, expira 09/04/2026)
+- Retorna só a primeira página por padrão. Sempre implementar paginação (`has_more` + `start_cursor`).
+
+### Brave Search instável (09/03/2026, expira 09/04/2026)
+- Instabilidade ocasional. Ter fallback com web_fetch direto na URL.
 
 ---
 
