@@ -92,6 +92,16 @@
 - Versão 2026.3.2: mudou default de `tools.exec.security` para "allowlist" e `tools.exec.ask` para "on-miss".
 - Sempre definir `tools.exec.security: "full"` e `tools.exec.ask: "off"` explicitamente na config para manter comportamento esperado.
 
+### WhatsApp no OpenClaw (12/03/2026)
+- **CLI login não funciona**: `openclaw channels login --channel whatsapp` retorna "Unsupported channel". Só funciona via ferramenta `whatsapp_login` do gateway.
+- **PNG do whatsapp_login funciona no Telegram**: enviar via `message(buffer=data:image/png;base64,...)`. Isis recebe. O problema é o QR expirar em ~20s.
+- **Session conflict (440)**: WhatsApp Web só permite UMA conexão ativa. Se Isis conecta pelo terminal e o gateway também tenta, dá conflito.
+- **401 após conflito**: múltiplos restarts durante conflito corrompem credenciais. Solução: mover `/home/openclaw/.openclaw/credentials/whatsapp/default/` e reconectar do zero.
+- **NÃO reiniciar gateway em loop**: cada restart piora conflito de sessão. Diagnosticar nos logs primeiro.
+- **Binding obrigatório**: sem `{"agentId":"main","match":{"channel":"whatsapp"}}` em bindings, mensagens chegam mas NÃO são roteadas.
+- **Fluxo correto**: (1) nenhuma outra sessão Web aberta, (2) `whatsapp_login(start, force=true)`, (3) enviar PNG via message(buffer), (4) Isis escaneia em <20s, (5) confirmar com `whatsapp_login(wait)`.
+- **Credenciais em**: `/home/openclaw/.openclaw/credentials/whatsapp/default/`
+
 ---
 
 ## Táticas (expiram em 30 dias)
