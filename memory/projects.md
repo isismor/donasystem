@@ -66,6 +66,25 @@
 **Pendente:** App Meta em modo Live, novo token via Marketing Essencial, conta desbloqueada
 **Criado em:** 10/03/2026
 
+### Doninha (Agente de Suporte Mentoria Skava)
+**Status:** Em montagem
+**Papel:** Suporte automatizado de alunas nos grupos de WhatsApp da Mentoria Skava
+**Canais:** 2 grupos de WhatsApp da mentoria (acesso pendente)
+**Tom:** Direta, humana, didática
+**Operação:** 24h, responde dúvidas de conteúdo e técnicas com base fechada
+**Limites:** Não vende, não dá dados pessoais, não inventa respostas fora da base
+**Relatório:** PDF diário às 20h com resumo + lacunas
+**Base de conhecimento:** knowledge/doninha/ (FAQ, PDO, Helios consolidado)
+**Ciclo de atualização:** Lacunas no relatório > Isis responde > base atualizada > Doninha aprende
+**Integração:** Módulo Doninha na Torre Dona (Atlas vai consolidar escopo)
+**Pendente:**
+- Isis adicionar nos 2 grupos de WhatsApp (amanhã)
+- Definir número de WhatsApp da Doninha
+- Puxar restante dos docs (truncados em 50KB)
+- Eva estruturar identidade completa (IDENTITY.md, SOUL.md)
+- Definir formato do relatório PDF diário
+**Criado em:** 12/03/2026
+
 ## Backlog
 
 - Configurar análise diária automática (08h SP) após ter acesso a dados do Instagram

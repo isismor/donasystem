@@ -3,6 +3,13 @@
 > Erros, padrões e aprendizados do dia a dia com o agente.
 > Estratégicas = permanentes | Táticas = expiram em 30 dias
 
+### 2026-03-12 — Device Identity e Client ID no OpenClaw (estratégica)
+- Gateway só reconhece `client.id === "openclaw-control-ui"` como Control UI. Qualquer outro client ID (ex: `torre-dona`) NÃO recebe o bypass de `dangerouslyDisableDeviceAuth`
+- `dangerouslyDisableDeviceAuth=true` sozinho NÃO resolve. Precisa: client ID correto + token enviado + origin na allowedOrigins
+- Variáveis `NEXT_PUBLIC_*` do Next.js são injetadas no BUILD TIME. Alterar .env sem rebuild não muda nada no browser
+- `NEXT_PUBLIC_GATEWAY_HOST` deve ser o IP/domínio do servidor, NUNCA `127.0.0.1` (senão browser tenta conectar no localhost do usuário)
+- Para depurar: ler `evaluateMissingDeviceIdentity()` em `gateway-cli-*.js` e rastrear cada condition
+
 ### 2026-03-11 — Deploy Torre Dona via Coolify (tática)
 - Coolify Service Stack NÃO clona repo Git. Para build de Dockerfile do repo, usar tipo **Application**
 - Servidor OpenClaw (72.60.241.247) não tem Docker. Coolify está em VPS separado (72.61.63.82)
