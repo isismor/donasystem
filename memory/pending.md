@@ -2,7 +2,7 @@
 
 ## Aguardando Isis
 
-- [ ] Torre Dona (hub.donasystem.com.br): precisa de acesso SSH ao 72.61.63.82 OU Isis atualiza env vars no painel do Coolify + redeploy (detalhes em memory/2026-03-12.md)
+- [ ] Torre Dona (hub.donasystem.com.br): deploy local no srv1464443. Bloqueado por falta de sudo. Isis precisa rodar 3 comandos sudo (nginx reload + certbot SSL). Detalhes em memory/2026-03-12.md
 - [ ] Coconote: decidir forma de integracao (exportar manual para Telegram, email, ou Notion sync)
 
 - [ ] Configurar OpenAI/Gemini no OpenClaw (chaves ja estao no vault, preciso aplicar na config)

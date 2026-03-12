@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Frameworks de Funis — Isis Moreira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=DM+Serif+Text:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marfim: #f9f8f4;
+    --creme: #efede6;
+    --cacao: #2a2420;
+    --ouro: #b4a68c;
+    --ouro-deep: #7a6e5c;
+    --ouro-pale: #d4cec4;
+    --mirror: #9ba1a8;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'DM Serif Text', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--cacao);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    position: relative;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* COVER */
+  .cover-c {
+    background: var(--cacao);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 64px;
+  }
+  .cover-c .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ouro);
+    margin-bottom: 28px;
+  }
+  .cover-c .title {
+    font-family: var(--serif);
+    font-size: 52px;
+    line-height: 1.08;
+    color: var(--marfim);
+    margin-bottom: 20px;
+    max-width: 560px;
+  }
+  .cover-c .title em { font-style: italic; }
+  .cover-c .title .gold { color: var(--ouro); }
+  .cover-c .rule {
+    width: 120px;
+    height: 2px;
+    background: var(--ouro);
+    margin: 0 auto 20px auto;
+  }
+  .cover-c .subtitle {
+    font-size: 16px;
+    color: var(--ouro-pale);
+    line-height: 1.6;
+    max-width: 420px;
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .cover-c .meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--ouro-deep);
+    text-transform: uppercase;
+  }
+
+  /* INTERNAL */
+  .inner-c {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .inner-c.bg-marfim { background: var(--marfim); }
+  .inner-c.bg-creme { background: var(--creme); }
+
+  .header-c {
+    padding: 36px 72px 14px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .header-c .left {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+  }
+  .header-c .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ouro-pale);
+  }
+  .header-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+
+  .body-c {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 28px 72px 0 72px;
+  }
+
+  .footer-c {
+    padding: 14px 72px 28px 72px;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-c-line {
+    margin: 0 72px;
+    height: 1px;
+    background: var(--ouro-pale);
+    flex-shrink: 0;
+  }
+  .footer-c span {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--mirror);
+    letter-spacing: 1px;
+  }
+
+  .sec-c {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ouro);
+    margin-bottom: 12px;
+  }
+  .title-c {
+    font-family: var(--serif);
+    font-size: 40px;
+    line-height: 1.08;
+    color: var(--cacao);
+    margin-bottom: 24px;
+    max-width: 520px;
+  }
+  .title-c em { font-style: italic; }
+  .title-c .gold { color: var(--ouro); }
+
+  .text-c {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cacao);
+    margin-bottom: 16px;
+    max-width: 480px;
+  }
+  .lead-c {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ouro-deep);
+    margin-bottom: 24px;
+    max-width: 460px;
+    font-weight: 400;
+  }
+
+  /* FUNNEL FLOW */
+  .funnel-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 20px auto;
+    max-width: 520px;
+    width: 100%;
+  }
+  .funnel-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+  }
+  .funnel-box {
+    border-radius: 10px;
+    padding: 16px 12px;
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .funnel-box.fb-ouro {
+    background: var(--ouro);
+  }
+  .funnel-box.fb-ouro span {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--cacao);
+    line-height: 1.3;
+  }
+  .funnel-box.fb-dark {
+    background: var(--cacao);
+  }
+  .funnel-box.fb-dark span {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--marfim);
+    line-height: 1.3;
+  }
+  .funnel-box.fb-outline {
+    background: transparent;
+    border: 2px solid var(--ouro);
+  }
+  .funnel-box.fb-outline span {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ouro-deep);
+    line-height: 1.3;
+  }
+  .funnel-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    min-width: 40px;
+    flex-shrink: 0;
+  }
+  .funnel-arrow svg {
+    width: 28px;
+    height: 16px;
+  }
+  .funnel-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--mirror);
+    margin-top: 8px;
+  }
+
+  /* SUPPORT ITEMS */
+  .support-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    max-width: 520px;
+    margin: 16px auto 0 auto;
+    width: 100%;
+  }
+  .support-item {
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .support-item.si-gold {
+    background: rgba(180,166,140,.15);
+    border: 1px solid rgba(180,166,140,.35);
+    color: var(--cacao);
+  }
+  .support-item.si-marfim {
+    background: var(--marfim);
+    border: 1px solid var(--ouro-pale);
+    color: var(--cacao);
+  }
+
+  .support-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    margin: 24px auto 10px auto;
+    max-width: 520px;
+    width: 100%;
+  }
+
+  /* OVERVIEW TABLE */
+  .overview-table {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+  .overview-table th {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    text-align: left;
+    padding: 0 12px 8px 12px;
+    border-bottom: 1px solid var(--ouro-pale);
+  }
+  .overview-table td {
+    padding: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .overview-table tr.row-dark td {
+    background: var(--cacao);
+    color: var(--marfim);
+  }
+  .overview-table tr.row-dark td:first-child {
+    border-radius: 8px 0 0 8px;
+    font-family: var(--sans);
+    font-weight: 700;
+  }
+  .overview-table tr.row-dark td:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+  .overview-table tr.row-gold td {
+    background: rgba(180,166,140,.15);
+    color: var(--cacao);
+  }
+  .overview-table tr.row-gold td:first-child {
+    border-radius: 8px 0 0 8px;
+    font-family: var(--sans);
+    font-weight: 700;
+  }
+  .overview-table tr.row-gold td:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+
+  .funnel-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--cacao);
+    opacity: 0.8;
+    max-width: 520px;
+    margin: 0 auto 20px auto;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="page">
+  <div class="cover-c">
+    <div class="label">Frameworks Estratégicos</div>
+    <div class="title">Meus <em>5 funis</em> de <span class="gold">conversão</span></div>
+    <div class="rule"></div>
+    <div class="subtitle">A arquitetura completa de aquisição, nutrição e conversão do ecossistema Isis Moreira.</div>
+    <div class="meta">Isis Moreira · Março 2026 · 8 páginas</div>
+  </div>
+</div>
+
+<!-- PÁGINA 2: VISÃO GERAL -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Frameworks de Funis</span>
+      <span class="num">01</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Visão Geral</div>
+      <div class="title-c">A <em>arquitetura</em> dos <span class="gold">5 funis</span></div>
+      <p class="lead-c">Cada funil opera em um pilar do ecossistema. Todos convergem para o mesmo destino: Mentoria Skava.</p>
+
+      <table class="overview-table">
+        <thead>
+          <tr>
+            <th>Funil</th>
+            <th>Entrada</th>
+            <th>Ponte</th>
+            <th>Destino</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-dark">
+            <td>Conteúdo</td>
+            <td>Carrosseis, Templates, Conteúdo de alcance</td>
+            <td>Mensagem de Ouro</td>
+            <td>Mentoria Skava</td>
+          </tr>
+          <tr class="row-gold">
+            <td>Vendas</td>
+            <td>Funil Invisível</td>
+            <td>Funil Dona</td>
+            <td>Mentoria Skava</td>
+          </tr>
+          <tr class="row-dark">
+            <td>Alinhamento</td>
+            <td>Manifeste em 7 Passos</td>
+            <td>PDO</td>
+            <td>Mentoria Skava</td>
+          </tr>
+          <tr class="row-gold">
+            <td>Corpo</td>
+            <td>Dona Fit</td>
+            <td>PDO</td>
+            <td>Mentoria Skava</td>
+          </tr>
+          <tr class="row-dark">
+            <td>Protocolos</td>
+            <td>Plano de Ouro</td>
+            <td>Funil Dona</td>
+            <td>Mentoria Skava</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="text-c" style="margin-top: 20px;">Os dois produtos ponte (Funil Dona e PDO) funcionam como esteira intermediária. A Mentoria Skava é o topo da esteira em todos os funis.</p>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>02</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 3: FUNIL CONTEÚDO -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Frameworks de Funis</span>
+      <span class="num">02</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Framework 01</div>
+      <div class="title-c">Funil <em class="gold">Conteúdo</em></div>
+      <p class="funnel-desc">Atrai audiência via conteúdo orgânico de alto alcance. Os templates e carrosseis geram volume. A Mensagem de Ouro qualifica e direciona para a Mentoria Skava.</p>
+
+      <div class="funnel-flow">
+        <div class="funnel-step">
+          <div class="funnel-box fb-ouro"><span>Carrosseis<br>(Templates)</span></div>
+          <div class="funnel-label">Entrada</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-dark"><span>Mensagem<br>de Ouro</span></div>
+          <div class="funnel-label">Ponte</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-outline"><span>Mentoria<br>Skava</span></div>
+          <div class="funnel-label">Destino</div>
+        </div>
+      </div>
+
+      <div class="support-label">Materiais de suporte</div>
+      <div class="support-grid">
+        <div class="support-item si-marfim">Templates de Reels</div>
+        <div class="support-item si-marfim">Templates de Stories</div>
+        <div class="support-item si-marfim" style="grid-column: 1 / -1;">Conteúdo de Alto Alcance</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>03</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 4: FUNIL VENDAS -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Frameworks de Funis</span>
+      <span class="num">03</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Framework 02</div>
+      <div class="title-c">Funil <em class="gold">Vendas</em></div>
+      <p class="funnel-desc">Estrutura de conversão direta. O Funil Invisível capta leads qualificados que entram no Funil Dona como produto intermediário antes da Mentoria Skava.</p>
+
+      <div class="funnel-flow">
+        <div class="funnel-step">
+          <div class="funnel-box fb-ouro"><span>Funil<br>Invisível</span></div>
+          <div class="funnel-label">Entrada</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-dark"><span>Funil<br>Dona</span></div>
+          <div class="funnel-label">Ponte</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-outline"><span>Mentoria<br>Skava</span></div>
+          <div class="funnel-label">Destino</div>
+        </div>
+      </div>
+
+      <div class="support-label">Materiais de suporte</div>
+      <div class="support-grid">
+        <div class="support-item si-gold">Guia de Objeções</div>
+        <div class="support-item si-gold">Vendas no WhatsApp</div>
+        <div class="support-item si-gold" style="grid-column: 1 / -1;">Desafio 100k</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>04</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 5: FUNIL DE ALINHAMENTO -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Frameworks de Funis</span>
+      <span class="num">04</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Framework 03</div>
+      <div class="title-c">Funil de <em class="gold">Alinhamento</em></div>
+      <p class="funnel-desc">Funil de mentalidade e propósito. O Manifeste em 7 Passos ativa a transformação interna. O PDO (Programa Donas do Ouro) consolida e escala para a Mentoria Skava.</p>
+
+      <div class="funnel-flow">
+        <div class="funnel-step">
+          <div class="funnel-box fb-ouro"><span>Manifeste<br>em 7 Passos</span></div>
+          <div class="funnel-label">Entrada</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-dark"><span>PDO</span></div>
+          <div class="funnel-label">Ponte</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-outline"><span>Mentoria<br>Skava</span></div>
+          <div class="funnel-label">Destino</div>
+        </div>
+      </div>
+
+      <div class="support-label">Materiais de suporte</div>
+      <div class="support-grid">
+        <div class="support-item si-marfim">Dona Verbo</div>
+        <div class="support-item si-marfim">15 Áudios de Alinhamento</div>
+        <div class="support-item si-marfim" style="grid-column: 1 / -1;">Dona Brain</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>05</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 6: FUNIL CORPO -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Frameworks de Funis</span>
+      <span class="num">05</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Framework 04</div>
+      <div class="title-c">Funil <em class="gold">Corpo</em></div>
+      <p class="funnel-desc">Pilar de saúde, energia e corpo feminino. O Dona Fit é a porta de entrada. Nutre com ativações e rotinas, e escala via PDO para a Mentoria Skava.</p>
+
+      <div class="funnel-flow">
+        <div class="funnel-step">
+          <div class="funnel-box fb-ouro"><span>Dona<br>Fit</span></div>
+          <div class="funnel-label">Entrada</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-dark"><span>PDO</span></div>
+          <div class="funnel-label">Ponte</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-outline"><span>Mentoria<br>Skava</span></div>
+          <div class="funnel-label">Destino</div>
+        </div>
+      </div>
+
+      <div class="support-label">Materiais de suporte</div>
+      <div class="support-grid">
+        <div class="support-item si-gold">Dona Shape</div>
+        <div class="support-item si-gold">Áudios de Ativação Feminina</div>
+        <div class="support-item si-gold" style="grid-column: 1 / -1;">Rotina Milionária</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>06</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 7: FUNIL PROTOCOLOS -->
+<div class="page">
+  <div class="inner-c bg-creme">
+    <div class="header-c">
+      <span class="left">Frameworks de Funis</span>
+      <span class="num">06</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Framework 05</div>
+      <div class="title-c">Funil <em class="gold">Protocolos</em></div>
+      <p class="funnel-desc">Funil de autoconhecimento e identidade. O Plano de Ouro inicia o processo. Ferramentas de análise e branding aprofundam a jornada antes do Funil Dona e da Mentoria Skava.</p>
+
+      <div class="funnel-flow">
+        <div class="funnel-step">
+          <div class="funnel-box fb-ouro"><span>Plano<br>de Ouro</span></div>
+          <div class="funnel-label">Entrada</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-dark"><span>Funil<br>Dona</span></div>
+          <div class="funnel-label">Ponte</div>
+        </div>
+        <div class="funnel-arrow"><svg viewBox="0 0 28 16"><path d="M2 8h20M18 3l6 5-6 5" fill="none" stroke="#b4a68c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="funnel-step">
+          <div class="funnel-box fb-outline"><span>Mentoria<br>Skava</span></div>
+          <div class="funnel-label">Destino</div>
+        </div>
+      </div>
+
+      <div class="support-label">Materiais de suporte</div>
+      <div class="support-grid">
+        <div class="support-item si-marfim">Análise de Arquétipo</div>
+        <div class="support-item si-marfim">Análise Existencial</div>
+        <div class="support-item si-marfim" style="grid-column: 1 / -1;">Branding Book</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>07</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÁGINA 8: ENCERRAMENTO -->
+<div class="page">
+  <div class="inner-c bg-marfim">
+    <div class="header-c">
+      <span class="left">Frameworks de Funis</span>
+      <span class="num">07</span>
+    </div>
+    <div class="header-c-line"></div>
+    <div class="body-c">
+      <div class="sec-c">Convergência</div>
+      <div class="title-c">Todos os caminhos levam à <em class="gold">Skava</em></div>
+
+      <p class="lead-c">5 funis. 5 portas de entrada. 2 produtos ponte (Funil Dona e PDO). 1 destino final.</p>
+
+      <div style="background: var(--cacao); border-radius: 10px; padding: 28px 32px; max-width: 480px; margin: 0 auto 20px auto; width: 100%;">
+        <div style="font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--ouro); margin-bottom: 14px;">Produtos Ponte</div>
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+          <div style="flex: 1; background: rgba(180,166,140,.2); border-radius: 8px; padding: 14px 16px; text-align: center;">
+            <div style="font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--marfim); margin-bottom: 4px;">Funil Dona</div>
+            <div style="font-family: var(--mono); font-size: 9px; color: var(--ouro-pale);">Vendas + Protocolos</div>
+          </div>
+          <div style="flex: 1; background: rgba(180,166,140,.2); border-radius: 8px; padding: 14px 16px; text-align: center;">
+            <div style="font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--marfim); margin-bottom: 4px;">PDO</div>
+            <div style="font-family: var(--mono); font-size: 9px; color: var(--ouro-pale);">Alinhamento + Corpo</div>
+          </div>
+        </div>
+        <div style="font-family: var(--mono); font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--ouro); margin-bottom: 10px;">Destino Final</div>
+        <div style="background: var(--ouro); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="font-family: var(--serif); font-size: 20px; color: var(--cacao);">Mentoria Skava</div>
+        </div>
+      </div>
+
+      <p class="text-c">Cada funil alimenta os outros. Quem entra por Conteúdo pode migrar para Alinhamento. Quem entra por Corpo pode subir para Protocolos. O ecossistema é circular.</p>
+
+      <div style="margin-top: 24px;">
+        <div style="width: 120px; height: 2px; background: var(--ouro); margin-bottom: 14px;"></div>
+        <div style="font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--cacao);">Isis Moreira</div>
+        <div style="font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--mirror); margin-top: 6px;">Março 2026</div>
+      </div>
+    </div>
+    <div class="footer-c-line"></div>
+    <div class="footer-c">
+      <span>Isis Moreira</span>
+      <span>08</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

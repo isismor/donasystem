@@ -3,6 +3,16 @@
 > Erros, padrões e aprendizados do dia a dia com o agente.
 > Estratégicas = permanentes | Táticas = expiram em 30 dias
 
+### 2026-03-12 — Elevated tools não funciona em sessão existente (tática)
+- Adicionar `tools.elevated` via config.patch e reiniciar gateway NÃO habilita elevated na sessão atual
+- Possível causa: sessão precisa ser nova após o config ser carregado, ou elevated tem restrições em grupo Telegram
+- Workaround: pedir para Isis rodar comandos sudo manualmente, ou configurar sudoers do openclaw
+
+### 2026-03-12 — Coolify: variáveis Build vs Runtime (estratégica)
+- No Coolify, variáveis marcadas como "Runtime" NÃO são injetadas no build do Next.js
+- `NEXT_PUBLIC_*` PRECISA estar marcada como "Build" (ou "Build + Runtime")
+- Mesmo adicionando a variável no Coolify, se não estiver como Build, não aparece no container como NEXT_PUBLIC
+
 ### 2026-03-12 — Device Identity e Client ID no OpenClaw (estratégica)
 - Gateway só reconhece `client.id === "openclaw-control-ui"` como Control UI. Qualquer outro client ID (ex: `torre-dona`) NÃO recebe o bypass de `dangerouslyDisableDeviceAuth`
 - `dangerouslyDisableDeviceAuth=true` sozinho NÃO resolve. Precisa: client ID correto + token enviado + origin na allowedOrigins
