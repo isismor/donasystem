@@ -29,6 +29,25 @@
 - Sessões de trabalho técnico devem ter checkpoints frequentes em memory/ (a cada milestone, não só no final)
 - Lição: consolidar memória DURANTE o trabalho, não só quando pedido
 
+### 2026-03-12 — Firewall de datacenter bloqueia portas não padrão (ESTRATÉGICA)
+- Servidor 72.60.241.247: apenas portas 18789 (gateway) e SSH estão abertas para tráfego externo
+- Portas 3001, 18790, 80, 443, 8080 são inacessíveis de fora (ERR_CONNECTION_TIMED_OUT)
+- Curl local retorna 200 mas browser externo não chega — o problema é firewall, não código
+- Regra: qualquer serviço novo deve rodar na porta 18789 (gateway) ou atrás de proxy nela
+- Nunca mais gastar tempo debugando código quando o browser mostra timeout — verificar firewall primeiro
+
+### 2026-03-12 — OpenClaw tem Control UI nativo na porta do gateway (ESTRATÉGICA)
+- O gateway já serve um painel web embutido em `http://<host>:18789/`
+- SPA Vite+Lit com: sessões, crons, chat, config, logs, skills, nodes
+- Precisa configurar `gateway.controlUi.allowedOrigins` com o IP/domínio de acesso externo
+- Precisa `allowInsecureAuth: true` e `dangerouslyDisableDeviceAuth: true` para HTTP sem SSL
+- Antes de buildar painéis custom, verificar se o Control UI nativo já atende
+
+### 2026-03-12 — Cookie secure:true quebra login em HTTP (tática)
+- Next.js em NODE_ENV=production seta cookies com `secure: true` por padrão
+- Cookie secure não funciona em HTTP (browser ignora) → redirect loop infinito
+- Fix: `MC_COOKIE_SECURE=false` ou servir via HTTPS. Expira: 2026-04-12
+
 ## Estratégicas
 
 ### Crons
