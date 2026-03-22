@@ -625,30 +625,33 @@
     /* ── SOBRE ISIS ── */
     .isis-grid {
       display: grid;
-      grid-template-columns: 1fr 480px;
-      gap: 80px;
-      align-items: center;
+      grid-template-columns: 45% 55%;
+      gap: 64px;
+      align-items: start;
     }
 
     .isis-content {}
 
     .isis-content .eyebrow {
-      color: var(--ouro);
       margin-bottom: 16px;
     }
 
     .isis-bio {
-      font-size: 18px;
-      line-height: 1.7;
-      color: rgba(249, 248, 244, 0.75);
-      margin-bottom: 40px;
-      max-width: 520px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--mirror);
+      font-weight: 300;
+      margin-bottom: 16px;
     }
 
     .isis-stats-row {
-      display: flex;
-      gap: 32px;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--ouro);
     }
 
     .isis-stat {
@@ -658,19 +661,19 @@
     }
 
     .isis-stat-value {
-      font-family: 'DM Serif Text', serif;
-      font-size: 32px;
-      color: var(--marfim);
-      letter-spacing: -0.02em;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: var(--ouro);
+      line-height: 1;
+      margin-bottom: 6px;
     }
 
     .isis-stat-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ouro);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--cacau);
+      letter-spacing: 0.02em;
     }
 
     .isis-photo-side {
@@ -678,20 +681,9 @@
     }
 
     .isis-photo-frame {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(180, 166, 140, 0.2);
-      border-radius: var(--radius);
+      border: 1px solid var(--ouro);
       overflow: hidden;
       position: relative;
-    }
-
-    .isis-photo-frame::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(180, 166, 140, 0.12) 1px, transparent 1px);
-      background-size: 16px 16px;
-      z-index: 0;
     }
 
     .isis-photo {
@@ -948,24 +940,6 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
           </a>
-          <a href="#sobre" class="btn-secondary">Quero aplicar</a>
-        </div>
-
-        <div class="hero-stats reveal reveal-delay-4">
-          <div class="hero-stat">
-            <span class="hero-stat-value">10+</span>
-            <span class="hero-stat-label">anos empreendendo</span>
-          </div>
-          <div class="hero-stat-div"></div>
-          <div class="hero-stat">
-            <span class="hero-stat-value">40k+</span>
-            <span class="hero-stat-label">alunos formados</span>
-          </div>
-          <div class="hero-stat-div"></div>
-          <div class="hero-stat">
-            <span class="hero-stat-value">R$40M</span>
-            <span class="hero-stat-label">em vendas</span>
-          </div>
         </div>
       </div>
 
@@ -983,10 +957,7 @@
               class="hero-photo"
             />
           </div>
-          <div class="hero-photo-tag">
-            <span class="hero-photo-tag-name">Isis Moreira</span>
-            <span class="hero-photo-tag-role">Fundadora · Myna</span>
-          </div>
+
         </div>
       </div>
     </div>
@@ -1111,120 +1082,68 @@
     </div>
   </section>
 
-  <!-- SOBRE ISIS -->
-  <section class="section section--cacau" id="sobre">
-    <div class="container">
-      <div class="isis-grid">
-        <div class="isis-content">
-          <span class="eyebrow reveal" style="color:var(--ouro)">Quem lidera o Myna</span>
-          <h2 class="section-title section-title--light reveal reveal-delay-1" style="margin-bottom:24px">Isis Moreira</h2>
-          <p class="isis-bio reveal reveal-delay-2">
-            Empreendedora há mais de 10 anos, Isis Moreira construiu um negócio digital de 40 milhões em vendas antes de decidir que o próximo passo seria operar diferente. Não mais contratando mais pessoas para cada novo nível, mas construindo sistemas que escalam sozinhos.
-          </p>
-          <p class="isis-bio reveal reveal-delay-2" style="margin-top:-16px">
-            O Myna é o resultado desse processo: uma metodologia testada na sua própria empresa e transferida para um grupo seleto de empresários que querem o mesmo. Autora do best-seller "Acorda! Sonhar não Basta", Isis combina visão de negócios com domínio operacional e aplicação prática de inteligência artificial.
-          </p>
-          <div class="isis-stats-row reveal reveal-delay-3">
-            <div class="isis-stat">
-              <span class="isis-stat-value">10+</span>
-              <span class="isis-stat-label">anos empreendendo</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">40k+</span>
-              <span class="isis-stat-label">alunos formados</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">R$40M</span>
-              <span class="isis-stat-label">em vendas</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">1</span>
-              <span class="isis-stat-label">best-seller nacional</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="isis-photo-side reveal reveal-delay-2">
-          <div class="corner corner--tl" style="border-color:var(--ouro-deep)"></div>
-          <div class="corner corner--tr" style="border-color:var(--ouro-deep)"></div>
-          <div class="corner corner--bl" style="border-color:var(--ouro-deep)"></div>
-          <div class="corner corner--br" style="border-color:var(--ouro-deep)"></div>
-          <div class="isis-photo-frame">
-            <img
-              src="/myna/assets/foto-perfil.jpg"
-              alt="Isis Moreira"
-              class="isis-photo"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOBRE ISIS -->
-  <section class="section section--cacau" id="sobre">
-    <div class="container">
-      <div class="isis-grid">
-        <div class="isis-content">
-          <span class="eyebrow reveal" style="color:var(--ouro)">Quem lidera o Myna</span>
-          <h2 class="section-title section-title--light reveal reveal-delay-1" style="margin-bottom:24px">Isis Moreira</h2>
-          <p class="isis-bio reveal reveal-delay-2">
-            Empreendedora há mais de 10 anos, Isis Moreira construiu um negócio digital de 40 milhões em vendas antes de decidir que o próximo passo seria operar diferente. Não mais contratando mais pessoas para cada novo nível, mas construindo sistemas que escalam sozinhos.
-          </p>
-          <p class="isis-bio reveal reveal-delay-2" style="margin-top:-16px">
-            O Myna é o resultado desse processo: uma metodologia testada na sua própria empresa e transferida para um grupo seleto de empresários que querem o mesmo. Autora do best-seller "Acorda! Sonhar não Basta", Isis combina visão de negócios com domínio operacional e aplicação prática de inteligência artificial.
-          </p>
-          <div class="isis-stats-row reveal reveal-delay-3">
-            <div class="isis-stat">
-              <span class="isis-stat-value">10+</span>
-              <span class="isis-stat-label">anos empreendendo</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">40k+</span>
-              <span class="isis-stat-label">alunos formados</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">R$40M</span>
-              <span class="isis-stat-label">em vendas</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">1</span>
-              <span class="isis-stat-label">best-seller nacional</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="isis-photo-side reveal reveal-delay-2">
-          <div class="corner corner--tl" style="border-color:var(--ouro-deep)"></div>
-          <div class="corner corner--tr" style="border-color:var(--ouro-deep)"></div>
-          <div class="corner corner--bl" style="border-color:var(--ouro-deep)"></div>
-          <div class="corner corner--br" style="border-color:var(--ouro-deep)"></div>
-          <div class="isis-photo-frame">
-            <img
-              src="/myna/assets/foto-perfil.jpg"
-              alt="Isis Moreira"
-              class="isis-photo"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
+  <!-- CTA FINAL -->
   <section class="cta-section">
     <div class="container">
       <div class="cta-card reveal">
-        <span class="cta-card-eyebrow">Investimento</span>
         <h2 class="cta-card-title">Vagas limitadas.</h2>
-        <p class="cta-card-subtitle">Os membros do Myna são selecionados. Se você acredita que se qualifica, aplique para o Myna.</p>
+        <p class="cta-card-subtitle">Os membros do Myna são selecionados. Se você acredita que se qualifica, aplique.</p>
         <a href="https://form.typeform.com/to/pYsEDh1i" target="_blank" class="cta-card-btn">
-          <span>Quero aplicar</span>
+          <span>aplique para o Myna</span>
           <div class="cta-btn-arrow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </div>
         </a>
-        <p class="cta-note">Seleção por aplicação</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE ISIS -->
+  <section class="section section--creme" id="sobre">
+    <div class="container">
+      <div class="isis-grid">
+        <div class="isis-photo-side reveal reveal-delay-1">
+          <div class="corner corner--tl"></div>
+          <div class="corner corner--tr"></div>
+          <div class="corner corner--bl"></div>
+          <div class="corner corner--br"></div>
+          <div class="isis-photo-frame">
+            <img
+              src="/myna/assets/foto-perfil.jpg"
+              alt="Isis Moreira"
+              class="isis-photo"
+            />
+          </div>
+        </div>
+
+        <div class="isis-content">
+          <span class="eyebrow reveal">Quem lidera o Myna</span>
+          <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:24px">Isis Moreira</h2>
+          <p class="isis-bio reveal reveal-delay-2">
+            Empreendedora há mais de 10 anos, Isis Moreira construiu um negócio digital de 40 milhões em vendas antes de decidir que o próximo passo seria operar diferente. Não mais contratando mais pessoas para cada novo nível, mas construindo sistemas que escalam sozinhos.
+          </p>
+          <p class="isis-bio reveal reveal-delay-2">
+            O Myna é o resultado desse processo: uma metodologia testada na sua própria empresa e transferida para um grupo seleto de empresários que querem o mesmo. Autora do best-seller "Acorda! Sonhar não Basta", Isis combina visão de negócios com domínio operacional e aplicação prática de inteligência artificial.
+          </p>
+          <div class="isis-stats-row reveal reveal-delay-3">
+            <div class="isis-stat">
+              <span class="isis-stat-value">10+</span>
+              <span class="isis-stat-label">anos empreendendo</span>
+            </div>
+            <div class="isis-stat">
+              <span class="isis-stat-value">40k+</span>
+              <span class="isis-stat-label">alunos formados</span>
+            </div>
+            <div class="isis-stat">
+              <span class="isis-stat-value">R$40M</span>
+              <span class="isis-stat-label">em vendas</span>
+            </div>
+            <div class="isis-stat">
+              <span class="isis-stat-value">1</span>
+              <span class="isis-stat-label">best-seller nacional</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1234,7 +1153,6 @@
     <div class="container">
       <div class="footer-sep"></div>
       <div class="footer-inner">
-        <img src="/myna/assets/myna-logo-transparent.png" alt="Myna" class="footer-logo" onerror="this.style.display='none'">
         <span class="footer-copy">© 2026 Isis Moreira. Todos os direitos reservados.</span>
       </div>
     </div>
