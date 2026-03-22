@@ -70,82 +70,21 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
-    /* ── HEADER ── */
-    .site-header {
-      position: sticky;
-      top: 16px;
-      z-index: 100;
-      max-width: 1280px;
-      margin: 16px auto 0;
-      padding: 0 24px;
-    }
-
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 10px 10px 20px;
-      background: rgba(249, 248, 244, 0.85);
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
-      border: 1px solid rgba(42, 36, 32, 0.08);
-      border-radius: var(--radius);
-    }
-
-    .header-logo {
-      height: 28px;
+        .hero-logo {
+      height: 36px;
       width: auto;
+      display: block;
+      margin-bottom: 28px;
     }
-
-    .header-cta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--cacau);
-      border: none;
-      border-radius: var(--radius);
-      padding: 6px 6px 6px 20px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.3s var(--ease-expo), transform 0.3s var(--ease-expo);
-    }
-
-    .header-cta:hover { background: #3d342e; transform: translateY(-2px); }
-
-    .header-cta span {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--marfim);
-    }
-
-    .header-cta-arrow {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--ouro);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: transform 0.4s var(--ease-expo);
-    }
-
-    .header-cta:hover .header-cta-arrow { transform: rotate(-45deg); }
-
-    .header-cta-arrow svg { width: 14px; height: 14px; color: var(--cacau); }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      padding: 0 8px 8px;
+      padding: 0 8px 0;
       display: flex;
       flex-direction: column;
-      margin-top: -64px;
-      padding-top: 0;
       position: relative;
+      overflow: hidden;
     }
 
     .hero-container {
@@ -153,11 +92,11 @@
       max-width: 1280px;
       margin: 0 auto;
       width: 100%;
-      padding: 120px 24px 80px;
+      padding: 80px 24px 0;
       display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 64px;
-      align-items: center;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      align-items: flex-end;
       position: relative;
     }
 
@@ -208,7 +147,7 @@
 
     .hero-title {
       font-family: 'DM Serif Text', serif;
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-size: clamp(1.8rem, 4.05vw, 3.15rem);
       font-weight: 400;
       letter-spacing: -0.03em;
       line-height: 1.1;
@@ -306,6 +245,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
+      align-self: flex-end;
     }
 
     .hero-photo-wrapper {
@@ -314,29 +254,17 @@
       max-width: 380px;
     }
 
-    /* Moldura tech */
-    .hero-photo-wrapper::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border: 1px solid rgba(180, 166, 140, 0.35);
-      border-radius: var(--radius);
-      pointer-events: none;
-      z-index: 2;
-    }
-
     .hero-photo-frame {
       position: relative;
-      background: var(--creme);
-      border-radius: var(--radius);
       overflow: hidden;
     }
 
     .hero-photo-frame::before {
+      display: none;
       content: '';
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(circle, rgba(180, 166, 140, 0.2) 1px, transparent 1px);
+      background-image: none;
       background-size: 16px 16px;
       z-index: 0;
     }
@@ -815,12 +743,11 @@
     }
 
     @media (max-width: 768px) {
-      .site-header { top: 8px; margin-top: 8px; padding: 0 12px; }
-
       .hero-container {
         grid-template-columns: 1fr;
-        padding: 100px 24px 48px;
-        gap: 48px;
+        padding: 60px 24px 0;
+        gap: 40px;
+        align-items: flex-end;
       }
 
       .hero-right { order: -1; }
@@ -850,21 +777,7 @@
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="header-inner">
-      <img src="/myna/assets/myna-logo-transparent.png" alt="Myna" class="header-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <span style="display:none;font-family:'DM Serif Text',serif;font-size:20px;letter-spacing:-0.02em;color:var(--cacau)">Myna</span>
-      <a href="https://form.typeform.com/to/pYsEDh1i" target="_blank" class="header-cta">
-        <span>Quero uma vaga</span>
-        <div class="header-cta-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-      </a>
-    </div>
-  </header>
-
-  <!-- HERO -->
+    <!-- HERO -->
   <section class="hero">
     <div class="hero-container">
       <!-- Left -->
@@ -874,8 +787,10 @@
           Club de Sistemas e Inteligência Artificial
         </div>
 
+        <img src="/myna/assets/myna-logo-transparent.png" alt="Myna" class="hero-logo reveal" onerror="this.style.display='none'">
+
         <h1 class="hero-title reveal reveal-delay-1">
-          Escale de forma <em>automatizada,</em><br>inteligente, <em>rápida</em> e econômica.
+          Escale de forma <em>automatizada,</em> inteligente, <em>rápida</em> e econômica.
         </h1>
 
         <p class="hero-desc reveal reveal-delay-2">
@@ -895,10 +810,6 @@
       <!-- Right: Photo -->
       <div class="hero-right reveal reveal-delay-2">
         <div class="hero-photo-wrapper">
-          <div class="corner corner--tl"></div>
-          <div class="corner corner--tr"></div>
-          <div class="corner corner--bl"></div>
-          <div class="corner corner--br"></div>
           <div class="hero-photo-frame">
             <img
               src="/myna/assets/foto-sem-fundo.png"
@@ -906,7 +817,6 @@
               class="hero-photo"
             />
           </div>
-
         </div>
       </div>
     </div>
