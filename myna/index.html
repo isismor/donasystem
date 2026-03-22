@@ -298,41 +298,7 @@
 
     .btn-secondary:hover { color: var(--ouro-deep); border-color: var(--ouro); }
 
-    .hero-stats {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
 
-    .hero-stat {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .hero-stat-value {
-      font-family: 'DM Serif Text', serif;
-      font-size: 24px;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      color: var(--cacau);
-    }
-
-    .hero-stat-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--ouro-deep);
-    }
-
-    .hero-stat-div {
-      width: 1px;
-      height: 32px;
-      background: rgba(180, 166, 140, 0.4);
-    }
 
     .hero-right {
       position: relative;
@@ -383,34 +349,7 @@
       z-index: 1;
     }
 
-    /* Tag flutuante */
-    .hero-photo-tag {
-      position: absolute;
-      bottom: 20px;
-      left: -20px;
-      background: var(--cacau);
-      border-radius: var(--radius);
-      padding: 10px 16px;
-      z-index: 3;
-    }
 
-    .hero-photo-tag-name {
-      font-family: 'DM Serif Text', serif;
-      font-size: 14px;
-      color: var(--marfim);
-      display: block;
-    }
-
-    .hero-photo-tag-role {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--ouro);
-      display: block;
-      margin-top: 2px;
-    }
 
     /* Corner decorations */
     .corner {
@@ -876,7 +815,7 @@
 
       .hero-right { order: -1; }
       .hero-photo-wrapper { max-width: 280px; }
-      .hero-photo-tag { left: -10px; }
+
 
       .criteria-grid { grid-template-columns: 1fr; }
 
@@ -892,7 +831,7 @@
 
     @media (max-width: 580px) {
       .hero-title { font-size: 2rem; }
-      .hero-stats { gap: 20px; }
+
       .isis-stats-row { gap: 20px; }
       .cta-card { padding: 32px 20px; }
       .criteria-card { padding: 24px 20px; }
