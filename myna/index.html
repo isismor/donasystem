@@ -1,366 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Myna. Club de Sistemas e Inteligência Artificial</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Club Myna | Isis Moreira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    /* ===========================
+       DESIGN SYSTEM ISIS v7
+    =========================== */
     :root {
-      --marfim:    #f9f8f4;
-      --creme:     #efede6;
-      --cacau:     #2a2420;
-      --ouro:      #b4a68c;
+      --marfim: #f9f8f4;
+      --creme: #efede6;
+      --cacau: #2a2420;
+      --hero-dark: #1a1410;
+      --ouro: #b4a68c;
       --ouro-deep: #7a6e5c;
-      --mirror:    #9ba1a8;
-      --radius:    4px;
-      --ease-expo: cubic-bezier(.16, 1, .3, 1);
+      --mirror: #9ba1a8;
+      --radius: 4px;
+      --easing: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    html { font-size: 16px; scroll-behavior: smooth; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      background: var(--marfim);
+      background: var(--hero-dark);
       color: var(--cacau);
       font-family: 'DM Sans', sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── TIPOGRAFIA ── */
-    .eyebrow {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--ouro-deep);
-      display: inline-block;
-    }
-
-    .section-title {
-      font-family: 'DM Serif Text', serif;
-      font-size: clamp(28px, 4vw, 44px);
       font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: var(--cacau);
-    }
-
-    .section-title em {
-      font-style: italic;
-      color: var(--ouro-deep);
-    }
-
-    .section-title--light { color: var(--marfim); }
-    .section-title--light em { color: var(--ouro); }
-
-    /* ── REVEAL ANIMATION ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.65s var(--ease-expo), transform 0.65s var(--ease-expo);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-
-        .hero-logo {
-      height: 54px;
-      width: auto;
-      display: block;
-      margin-bottom: 12px;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: visible;
-    }
-
-    .hero-container {
-      max-width: 1280px;
-      margin: 0 auto;
-      width: 100%;
-      padding: 40px 24px 0;
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 48px;
-      align-items: flex-end;
-      position: relative;
-    }
-
-    /* Dot grid */
-    .hero-container::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(180, 166, 140, 0.35) 1px, transparent 1px);
-      background-size: 20px 20px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-left {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
-      padding-bottom: 32px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(180, 166, 140, 0.15);
-      border: 1px solid rgba(180, 166, 140, 0.4);
-      border-radius: var(--radius);
-      padding: 6px 14px;
-      margin-bottom: 28px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--ouro-deep);
-    }
-
-    .hero-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--ouro);
-      flex-shrink: 0;
-    }
-
-    .hero-title {
-      font-family: 'DM Serif Text', serif;
-      font-size: clamp(1.8rem, 4.05vw, 3.15rem);
-      font-weight: 400;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--cacau);
-      margin-bottom: 0;
-      max-width: 680px;
-    }
-
-    .hero-title em {
-      font-style: italic;
-      color: var(--ouro-deep);
-    }
-
-    .hero-desc {
-      font-size: 18px;
-      font-weight: 300;
+      font-size: 16px;
       line-height: 1.6;
-      color: rgba(42, 36, 32, 0.7);
-      max-width: 520px;
-      margin-top: 16px;
-      margin-bottom: 0;
-    }
-
-    .cta-group {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-      margin-bottom: 0;
-    }
-
-    .btn-primary {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: var(--cacau);
-      border: none;
-      border-radius: var(--radius);
-      padding: 6px 6px 6px 28px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.4s var(--ease-expo), transform 0.4s var(--ease-expo), box-shadow 0.4s var(--ease-expo);
-    }
-
-    .btn-primary:hover {
-      background: #3d342e;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(42, 36, 32, 0.18);
-    }
-
-    .btn-primary span {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--marfim);
-    }
-
-    .btn-arrow {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: var(--ouro);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: transform 0.4s var(--ease-expo);
-    }
-
-    .btn-primary:hover .btn-arrow { transform: rotate(-45deg); }
-
-    .btn-arrow svg { width: 18px; height: 18px; color: var(--cacau); }
-
-    .btn-secondary {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--cacau);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(42, 36, 32, 0.3);
-      padding-bottom: 2px;
-      transition: border-color 0.3s, color 0.3s;
-    }
-
-    .btn-secondary:hover { color: var(--ouro-deep); border-color: var(--ouro); }
-
-
-
-    .hero-right {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      align-self: flex-end;
-    }
-
-    .hero-photo-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 380px;
-    }
-
-    .hero-photo-frame {
-      position: relative;
-      overflow: visible;
-    }
-
-    .hero-photo-frame::before {
-      display: none;
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: none;
-      background-size: 16px 16px;
-      z-index: 0;
-    }
-
-    .hero-photo {
-      display: block;
-      width: 100%;
-      height: auto;
-      position: relative;
-      z-index: 1;
-    }
-
-
-
-    /* Corner decorations */
-    .corner {
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      z-index: 4;
-    }
-
-    .corner--tl { top: -1px; left: -1px; border-top: 2px solid var(--ouro); border-left: 2px solid var(--ouro); }
-    .corner--tr { top: -1px; right: -1px; border-top: 2px solid var(--ouro); border-right: 2px solid var(--ouro); }
-    .corner--bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--ouro); border-left: 2px solid var(--ouro); }
-    .corner--br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--ouro); border-right: 2px solid var(--ouro); }
-
-    /* ── TICKER ── */
-    .ticker {
-      overflow: hidden;
-      background: var(--cacau);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 16px 0;
-    }
-
-    .ticker-track {
-      display: flex;
-      white-space: nowrap;
-    }
-
-    .ticker-content {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      animation: tickerScroll 28s linear infinite;
-      flex-shrink: 0;
-    }
-
-    @keyframes tickerScroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    .ticker-item {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: rgba(180, 166, 140, 0.6);
-      padding: 0 24px;
-      flex-shrink: 0;
-    }
-
-    .ticker-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--ouro);
-      opacity: 0.5;
-      flex-shrink: 0;
-    }
-
-    /* ── SEÇÕES ── */
-    .section {
-      padding: 48px 0;
-    }
-
-    .section--creme {
-      background: var(--creme);
-    }
-
-    .section__body {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      line-height: 1.75;
-      color: var(--mirror);
-      font-weight: 300;
-      max-width: 720px;
-      margin-top: 24px;
-    }
-
-    .section--cacau {
-      background: var(--cacau);
+      overflow-x: hidden;
     }
 
     .container {
@@ -369,663 +53,1776 @@
       padding: 0 24px;
     }
 
-    .section-header {
-      margin-bottom: 32px;
+    /* ===========================
+       ANIMAÇÕES
+    =========================== */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
     }
 
-    .section-header .eyebrow {
+    @keyframes ticker-move {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scale-in {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .hero-badge    { animation: fade-in-up 600ms var(--easing) 0ms    both; }
+    .hero-logo     { animation: fade-in-up 600ms var(--easing) 100ms  both; }
+    .hero-title    { animation: fade-in-up 600ms var(--easing) 200ms  both; }
+    .hero-desc     { animation: fade-in-up 600ms var(--easing) 300ms  both; }
+    .hero-cta      { animation: fade-in-up 600ms var(--easing) 400ms  both; }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms var(--easing), transform 600ms var(--easing);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 100ms; }
+    .reveal-delay-2 { transition-delay: 200ms; }
+    .reveal-delay-3 { transition-delay: 300ms; }
+    .reveal-delay-4 { transition-delay: 400ms; }
+    .reveal-delay-5 { transition-delay: 500ms; }
+
+    /* ===========================
+       HERO
+    =========================== */
+    #hero {
+      position: relative;
+      background-color: var(--hero-dark);
+      background-image: url('./assets/hero-isis.jpg');
+      background-size: cover;
+      background-position: center top;
+      overflow: hidden;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(26,20,16,0.95) 0%,
+        rgba(26,20,16,0.80) 45%,
+        rgba(26,20,16,0.45) 70%,
+        rgba(26,20,16,0.20) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(180,166,140,0.20) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 24px 0;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      padding-bottom: 40px;
+    }
+
+    /* Badge */
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid rgba(180,166,140,0.40);
+      border-radius: 100px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ouro-deep);
+      background: rgba(26,20,16,0.40);
+      backdrop-filter: blur(8px);
+      margin-bottom: 20px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--ouro);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    /* Logo no hero */
+    .hero-logo img {
+      height: 54px;
+      width: auto;
+      display: block;
       margin-bottom: 12px;
     }
 
-    /* ── PARA QUEM É ── */
-    .criteria-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .criteria-card {
-      background: var(--marfim);
-      border: 1px solid rgba(180, 166, 140, 0.3);
-      border-radius: var(--radius);
-      padding: 36px;
-      transition: border-color 0.3s var(--ease-expo), transform 0.3s var(--ease-expo), box-shadow 0.3s var(--ease-expo);
-    }
-
-    .criteria-card:hover {
-      border-color: var(--ouro);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(180, 166, 140, 0.15);
-    }
-
-    .criteria-card-title {
+    /* Título H1 */
+    .hero-title {
       font-family: 'DM Serif Text', serif;
-      font-size: 20px;
-      color: var(--cacau);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--marfim);
+      margin-bottom: 18px;
     }
 
-    .criteria-icon {
-      width: 28px;
-      height: 28px;
+    .hero-title em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    /* Descrição hero */
+    .hero-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(249,248,244,0.75);
+      margin-bottom: 32px;
+    }
+
+    /* ===========================
+       BOTÃO CTA
+    =========================== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 6px 6px 6px 20px;
       border-radius: var(--radius);
-      background: rgba(180, 166, 140, 0.15);
-      border: 1px solid rgba(180, 166, 140, 0.3);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      background: var(--ouro);
+      transition: background 400ms var(--easing), transform 300ms var(--easing);
+      overflow: hidden;
+    }
+
+    .btn-primary:hover {
+      background: var(--ouro-deep);
+      transform: translateY(-2px);
+    }
+
+    .btn-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--cacau);
+      display: flex;
+      gap: 0;
+      margin-right: 12px;
+    }
+
+    .btn-text span {
+      display: inline-block;
+      transition: transform 200ms var(--easing);
+    }
+
+    .btn-primary:hover .btn-text span:nth-child(1)  { transform: translateY(-3px); transition-delay: 0ms; }
+    .btn-primary:hover .btn-text span:nth-child(2)  { transform: translateY(-3px); transition-delay: 30ms; }
+    .btn-primary:hover .btn-text span:nth-child(3)  { transform: translateY(-3px); transition-delay: 60ms; }
+    .btn-primary:hover .btn-text span:nth-child(4)  { transform: translateY(-3px); transition-delay: 90ms; }
+    .btn-primary:hover .btn-text span:nth-child(5)  { transform: translateY(-3px); transition-delay: 120ms; }
+    .btn-primary:hover .btn-text span:nth-child(6)  { transform: translateY(-3px); transition-delay: 150ms; }
+    .btn-primary:hover .btn-text span:nth-child(7)  { transform: translateY(-3px); transition-delay: 180ms; }
+    .btn-primary:hover .btn-text span:nth-child(8)  { transform: translateY(-3px); transition-delay: 210ms; }
+    .btn-primary:hover .btn-text span:nth-child(9)  { transform: translateY(-3px); transition-delay: 240ms; }
+    .btn-primary:hover .btn-text span:nth-child(10) { transform: translateY(-3px); transition-delay: 270ms; }
+    .btn-primary:hover .btn-text span:nth-child(11) { transform: translateY(-3px); transition-delay: 300ms; }
+    .btn-primary:hover .btn-text span:nth-child(12) { transform: translateY(-3px); transition-delay: 330ms; }
+    .btn-primary:hover .btn-text span:nth-child(13) { transform: translateY(-3px); transition-delay: 360ms; }
+    .btn-primary:hover .btn-text span:nth-child(14) { transform: translateY(-3px); transition-delay: 390ms; }
+    .btn-primary:hover .btn-text span:nth-child(15) { transform: translateY(-3px); transition-delay: 420ms; }
+    .btn-primary:hover .btn-text span:nth-child(16) { transform: translateY(-3px); transition-delay: 450ms; }
+    .btn-primary:hover .btn-text span:nth-child(17) { transform: translateY(-3px); transition-delay: 480ms; }
+    .btn-primary:hover .btn-text span:nth-child(18) { transform: translateY(-3px); transition-delay: 510ms; }
+    .btn-primary:hover .btn-text span:nth-child(19) { transform: translateY(-3px); transition-delay: 540ms; }
+    .btn-primary:hover .btn-text span:nth-child(20) { transform: translateY(-3px); transition-delay: 570ms; }
+    .btn-primary:hover .btn-text span:nth-child(21) { transform: translateY(-3px); transition-delay: 600ms; }
+    .btn-primary:hover .btn-text span:nth-child(22) { transform: translateY(-3px); transition-delay: 630ms; }
+    .btn-primary:hover .btn-text span:nth-child(23) { transform: translateY(-3px); transition-delay: 660ms; }
+    .btn-primary:hover .btn-text span:nth-child(24) { transform: translateY(-3px); transition-delay: 690ms; }
+    .btn-primary:hover .btn-text span:nth-child(25) { transform: translateY(-3px); transition-delay: 720ms; }
+
+    .btn-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      transition: transform 400ms var(--easing);
     }
 
-    .criteria-icon svg { width: 14px; height: 14px; color: var(--ouro-deep); }
+    .btn-primary:hover .btn-arrow {
+      transform: rotate(-45deg);
+    }
 
-    .criteria-list {
+    /* Hero: fundo escuro => btn ouro, seta cacau */
+    .btn-hero .btn-arrow {
+      background: var(--cacau);
+      color: var(--ouro);
+    }
+
+    /* Seções claras: btn cacau, seta ouro */
+    .btn-light {
+      background: var(--cacau);
+    }
+    .btn-light:hover {
+      background: #3d342e;
+    }
+    .btn-light .btn-text {
+      color: var(--marfim);
+    }
+    .btn-light .btn-arrow {
+      background: var(--ouro);
+      color: var(--cacau);
+    }
+
+    /* Seções escuras: btn ouro, seta cacau */
+    .btn-dark {
+      background: var(--ouro);
+    }
+    .btn-dark:hover {
+      background: var(--ouro-deep);
+    }
+    .btn-dark .btn-text {
+      color: var(--cacau);
+    }
+    .btn-dark .btn-arrow {
+      background: var(--cacau);
+      color: var(--ouro);
+    }
+
+    /* ===========================
+       TICKER
+    =========================== */
+    #ticker {
+      background: var(--cacau);
+      padding: 18px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      gap: 0;
+      animation: ticker-move 35s linear infinite;
+      will-change: transform;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--marfim);
+    }
+
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--ouro);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===========================
+       SEÇÕES
+    =========================== */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-bg-marfim { background: var(--marfim); }
+    .section-bg-creme  { background: var(--creme); }
+    .section-bg-cacau  { background: var(--cacau); }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+      display: block;
+      text-align: center;
+    }
+
+    .eyebrow-light { color: var(--ouro-deep); }
+    .eyebrow-dark  { color: var(--ouro); }
+
+    /* H2 Seção */
+    h2.section-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      text-align: center;
+    }
+
+    h2.section-title.title-light { color: var(--cacau); }
+    h2.section-title.title-dark  { color: var(--marfim); }
+
+    h2.section-title em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    /* Descrição de seção */
+    .section-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 680px;
+    }
+    .section-desc-light { color: var(--ouro-deep); }
+    .section-desc-dark  { color: rgba(249,248,244,0.75); }
+
+    /* ===========================
+       STATS
+    =========================== */
+    #stats {
+      background: var(--marfim);
+      padding: 64px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 32px 32px;
+      border-right: 1px solid rgba(180,166,140,0.30);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      color: var(--ouro);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-number em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--ouro-deep);
+      line-height: 1.5;
+    }
+
+    /* ===========================
+       DORES
+    =========================== */
+    .dores-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .dor-item {
+      padding: 28px;
+      background: rgba(180,166,140,0.08);
+      border-left: 2px solid var(--ouro);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .dor-text {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--cacau);
+      line-height: 1.65;
+    }
+
+    /* ===========================
+       SOLUÇÃO
+    =========================== */
+    .solucao-content {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .solucao-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.80);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .solucao-destaque {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      color: var(--ouro);
+      font-style: italic;
+      margin: 32px 0;
+      line-height: 1.3;
+    }
+
+    .solucao-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(180,166,140,0.60);
+      margin-top: 40px;
+    }
+
+    /* ===========================
+       PARA QUEM É / NÃO É
+    =========================== */
+    .para-quem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .para-quem-col h3 {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      font-weight: 400;
+      color: var(--cacau);
+      margin-bottom: 24px;
+    }
+
+    .para-quem-col h3 em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .para-quem-list {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .criteria-item {
+    .para-quem-list li {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 12px;
       font-size: 15px;
-      line-height: 1.5;
-      color: rgba(42, 36, 32, 0.8);
+      font-weight: 300;
+      color: var(--cacau);
+      line-height: 1.55;
     }
 
-    .criteria-bullet {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(180, 166, 140, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .criteria-bullet svg { width: 10px; height: 10px; color: var(--ouro-deep); }
-
-    /* ── ENTREGAS ── */
-    .delivery-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      max-width: 720px;
-    }
-
-    .delivery-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 24px 0;
-      border-bottom: 1px solid var(--creme);
-    }
-
-    .delivery-item:first-child {
-      border-top: 1px solid var(--creme);
-    }
-
-    .delivery-item__icon {
+    .para-quem-list li .list-icon {
       flex-shrink: 0;
       width: 20px;
       height: 20px;
-      margin-top: 2px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .icon-sim  { background: rgba(180,166,140,0.20); color: var(--ouro-deep); }
+    .icon-nao  { background: rgba(42,36,32,0.08); color: var(--mirror); }
+
+    .icon-sim i, .icon-nao i {
+      font-size: 10px;
+    }
+
+    /* ===========================
+       ENTREGAS
+    =========================== */
+    .entregas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .entrega-card {
+      background: rgba(180,166,140,0.08);
+      border: 1px solid rgba(180,166,140,0.25);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 300ms var(--easing), box-shadow 300ms var(--easing), border-color 300ms;
+    }
+
+    .entrega-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      border-color: rgba(180,166,140,0.55);
+    }
+
+    .entrega-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(180,166,140,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--ouro);
+      font-size: 24px;
     }
 
-    .delivery-item__content {
-      flex: 1;
+    .entrega-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--marfim);
+      line-height: 1.3;
     }
 
-    .delivery-item__title {
+    .entrega-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.70);
+      line-height: 1.6;
+    }
+
+    /* ===========================
+       COMPARATIVO
+    =========================== */
+    .comparativo-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .comparativo-table th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 16px 24px;
+      text-align: left;
+    }
+
+    .th-sem {
+      background: rgba(42,36,32,0.06);
+      color: var(--mirror);
+      width: 50%;
+    }
+
+    .th-com {
+      background: rgba(180,166,140,0.12);
+      color: var(--ouro-deep);
+      width: 50%;
+    }
+
+    .comparativo-table td {
+      padding: 14px 24px;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.5;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(180,166,140,0.12);
+    }
+
+    .td-sem {
+      color: var(--ouro-deep);
+      background: rgba(42,36,32,0.03);
+    }
+
+    .td-com {
+      color: var(--cacau);
+      background: rgba(180,166,140,0.05);
+      font-weight: 400;
+    }
+
+    /* Linhas alternadas */
+    .comparativo-table tbody tr:nth-child(even) .td-sem {
+      background: var(--creme);
+    }
+
+    .comparativo-table tbody tr:nth-child(even) .td-com {
+      background: rgba(180,166,140,0.10);
+    }
+
+    .td-sem .td-icon {
+      color: var(--mirror);
+      margin-right: 10px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .td-com .td-icon {
+      color: var(--ouro);
+      margin-right: 10px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    /* ===========================
+       INVESTIMENTO
+    =========================== */
+    .investimento-content {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .investimento-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.80);
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    /* ===========================
+       FAQ
+    =========================== */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(180,166,140,0.20);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 24px 0;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.975rem;
+      font-size: 16px;
       font-weight: 500;
       color: var(--cacau);
-      margin-bottom: 4px;
+      line-height: 1.4;
+      transition: color 200ms;
     }
 
-    .delivery-item__desc {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--mirror);
+    .faq-question:hover {
+      color: var(--ouro-deep);
+    }
+
+    .faq-toggle {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(180,166,140,0.30);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ouro-deep);
+      font-size: 12px;
+      transition: transform 300ms var(--easing), background 200ms, border-color 200ms;
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(45deg);
+      background: var(--ouro);
+      border-color: var(--ouro);
+      color: var(--cacau);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 400px;
+    }
+
+    .faq-answer-inner {
+      padding: 0 0 24px;
+      font-size: 15px;
       font-weight: 300;
+      color: var(--ouro-deep);
+      line-height: 1.7;
     }
 
-    /* ── SOBRE ISIS ── */
-    .isis-grid {
+    /* ===========================
+       URGÊNCIA
+    =========================== */
+    .urgencia-content {
+      max-width: 760px;
+    }
+
+    .urgencia-line {
+      width: 60px;
+      height: 1px;
+      background: var(--ouro);
+      margin: 0 auto 24px;
+    }
+
+    .urgencia-body {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--ouro-deep);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .urgencia-tagline {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ouro);
+      margin-top: 32px;
+      padding-left: 16px;
+      border-left: 3px solid var(--ouro);
+    }
+
+    /* ===========================
+       SOBRE ISIS
+    =========================== */
+    .sobre-grid {
       display: grid;
-      grid-template-columns: 45% 55%;
+      grid-template-columns: 1fr 1fr;
       gap: 64px;
       align-items: start;
     }
 
-    .isis-content {}
-
-    .isis-content .eyebrow {
-      margin-bottom: 16px;
+    .sobre-col-left h2 {
+      margin-bottom: 24px;
     }
 
-    .isis-bio {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: var(--mirror);
+    .sobre-bio {
+      font-size: 16px;
       font-weight: 300;
-      margin-bottom: 16px;
+      color: var(--cacau);
+      line-height: 1.75;
+      margin-bottom: 40px;
     }
 
-    .isis-stats-row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-top: 24px;
+    .sobre-stats {
+      display: flex;
+      gap: 32px;
       padding-top: 24px;
-      border-top: 1px solid var(--ouro);
+      border-top: 1px solid rgba(180,166,140,0.25);
     }
 
-    .isis-stat {
+    .sobre-stat {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
 
-    .isis-stat-value {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1.75rem;
-      font-weight: 500;
-      color: var(--ouro);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .isis-stat-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
+    .sobre-stat-num {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
       color: var(--cacau);
-      letter-spacing: 0.02em;
+      letter-spacing: -0.02em;
     }
 
-    .isis-photo-side {
-      position: relative;
+    .sobre-stat-num em {
+      color: var(--ouro);
+      font-style: italic;
     }
 
-    .isis-photo-frame {
-      border: 1px solid var(--ouro);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .isis-photo {
-      display: block;
-      width: 100%;
-      height: auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── CTA SECTION ── */
-    .cta-section {
-      padding: 48px 0;
-      background: var(--marfim);
-    }
-
-    .cta-card {
-      max-width: 640px;
-      margin: 0 auto;
-      background: var(--cacau);
-      border-radius: var(--radius);
-      padding: 40px 40px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* linha ouro no topo */
-    .cta-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--ouro), transparent);
-    }
-
-    .cta-card-eyebrow {
+    .sobre-stat-label {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--ouro);
+      letter-spacing: 0.10em;
+      color: var(--ouro-deep);
+    }
+
+    .sobre-col-right img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      border-radius: 8px;
       display: block;
-      margin-bottom: 16px;
     }
 
-    .cta-card-title {
-      font-family: 'DM Serif Text', serif;
-      font-size: clamp(24px, 3.5vw, 36px);
-      color: var(--marfim);
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      margin-bottom: 12px;
+    /* ===========================
+       CTA FINAL
+    =========================== */
+    .cta-final-content {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
     }
 
-    .cta-card-subtitle {
-      font-size: 16px;
-      line-height: 1.6;
-      color: rgba(249, 248, 244, 0.6);
+    .cta-final-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.80);
+      line-height: 1.75;
       margin-bottom: 40px;
     }
 
-    .cta-price {
-      margin-bottom: 36px;
-    }
-
-    .cta-price-label {
+    .cta-final-tagline {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: rgba(180, 166, 140, 0.6);
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .cta-price-value {
-      font-family: 'DM Serif Text', serif;
-      font-size: clamp(36px, 6vw, 56px);
-      color: var(--ouro);
-      letter-spacing: -0.03em;
-    }
-
-    .cta-card-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      background: var(--ouro);
-      border: none;
-      border-radius: var(--radius);
-      padding: 6px 6px 6px 32px;
-      cursor: pointer;
-      text-decoration: none;
-      margin-bottom: 20px;
-      transition: background 0.4s var(--ease-expo), transform 0.4s var(--ease-expo);
-    }
-
-    .cta-card-btn:hover { background: #a5957c; transform: translateY(-4px); }
-
-    .cta-card-btn span {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--cacau);
+      letter-spacing: 0.12em;
+      color: rgba(180,166,140,0.50);
+      margin-bottom: 40px;
+      display: block;
     }
 
-    .cta-btn-arrow {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
+    /* ===========================
+       FOOTER
+    =========================== */
+    #footer {
       background: var(--cacau);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: transform 0.4s var(--ease-expo);
-    }
-
-    .cta-card-btn:hover .cta-btn-arrow { transform: rotate(-45deg); }
-    .cta-btn-arrow svg { width: 18px; height: 18px; color: var(--ouro); }
-
-    .cta-note {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(180, 166, 140, 0.4);
-    }
-
-    /* ── FOOTER ── */
-    .footer {
-      background: var(--cacau);
-      padding: 24px 0 20px;
+      padding: 32px 0;
+      border-top: 1px solid rgba(180,166,140,0.20);
     }
 
     .footer-inner {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      justify-content: space-between;
       gap: 16px;
     }
-
-    .footer-logo {
-      height: 24px;
-      width: auto;
-      opacity: 0.5;
-      transition: opacity 0.3s;
-    }
-
-    .footer-logo:hover { opacity: 1; }
 
     .footer-copy {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
-      font-weight: 400;
-      color: rgba(180, 166, 140, 0.4);
+      font-weight: 500;
+      color: var(--ouro-deep);
+      letter-spacing: 0.08em;
     }
 
-    .footer-sep {
+    /* ===========================
+       SEPARADORES VISUAIS
+    =========================== */
+    .section-divider {
       width: 100%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(180, 166, 140, 0.2), transparent);
-      margin-bottom: 16px;
+      background: linear-gradient(to right, transparent, rgba(180,166,140,0.35), transparent);
+      margin: 0;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      .isis-grid {
-        grid-template-columns: 1fr 380px;
-        gap: 48px;
-      }
+    .section-divider-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0;
+      height: 32px;
     }
 
+    .section-divider-ornament::before,
+    .section-divider-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(180,166,140,0.30));
+    }
+
+    .section-divider-ornament::after {
+      background: linear-gradient(to left, transparent, rgba(180,166,140,0.30));
+    }
+
+    .ornament-diamond {
+      width: 6px;
+      height: 6px;
+      background: var(--ouro);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: 0.70;
+    }
+
+    /* ===========================
+       ELEMENTOS DECORATIVOS DE FUNDO
+    =========================== */
+    .section-bg-cacau {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-bg-cacau::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(180,166,140,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .section-bg-cacau .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===========================
+       STAGGER CARDS ENTREGAS
+    =========================== */
+    .entrega-card:nth-child(1)  { transition-delay: 0ms; }
+    .entrega-card:nth-child(2)  { transition-delay: 100ms; }
+    .entrega-card:nth-child(3)  { transition-delay: 200ms; }
+    .entrega-card:nth-child(4)  { transition-delay: 300ms; }
+    .entrega-card:nth-child(5)  { transition-delay: 400ms; }
+    .entrega-card:nth-child(6)  { transition-delay: 500ms; }
+
+    /* ===========================
+       MOBILE
+    =========================== */
     @media (max-width: 768px) {
-      .hero-container {
+      section { padding: 56px 0; }
+
+      .hero-inner {
+        padding: 48px 16px 0;
+      }
+
+      .hero-content {
+        padding-bottom: 48px;
+        max-width: 100%;
+      }
+
+      #hero {
+        background-position: center top;
+      }
+
+      .hero-overlay {
+        background: rgba(26,20,16,0.90);
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-desc {
+        font-size: 15px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0;
+      }
+
+      .stat-item {
+        border-right: 1px solid rgba(180,166,140,0.30);
+        border-bottom: 1px solid rgba(180,166,140,0.30);
+        padding: 24px 20px;
+      }
+
+      .stat-item:nth-child(2n) {
+        border-right: none;
+      }
+
+      .stat-item:nth-child(3),
+      .stat-item:nth-child(4) {
+        border-bottom: none;
+      }
+
+      .dores-grid {
         grid-template-columns: 1fr;
-        padding: 60px 24px 0;
+        gap: 16px;
+      }
+
+      .para-quem-grid {
+        grid-template-columns: 1fr;
         gap: 40px;
-        align-items: flex-end;
       }
 
-      .hero-right { order: -1; }
-      .hero-photo-wrapper { max-width: 280px; }
-
-
-      .criteria-grid { grid-template-columns: 1fr; }
-
-      .isis-grid {
+      .entregas-grid {
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 16px;
       }
 
-      .cta-card { padding: 28px 20px; }
-      .section { padding: 32px 0; }
-      .section-header { margin-bottom: 20px; }
-    }
+      .sobre-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
 
-    @media (max-width: 580px) {
-      .hero-title { font-size: 2rem; }
+      .sobre-col-right {
+        order: -1;
+      }
 
-      .isis-stats-row { gap: 20px; }
-      .cta-card { padding: 24px 16px; }
-      .criteria-card { padding: 24px 20px; }
+      .sobre-col-right img {
+        height: 360px;
+      }
+
+      .sobre-stats {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+
+      .comparativo-table th,
+      .comparativo-table td {
+        padding: 12px 14px;
+        font-size: 13px;
+      }
     }
   </style>
 </head>
 <body>
 
-    <!-- HERO -->
-  <section class="hero">
-    <div class="hero-container">
-      <!-- Left -->
-      <div class="hero-left">
-        <div class="hero-badge reveal">
-          <div class="hero-badge-dot"></div>
-          Club de Sistemas e Inteligência Artificial
+  <!-- =====================
+       HERO
+  ===================== -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-dots"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+
+        <div class="badge-pill hero-badge">
+          <span class="badge-dot"></span>
+          Club de sistemas, tecnologia e negócios inteligentes
         </div>
 
-        <img src="/myna/assets/myna-logo-transparent.png" alt="Myna" class="hero-logo reveal" onerror="this.style.display='none'">
+        <div class="hero-logo">
+          <img src="./assets/logo-myna.png" alt="Club Myna">
+        </div>
 
-        <h1 class="hero-title reveal reveal-delay-1">
-          Escale de forma <em>automatizada,</em> inteligente, <em>rápida</em> e econômica.
+        <h1 class="hero-title">
+          Escale de forma <em>automatizada</em>, <em>inteligente</em>, rápida e econômica com um <em>sistema operacional</em> que trabalha enquanto você lidera.
         </h1>
 
-        <p class="hero-desc reveal reveal-delay-2">
-          O Myna é o único club de negócios onde você aprende, implementa e opera sistemas de inteligência artificial com acompanhamento real, em um grupo seleto de empresários que decidiram crescer mais contratando menos.
+        <p class="hero-desc">
+          O Myna é o único club de negócios onde você aprende, implementa e opera sistemas de inteligência artificial com acompanhamento real, ao lado de um grupo seleto de empresários que decidiram crescer mais contratando menos. Um ano. Implementação completa.
         </p>
 
-        <div class="cta-group reveal reveal-delay-3">
-          <a href="https://form.typeform.com/to/pYsEDh1i" target="_blank" class="btn-primary">
-            <span>Quero aplicar</span>
+        <div class="hero-cta">
+          <a href="#" class="btn-primary btn-hero">
+            <div class="btn-text">
+              <span>Q</span><span>u</span><span>e</span><span>r</span><span>o</span><span>&nbsp;</span><span>a</span><span>p</span><span>l</span><span>i</span><span>c</span><span>a</span><span>r</span><span>&nbsp;</span><span>e</span><span>&nbsp;</span><span>e</span><span>n</span><span>t</span><span>r</span><span>a</span><span>r</span><span>&nbsp;</span><span>n</span><span>o</span><span>&nbsp;</span><span>c</span><span>l</span><span>u</span><span>b</span>
+            </div>
             <div class="btn-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <i class="fi fi-rr-arrow-right"></i>
             </div>
           </a>
         </div>
-      </div>
 
-      <!-- Right: Photo -->
-      <div class="hero-right reveal reveal-delay-2">
-        <div class="hero-photo-wrapper">
-          <div class="hero-photo-frame">
-            <img
-              src="/myna/assets/foto-sem-fundo.png"
-              alt="Isis Moreira"
-              class="hero-photo"
-            />
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- TICKER -->
-  <div class="ticker">
+  <!-- =====================
+       TICKER
+  ===================== -->
+  <div id="ticker">
     <div class="ticker-track">
-      <div class="ticker-content">
-        <span class="ticker-item">Myna</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Sistemas</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Inteligência Artificial</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Escala automatizada</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Isis Moreira</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Club exclusivo</span><span class="ticker-dot"></span>
-        <!-- duplicado para loop -->
-        <span class="ticker-item">Myna</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Sistemas</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Inteligência Artificial</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Escala automatizada</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Isis Moreira</span><span class="ticker-dot"></span>
-        <span class="ticker-item">Club exclusivo</span><span class="ticker-dot"></span>
-      </div>
+      <span class="ticker-item">Sistemas libertam<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Isis Moreira<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Tecnologia<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Inteligência Artificial<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Agentes Orquestrados<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Negócios Inteligentes<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Chegue na frente<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Velocidade<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Precisão<span class="ticker-dot"></span></span>
+      <!-- duplicado para loop contínuo -->
+      <span class="ticker-item">Sistemas libertam<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Isis Moreira<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Tecnologia<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Inteligência Artificial<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Agentes Orquestrados<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Negócios Inteligentes<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Chegue na frente<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Velocidade<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Precisão<span class="ticker-dot"></span></span>
     </div>
   </div>
 
-  <!-- PARA QUEM É -->
-  <section class="section section--creme">
+  <!-- Separador -->
+  <div class="section-divider-ornament"><span class="ornament-diamond"></span></div>
+
+  <!-- =====================
+       STATS
+  ===================== -->
+  <section id="stats" class="section-bg-marfim">
     <div class="container">
+      <div class="stats-grid">
+
+        <div class="stat-item reveal">
+          <div class="stat-number"><em>10</em> anos</div>
+          <div class="stat-label">formando homens e mulheres que empreendem com negócios educacionais</div>
+        </div>
+
+        <div class="stat-item reveal reveal-delay-1">
+          <div class="stat-number"><em>40</em> mil</div>
+          <div class="stat-label">alunos formados no ecossistema Isis Moreira</div>
+        </div>
+
+        <div class="stat-item reveal reveal-delay-2">
+          <div class="stat-number"><em>2</em> mil</div>
+          <div class="stat-label">empreendedores mentorados diretamente</div>
+        </div>
+
+        <div class="stat-item reveal reveal-delay-3">
+          <div class="stat-number"><em>R$30 mil</em></div>
+          <div class="stat-label">de economia mensal mínima que membros do Myna conquistam na operação</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       DORES
+  ===================== -->
+  <section id="dores" class="section-bg-creme">
+    <div class="container">
+
       <div class="section-header">
-        <span class="eyebrow reveal">Para quem é</span>
-        <h2 class="section-title reveal reveal-delay-1">
-          O Myna é para quem já tem um negócio e quer escalar sem contratar mais.
+        <h2 class="section-title title-light reveal">
+          Você reconhece alguma dessas <em>situações?</em>
         </h2>
-        <p class="section__body reveal reveal-delay-2">
-          Se você já fatura, já tem produto, já tem equipe, e mesmo assim sente que cada crescimento exige contratar outra pessoa, o Myna foi construído para resolver exatamente isso. Aqui você aprende a substituir processos manuais por sistemas inteligentes que operam sem depender de você. O grupo é seleto por design. Cada membro é avaliado antes de entrar, porque o ambiente importa tanto quanto o conteúdo. Você aprende junto com empresários que já estão no jogo e que, como você, querem operar em outro nível.
+      </div>
+
+      <div class="dores-grid">
+
+        <div class="dor-item reveal">
+          <p class="dor-text">Você contrata, treina, contrata de novo. A equipe nunca chega no nível que o seu negócio exige. Você se torna o gargalo que você prometeu eliminar.</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-1">
+          <p class="dor-text">Semanas passam. As entregas não chegam. Você mesmo faz o que deveria ter sido feito. O crescimento espera enquanto você apaga incêndio.</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-2">
+          <p class="dor-text">O custo operacional cresce mais rápido do que a receita. Você expande, mas a margem desaparece. Mais faturamento, menos sobra.</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-3">
+          <p class="dor-text">Você tentou ferramentas de IA, contratou freelancers, comprou cursos. Nada se conectou. Os agentes funcionam separados, sem inteligência, sem resultado real.</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-4">
+          <p class="dor-text">Reunião sobre reunião, e as decisões continuam presas no mesmo lugar. Você sente que a empresa consome mais da sua energia do que deveria.</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-5">
+          <p class="dor-text">O mercado acelera. Concorrentes menores crescem mais rápido, com equipes mais enxutas. Você observa e sente o custo de não agir.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       SOLUÇÃO
+  ===================== -->
+  <section id="solucao" class="section-bg-cacau">
+    <div class="container">
+      <div class="solucao-content">
+
+        <h2 class="section-title title-dark reveal" style="text-align:center;">
+          O problema nunca foi falta de <em>esforço.</em>
+        </h2>
+
+        <p class="solucao-body reveal reveal-delay-2">
+          Você trabalhou. Contratou. Reorganizou. Investiu. E mesmo assim, o crescimento ficou represado.
         </p>
+
+        <p class="solucao-body reveal reveal-delay-3">
+          O que faltou foi um sistema. Um sistema real, operando de forma integrada, onde cada parte do seu negócio, marketing, vendas, suporte e operação, funciona com automação, inteligência e continuidade.
+        </p>
+
+        <p class="solucao-body reveal reveal-delay-4" style="color: var(--ouro);">
+          Esse sistema existe. Ele tem nome.
+        </p>
+
+        <div class="solucao-destaque reveal reveal-delay-5">
+          Conheça o Club Myna.
+        </div>
+
+        <p class="solucao-body reveal">
+          O Myna foi criado para empresários que decidiram parar de crescer na base do volume humano e começar a crescer com precisão tecnológica. Aqui você sai do zero e chega ao seu próprio sistema operacional automatizado, com suporte real, grupo de alto nível e implementação guiada do início ao fim.
+        </p>
+
+        <p class="solucao-tagline reveal reveal-delay-1">
+          Sistemas libertam. Tecnologia é leveza.
+        </p>
+
       </div>
     </div>
   </section>
 
-  <!-- O QUE VOCÊ RECEBE -->
-  <section class="section">
+  <!-- =====================
+       PARA QUEM É / NÃO É
+  ===================== -->
+  <section id="para-quem" class="section-bg-marfim">
     <div class="container">
+
       <div class="section-header">
-        <span class="eyebrow reveal">O que você recebe</span>
-        <h2 class="section-title reveal reveal-delay-1">
-          Tudo que você precisa para construir e operar sistemas de IA no seu negócio.
+        <h2 class="section-title title-light reveal">
+          Para quem é o <em>Myna</em>
         </h2>
       </div>
 
-      <ul class="delivery-list reveal reveal-delay-2">
-        <li class="delivery-item">
-          <svg class="delivery-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="10" cy="10" r="8"/><path d="M7 10l2 2 4-4"/>
-          </svg>
-          <div class="delivery-item__content">
-            <p class="delivery-item__title">Acesso ao grupo privado de membros</p>
-            <p class="delivery-item__desc">Comunidade fechada com empresários selecionados. Troca real, sem ruído, sem iniciantes.</p>
-          </div>
-        </li>
-        <li class="delivery-item">
-          <svg class="delivery-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="14" height="14" rx="1"/><path d="M7 7h6M7 10h6M7 13h4"/>
-          </svg>
-          <div class="delivery-item__content">
-            <p class="delivery-item__title">Biblioteca de sistemas prontos para implementar</p>
-            <p class="delivery-item__desc">Fluxos, automações e agentes de IA testados e documentados, prontos para adaptar ao seu negócio.</p>
-          </div>
-        </li>
-        <li class="delivery-item">
-          <svg class="delivery-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 3v14M3 10h14"/><circle cx="10" cy="10" r="7"/>
-          </svg>
-          <div class="delivery-item__content">
-            <p class="delivery-item__title">Encontros ao vivo mensais com Isis Moreira</p>
-            <p class="delivery-item__desc">Sessões de implementação, análise de casos reais e acompanhamento direto da mentora.</p>
-          </div>
-        </li>
-        <li class="delivery-item">
-          <svg class="delivery-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 3h10a1 1 0 011 1v2l-8 8-4-4V4a1 1 0 011-1z"/><path d="M13 3v5"/>
-          </svg>
-          <div class="delivery-item__content">
-            <p class="delivery-item__title">Treinamentos em vídeo sob demanda</p>
-            <p class="delivery-item__desc">Módulos práticos sobre ferramentas de IA, automação e operação de sistemas para negócios reais.</p>
-          </div>
-        </li>
-        <li class="delivery-item">
-          <svg class="delivery-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 5h14M3 10h14M3 15h10"/>
-          </svg>
-          <div class="delivery-item__content">
-            <p class="delivery-item__title">Suporte técnico de implementação</p>
-            <p class="delivery-item__desc">Canal dedicado para tirar dúvidas técnicas enquanto você coloca os sistemas em produção.</p>
-          </div>
-        </li>
-        <li class="delivery-item">
-          <svg class="delivery-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="10" cy="7" r="3"/><path d="M4 17c0-3.314 2.686-6 6-6s6 2.686 6 6"/>
-          </svg>
-          <div class="delivery-item__content">
-            <p class="delivery-item__title">Acesso à rede de parceiros e fornecedores</p>
-            <p class="delivery-item__desc">Indicações curadas de desenvolvedores, ferramentas e serviços testados pelos próprios membros.</p>
-          </div>
-        </li>
-        <li class="delivery-item">
-          <svg class="delivery-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 2l2.4 4.8 5.6.8-4 3.9.9 5.5L10 14.5l-4.9 2.5.9-5.5L2 7.6l5.6-.8L10 2z"/>
-          </svg>
-          <div class="delivery-item__content">
-            <p class="delivery-item__title">Atualizações contínuas de conteúdo</p>
-            <p class="delivery-item__desc">O Myna evolui com o mercado. Novos sistemas, novas ferramentas e novos casos são adicionados regularmente.</p>
-          </div>
-        </li>
-      </ul>
+      <div class="para-quem-grid">
+
+        <div class="para-quem-col reveal">
+          <h3>Para quem <em>é</em> o Myna</h3>
+          <ul class="para-quem-list">
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              Para quem fatura e quer escalar sem contratar mais.
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              Para quem já tentou IA genérica e sabe que o resultado real vem da orquestração, não de ferramentas isoladas.
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              Para quem quer crescer com velocidade e manter o controle da qualidade, do custo e do tempo.
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              Para quem está em momento de rampagem e quer que a tecnologia seja o motor desse crescimento.
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              Para quem entende que o futuro dos negócios é automatizado e quer chegar antes da concorrência.
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              Para quem busca um grupo de alto nível, onde a troca é real e o padrão é alto.
+            </li>
+          </ul>
+        </div>
+
+        <div class="para-quem-col reveal reveal-delay-2">
+          <h3>Para quem <em>não é</em> o Myna</h3>
+          <ul class="para-quem-list">
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              Para quem prefere manter os processos engessados e lentos como estão.
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              Para empresas que enxergam tecnologia como ameaça, e não como vantagem competitiva.
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              Para quem quer crescer devagar, sem urgência e sem comprometimento real com a implementação.
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              Para quem busca um curso com aulas gravadas e sem responsabilidade de execução.
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              Para quem não gosta de estar à frente do seu mercado.
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              Para quem acredita que inteligência artificial é apenas uma hype.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
     </div>
   </section>
 
-  <!-- CTA FINAL -->
-  <section class="cta-section">
+  <!-- =====================
+       ENTREGAS
+  ===================== -->
+  <section id="entregas" class="section-bg-cacau">
     <div class="container">
-      <div class="cta-card reveal">
-        <h2 class="cta-card-title">Candidate-se</h2>
-        <p class="cta-card-subtitle">Os membros do Myna são selecionados. Se você acredita que se qualifica, aplique.</p>
-        <a href="https://form.typeform.com/to/pYsEDh1i" target="_blank" class="cta-card-btn">
-          <span>aplique para o Myna</span>
-          <div class="cta-btn-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+
+      <div class="section-header">
+        <h2 class="section-title title-dark reveal">
+          O que está incluído no <em>Club Myna</em>
+        </h2>
+      </div>
+
+      <div class="entregas-grid">
+
+        <div class="entrega-card reveal">
+          <div class="entrega-icon">
+            <i class="fi fi-rr-comments"></i>
           </div>
-        </a>
+          <div class="entrega-title">Grupo diário de membros</div>
+          <p class="entrega-desc">Acesso a um grupo ativo com outros empresários do mesmo nível. Troca de experiências, dúvidas respondidas, aprendizado contínuo no dia a dia da operação.</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-1">
+          <div class="entrega-icon">
+            <i class="fi fi-rr-video-camera"></i>
+          </div>
+          <div class="entrega-title">1 encontro online por mês</div>
+          <p class="entrega-desc">Sessão ao vivo com Isis Moreira. Análise de casos, aprofundamento de temas, respostas diretas para os desafios da operação de cada membro.</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-2">
+          <div class="entrega-icon">
+            <i class="fi fi-rr-users"></i>
+          </div>
+          <div class="entrega-title">3 encontros presenciais de 3 dias ao longo do ano</div>
+          <p class="entrega-desc">Imersões presenciais com o grupo. Ambiente de alta intensidade para implementação, alinhamento estratégico e conexão real entre os membros.</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-3">
+          <div class="entrega-icon">
+            <i class="fi fi-rr-laptop"></i>
+          </div>
+          <div class="entrega-title">Acesso ao Dona System</div>
+          <p class="entrega-desc">O sistema operacional de IA de Isis Moreira. Você acessa a inteligência que move o ecossistema Donas do Ouro e aprende a replicar essa arquitetura no seu negócio.</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-4">
+          <div class="entrega-icon">
+            <i class="fi fi-rr-settings"></i>
+          </div>
+          <div class="entrega-title">Implementação guiada do próprio sistema de agentes autônomos</div>
+          <p class="entrega-desc">Com o Club Myna você tem o seu sistema funcionando. Não é teoria. É implementação real, acompanhada, validada e operando no seu negócio.</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-5">
+          <div class="entrega-icon">
+            <i class="fi fi-rr-life-ring"></i>
+          </div>
+          <div class="entrega-title">Suporte técnico operacional 24 horas por dia, 7 dias por semana</div>
+          <p class="entrega-desc">Quando o sistema precisa de ajuste, o suporte está lá. Sem fila de espera, sem semanas aguardando resposta. Operação contínua e confiável.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       COMPARATIVO
+  ===================== -->
+  <section id="comparativo" class="section-bg-marfim">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title title-light reveal">
+          Com o Myna vs. <em>sem o Myna</em>
+        </h2>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <table class="comparativo-table">
+          <thead>
+            <tr>
+              <th class="th-sem">Sem o Myna</th>
+              <th class="th-com">Com o Myna</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>Contratações constantes para cobrir buracos da operação</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>1 sistema que substitui funções inteiras</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>Dependência de equipe para tarefas repetitivas</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>Automações operando 24 horas por dia</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>Retrabalho, atraso e inconsistência nas entregas</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>Processos padronizados e executados com precisão</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>Custo operacional crescendo fora de controle</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>Economia de pelo menos R$30 mil por mês</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>Reuniões que não decidem nada</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>Decisões rápidas, baseadas em dados do sistema</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>Crescendo mais devagar que a concorrência</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>Escala com velocidade, precisão e economia</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>IA genérica sem resultado real</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>Sistema próprio de agentes orquestrados e implementados</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>Você como gargalo do negócio</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>Você como líder, com o sistema trabalhando por você</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       INVESTIMENTO
+  ===================== -->
+  <section id="investimento" class="section-bg-cacau">
+    <div class="container">
+      <div class="investimento-content">
+
+        <h2 class="section-title title-dark reveal" style="text-align:center;">
+          O acesso ao Myna é feito por <em>aplicação.</em>
+        </h2>
+
+        <p class="investimento-body reveal reveal-delay-2">
+          O processo de aplicação existe para garantir que cada membro que entra está no momento certo e com o nível de compromisso que o grupo exige. O Myna funciona porque os membros são selecionados.
+        </p>
+
+        <p class="investimento-body reveal reveal-delay-3">
+          Preencha sua aplicação. Vamos avaliar e entrar em contato para a próxima etapa.
+        </p>
+
+        <div class="reveal reveal-delay-4">
+          <a href="#" class="btn-primary btn-dark">
+            <div class="btn-text">
+              <span>Q</span><span>u</span><span>e</span><span>r</span><span>o</span><span>&nbsp;</span><span>a</span><span>p</span><span>l</span><span>i</span><span>c</span><span>a</span><span>r</span><span>&nbsp;</span><span>e</span><span>&nbsp;</span><span>e</span><span>n</span><span>t</span><span>r</span><span>a</span><span>r</span><span>&nbsp;</span><span>n</span><span>o</span><span>&nbsp;</span><span>c</span><span>l</span><span>u</span><span>b</span>
+            </div>
+            <div class="btn-arrow">
+              <i class="fi fi-rr-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- SOBRE ISIS -->
-  <section class="section section--creme" id="sobre">
+  <!-- =====================
+       URGÊNCIA
+  ===================== -->
+  <section id="urgencia" class="section-bg-marfim">
     <div class="container">
-      <div class="isis-grid">
-        <div class="isis-photo-side reveal reveal-delay-1">
-          <div class="corner corner--tl"></div>
-          <div class="corner corner--tr"></div>
-          <div class="corner corner--bl"></div>
-          <div class="corner corner--br"></div>
-          <div class="isis-photo-frame">
-            <img
-              src="/myna/assets/foto-perfil.jpg"
-              alt="Isis Moreira"
-              class="isis-photo"
-            />
-          </div>
-        </div>
+      <div class="urgencia-content">
 
-        <div class="isis-content">
-          <span class="eyebrow reveal">Quem lidera o Myna</span>
-          <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:24px">Isis Moreira</h2>
-          <p class="isis-bio reveal reveal-delay-2">
-            Empreendedora há mais de 10 anos, Isis Moreira construiu um negócio digital de 40 milhões em vendas antes de decidir que o próximo passo seria operar diferente. Não mais contratando mais pessoas para cada novo nível, mas construindo sistemas que escalam sozinhos.
-          </p>
-          <p class="isis-bio reveal reveal-delay-2">
-            O Myna é o resultado desse processo: uma metodologia testada na sua própria empresa e transferida para um grupo seleto de empresários que querem o mesmo. Autora do best-seller "Acorda! Sonhar não Basta", Isis combina visão de negócios com domínio operacional e aplicação prática de inteligência artificial.
-          </p>
-          <div class="isis-stats-row reveal reveal-delay-3">
-            <div class="isis-stat">
-              <span class="isis-stat-value">10+</span>
-              <span class="isis-stat-label">anos empreendendo</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">40k+</span>
-              <span class="isis-stat-label">alunos formados</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">R$40M</span>
-              <span class="isis-stat-label">em vendas</span>
-            </div>
-            <div class="isis-stat">
-              <span class="isis-stat-value">1</span>
-              <span class="isis-stat-label">best-seller nacional</span>
-            </div>
-          </div>
-        </div>
+        <div class="urgencia-line reveal"></div>
+
+        <h2 class="section-title title-light reveal reveal-delay-1">
+          Quem age agora tem <em>vantagem</em> que demora anos para ser recuperada.
+        </h2>
+
+        <p class="urgencia-body reveal reveal-delay-2">
+          Enquanto você avalia, empresários do mesmo porte já estão implementando. Já estão economizando. Já estão acelerando.
+        </p>
+
+        <p class="urgencia-body reveal reveal-delay-3">
+          Quem chega antes nas inovações ocupa um espaço que os que chegam depois precisam disputar com muito mais esforço. A vantagem de quem age agora, na fase em que a tecnologia ainda é diferencial competitivo, é uma vantagem que demora anos para ser recuperada por quem ficou parado.
+        </p>
+
+        <p class="urgencia-body reveal reveal-delay-4">
+          Automação e inteligência artificial já fazem parte da operação dos negócios que crescem mais rápido. Esse movimento não vai desacelerar. Vai intensificar.
+        </p>
+
+        <p class="urgencia-body reveal reveal-delay-5">
+          A questão é simples: você quer estar entre os que chegaram primeiro, com posicionamento consolidado e operação eficiente, ou entre os que chegaram depois, correndo para recuperar o terreno perdido?
+        </p>
+
+        <p class="urgencia-tagline reveal">
+          Sistemas libertam. E quem sistematiza primeiro, chega mais longe.
+        </p>
+
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
+  <!-- =====================
+       SOBRE ISIS
+  ===================== -->
+  <section id="sobre" class="section-bg-creme">
     <div class="container">
-      <div class="footer-sep"></div>
+
+      <div class="sobre-grid">
+
+        <div class="sobre-col-left">
+          <h2 class="section-title title-light reveal">
+            Isis <em>Moreira</em>
+          </h2>
+
+          <p class="sobre-bio reveal reveal-delay-2">
+            Isis Moreira é mentora de negócios há 10 anos. Formou mais de 40 mil alunos e mentorou diretamente mais de 2 mil empreendedores. Criou o ecossistema Donas do Ouro e é autora do best-seller "Acorda! Sonhar não Basta".
+          </p>
+
+          <p class="sobre-bio reveal reveal-delay-3">
+            Seu diferencial vai além da trajetória: Isis une um repertório sólido em gestão, marketing, vendas e conteúdo com profundo domínio em tecnologia, inteligência artificial, automações e sistemas. Poucas pessoas no Brasil têm os dois lados com a mesma profundidade.
+          </p>
+
+          <p class="sobre-bio reveal reveal-delay-4">
+            O Myna nasceu da mesma inteligência que move o ecossistema de Isis. O Dona System, o sistema operacional que o time de Isis opera, é o modelo que os membros do Myna aprendem a replicar e adaptar para os seus próprios negócios.
+          </p>
+
+          <p class="sobre-bio reveal reveal-delay-5" style="color: var(--ouro-deep); font-style: italic;">
+            Isis não ensina o que vai tentar. Ensina o que já opera.
+          </p>
+
+          <div class="sobre-stats reveal">
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>10</em> anos</span>
+              <span class="sobre-stat-label">de mentoria</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>40k</em></span>
+              <span class="sobre-stat-label">alunos formados</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>2k</em></span>
+              <span class="sobre-stat-label">mentorados</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>1</em> livro</span>
+              <span class="sobre-stat-label">best-seller</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="sobre-col-right reveal reveal-delay-2">
+          <img src="./assets/foto-sobre-isis.jpg" alt="Isis Moreira" loading="lazy">
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       FAQ
+  ===================== -->
+  <section id="faq" class="section-bg-creme">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title title-light reveal">
+          Dúvidas sobre o <em>Club Myna</em>
+        </h2>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item reveal">
+          <button class="faq-question" type="button">
+            Já testei ferramentas de IA e não tive resultado. Por que o Myna seria diferente?
+            <span class="faq-toggle"><i class="fi fi-rr-plus-small"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Porque o Myna não entrega ferramentas. Entrega um club inteligente, e além disso, um sistema. A diferença está na orquestração. Agentes isolados não produzem resultado. Agentes integrados, com arquitetura definida e implementação guiada, transformam a operação. Com o Myna você tem seu sistema funcionando no seu negócio, validado e documentado.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" type="button">
+            Tenho medo de crescer e perder controle da qualidade e do custo. O Myna resolve isso?
+            <span class="faq-toggle"><i class="fi fi-rr-plus-small"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Essa é exatamente a razão pela qual o Myna existe. O sistema que você implementa coloca você no controle real: visibilidade sobre o que acontece, automações que mantêm o padrão e custo operacional previsível. Você cresce sem depender de pessoas para garantir qualidade.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question" type="button">
+            Quanto tempo por semana eu preciso dedicar ao Myna?
+            <span class="faq-toggle"><i class="fi fi-rr-plus-small"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O grupo diário é assíncrono. Os encontros online mensais são objetivos. As imersões presenciais são três ao longo do ano. A implementação é guiada, o que significa que você não está descobrindo sozinho. O tempo que você investe aqui substitui o tempo que você gasta hoje apagando incêndio na operação.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-3">
+          <button class="faq-question" type="button">
+            O que garante que vou sair com o sistema funcionando?
+            <span class="faq-toggle"><i class="fi fi-rr-plus-small"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              O modelo do Myna foi desenhado para isso. A implementação é guiada, com suporte técnico 24 horas. Você não fica sozinho em nenhuma etapa. Você estará com pessoas que também estão implementando seus sistemas. Ao final dos 12 meses, o sistema está documentado, funcionando e operando de forma autônoma no seu negócio.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       CTA FINAL
+  ===================== -->
+  <section id="cta-final" class="section-bg-cacau">
+    <div class="container">
+      <div class="cta-final-content">
+
+        <h2 class="section-title title-dark reveal" style="text-align:center;">
+          Você chegou até aqui porque reconhece o que o Club Myna <em>representa.</em>
+        </h2>
+
+        <p class="cta-final-body reveal reveal-delay-2">
+          Um negócio que cresce com sistemas, opera com inteligência e libera o seu tempo para o que realmente importa. Esse é o padrão do Club Myna.
+        </p>
+
+        <p class="cta-final-body reveal reveal-delay-3">
+          A aplicação leva minutos. A decisão de entrar pode mudar os próximos anos da sua operação.
+        </p>
+
+        <span class="cta-final-tagline reveal reveal-delay-4">O próximo passo é simples.</span>
+
+        <div class="reveal reveal-delay-5">
+          <a href="#" class="btn-primary btn-dark">
+            <div class="btn-text">
+              <span>Q</span><span>u</span><span>e</span><span>r</span><span>o</span><span>&nbsp;</span><span>a</span><span>p</span><span>l</span><span>i</span><span>c</span><span>a</span><span>r</span><span>&nbsp;</span><span>e</span><span>&nbsp;</span><span>e</span><span>n</span><span>t</span><span>r</span><span>a</span><span>r</span><span>&nbsp;</span><span>n</span><span>o</span><span>&nbsp;</span><span>c</span><span>l</span><span>u</span><span>b</span>
+            </div>
+            <div class="btn-arrow">
+              <i class="fi fi-rr-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       FOOTER
+  ===================== -->
+  <footer id="footer">
+    <div class="container">
       <div class="footer-inner">
-        <span class="footer-copy">© 2026 Isis Moreira. Todos os direitos reservados.</span>
+        <span class="footer-copy">© 2026 Club Myna. Isis Moreira. Todos os direitos reservados.</span>
+        <span class="footer-copy">Club Myna faz parte do ecossistema Donas do Ouro.</span>
       </div>
     </div>
   </footer>
 
+  <!-- =====================
+       JAVASCRIPT
+  ===================== -->
   <script>
-    // Intersection Observer. reveal
-    const reveals = document.querySelectorAll('.reveal');
+    // Reveal on scroll
+    const revealElements = document.querySelectorAll('.reveal');
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
 
-    reveals.forEach(el => observer.observe(el));
+    revealElements.forEach(el => observer.observe(el));
+
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+
+        // Fecha todos
+        faqItems.forEach(i => i.classList.remove('open'));
+
+        // Abre o clicado se estava fechado
+        if (!isOpen) {
+          item.classList.add('open');
+        }
+      });
+    });
   </script>
+
 </body>
 </html>
