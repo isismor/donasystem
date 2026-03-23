@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DonaSystem | Programa de Aceleração em Tecnologia · Isis Moreira</title>
+  <meta name="description" content="Do zero à sua primeira equipe de agentes em 2 meses. Você produzindo 10 vezes mais de forma mais leve, com IA trabalhando 24h por dia pelo seu negócio." />
+  <meta property="og:title" content="DonaSystem | Isis Moreira" />
+  <meta property="og:description" content="Do zero à sua primeira equipe de agentes em 2 meses. Você produzindo 10 vezes mais de forma mais leve." />
+  <meta property="og:image" content="./assets/donasystem-hero.jpg" />
+  <meta property="og:url" content="https://www.isismoreira.com.br/system" />
+  <link rel="canonical" href="https://www.isismoreira.com.br/system" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+
+  <style>
+    :root {
+      --marfim: #f9f8f4;
+      --creme: #efede6;
+      --cacau: #2a2420;
+      --hero-dark: #1a1410;
+      --ouro: #b4a68c;
+      --ouro-deep: #7a6e5c;
+      --mirror: #9ba1a8;
+      --radius: 4px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: var(--hero-dark);
+      color: var(--marfim);
+      overflow-x: hidden;
+    }
+
+    /* TIPOGRAFIA BASE */
+    h1, h2, h3 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      line-height: 1.15;
+    }
+
+    /* EYEBROW */
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ouro);
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .eyebrow-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cacau);
+      background: var(--ouro);
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius);
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .container--narrow {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    .btn--ouro {
+      background: var(--ouro);
+      color: var(--cacau);
+    }
+
+    /* REVEAL ON SCROLL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* CURSOR BLINK */
+    .cursor-blink {
+      display: inline-block;
+      width: 3px;
+      height: 0.9em;
+      background: var(--ouro);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ============================
+       HERO
+    ============================ */
+    #hero {
+      background: var(--hero-dark);
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero__nav {
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero__logo {
+      height: 40px;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+    }
+
+    .hero__body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2.5rem 5rem;
+      gap: 4rem;
+      width: 100%;
+    }
+
+    .hero__text h1 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      color: var(--marfim);
+      line-height: 1.12;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero__sub {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--mirror);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+    }
+
+    .hero__image {
+      position: relative;
+    }
+
+    .hero__image img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .hero__image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: linear-gradient(to right, var(--hero-dark) 0%, transparent 30%);
+    }
+
+    /* ============================
+       TICKER
+    ============================ */
+    #ticker {
+      background: var(--cacau);
+      padding: 1.2rem 0;
+      overflow: hidden;
+    }
+
+    .ticker__track {
+      display: flex;
+      width: max-content;
+      animation: ticker-scroll 28s linear infinite;
+    }
+
+    .ticker__item {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ouro);
+      white-space: nowrap;
+      padding: 0 2.5rem;
+    }
+
+    .ticker__sep {
+      color: var(--ouro-deep);
+      padding: 0 0.5rem;
+    }
+
+    @keyframes ticker-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ============================
+       STATS
+    ============================ */
+    #stats {
+      background: var(--marfim);
+    }
+
+    .stats__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat__number {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      color: var(--cacau);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+
+    .stat__label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--ouro-deep);
+      line-height: 1.5;
+    }
+
+    /* ============================
+       DORES
+    ============================ */
+    #dores {
+      background: var(--creme);
+    }
+
+    #dores h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--cacau);
+      margin-bottom: 3rem;
+    }
+
+    #dores .eyebrow {
+      color: var(--ouro-deep);
+    }
+
+    .dores__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .dor-card {
+      background: var(--marfim);
+      border-left: 3px solid var(--ouro);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    .dor-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 1.15rem;
+      color: var(--cacau);
+      margin-bottom: 0.9rem;
+    }
+
+    .dor-card p {
+      font-size: 0.93rem;
+      color: var(--ouro-deep);
+      line-height: 1.7;
+    }
+
+    /* ============================
+       SOLUÇÃO
+    ============================ */
+    #solucao {
+      background: var(--cacau);
+    }
+
+    #solucao h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--marfim);
+      margin-bottom: 1rem;
+    }
+
+    .solucao__sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 0.82rem;
+      color: var(--ouro);
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+    }
+
+    .solucao__body p {
+      font-size: 1rem;
+      color: var(--mirror);
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .solucao__body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ============================
+       PARA QUEM
+    ============================ */
+    #paraquem {
+      background: var(--marfim);
+    }
+
+    #paraquem h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--cacau);
+      margin-bottom: 3rem;
+    }
+
+    #paraquem .eyebrow {
+      color: var(--ouro-deep);
+    }
+
+    .paraquem__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .paraquem__col h3 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 1.15rem;
+      color: var(--cacau);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--ouro);
+    }
+
+    .paraquem__col h3.col-nao {
+      border-color: var(--mirror);
+    }
+
+    .paraquem__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .paraquem__list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--ouro-deep);
+      line-height: 1.6;
+    }
+
+    .paraquem__list li .prefix {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: -0.05rem;
+    }
+
+    .paraquem__list li .prefix--sim {
+      color: var(--ouro-deep);
+    }
+
+    .paraquem__list li .prefix--nao {
+      color: var(--mirror);
+    }
+
+    /* ============================
+       ENTREGAS
+    ============================ */
+    #entregas {
+      background: var(--creme);
+    }
+
+    #entregas h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--cacau);
+      margin-bottom: 3rem;
+    }
+
+    #entregas .eyebrow {
+      color: var(--ouro-deep);
+    }
+
+    .entregas__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .entrega-card {
+      background: var(--marfim);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+    }
+
+    .entrega-card__icon {
+      width: 52px;
+      height: 52px;
+      background: var(--cacau);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    .entrega-card__icon i {
+      font-size: 1.2rem;
+      color: var(--ouro);
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(180, 166, 140, 0.35); }
+      50% { box-shadow: 0 0 0 10px rgba(180, 166, 140, 0); }
+    }
+
+    .entrega-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 1.2rem;
+      color: var(--cacau);
+      margin-bottom: 0.85rem;
+    }
+
+    .entrega-card p {
+      font-size: 0.92rem;
+      color: var(--ouro-deep);
+      line-height: 1.7;
+    }
+
+    /* ============================
+       COMO FUNCIONA
+    ============================ */
+    #comofunciona {
+      background: var(--cacau);
+    }
+
+    #comofunciona h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--marfim);
+      margin-bottom: 3.5rem;
+    }
+
+    .steps__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid rgba(180, 166, 140, 0.15);
+    }
+
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    .step__num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 2.4rem;
+      color: var(--ouro);
+      opacity: 0.5;
+      line-height: 1;
+    }
+
+    .step__content h3 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: var(--marfim);
+      margin-bottom: 0.7rem;
+    }
+
+    .step__content p {
+      font-size: 0.95rem;
+      color: var(--mirror);
+      line-height: 1.7;
+    }
+
+    /* ============================
+       CALCULADORA ROI
+    ============================ */
+    #roi {
+      background: var(--creme);
+    }
+
+    #roi h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--cacau);
+      margin-bottom: 1.5rem;
+    }
+
+    #roi .eyebrow {
+      color: var(--ouro-deep);
+    }
+
+    #roi .roi__body {
+      font-size: 1rem;
+      color: var(--ouro-deep);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .roi__table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .roi__table th {
+      background: var(--cacau);
+      color: var(--marfim);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 1rem 1.25rem;
+    }
+
+    .roi__table td {
+      background: var(--marfim);
+      color: var(--cacau);
+      font-size: 0.93rem;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--creme);
+    }
+
+    .roi__table tr:last-child td {
+      border-bottom: none;
+      font-weight: 500;
+    }
+
+    .roi__microcopy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--ouro-deep);
+      margin-top: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================
+       COMPARATIVO
+    ============================ */
+    #comparativo {
+      background: var(--cacau);
+    }
+
+    #comparativo h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--marfim);
+      margin-bottom: 3rem;
+    }
+
+    .comp__table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .comp__table thead th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1.1rem 1.5rem;
+    }
+
+    .comp__table thead th.th-antes {
+      background: rgba(155, 161, 168, 0.15);
+      color: var(--mirror);
+      text-align: left;
+    }
+
+    .comp__table thead th.th-depois {
+      background: var(--ouro);
+      color: var(--cacau);
+      text-align: left;
+    }
+
+    .comp__table tbody td {
+      padding: 1rem 1.5rem;
+      font-size: 0.93rem;
+      border-bottom: 1px solid rgba(180, 166, 140, 0.1);
+      vertical-align: middle;
+    }
+
+    .comp__table tbody td.td-antes {
+      background: rgba(155, 161, 168, 0.07);
+      color: var(--mirror);
+    }
+
+    .comp__table tbody td.td-depois {
+      background: rgba(180, 166, 140, 0.08);
+      color: var(--marfim);
+      font-weight: 500;
+    }
+
+    .comp__table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* ============================
+       VALUE STACK
+    ============================ */
+    #valuestack {
+      background: var(--marfim);
+    }
+
+    #valuestack h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--cacau);
+      margin-bottom: 3rem;
+    }
+
+    #valuestack .eyebrow {
+      color: var(--ouro-deep);
+    }
+
+    .vs__table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .vs__table thead th {
+      background: var(--cacau);
+      color: var(--marfim);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 1.25rem;
+      text-align: left;
+    }
+
+    .vs__table tbody td {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--creme);
+      font-size: 0.93rem;
+    }
+
+    .vs__table tbody td:first-child {
+      color: var(--cacau);
+    }
+
+    .vs__table tbody td:last-child {
+      color: var(--ouro-deep);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+
+    .vs__table tbody tr:last-child td {
+      background: var(--ouro);
+      color: var(--cacau);
+      font-weight: 700;
+      font-size: 1rem;
+      border-bottom: none;
+    }
+
+    .vs__table tbody tr:nth-last-child(2) td {
+      border-bottom: 2px solid var(--cacau);
+      color: var(--ouro-deep);
+    }
+
+    .vs__microcopy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 0.75rem;
+      color: var(--ouro-deep);
+      margin-top: 1.5rem;
+    }
+
+    /* ============================
+       INVESTIMENTO
+    ============================ */
+    #investimento {
+      background: var(--cacau);
+    }
+
+    .inv__card {
+      position: relative;
+      background: rgba(180, 166, 140, 0.08);
+      border: 1px solid rgba(180, 166, 140, 0.2);
+      border-radius: 8px;
+      padding: 3.5rem 3rem;
+      max-width: 640px;
+      margin: 0 auto;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Border beam */
+    .beam {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .beam::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -100%;
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+      animation: beam-move 3s linear infinite;
+    }
+
+    @keyframes beam-move {
+      0% { left: -60%; top: -2px; }
+      25% { left: 100%; top: -2px; }
+      26% { left: 100%; top: -2px; }
+      50% { left: 100%; top: calc(100% + 2px); }
+      51% { left: 40%; top: calc(100% + 2px); }
+      75% { left: -20%; top: calc(100% + 2px); }
+      76% { left: -20%; top: -2px; }
+      100% { left: -60%; top: -2px; }
+    }
+
+    .inv__card .eyebrow {
+      display: block;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    #investimento h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      color: var(--marfim);
+      margin-bottom: 2rem;
+    }
+
+    .inv__price {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 3.5rem;
+      color: var(--ouro);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .inv__price-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--mirror);
+      margin-bottom: 2.5rem;
+    }
+
+    .inv__list {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 2.5rem;
+    }
+
+    .inv__list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.93rem;
+      color: var(--mirror);
+      line-height: 1.6;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(180, 166, 140, 0.1);
+    }
+
+    .inv__list li:last-child {
+      border-bottom: none;
+    }
+
+    .inv__list li::before {
+      content: '✓';
+      color: var(--ouro);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .inv__microcopy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--ouro-deep);
+      margin-top: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================
+       GARANTIA
+    ============================ */
+    #garantia {
+      background: var(--marfim);
+    }
+
+    .garantia__inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 3rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .garantia__icon-wrap {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      background: var(--cacau);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .garantia__icon-wrap i {
+      font-size: 2rem;
+      color: var(--ouro);
+    }
+
+    .garantia__text .eyebrow {
+      color: var(--ouro-deep);
+    }
+
+    #garantia h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      color: var(--cacau);
+      margin-bottom: 1rem;
+    }
+
+    #garantia p {
+      font-size: 0.98rem;
+      color: var(--ouro-deep);
+      line-height: 1.8;
+      margin-bottom: 1.75rem;
+    }
+
+    .garantia__badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border: 1px solid var(--ouro);
+      color: var(--ouro-deep);
+      border-radius: var(--radius);
+    }
+
+    /* ============================
+       FAQ
+    ============================ */
+    #faq {
+      background: var(--creme);
+    }
+
+    #faq h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      color: var(--cacau);
+      margin-bottom: 3rem;
+    }
+
+    #faq .eyebrow {
+      color: var(--ouro-deep);
+    }
+
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid rgba(42, 36, 32, 0.12);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .accordion__item {
+      border-bottom: 1px solid rgba(42, 36, 32, 0.1);
+    }
+
+    .accordion__item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion__trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.5rem 1.75rem;
+      background: var(--marfim);
+      cursor: pointer;
+      text-align: left;
+      border: none;
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      color: var(--cacau);
+      transition: background 0.2s ease;
+    }
+
+    .accordion__trigger:hover {
+      background: var(--creme);
+    }
+
+    .accordion__trigger.open {
+      background: var(--cacau);
+      color: var(--marfim);
+    }
+
+    .accordion__arrow {
+      font-size: 1rem;
+      color: var(--ouro);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .accordion__trigger.open .accordion__arrow {
+      transform: rotate(45deg);
+    }
+
+    .accordion__body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .accordion__body.open {
+      max-height: 400px;
+    }
+
+    .accordion__body-inner {
+      padding: 1.5rem 1.75rem;
+      background: var(--marfim);
+      font-size: 0.95rem;
+      color: var(--ouro-deep);
+      line-height: 1.8;
+    }
+
+    /* ============================
+       URGÊNCIA
+    ============================ */
+    #urgencia {
+      background: var(--cacau);
+    }
+
+    #urgencia h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      color: var(--marfim);
+      margin-bottom: 2rem;
+    }
+
+    .urgencia__body p {
+      font-size: 0.98rem;
+      color: var(--mirror);
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .urgencia__body p:last-of-type {
+      margin-bottom: 2rem;
+    }
+
+    .urgencia__microcopy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--ouro);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ============================
+       SOBRE ISIS
+    ============================ */
+    #sobre {
+      background: var(--marfim);
+    }
+
+    .sobre__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .sobre__foto {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .sobre__text .eyebrow {
+      color: var(--ouro-deep);
+    }
+
+    #sobre h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--cacau);
+      margin-bottom: 1.5rem;
+    }
+
+    #sobre p {
+      font-size: 0.97rem;
+      color: var(--ouro-deep);
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .sobre__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .sobre__stat {
+      background: var(--creme);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .sobre__stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: 1.6rem;
+      color: var(--cacau);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .sobre__stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--ouro-deep);
+      line-height: 1.4;
+    }
+
+    /* ============================
+       CTA FINAL
+    ============================ */
+    #cta-final {
+      background: var(--cacau);
+      text-align: center;
+    }
+
+    #cta-final h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.9rem, 3.5vw, 3rem);
+      color: var(--marfim);
+      margin-bottom: 1.2rem;
+    }
+
+    #cta-final p {
+      font-size: 1rem;
+      color: var(--mirror);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ============================
+       FOOTER
+    ============================ */
+    footer {
+      background: var(--hero-dark);
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 0.72rem;
+      color: var(--ouro-deep);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    footer p:last-child {
+      margin-bottom: 0;
+      color: var(--mirror);
+      opacity: 0.6;
+    }
+
+    /* ============================
+       RESPONSIVE
+    ============================ */
+    @media (max-width: 768px) {
+      section {
+        padding: 4rem 1.25rem;
+      }
+
+      .hero__body {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.25rem 4rem;
+        gap: 2.5rem;
+      }
+
+      .hero__image img {
+        height: 360px;
+      }
+
+      .stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .dores__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .paraquem__grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .entregas__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .step {
+        grid-template-columns: 50px 1fr;
+        gap: 1rem;
+      }
+
+      .step__num {
+        font-size: 1.8rem;
+      }
+
+      .sobre__grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .garantia__inner {
+        flex-direction: column;
+        gap: 1.75rem;
+      }
+
+      .comp__table thead th,
+      .comp__table tbody td {
+        font-size: 0.8rem;
+        padding: 0.75rem 0.85rem;
+      }
+
+      .roi__table th,
+      .roi__table td {
+        font-size: 0.82rem;
+        padding: 0.75rem 0.85rem;
+      }
+
+      .inv__card {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero__nav {
+        padding: 1.5rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==============================
+       HERO
+  ============================== -->
+  <section id="hero">
+    <nav class="hero__nav">
+      <img src="./assets/donasystem-logo.png" alt="DonaSystem" class="hero__logo" />
+    </nav>
+    <div class="hero__body">
+      <div class="hero__text reveal">
+        <span class="eyebrow-badge">Programa de Aceleração em Tecnologia</span>
+        <h1 style="font-family: 'DM Serif Display', serif; font-weight: 400;">
+          Do zero à sua primeira equipe de agentes em 2 meses.<span class="cursor-blink"></span>
+        </h1>
+        <p class="hero__sub">Você produzindo 10 vezes mais de forma mais leve. Com agentes de inteligência artificial trabalhando 24 horas por dia, mesmo que você não entenda de tecnologia.</p>
+        <a href="https://pay.hotmart.com/donasystem" class="btn btn--ouro">Quero começar</a>
+      </div>
+      <div class="hero__image reveal">
+        <img src="./assets/donasystem-hero.jpg" alt="DonaSystem" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       TICKER
+  ============================== -->
+  <section id="ticker" style="padding: 1.2rem 0;">
+    <div class="ticker__track">
+      <!-- set 1 -->
+      <span class="ticker__item">Agentes 24h</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Liberdade</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">O fim do difícil</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Do zero ao sistema</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Velocidade</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Leveza</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Produção em massa</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Sem equipe cara</span>
+      <span class="ticker__item">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <!-- set 2 (duplicate for seamless loop) -->
+      <span class="ticker__item">Agentes 24h</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Liberdade</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">O fim do difícil</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Do zero ao sistema</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Velocidade</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Leveza</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Produção em massa</span>
+      <span class="ticker__item">·</span>
+      <span class="ticker__item">Sem equipe cara</span>
+      <span class="ticker__item">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </div>
+  </section>
+
+  <!-- ==============================
+       STATS
+  ============================== -->
+  <section id="stats">
+    <div class="container">
+      <div class="stats__grid">
+        <div class="reveal" style="text-align: center;">
+          <span class="stat__number" data-count="10" data-suffix=" anos">0</span>
+          <span class="stat__label">formando empreendedores na área digital</span>
+        </div>
+        <div class="reveal" style="text-align: center;">
+          <span class="stat__number" data-count="40" data-suffix=" mil">0</span>
+          <span class="stat__label">alunos no ecossistema Isis Moreira</span>
+        </div>
+        <div class="reveal" style="text-align: center;">
+          <span class="stat__number" data-count="2" data-suffix=" mil">0</span>
+          <span class="stat__label">mentorados com acompanhamento direto</span>
+        </div>
+        <div class="reveal" style="text-align: center;">
+          <span class="stat__number" data-count="30" data-prefix="R$" data-suffix="k/mês">0</span>
+          <span class="stat__label">de economia operacional mínima com o sistema</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       DORES
+  ============================== -->
+  <section id="dores">
+    <div class="container">
+      <span class="eyebrow">Você se reconhece aqui?</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">O problema não é esforço. É o modelo de trabalho.</h2>
+      <div class="dores__grid">
+
+        <div class="dor-card reveal">
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Você tenta fazer tudo. O dia acaba antes.</h3>
+          <p>Você acorda cedo, trabalha até tarde, e no final do dia a sensação é de que o negócio andou menos do que o esforço merecia. Tem conteúdo para produzir, cliente para atender, campanha para ajustar, página para revisar. O dia acabou antes de metade da lista.</p>
+        </div>
+
+        <div class="dor-card reveal">
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Você delega. O resultado volta fora do padrão.</h3>
+          <p>Você explica com detalhes, o colaborador confirma que entendeu, o prazo passa, e o entregável precisa ser refeito. Você gasta mais tempo corrigindo do que gastaria fazendo. E a conta mensal da equipe segue chegando, cheia e pontual.</p>
+        </div>
+
+        <div class="dor-card reveal">
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Você já tentou IA. Não funcionou como deveria.</h3>
+          <p>Você usou ChatGPT, testou ferramentas, assistiu tutoriais. Cada solução funcionou por um momento e depois virou mais uma aba aberta que você não usa. Sem integração, sem continuidade, sem resultado consistente.</p>
+        </div>
+
+        <div class="dor-card reveal">
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Você vê pessoas menos preparadas crescendo mais rápido.</h3>
+          <p>Você tem mais experiência, mais consistência, mais entrega. Mas alguém com metade do seu conhecimento está expandindo mais rápido. A diferença entre vocês: sistema. Eles têm um funcionando. Você ainda opera no modo manual.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       SOLUÇÃO
+  ============================== -->
+  <section id="solucao">
+    <div class="container--narrow">
+      <span class="eyebrow">O que muda com o DonaSystem</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;" class="reveal">Um sistema que trabalha pelo seu negócio enquanto você vive.</h2>
+      <p class="solucao__sub reveal">Implementação real, do zero ao sistema orquestrado, em 2 meses.</p>
+      <div class="solucao__body">
+        <p class="reveal">O DonaSystem te ensina a montar, configurar e orquestrar uma equipe de agentes de inteligência artificial que opera 24 horas por dia, 7 dias por semana, sem depender de você para cada tarefa.</p>
+        <p class="reveal">Em 2 meses, você sai do zero e chega a um sistema completo: agentes que produzem páginas em 1 hora, criam anúncios, geram criativos em massa, escrevem roteiros e carrosséis com o seu DNA, e ainda te devolvem o tempo que o operacional tomou por anos.</p>
+        <p class="reveal">O resultado prático: você trabalha 4 horas por dia, gasta cerca de R$1 mil em vez de até R$30 mil por mês com equipe, e produz mais do que jamais produziu, com mais leveza.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       PARA QUEM É / NÃO É
+  ============================== -->
+  <section id="paraquem">
+    <div class="container">
+      <span class="eyebrow">Seja honesto antes de continuar</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Este programa tem endereço certo.</h2>
+      <div class="paraquem__grid">
+
+        <div class="reveal">
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Para quem é</h3>
+          <ul class="paraquem__list">
+            <li><span class="prefix prefix--sim">✓</span> Para quem chegou no limite do que conseguem fazer só e precisa de um sistema que opera por você.</li>
+            <li><span class="prefix prefix--sim">✓</span> Quem já tentou delegar e cansou de receber trabalho abaixo do padrão, com custo alto e retrabalho garantido.</li>
+            <li><span class="prefix prefix--sim">✓</span> Quem quer usar inteligência artificial de verdade e precisa de implementação real, com acompanhamento.</li>
+            <li><span class="prefix prefix--sim">✓</span> Quem está pronto para reduzir custos, trabalhar com mais foco e parar de depender de equipe cara para crescer.</li>
+          </ul>
+        </div>
+
+        <div class="reveal">
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;" class="col-nao">Para quem não é</h3>
+          <ul class="paraquem__list">
+            <li><span class="prefix prefix--nao">×</span> Quem está satisfeito com a forma que trabalha hoje e prefere manter o mesmo modelo operacional.</li>
+            <li><span class="prefix prefix--nao">×</span> Quem acredita que inteligência artificial é tendência passageira e não vê valor em implementar agora.</li>
+            <li><span class="prefix prefix--nao">×</span> Quem quer resultado sem comprometer tempo e energia na fase de implementação.</li>
+            <li><span class="prefix prefix--nao">×</span> Quem busca um curso para consumir conteúdo passivamente, sem colocar nada em funcionamento de verdade.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       ENTREGAS
+  ============================== -->
+  <section id="entregas">
+    <div class="container">
+      <span class="eyebrow">O que você recebe</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Quatro entregas. Um sistema completo.</h2>
+      <div class="entregas__grid">
+
+        <div class="entrega-card reveal">
+          <div class="entrega-card__icon">
+            <i class="fi fi-rr-play-circle"></i>
+          </div>
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Área de membros com 12 módulos</h3>
+          <p>Conteúdo completo que te leva do absoluto zero até um sistema de agentes orquestrado e funcionando no seu negócio. Cada módulo foi construído para implementação imediata, com linguagem direta e sem enrolação técnica desnecessária.</p>
+        </div>
+
+        <div class="entrega-card reveal">
+          <div class="entrega-card__icon">
+            <i class="fi fi-rr-headset"></i>
+          </div>
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Suporte técnico 24/7 por 1 ano</h3>
+          <p>A entrega mais valiosa do programa. Por 12 meses, você tem suporte técnico disponível a qualquer hora para resolver qualquer travamento na implementação. Você não fica parado esperando resposta durante o processo mais importante do seu negócio.</p>
+        </div>
+
+        <div class="entrega-card reveal">
+          <div class="entrega-card__icon">
+            <i class="fi fi-rr-users"></i>
+          </div>
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Grupo de apoio</h3>
+          <p>Acesso a uma comunidade de empreendedores no mesmo processo de implementação. Troca de experiência, soluções práticas e acompanhamento coletivo de quem está construindo junto.</p>
+        </div>
+
+        <div class="entrega-card reveal">
+          <div class="entrega-card__icon">
+            <i class="fi fi-rr-layout-fluid"></i>
+          </div>
+          <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Template do dashboard</h3>
+          <p>O painel de controle pronto para você organizar, monitorar e gerenciar seus agentes desde o primeiro dia. Sem precisar montar do zero. Sem perder tempo com configuração básica.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       COMO FUNCIONA
+  ============================== -->
+  <section id="comofunciona">
+    <div class="container--narrow">
+      <span class="eyebrow">O processo</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Quatro etapas. Do conteúdo ao sistema rodando.</h2>
+      <div class="steps__list">
+
+        <div class="step reveal">
+          <span class="step__num">01</span>
+          <div class="step__content">
+            <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Você aprende o sistema do zero</h3>
+            <p>Os 12 módulos te ensinam tudo o que você precisa para montar sua equipe de agentes, mesmo sem experiência técnica anterior. Cada aula é objetiva e construída para que você implemente algo ao final.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <span class="step__num">02</span>
+          <div class="step__content">
+            <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Você monta o sistema no seu negócio</h3>
+            <p>Com o suporte técnico ativo e os templates em mãos, você implementa os agentes dentro da sua realidade. Cada etapa tem entrega concreta. Você sai de cada módulo com algo funcionando.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <span class="step__num">03</span>
+          <div class="step__content">
+            <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Seus agentes entram em operação</h3>
+            <p>Sua equipe de IA começa a trabalhar. Páginas, anúncios, criativos, roteiros e carrosséis produzidos com o seu DNA, no seu tom, seguindo os seus padrões.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <span class="step__num">04</span>
+          <div class="step__content">
+            <h3 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Você produz 10 vezes mais, com mais leveza</h3>
+            <p>Com o sistema rodando 24/7, você retoma seu tempo, reduz custos operacionais e cresce sem depender de equipe cara nem de horas extras que nunca têm fim.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       CALCULADORA ROI
+  ============================== -->
+  <section id="roi">
+    <div class="container">
+      <span class="eyebrow">Quanto você está gastando hoje?</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;" class="reveal">Calcule o que o sistema te devolve por mês.</h2>
+      <p class="roi__body reveal">A média de economia operacional de quem implementa o DonaSystem é R$30 mil por mês. Isso inclui salários, encargos, ferramentas avulsas e horas de retrabalho. O programa custa R$4.997. Em um único mês de operação, o sistema já se paga.</p>
+      <div class="reveal">
+        <table class="roi__table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Custo médio atual</th>
+              <th>Com DonaSystem</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Equipe de produção</td>
+              <td>R$10.000 a R$30.000/mês</td>
+              <td>R$0</td>
+            </tr>
+            <tr>
+              <td>Ferramentas avulsas</td>
+              <td>R$1.000 a R$3.000/mês</td>
+              <td>Incluso no sistema</td>
+            </tr>
+            <tr>
+              <td>Retrabalho (horas perdidas)</td>
+              <td>40h a 80h/mês</td>
+              <td>Eliminado</td>
+            </tr>
+            <tr>
+              <td>Total estimado</td>
+              <td>R$30.000/mês</td>
+              <td>~R$1.000/mês</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="roi__microcopy">Economia mínima estimada: R$29.000/mês. Investimento no programa: R$4.997.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       COMPARATIVO
+  ============================== -->
+  <section id="comparativo">
+    <div class="container">
+      <span class="eyebrow">O que muda na prática</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Antes e depois do DonaSystem.</h2>
+      <div class="reveal">
+        <table class="comp__table">
+          <thead>
+            <tr>
+              <th class="th-antes">Antes</th>
+              <th class="th-depois">Depois</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-antes">Trabalha o dia inteiro, entrega o mínimo</td>
+              <td class="td-depois">Trabalha 4 horas por dia, entrega mais</td>
+            </tr>
+            <tr>
+              <td class="td-antes">Gasta até R$30 mil/mês com equipe humana</td>
+              <td class="td-depois">Gasta cerca de R$1 mil/mês com o sistema</td>
+            </tr>
+            <tr>
+              <td class="td-antes">Delega e recebe trabalho fora do padrão</td>
+              <td class="td-depois">Agentes operam com o seu DNA, sem retrabalho</td>
+            </tr>
+            <tr>
+              <td class="td-antes">Ferramentas de IA soltas, sem integração</td>
+              <td class="td-depois">Sistema orquestrado rodando 24/7</td>
+            </tr>
+            <tr>
+              <td class="td-antes">Produção lenta, conteúdo represado</td>
+              <td class="td-depois">Páginas em 1h, criativos e roteiros em massa</td>
+            </tr>
+            <tr>
+              <td class="td-antes">Estresse constante com operação</td>
+              <td class="td-depois">Leveza e foco no que realmente importa</td>
+            </tr>
+            <tr>
+              <td class="td-antes">Computador ligado para o trabalho acontecer</td>
+              <td class="td-depois">Agentes funcionando mesmo sem computador</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       VALUE STACK
+  ============================== -->
+  <section id="valuestack">
+    <div class="container">
+      <span class="eyebrow">O que você está levando</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Tudo que está incluído no DonaSystem.</h2>
+      <div class="reveal">
+        <table class="vs__table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Valor de mercado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Área de membros com 12 módulos completos</td>
+              <td>R$3.000</td>
+            </tr>
+            <tr>
+              <td>Suporte técnico 24/7 por 1 ano</td>
+              <td>R$6.000</td>
+            </tr>
+            <tr>
+              <td>Grupo de apoio ativo</td>
+              <td>R$1.200</td>
+            </tr>
+            <tr>
+              <td>Template do dashboard</td>
+              <td>R$800</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>R$11.000</td>
+            </tr>
+            <tr>
+              <td>Você paga</td>
+              <td>R$4.997</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="vs__microcopy">Mais da metade do valor, pelo acesso a tudo que funciona na prática.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       INVESTIMENTO
+  ============================== -->
+  <section id="investimento">
+    <div class="container">
+      <div class="inv__card reveal">
+        <div class="beam"></div>
+        <span class="eyebrow" style="display: block; text-align: center; margin-bottom: 1rem;">Inscreva-se agora</span>
+        <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Acesso completo ao DonaSystem.</h2>
+        <span class="inv__price">R$4.997</span>
+        <p class="inv__price-sub">ou em parcelas no cartão</p>
+        <ul class="inv__list">
+          <li>Área de membros com 12 módulos completos: do zero ao sistema orquestrado</li>
+          <li>Suporte técnico 24/7 disponível por 1 ano inteiro</li>
+          <li>Grupo de apoio com comunidade ativa de implementação</li>
+          <li>Template do dashboard pronto para uso imediato</li>
+          <li>1 ano de acesso integral ao programa</li>
+        </ul>
+        <a href="https://pay.hotmart.com/donasystem" class="btn btn--ouro">Quero começar</a>
+        <p class="inv__microcopy">Uma única compra. Acesso imediato. Um ano para implementar, ajustar e escalar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       GARANTIA
+  ============================== -->
+  <section id="garantia">
+    <div class="container">
+      <div class="garantia__inner reveal">
+        <div class="garantia__icon-wrap">
+          <i class="fi fi-rr-shield-check"></i>
+        </div>
+        <div class="garantia__text">
+          <span class="eyebrow">Sem risco</span>
+          <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">7 dias de garantia incondicional.</h2>
+          <p>Se em até 7 dias após a compra você decidir que o DonaSystem não é para você, devolvemos 100% do valor. Sem formulário longo, sem burocracia, sem precisar justificar. Você entra com segurança.</p>
+          <div class="garantia__badges">
+            <span class="badge">Garantia de 7 dias</span>
+            <span class="badge">Devolução integral</span>
+            <span class="badge">Sem perguntas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       FAQ
+  ============================== -->
+  <section id="faq">
+    <div class="container--narrow">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">O que você precisa saber antes de começar.</h2>
+      <div class="accordion reveal">
+
+        <div class="accordion__item">
+          <button class="accordion__trigger" type="button" style="font-family: 'DM Serif Display', serif; font-weight: 400;">
+            Preciso ter conhecimento técnico para implementar o sistema?
+            <span class="accordion__arrow">+</span>
+          </button>
+          <div class="accordion__body">
+            <div class="accordion__body-inner">
+              O programa parte do absoluto zero e foi desenhado para empreendedores de todos os níveis técnicos. O suporte técnico 24/7 existe exatamente para resolver qualquer travamento que aparecer no caminho.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion__item">
+          <button class="accordion__trigger" type="button" style="font-family: 'DM Serif Display', serif; font-weight: 400;">
+            Quanto tempo vou precisar dedicar por semana?
+            <span class="accordion__arrow">+</span>
+          </button>
+          <div class="accordion__body">
+            <div class="accordion__body-inner">
+              O prazo de referência é 2 meses para chegar ao sistema completo funcionando. Você tem 1 ano de acesso, então avança no seu ritmo, pausa quando precisar e retoma sem perder o progresso.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion__item">
+          <button class="accordion__trigger" type="button" style="font-family: 'DM Serif Display', serif; font-weight: 400;">
+            Já tentei usar IA antes e não teve resultado. Por que seria diferente?
+            <span class="accordion__arrow">+</span>
+          </button>
+          <div class="accordion__body">
+            <div class="accordion__body-inner">
+              Ferramentas soltas geram resultados pontuais e inconsistentes. O DonaSystem entrega implementação integrada: agentes conectados, orquestrados e alinhados com o seu negócio específico. A maioria das tentativas anteriores falhou porque faltou o fio que une tudo e faz o sistema operar de forma contínua.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion__item">
+          <button class="accordion__trigger" type="button" style="font-family: 'DM Serif Display', serif; font-weight: 400;">
+            Como funciona o suporte técnico na prática?
+            <span class="accordion__arrow">+</span>
+          </button>
+          <div class="accordion__body">
+            <div class="accordion__body-inner">
+              Disponível 24 horas por dia, 7 dias por semana, por 1 ano a partir da sua compra. Canal direto para resolver qualquer questão técnica durante a implementação, sem fila longa nem burocracia.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       URGÊNCIA
+  ============================== -->
+  <section id="urgencia">
+    <div class="container--narrow">
+      <span class="eyebrow">O custo de esperar</span>
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;" class="reveal">Cada dia sem sistema é um dia a menos de liberdade e um dia a mais de peso.</h2>
+      <div class="urgencia__body">
+        <p class="reveal">As inscrições do DonaSystem ficam abertas continuamente. O ponto não é prazo. É o que acontece no seu negócio enquanto você adia.</p>
+        <p class="reveal">Enquanto você deixa para depois, alguém do seu mercado está colocando o sistema para funcionar. Enquanto você ainda refaz trabalho de equipe, um concorrente com menos experiência está produzindo em massa, com custo 30 vezes menor e velocidade que você ainda não tem.</p>
+        <p class="reveal">O custo concreto de não agir: mais meses operando no limite da capacidade humana, mais dinheiro gasto com equipe cara, mais retrabalho, mais tempo longe do que você quer realmente construir.</p>
+      </div>
+      <p class="urgencia__microcopy reveal">A inscrição está aberta. O tempo perdido enquanto você espera, não está.</p>
+      <a href="https://pay.hotmart.com/donasystem" class="btn btn--ouro reveal">Quero começar</a>
+    </div>
+  </section>
+
+  <!-- ==============================
+       SOBRE ISIS
+  ============================== -->
+  <section id="sobre">
+    <div class="container">
+      <div class="sobre__grid">
+        <div class="reveal">
+          <img src="./assets/foto-sobre-isis.jpg" alt="Isis Moreira" class="sobre__foto" loading="lazy" />
+        </div>
+        <div class="sobre__text reveal">
+          <span class="eyebrow">Quem está por trás do DonaSystem</span>
+          <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;">Isis Moreira</h2>
+          <p>Isis Moreira une gestão, marketing e conteúdo com tecnologia, inteligência artificial e sistemas. São 10 anos formando empreendedores, 40 mil alunos no ecossistema e 2 mil mentorados com acompanhamento direto.</p>
+          <p>O DonaSystem nasceu da implementação real. O sistema que Isis opera no próprio negócio gera uma economia operacional mínima de R$30 mil por mês. O que está no programa é o que funciona na prática, testado e refinado dentro de uma operação real, antes de ser ensinado para qualquer aluno.</p>
+          <div class="sobre__stats">
+            <div class="sobre__stat">
+              <span class="sobre__stat-num">10 anos</span>
+              <span class="sobre__stat-label">formando empreendedores digitais</span>
+            </div>
+            <div class="sobre__stat">
+              <span class="sobre__stat-num">40 mil</span>
+              <span class="sobre__stat-label">alunos no ecossistema</span>
+            </div>
+            <div class="sobre__stat">
+              <span class="sobre__stat-num">2 mil</span>
+              <span class="sobre__stat-label">mentorados diretos</span>
+            </div>
+            <div class="sobre__stat">
+              <span class="sobre__stat-num">R$30k/mês</span>
+              <span class="sobre__stat-label">de economia operacional mínima</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       CTA FINAL
+  ============================== -->
+  <section id="cta-final">
+    <div class="container--narrow" style="text-align: center;">
+      <h2 style="font-family: 'DM Serif Display', serif; font-weight: 400;" class="reveal">Você produzindo 10 vezes mais de forma mais leve.</h2>
+      <p class="reveal">O sistema está pronto. A inscrição está aberta. O próximo passo é seu.</p>
+      <a href="https://pay.hotmart.com/donasystem" class="btn btn--ouro reveal">Quero começar</a>
+    </div>
+  </section>
+
+  <!-- ==============================
+       FOOTER
+  ============================== -->
+  <footer>
+    <p>© 2025 Isis Moreira. Todos os direitos reservados.</p>
+    <p>DonaSystem é um programa de implementação do ecossistema Isis Moreira.</p>
+  </footer>
+
+  <!-- ==============================
+       SCRIPTS
+  ============================== -->
+  <script>
+    // ---- REVEAL ON SCROLL ----
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ---- ANIMATED COUNTERS ----
+    const counterEls = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.count, 10);
+          const prefix = el.dataset.prefix || '';
+          const suffix = el.dataset.suffix || '';
+          const duration = 1800;
+          const start = performance.now();
+
+          function step(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+            el.textContent = prefix + current + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    counterEls.forEach(el => counterObserver.observe(el));
+
+    // ---- ACCORDION ----
+    const triggers = document.querySelectorAll('.accordion__trigger');
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const body = trigger.nextElementSibling;
+        const isOpen = body.classList.contains('open');
+        // close all
+        document.querySelectorAll('.accordion__body').forEach(b => b.classList.remove('open'));
+        document.querySelectorAll('.accordion__trigger').forEach(t => t.classList.remove('open'));
+        // open clicked if was closed
+        if (!isOpen) {
+          body.classList.add('open');
+          trigger.classList.add('open');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
