@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="description" content="{{META_DESCRICAO}}">
+  <title>{{META_TITULO}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <style>
+    /* ===========================
+       DESIGN SYSTEM ISIS v7
+    =========================== */
+    :root {
+      --marfim: #f9f8f4;
+      --creme: #efede6;
+      --cacau: #2a2420;
+      --hero-dark: #1a1410;
+      --ouro: #b4a68c;
+      --ouro-deep: #7a6e5c;
+      --mirror: #9ba1a8;
+      --radius: 4px;
+      --easing: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--hero-dark);
+      color: var(--cacau);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===========================
+       ANIMAÇÕES
+    =========================== */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    @keyframes ticker-move {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scale-in {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .hero-badge    { animation: fade-in-up 600ms var(--easing) 0ms    both; }
+    .hero-logo     { animation: fade-in-up 600ms var(--easing) 100ms  both; }
+    .hero-title    { animation: fade-in-up 600ms var(--easing) 200ms  both; }
+    .hero-desc     { animation: fade-in-up 600ms var(--easing) 300ms  both; }
+    .hero-cta      { animation: fade-in-up 600ms var(--easing) 400ms  both; }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms var(--easing), transform 600ms var(--easing);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 100ms; }
+    .reveal-delay-2 { transition-delay: 200ms; }
+    .reveal-delay-3 { transition-delay: 300ms; }
+    .reveal-delay-4 { transition-delay: 400ms; }
+    .reveal-delay-5 { transition-delay: 500ms; }
+
+    /* ===========================
+       HERO
+    =========================== */
+    #hero {
+      position: relative;
+      background-color: var(--hero-dark);
+      background-image: url('{{FOTO_HERO}}');
+      background-size: cover;
+      background-position: center top;
+      overflow: hidden;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(26,20,16,0.95) 0%,
+        rgba(26,20,16,0.80) 45%,
+        rgba(26,20,16,0.45) 70%,
+        rgba(26,20,16,0.20) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(180,166,140,0.20) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 24px 0;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      padding-bottom: 40px;
+    }
+
+    /* Badge */
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid rgba(180,166,140,0.40);
+      border-radius: 100px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ouro-deep);
+      background: rgba(26,20,16,0.40);
+      backdrop-filter: blur(8px);
+      margin-bottom: 20px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--ouro);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    /* Logo no hero */
+    .hero-logo img {
+      height: 54px;
+      width: auto;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    /* Título H1 */
+    .hero-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--marfim);
+      margin-bottom: 18px;
+    }
+
+    .hero-title em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    /* Descrição hero */
+    .hero-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(249,248,244,0.75);
+      margin-bottom: 32px;
+    }
+
+    /* ===========================
+       BOTÃO CTA
+    =========================== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 6px 6px 6px 20px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      background: var(--ouro);
+      transition: background 400ms var(--easing), transform 300ms var(--easing);
+      overflow: hidden;
+    }
+
+    .btn-primary:hover {
+      background: var(--ouro-deep);
+      transform: translateY(-2px);
+    }
+
+    .btn-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--cacau);
+      display: flex;
+      gap: 0;
+      margin-right: 12px;
+    }
+
+    .btn-text span {
+      display: inline-block;
+      transition: transform 200ms var(--easing);
+    }
+
+    .btn-primary:hover .btn-text span:nth-child(1)  { transform: translateY(-3px); transition-delay: 0ms; }
+    .btn-primary:hover .btn-text span:nth-child(2)  { transform: translateY(-3px); transition-delay: 30ms; }
+    .btn-primary:hover .btn-text span:nth-child(3)  { transform: translateY(-3px); transition-delay: 60ms; }
+    .btn-primary:hover .btn-text span:nth-child(4)  { transform: translateY(-3px); transition-delay: 90ms; }
+    .btn-primary:hover .btn-text span:nth-child(5)  { transform: translateY(-3px); transition-delay: 120ms; }
+    .btn-primary:hover .btn-text span:nth-child(6)  { transform: translateY(-3px); transition-delay: 150ms; }
+    .btn-primary:hover .btn-text span:nth-child(7)  { transform: translateY(-3px); transition-delay: 180ms; }
+    .btn-primary:hover .btn-text span:nth-child(8)  { transform: translateY(-3px); transition-delay: 210ms; }
+    .btn-primary:hover .btn-text span:nth-child(9)  { transform: translateY(-3px); transition-delay: 240ms; }
+    .btn-primary:hover .btn-text span:nth-child(10) { transform: translateY(-3px); transition-delay: 270ms; }
+    .btn-primary:hover .btn-text span:nth-child(11) { transform: translateY(-3px); transition-delay: 300ms; }
+    .btn-primary:hover .btn-text span:nth-child(12) { transform: translateY(-3px); transition-delay: 330ms; }
+    .btn-primary:hover .btn-text span:nth-child(13) { transform: translateY(-3px); transition-delay: 360ms; }
+    .btn-primary:hover .btn-text span:nth-child(14) { transform: translateY(-3px); transition-delay: 390ms; }
+    .btn-primary:hover .btn-text span:nth-child(15) { transform: translateY(-3px); transition-delay: 420ms; }
+    .btn-primary:hover .btn-text span:nth-child(16) { transform: translateY(-3px); transition-delay: 450ms; }
+    .btn-primary:hover .btn-text span:nth-child(17) { transform: translateY(-3px); transition-delay: 480ms; }
+    .btn-primary:hover .btn-text span:nth-child(18) { transform: translateY(-3px); transition-delay: 510ms; }
+    .btn-primary:hover .btn-text span:nth-child(19) { transform: translateY(-3px); transition-delay: 540ms; }
+    .btn-primary:hover .btn-text span:nth-child(20) { transform: translateY(-3px); transition-delay: 570ms; }
+    .btn-primary:hover .btn-text span:nth-child(21) { transform: translateY(-3px); transition-delay: 600ms; }
+    .btn-primary:hover .btn-text span:nth-child(22) { transform: translateY(-3px); transition-delay: 630ms; }
+    .btn-primary:hover .btn-text span:nth-child(23) { transform: translateY(-3px); transition-delay: 660ms; }
+    .btn-primary:hover .btn-text span:nth-child(24) { transform: translateY(-3px); transition-delay: 690ms; }
+    .btn-primary:hover .btn-text span:nth-child(25) { transform: translateY(-3px); transition-delay: 720ms; }
+
+    .btn-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 400ms var(--easing);
+    }
+
+    .btn-primary:hover .btn-arrow {
+      transform: rotate(-45deg);
+    }
+
+    /* Hero: fundo escuro => btn ouro, seta cacau */
+    .btn-hero .btn-arrow {
+      background: var(--cacau);
+      color: var(--ouro);
+    }
+
+    /* Seções claras: btn cacau, seta ouro */
+    .btn-light {
+      background: var(--cacau);
+    }
+    .btn-light:hover {
+      background: #3d342e;
+    }
+    .btn-light .btn-text {
+      color: var(--marfim);
+    }
+    .btn-light .btn-arrow {
+      background: var(--ouro);
+      color: var(--cacau);
+    }
+
+    /* Seções escuras: btn ouro, seta cacau */
+    .btn-dark {
+      background: var(--ouro);
+    }
+    .btn-dark:hover {
+      background: var(--ouro-deep);
+    }
+    .btn-dark .btn-text {
+      color: var(--cacau);
+    }
+    .btn-dark .btn-arrow {
+      background: var(--cacau);
+      color: var(--ouro);
+    }
+
+    /* ===========================
+       TICKER
+    =========================== */
+    #ticker {
+      background: var(--cacau);
+      padding: 18px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      gap: 0;
+      animation: ticker-move 35s linear infinite;
+      will-change: transform;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--marfim);
+    }
+
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--ouro);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===========================
+       SEÇÕES
+    =========================== */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-bg-marfim { background: var(--marfim); }
+    .section-bg-creme  { background: var(--creme); }
+    .section-bg-cacau  { background: var(--cacau); }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+      display: block;
+      text-align: center;
+    }
+
+    .eyebrow-light { color: var(--ouro-deep); }
+    .eyebrow-dark  { color: var(--ouro); }
+
+    /* H2 Seção */
+    h2.section-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      text-align: center;
+    }
+
+    h2.section-title.title-light { color: var(--cacau); }
+    h2.section-title.title-dark  { color: var(--marfim); }
+
+    h2.section-title em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    /* Descrição de seção */
+    .section-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 680px;
+    }
+    .section-desc-light { color: var(--ouro-deep); }
+    .section-desc-dark  { color: rgba(249,248,244,0.75); }
+
+    /* ===========================
+       STATS
+    =========================== */
+    #stats {
+      background: var(--marfim);
+      padding: 64px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 32px 32px;
+      border-right: 1px solid rgba(180,166,140,0.30);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      color: var(--ouro);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-number em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--ouro-deep);
+      line-height: 1.5;
+    }
+
+    /* ===========================
+       DORES
+    =========================== */
+    .dores-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .dor-item {
+      padding: 28px;
+      background: rgba(180,166,140,0.08);
+      border-left: 2px solid var(--ouro);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    /* Título do bloco de problema (adicionado no template) */
+    .dor-titulo {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--cacau);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .dor-text {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--cacau);
+      line-height: 1.65;
+    }
+
+    /* ===========================
+       SOLUÇÃO
+    =========================== */
+    .solucao-content {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .solucao-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.80);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .solucao-destaque {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      color: var(--ouro);
+      font-style: italic;
+      margin: 32px 0;
+      line-height: 1.3;
+    }
+
+    .solucao-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(180,166,140,0.60);
+      margin-top: 40px;
+    }
+
+    /* ===========================
+       PARA QUEM É / NÃO É
+    =========================== */
+    .para-quem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .para-quem-col h3 {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+      font-weight: 400;
+      color: var(--cacau);
+      margin-bottom: 24px;
+    }
+
+    .para-quem-col h3 em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .para-quem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .para-quem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--cacau);
+      line-height: 1.55;
+    }
+
+    .para-quem-list li .list-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .icon-sim  { background: rgba(180,166,140,0.20); color: var(--ouro-deep); }
+    .icon-nao  { background: rgba(42,36,32,0.08); color: var(--mirror); }
+
+    .icon-sim i, .icon-nao i {
+      font-size: 10px;
+    }
+
+    /* ===========================
+       ENTREGAS
+    =========================== */
+    .entregas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .entrega-card {
+      background: rgba(180,166,140,0.08);
+      border: 1px solid rgba(180,166,140,0.25);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 300ms var(--easing), box-shadow 300ms var(--easing), border-color 300ms;
+    }
+
+    .entrega-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      border-color: rgba(180,166,140,0.55);
+    }
+
+    .entrega-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(180,166,140,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ouro);
+      font-size: 24px;
+    }
+
+    .entrega-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--marfim);
+      line-height: 1.3;
+    }
+
+    .entrega-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.70);
+      line-height: 1.6;
+    }
+
+    /* ===========================
+       COMPARATIVO
+    =========================== */
+    .comparativo-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .comparativo-table th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 16px 24px;
+      text-align: left;
+    }
+
+    .th-sem {
+      background: rgba(42,36,32,0.06);
+      color: var(--mirror);
+      width: 50%;
+    }
+
+    .th-com {
+      background: rgba(180,166,140,0.12);
+      color: var(--ouro-deep);
+      width: 50%;
+    }
+
+    .comparativo-table td {
+      padding: 14px 24px;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.5;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(180,166,140,0.12);
+    }
+
+    .td-sem {
+      color: var(--ouro-deep);
+      background: rgba(42,36,32,0.03);
+    }
+
+    .td-com {
+      color: var(--cacau);
+      background: rgba(180,166,140,0.05);
+      font-weight: 400;
+    }
+
+    /* Linhas alternadas */
+    .comparativo-table tbody tr:nth-child(even) .td-sem {
+      background: var(--creme);
+    }
+
+    .comparativo-table tbody tr:nth-child(even) .td-com {
+      background: rgba(180,166,140,0.10);
+    }
+
+    .td-sem .td-icon {
+      color: var(--mirror);
+      margin-right: 10px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .td-com .td-icon {
+      color: var(--ouro);
+      margin-right: 10px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    /* ===========================
+       INVESTIMENTO
+    =========================== */
+    .investimento-content {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .investimento-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.80);
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    /* ===========================
+       FAQ
+    =========================== */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(180,166,140,0.20);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 24px 0;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--cacau);
+      line-height: 1.4;
+      transition: color 200ms;
+    }
+
+    .faq-question:hover {
+      color: var(--ouro-deep);
+    }
+
+    .faq-toggle {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(180,166,140,0.30);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ouro-deep);
+      font-size: 12px;
+      transition: transform 300ms var(--easing), background 200ms, border-color 200ms;
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(45deg);
+      background: var(--ouro);
+      border-color: var(--ouro);
+      color: var(--cacau);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 400px;
+    }
+
+    .faq-answer-inner {
+      padding: 0 0 24px;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ouro-deep);
+      line-height: 1.7;
+    }
+
+    /* ===========================
+       URGÊNCIA
+    =========================== */
+    .urgencia-content {
+      max-width: 760px;
+    }
+
+    .urgencia-line {
+      width: 60px;
+      height: 1px;
+      background: var(--ouro);
+      margin: 0 auto 24px;
+    }
+
+    .urgencia-body {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--ouro-deep);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .urgencia-tagline {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ouro);
+      margin-top: 32px;
+      padding-left: 16px;
+      border-left: 3px solid var(--ouro);
+    }
+
+    /* ===========================
+       SOBRE ISIS
+    =========================== */
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .sobre-col-left h2 {
+      margin-bottom: 24px;
+    }
+
+    .sobre-bio {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--cacau);
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    .sobre-stats {
+      display: flex;
+      gap: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(180,166,140,0.25);
+    }
+
+    .sobre-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sobre-stat-num {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--cacau);
+      letter-spacing: -0.02em;
+    }
+
+    .sobre-stat-num em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .sobre-stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--ouro-deep);
+    }
+
+    .sobre-col-right img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* ===========================
+       CTA FINAL
+    =========================== */
+    .cta-final-content {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-final-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.80);
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    .cta-final-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(180,166,140,0.50);
+      margin-bottom: 40px;
+      display: block;
+    }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    #footer {
+      background: var(--cacau);
+      padding: 32px 0;
+      border-top: 1px solid rgba(180,166,140,0.20);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-copy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ouro-deep);
+      letter-spacing: 0.08em;
+    }
+
+    /* ===========================
+       SEPARADORES VISUAIS
+    =========================== */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(180,166,140,0.35), transparent);
+      margin: 0;
+    }
+
+    .section-divider-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0;
+      height: 32px;
+    }
+
+    .section-divider-ornament::before,
+    .section-divider-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(180,166,140,0.30));
+    }
+
+    .section-divider-ornament::after {
+      background: linear-gradient(to left, transparent, rgba(180,166,140,0.30));
+    }
+
+    .ornament-diamond {
+      width: 6px;
+      height: 6px;
+      background: var(--ouro);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: 0.70;
+    }
+
+    /* ===========================
+       ELEMENTOS DECORATIVOS DE FUNDO
+    =========================== */
+    .section-bg-cacau {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-bg-cacau::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(180,166,140,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .section-bg-cacau .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===========================
+       STAGGER CARDS ENTREGAS
+    =========================== */
+    .entrega-card:nth-child(1)  { transition-delay: 0ms; }
+    .entrega-card:nth-child(2)  { transition-delay: 100ms; }
+    .entrega-card:nth-child(3)  { transition-delay: 200ms; }
+    .entrega-card:nth-child(4)  { transition-delay: 300ms; }
+    .entrega-card:nth-child(5)  { transition-delay: 400ms; }
+    .entrega-card:nth-child(6)  { transition-delay: 500ms; }
+
+    /* ===========================
+       MOBILE
+    =========================== */
+    @media (max-width: 768px) {
+      section { padding: 56px 0; }
+
+      .hero-inner {
+        padding: 48px 16px 0;
+      }
+
+      .hero-content {
+        padding-bottom: 48px;
+        max-width: 100%;
+      }
+
+      #hero {
+        background-position: center top;
+      }
+
+      .hero-overlay {
+        background: rgba(26,20,16,0.90);
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-desc {
+        font-size: 15px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0;
+      }
+
+      .stat-item {
+        border-right: 1px solid rgba(180,166,140,0.30);
+        border-bottom: 1px solid rgba(180,166,140,0.30);
+        padding: 24px 20px;
+      }
+
+      .stat-item:nth-child(2n) {
+        border-right: none;
+      }
+
+      .stat-item:nth-child(3),
+      .stat-item:nth-child(4) {
+        border-bottom: none;
+      }
+
+      .dores-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .para-quem-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .entregas-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .sobre-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .sobre-col-right {
+        order: -1;
+      }
+
+      .sobre-col-right img {
+        height: 360px;
+      }
+
+      .sobre-stats {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+
+      .comparativo-table th,
+      .comparativo-table td {
+        padding: 12px 14px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================
+       HERO
+  ===================== -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-dots"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+
+        <div class="badge-pill hero-badge">
+          <span class="badge-dot"></span>
+          {{PROGRAMA_BADGE}}
+        </div>
+
+        <div class="hero-logo">
+          <img src="{{LOGO_SRC}}" alt="{{PROGRAMA_NOME}}">
+        </div>
+
+        <h1 class="hero-title">
+          {{PROGRAMA_TAGLINE}}
+        </h1>
+
+        <p class="hero-desc">
+          {{PROGRAMA_DESCRICAO}}
+        </p>
+
+        <div class="hero-cta">
+          <a href="{{CTA_LINK}}" class="btn-primary btn-hero">
+            <div class="btn-text">{{CTA_TEXTO}}</div>
+            <div class="btn-arrow">
+              <i class="fi fi-rr-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       TICKER
+  ===================== -->
+  <div id="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">{{TICKER_ITEM_1}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{PROGRAMA_NOME}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_2}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_3}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_4}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_5}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_6}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_7}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_8}}<span class="ticker-dot"></span></span>
+      <!-- duplicado para loop contínuo -->
+      <span class="ticker-item">{{TICKER_ITEM_1}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{PROGRAMA_NOME}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_2}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_3}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_4}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_5}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_6}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_7}}<span class="ticker-dot"></span></span>
+      <span class="ticker-item">{{TICKER_ITEM_8}}<span class="ticker-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- Separador -->
+  <div class="section-divider-ornament"><span class="ornament-diamond"></span></div>
+
+  <!-- =====================
+       STATS
+  ===================== -->
+  <section id="stats" class="section-bg-marfim">
+    <div class="container">
+      <div class="stats-grid">
+
+        <div class="stat-item reveal">
+          <div class="stat-number"><em>{{STAT_1_NUMERO}}</em></div>
+          <div class="stat-label">{{STAT_1_TEXTO}}</div>
+        </div>
+
+        <div class="stat-item reveal reveal-delay-1">
+          <div class="stat-number"><em>{{STAT_2_NUMERO}}</em></div>
+          <div class="stat-label">{{STAT_2_TEXTO}}</div>
+        </div>
+
+        <div class="stat-item reveal reveal-delay-2">
+          <div class="stat-number"><em>{{STAT_3_NUMERO}}</em></div>
+          <div class="stat-label">{{STAT_3_TEXTO}}</div>
+        </div>
+
+        <div class="stat-item reveal reveal-delay-3">
+          <div class="stat-number"><em>{{STAT_4_NUMERO}}</em></div>
+          <div class="stat-label">{{STAT_4_TEXTO}}</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       DORES / PROBLEMAS
+  ===================== -->
+  <section id="dores" class="section-bg-creme">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title title-light reveal">
+          {{DORES_TITULO}}
+        </h2>
+      </div>
+
+      <div class="dores-grid">
+
+        <div class="dor-item reveal">
+          <strong class="dor-titulo">{{PROBLEMA_1_TITULO}}</strong>
+          <p class="dor-text">{{PROBLEMA_1_TEXTO}}</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-1">
+          <strong class="dor-titulo">{{PROBLEMA_2_TITULO}}</strong>
+          <p class="dor-text">{{PROBLEMA_2_TEXTO}}</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-2">
+          <strong class="dor-titulo">{{PROBLEMA_3_TITULO}}</strong>
+          <p class="dor-text">{{PROBLEMA_3_TEXTO}}</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-3">
+          <strong class="dor-titulo">{{PROBLEMA_4_TITULO}}</strong>
+          <p class="dor-text">{{PROBLEMA_4_TEXTO}}</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-4">
+          <strong class="dor-titulo">{{PROBLEMA_5_TITULO}}</strong>
+          <p class="dor-text">{{PROBLEMA_5_TEXTO}}</p>
+        </div>
+
+        <div class="dor-item reveal reveal-delay-5">
+          <strong class="dor-titulo">{{PROBLEMA_6_TITULO}}</strong>
+          <p class="dor-text">{{PROBLEMA_6_TEXTO}}</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       SOLUÇÃO
+  ===================== -->
+  <section id="solucao" class="section-bg-cacau">
+    <div class="container">
+      <div class="solucao-content">
+
+        <h2 class="section-title title-dark reveal" style="text-align:center;">
+          {{SOLUCAO_TITULO}}
+        </h2>
+
+        <p class="solucao-body reveal reveal-delay-2">
+          {{SOLUCAO_TEXTO}}
+        </p>
+
+        <p class="solucao-body reveal reveal-delay-3">
+          {{SOLUCAO_TEXTO_2}}
+        </p>
+
+        <p class="solucao-body reveal reveal-delay-4" style="color: var(--ouro);">
+          {{SOLUCAO_GANCHO}}
+        </p>
+
+        <div class="solucao-destaque reveal reveal-delay-5">
+          {{SOLUCAO_DESTAQUE}}
+        </div>
+
+        <p class="solucao-body reveal">
+          {{SOLUCAO_TEXTO_3}}
+        </p>
+
+        <p class="solucao-tagline reveal reveal-delay-1">
+          {{SOLUCAO_TAGLINE}}
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       PARA QUEM É / NÃO É
+  ===================== -->
+  <section id="para-quem" class="section-bg-marfim">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title title-light reveal">
+          Para quem é o <em>{{PROGRAMA_NOME}}</em>
+        </h2>
+      </div>
+
+      <div class="para-quem-grid">
+
+        <div class="para-quem-col reveal">
+          <h3>Para quem <em>é</em> o {{PROGRAMA_NOME}}</h3>
+          <ul class="para-quem-list">
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              {{PARA_QUEM_SIM_1}}
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              {{PARA_QUEM_SIM_2}}
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              {{PARA_QUEM_SIM_3}}
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              {{PARA_QUEM_SIM_4}}
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              {{PARA_QUEM_SIM_5}}
+            </li>
+            <li>
+              <span class="list-icon icon-sim"><i class="fi fi-rr-check"></i></span>
+              {{PARA_QUEM_SIM_6}}
+            </li>
+          </ul>
+        </div>
+
+        <div class="para-quem-col reveal reveal-delay-2">
+          <h3>Para quem <em>não é</em> o {{PROGRAMA_NOME}}</h3>
+          <ul class="para-quem-list">
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              {{PARA_QUEM_NAO_1}}
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              {{PARA_QUEM_NAO_2}}
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              {{PARA_QUEM_NAO_3}}
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              {{PARA_QUEM_NAO_4}}
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              {{PARA_QUEM_NAO_5}}
+            </li>
+            <li>
+              <span class="list-icon icon-nao"><i class="fi fi-rr-cross-small"></i></span>
+              {{PARA_QUEM_NAO_6}}
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       ENTREGAS
+  ===================== -->
+  <section id="entregas" class="section-bg-cacau">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title title-dark reveal">
+          O que está incluído no <em>{{PROGRAMA_NOME}}</em>
+        </h2>
+      </div>
+
+      <div class="entregas-grid">
+
+        <div class="entrega-card reveal">
+          <div class="entrega-icon">{{ENTREGA_1_NUMERO}}</div>
+          <div class="entrega-title">{{ENTREGA_1_TITULO}}</div>
+          <p class="entrega-desc">{{ENTREGA_1_TEXTO}}</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-1">
+          <div class="entrega-icon">{{ENTREGA_2_NUMERO}}</div>
+          <div class="entrega-title">{{ENTREGA_2_TITULO}}</div>
+          <p class="entrega-desc">{{ENTREGA_2_TEXTO}}</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-2">
+          <div class="entrega-icon">{{ENTREGA_3_NUMERO}}</div>
+          <div class="entrega-title">{{ENTREGA_3_TITULO}}</div>
+          <p class="entrega-desc">{{ENTREGA_3_TEXTO}}</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-3">
+          <div class="entrega-icon">{{ENTREGA_4_NUMERO}}</div>
+          <div class="entrega-title">{{ENTREGA_4_TITULO}}</div>
+          <p class="entrega-desc">{{ENTREGA_4_TEXTO}}</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-4">
+          <div class="entrega-icon">{{ENTREGA_5_NUMERO}}</div>
+          <div class="entrega-title">{{ENTREGA_5_TITULO}}</div>
+          <p class="entrega-desc">{{ENTREGA_5_TEXTO}}</p>
+        </div>
+
+        <div class="entrega-card reveal reveal-delay-5">
+          <div class="entrega-icon">{{ENTREGA_6_NUMERO}}</div>
+          <div class="entrega-title">{{ENTREGA_6_TITULO}}</div>
+          <p class="entrega-desc">{{ENTREGA_6_TEXTO}}</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       COMPARATIVO
+  ===================== -->
+  <section id="comparativo" class="section-bg-marfim">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title title-light reveal">
+          Com o {{PROGRAMA_NOME}} vs. <em>sem o {{PROGRAMA_NOME}}</em>
+        </h2>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <table class="comparativo-table">
+          <thead>
+            <tr>
+              <th class="th-sem">Sem o {{PROGRAMA_NOME}}</th>
+              <th class="th-com">Com o {{PROGRAMA_NOME}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>{{COMPARATIVO_SEM_1}}</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>{{COMPARATIVO_COM_1}}</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>{{COMPARATIVO_SEM_2}}</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>{{COMPARATIVO_COM_2}}</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>{{COMPARATIVO_SEM_3}}</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>{{COMPARATIVO_COM_3}}</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>{{COMPARATIVO_SEM_4}}</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>{{COMPARATIVO_COM_4}}</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>{{COMPARATIVO_SEM_5}}</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>{{COMPARATIVO_COM_5}}</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>{{COMPARATIVO_SEM_6}}</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>{{COMPARATIVO_COM_6}}</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>{{COMPARATIVO_SEM_7}}</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>{{COMPARATIVO_COM_7}}</td>
+            </tr>
+            <tr>
+              <td class="td-sem"><i class="fi fi-rr-cross-circle td-icon"></i>{{COMPARATIVO_SEM_8}}</td>
+              <td class="td-com"><i class="fi fi-rr-check-circle td-icon"></i>{{COMPARATIVO_COM_8}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       INVESTIMENTO
+  ===================== -->
+  <section id="investimento" class="section-bg-cacau">
+    <div class="container">
+      <div class="investimento-content">
+
+        <h2 class="section-title title-dark reveal" style="text-align:center;">
+          {{INVESTIMENTO_TITULO}}
+        </h2>
+
+        <p class="investimento-body reveal reveal-delay-2">
+          {{INVESTIMENTO_TEXTO_1}}
+        </p>
+
+        <p class="investimento-body reveal reveal-delay-3">
+          {{INVESTIMENTO_TEXTO_2}}
+        </p>
+
+        <div class="reveal reveal-delay-4">
+          <a href="{{CTA_LINK}}" class="btn-primary btn-dark">
+            <div class="btn-text">{{CTA_TEXTO}}</div>
+            <div class="btn-arrow">
+              <i class="fi fi-rr-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       URGÊNCIA
+  ===================== -->
+  <section id="urgencia" class="section-bg-marfim">
+    <div class="container">
+      <div class="urgencia-content">
+
+        <div class="urgencia-line reveal"></div>
+
+        <h2 class="section-title title-light reveal reveal-delay-1">
+          {{URGENCIA_TITULO}}
+        </h2>
+
+        <p class="urgencia-body reveal reveal-delay-2">
+          {{URGENCIA_TEXTO_1}}
+        </p>
+
+        <p class="urgencia-body reveal reveal-delay-3">
+          {{URGENCIA_TEXTO_2}}
+        </p>
+
+        <p class="urgencia-body reveal reveal-delay-4">
+          {{URGENCIA_TEXTO_3}}
+        </p>
+
+        <p class="urgencia-body reveal reveal-delay-5">
+          {{URGENCIA_TEXTO_4}}
+        </p>
+
+        <p class="urgencia-tagline reveal">
+          {{URGENCIA_TAGLINE}}
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       SOBRE ISIS
+  ===================== -->
+  <section id="sobre" class="section-bg-creme">
+    <div class="container">
+
+      <div class="sobre-grid">
+
+        <div class="sobre-col-left">
+          <h2 class="section-title title-light reveal">
+            {{SOBRE_TITULO}}
+          </h2>
+
+          <p class="sobre-bio reveal reveal-delay-2">
+            {{SOBRE_BIO_1}}
+          </p>
+
+          <p class="sobre-bio reveal reveal-delay-3">
+            {{SOBRE_BIO_2}}
+          </p>
+
+          <p class="sobre-bio reveal reveal-delay-4">
+            {{SOBRE_BIO_3}}
+          </p>
+
+          <p class="sobre-bio reveal reveal-delay-5" style="color: var(--ouro-deep); font-style: italic;">
+            {{SOBRE_BIO_DESTAQUE}}
+          </p>
+
+          <div class="sobre-stats reveal">
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>{{SOBRE_STAT_1_NUM}}</em></span>
+              <span class="sobre-stat-label">{{SOBRE_STAT_1_LABEL}}</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>{{SOBRE_STAT_2_NUM}}</em></span>
+              <span class="sobre-stat-label">{{SOBRE_STAT_2_LABEL}}</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>{{SOBRE_STAT_3_NUM}}</em></span>
+              <span class="sobre-stat-label">{{SOBRE_STAT_3_LABEL}}</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>{{SOBRE_STAT_4_NUM}}</em></span>
+              <span class="sobre-stat-label">{{SOBRE_STAT_4_LABEL}}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="sobre-col-right reveal reveal-delay-2">
+          <img src="{{SOBRE_FOTO_SRC}}" alt="{{SOBRE_FOTO_ALT}}" loading="lazy">
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       FAQ
+  ===================== -->
+  <section id="faq" class="section-bg-creme">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-title title-light reveal">
+          Dúvidas sobre o <em>{{PROGRAMA_NOME}}</em>
+        </h2>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item reveal">
+          <button class="faq-question" type="button">
+            {{FAQ_1_PERGUNTA}}
+            <span class="faq-toggle"><i class="fi fi-rr-plus-small"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              {{FAQ_1_RESPOSTA}}
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question" type="button">
+            {{FAQ_2_PERGUNTA}}
+            <span class="faq-toggle"><i class="fi fi-rr-plus-small"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              {{FAQ_2_RESPOSTA}}
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question" type="button">
+            {{FAQ_3_PERGUNTA}}
+            <span class="faq-toggle"><i class="fi fi-rr-plus-small"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              {{FAQ_3_RESPOSTA}}
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-3">
+          <button class="faq-question" type="button">
+            {{FAQ_4_PERGUNTA}}
+            <span class="faq-toggle"><i class="fi fi-rr-plus-small"></i></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              {{FAQ_4_RESPOSTA}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       CTA FINAL
+  ===================== -->
+  <section id="cta-final" class="section-bg-cacau">
+    <div class="container">
+      <div class="cta-final-content">
+
+        <h2 class="section-title title-dark reveal" style="text-align:center;">
+          {{CTA_FINAL_TITULO}}
+        </h2>
+
+        <p class="cta-final-body reveal reveal-delay-2">
+          {{CTA_FINAL_TEXTO_1}}
+        </p>
+
+        <p class="cta-final-body reveal reveal-delay-3">
+          {{CTA_FINAL_TEXTO_2}}
+        </p>
+
+        <span class="cta-final-tagline reveal reveal-delay-4">{{CTA_FINAL_TAGLINE}}</span>
+
+        <div class="reveal reveal-delay-5">
+          <a href="{{CTA_LINK}}" class="btn-primary btn-dark">
+            <div class="btn-text">{{CTA_TEXTO}}</div>
+            <div class="btn-arrow">
+              <i class="fi fi-rr-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       FOOTER
+  ===================== -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">{{FOOTER_COPY}}</span>
+        <span class="footer-copy">{{FOOTER_ECOSSISTEMA}}</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================
+       JAVASCRIPT
+  ===================== -->
+  <script>
+    // Reveal on scroll
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+
+        // Fecha todos
+        faqItems.forEach(i => i.classList.remove('open'));
+
+        // Abre o clicado se estava fechado
+        if (!isOpen) {
+          item.classList.add('open');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
