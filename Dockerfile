@@ -4,4 +4,5 @@ COPY myna/ /usr/share/nginx/html/myna/
 COPY clubmyna/ /usr/share/nginx/html/clubmyna/
 COPY system/ /usr/share/nginx/html/system/
 COPY assets/ /usr/share/nginx/html/assets/
+COPY assets/ /usr/share/nginx/html/system/assets/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
