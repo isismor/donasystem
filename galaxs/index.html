@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>GALAXS | Kenia Gama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <style>
+    /* ===========================
+       DESIGN SYSTEM ISIS v7
+    =========================== */
+    :root {
+      --marfim: #f9f8f4;
+      --creme: #efede6;
+      --cacau: #2a2420;
+      --hero-dark: #1a1410;
+      --ouro: #b4a68c;
+      --ouro-deep: #7a6e5c;
+      --mirror: #9ba1a8;
+      --radius: 4px;
+      --easing: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--hero-dark);
+      color: var(--cacau);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===========================
+       ANIMACOES
+    =========================== */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    @keyframes ticker-move {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scale-in {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .hero-badge    { animation: fade-in-up 600ms var(--easing) 0ms    both; }
+    .hero-label    { animation: fade-in-up 600ms var(--easing) 80ms   both; }
+    .hero-title    { animation: fade-in-up 600ms var(--easing) 200ms  both; }
+    .hero-desc     { animation: fade-in-up 600ms var(--easing) 320ms  both; }
+    .hero-cta      { animation: fade-in-up 600ms var(--easing) 440ms  both; }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms var(--easing), transform 600ms var(--easing);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 100ms; }
+    .reveal-delay-2 { transition-delay: 200ms; }
+    .reveal-delay-3 { transition-delay: 300ms; }
+    .reveal-delay-4 { transition-delay: 400ms; }
+    .reveal-delay-5 { transition-delay: 500ms; }
+
+    /* ===========================
+       HERO
+    =========================== */
+    #hero {
+      position: relative;
+      background-color: var(--hero-dark);
+      background-image: url('./assets/evento.jpg');
+      background-size: cover;
+      background-position: center top;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(26,20,16,0.97) 0%,
+        rgba(26,20,16,0.85) 45%,
+        rgba(26,20,16,0.55) 70%,
+        rgba(26,20,16,0.30) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(180,166,140,0.18) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 24px 0;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 640px;
+      padding-bottom: 80px;
+    }
+
+    /* Badge */
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid rgba(180,166,140,0.40);
+      border-radius: 100px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ouro-deep);
+      background: rgba(26,20,16,0.40);
+      backdrop-filter: blur(8px);
+      margin-bottom: 20px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--ouro);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    /* Produto label */
+    .hero-label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--ouro);
+      margin-bottom: 16px;
+    }
+
+    /* Titulo H1 */
+    .hero-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--marfim);
+      margin-bottom: 24px;
+    }
+
+    .hero-title em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    /* Descricao hero */
+    .hero-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.70;
+      color: rgba(249,248,244,0.72);
+      margin-bottom: 36px;
+    }
+
+    /* ===========================
+       BOTAO CTA
+    =========================== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 6px 6px 6px 20px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      background: var(--ouro);
+      transition: background 400ms var(--easing), transform 300ms var(--easing);
+      overflow: hidden;
+    }
+
+    .btn-primary:hover {
+      background: var(--ouro-deep);
+      transform: translateY(-2px);
+    }
+
+    .btn-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--cacau);
+      display: flex;
+      gap: 0;
+      margin-right: 12px;
+    }
+
+    .btn-text span {
+      display: inline-block;
+      transition: transform 200ms var(--easing);
+    }
+
+    .btn-primary:hover .btn-text span:nth-child(1)  { transform: translateY(-3px); transition-delay: 0ms; }
+    .btn-primary:hover .btn-text span:nth-child(2)  { transform: translateY(-3px); transition-delay: 30ms; }
+    .btn-primary:hover .btn-text span:nth-child(3)  { transform: translateY(-3px); transition-delay: 60ms; }
+    .btn-primary:hover .btn-text span:nth-child(4)  { transform: translateY(-3px); transition-delay: 90ms; }
+    .btn-primary:hover .btn-text span:nth-child(5)  { transform: translateY(-3px); transition-delay: 120ms; }
+    .btn-primary:hover .btn-text span:nth-child(6)  { transform: translateY(-3px); transition-delay: 150ms; }
+    .btn-primary:hover .btn-text span:nth-child(7)  { transform: translateY(-3px); transition-delay: 180ms; }
+    .btn-primary:hover .btn-text span:nth-child(8)  { transform: translateY(-3px); transition-delay: 210ms; }
+    .btn-primary:hover .btn-text span:nth-child(9)  { transform: translateY(-3px); transition-delay: 240ms; }
+    .btn-primary:hover .btn-text span:nth-child(10) { transform: translateY(-3px); transition-delay: 270ms; }
+    .btn-primary:hover .btn-text span:nth-child(11) { transform: translateY(-3px); transition-delay: 300ms; }
+    .btn-primary:hover .btn-text span:nth-child(12) { transform: translateY(-3px); transition-delay: 330ms; }
+    .btn-primary:hover .btn-text span:nth-child(13) { transform: translateY(-3px); transition-delay: 360ms; }
+    .btn-primary:hover .btn-text span:nth-child(14) { transform: translateY(-3px); transition-delay: 390ms; }
+    .btn-primary:hover .btn-text span:nth-child(15) { transform: translateY(-3px); transition-delay: 420ms; }
+    .btn-primary:hover .btn-text span:nth-child(16) { transform: translateY(-3px); transition-delay: 450ms; }
+    .btn-primary:hover .btn-text span:nth-child(17) { transform: translateY(-3px); transition-delay: 480ms; }
+    .btn-primary:hover .btn-text span:nth-child(18) { transform: translateY(-3px); transition-delay: 510ms; }
+    .btn-primary:hover .btn-text span:nth-child(19) { transform: translateY(-3px); transition-delay: 540ms; }
+    .btn-primary:hover .btn-text span:nth-child(20) { transform: translateY(-3px); transition-delay: 570ms; }
+    .btn-primary:hover .btn-text span:nth-child(21) { transform: translateY(-3px); transition-delay: 600ms; }
+    .btn-primary:hover .btn-text span:nth-child(22) { transform: translateY(-3px); transition-delay: 630ms; }
+    .btn-primary:hover .btn-text span:nth-child(23) { transform: translateY(-3px); transition-delay: 660ms; }
+    .btn-primary:hover .btn-text span:nth-child(24) { transform: translateY(-3px); transition-delay: 690ms; }
+    .btn-primary:hover .btn-text span:nth-child(25) { transform: translateY(-3px); transition-delay: 720ms; }
+
+    .btn-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 400ms var(--easing);
+    }
+
+    .btn-primary:hover .btn-arrow {
+      transform: rotate(-45deg);
+    }
+
+    .btn-hero .btn-arrow {
+      background: var(--cacau);
+      color: var(--ouro);
+    }
+
+    .btn-light {
+      background: var(--cacau);
+    }
+    .btn-light:hover {
+      background: #3d342e;
+    }
+    .btn-light .btn-text {
+      color: var(--marfim);
+    }
+    .btn-light .btn-arrow {
+      background: var(--ouro);
+      color: var(--cacau);
+    }
+
+    .btn-dark {
+      background: var(--ouro);
+    }
+    .btn-dark:hover {
+      background: var(--ouro-deep);
+    }
+    .btn-dark .btn-text {
+      color: var(--cacau);
+    }
+    .btn-dark .btn-arrow {
+      background: var(--cacau);
+      color: var(--ouro);
+    }
+
+    /* ===========================
+       TICKER
+    =========================== */
+    #ticker {
+      background: var(--cacau);
+      padding: 18px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      gap: 0;
+      animation: ticker-move 40s linear infinite;
+      will-change: transform;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--marfim);
+    }
+
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--ouro);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===========================
+       SECOES
+    =========================== */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-bg-marfim { background: var(--marfim); }
+    .section-bg-creme  { background: var(--creme); }
+    .section-bg-cacau  { background: var(--cacau); }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+      display: block;
+      text-align: center;
+    }
+
+    .eyebrow-light { color: var(--ouro-deep); }
+    .eyebrow-dark  { color: var(--ouro); }
+
+    /* H2 Secao */
+    h2.section-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    h2.section-title.title-light { color: var(--cacau); }
+    h2.section-title.title-dark  { color: var(--marfim); }
+
+    h2.section-title em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .section-desc-light { color: var(--ouro-deep); }
+    .section-desc-dark  { color: rgba(249,248,244,0.75); }
+
+    /* ===========================
+       STATS
+    =========================== */
+    #stats {
+      background: var(--marfim);
+      padding: 64px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 32px 40px;
+      border-right: 1px solid rgba(180,166,140,0.30);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 400;
+      color: var(--ouro);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-number em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--ouro-deep);
+      line-height: 1.5;
+    }
+
+    /* ===========================
+       DIFERENCIAIS
+    =========================== */
+    .diferenciais-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .diferencial-item {
+      padding: 32px;
+      background: rgba(180,166,140,0.08);
+      border-left: 2px solid var(--ouro);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .diferencial-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ouro-deep);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .diferencial-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--cacau);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .diferencial-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ouro-deep);
+      line-height: 1.65;
+    }
+
+    /* ===========================
+       SOLUCAO / INTRO
+    =========================== */
+    .solucao-content {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .solucao-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.80);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .solucao-destaque {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      color: var(--ouro);
+      font-style: italic;
+      margin: 32px 0;
+      line-height: 1.3;
+    }
+
+    .solucao-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(180,166,140,0.60);
+      margin-top: 40px;
+    }
+
+    /* ===========================
+       SOLUCOES (6 cards)
+    =========================== */
+    .solucoes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .solucao-card {
+      background: rgba(180,166,140,0.08);
+      border: 1px solid rgba(180,166,140,0.25);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: transform 300ms var(--easing), box-shadow 300ms var(--easing), border-color 300ms;
+    }
+
+    .solucao-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      border-color: rgba(180,166,140,0.55);
+    }
+
+    .solucao-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ouro);
+      letter-spacing: 0.10em;
+    }
+
+    .solucao-card-title {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--marfim);
+      line-height: 1.3;
+    }
+
+    .solucao-card-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.68);
+      line-height: 1.6;
+    }
+
+    /* ===========================
+       ENTREGAS
+    =========================== */
+    .entregas-lista {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 900px;
+      margin: 0 auto;
+      border: 1px solid rgba(180,166,140,0.20);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .entrega-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(180,166,140,0.15);
+      border-right: 1px solid rgba(180,166,140,0.15);
+      background: rgba(180,166,140,0.04);
+      transition: background 200ms;
+    }
+
+    .entrega-item:hover {
+      background: rgba(180,166,140,0.10);
+    }
+
+    .entrega-item:nth-child(even) {
+      border-right: none;
+    }
+
+    .entrega-item:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+
+    .entrega-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(180,166,140,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ouro);
+    }
+
+    .entrega-texto {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--cacau);
+      line-height: 1.45;
+      padding-top: 4px;
+    }
+
+    /* ===========================
+       DEPOIMENTOS
+    =========================== */
+    .depoimentos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .depoimento-card {
+      background: rgba(180,166,140,0.08);
+      border: 1px solid rgba(180,166,140,0.20);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: border-color 300ms;
+    }
+
+    .depoimento-card:hover {
+      border-color: rgba(180,166,140,0.45);
+    }
+
+    .depoimento-aspas {
+      font-family: 'DM Serif Text', serif;
+      font-size: 3rem;
+      color: var(--ouro);
+      line-height: 0.8;
+      opacity: 0.50;
+    }
+
+    .depoimento-texto {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--cacau);
+      line-height: 1.75;
+      font-style: italic;
+    }
+
+    .depoimento-autor {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--ouro-deep);
+    }
+
+    /* ===========================
+       INVESTIMENTO
+    =========================== */
+    .investimento-box {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .investimento-nota {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(180,166,140,0.60);
+      letter-spacing: 0.08em;
+      margin-bottom: 40px;
+      display: block;
+    }
+
+    .investimento-referencia {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.45);
+      text-decoration: line-through;
+      margin-bottom: 8px;
+    }
+
+    .investimento-valor {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 400;
+      color: var(--ouro);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .investimento-ou {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(180,166,140,0.50);
+      margin: 16px 0;
+    }
+
+    .investimento-parcelas {
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.75);
+      margin-bottom: 40px;
+    }
+
+    .investimento-parcelas strong {
+      color: var(--marfim);
+      font-weight: 500;
+    }
+
+    .investimento-aviso {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.50);
+      margin-top: 24px;
+      font-style: italic;
+    }
+
+    /* ===========================
+       SOBRE KENIA
+    =========================== */
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 64px;
+      align-items: end;
+    }
+
+    .sobre-col-left h2 {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .sobre-bio {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--cacau);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .sobre-citacao {
+      font-family: 'DM Serif Text', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-style: italic;
+      color: var(--ouro-deep);
+      line-height: 1.55;
+      padding: 24px 0 24px 24px;
+      border-left: 2px solid var(--ouro);
+      margin: 28px 0;
+    }
+
+    .sobre-stats {
+      display: flex;
+      gap: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(180,166,140,0.25);
+    }
+
+    .sobre-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sobre-stat-num {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--cacau);
+      letter-spacing: -0.02em;
+    }
+
+    .sobre-stat-num em {
+      color: var(--ouro);
+      font-style: italic;
+    }
+
+    .sobre-stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--ouro-deep);
+    }
+
+    .sobre-col-right {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .sobre-col-right img {
+      width: 100%;
+      max-width: 480px;
+      display: block;
+      object-fit: contain;
+      object-position: bottom center;
+    }
+
+    /* ===========================
+       CTA FINAL
+    =========================== */
+    .cta-final-content {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-final-body {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(249,248,244,0.80);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    .cta-final-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(180,166,140,0.50);
+      margin-bottom: 36px;
+      display: block;
+    }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    #footer {
+      background: var(--cacau);
+      padding: 32px 0;
+      border-top: 1px solid rgba(180,166,140,0.20);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-copy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ouro-deep);
+      letter-spacing: 0.08em;
+    }
+
+    /* ===========================
+       SEPARADORES VISUAIS
+    =========================== */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(180,166,140,0.35), transparent);
+    }
+
+    .section-divider-ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: 32px;
+    }
+
+    .section-divider-ornament::before,
+    .section-divider-ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(180,166,140,0.30));
+    }
+
+    .section-divider-ornament::after {
+      background: linear-gradient(to left, transparent, rgba(180,166,140,0.30));
+    }
+
+    .ornament-diamond {
+      width: 6px;
+      height: 6px;
+      background: var(--ouro);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: 0.70;
+    }
+
+    /* Dots pattern em secoes escuras */
+    .section-bg-cacau {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-bg-cacau::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(180,166,140,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .section-bg-cacau .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===========================
+       STAGGER CARDS
+    =========================== */
+    .solucao-card:nth-child(1) { transition-delay: 0ms; }
+    .solucao-card:nth-child(2) { transition-delay: 100ms; }
+    .solucao-card:nth-child(3) { transition-delay: 200ms; }
+    .solucao-card:nth-child(4) { transition-delay: 300ms; }
+    .solucao-card:nth-child(5) { transition-delay: 400ms; }
+    .solucao-card:nth-child(6) { transition-delay: 500ms; }
+
+    /* ===========================
+       MOBILE
+    =========================== */
+    @media (max-width: 768px) {
+      section { padding: 56px 0; }
+
+      .hero-inner {
+        padding: 48px 16px 0;
+        align-items: flex-end;
+      }
+
+      .hero-content {
+        padding-bottom: 56px;
+        max-width: 100%;
+      }
+
+      #hero {
+        min-height: 100svh;
+      }
+
+      .hero-overlay {
+        background: rgba(26,20,16,0.92);
+      }
+
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .hero-desc {
+        font-size: 15px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .stat-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(180,166,140,0.30);
+        padding: 24px 20px;
+      }
+
+      .stat-item:last-child {
+        border-bottom: none;
+      }
+
+      .diferenciais-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .solucoes-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .entregas-lista {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+      }
+
+      .entrega-item {
+        border-right: none;
+      }
+
+      .entrega-item:nth-last-child(-n+2) {
+        border-bottom: 1px solid rgba(180,166,140,0.15);
+      }
+
+      .entrega-item:last-child {
+        border-bottom: none;
+      }
+
+      .depoimentos-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .sobre-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .sobre-col-right {
+        order: -1;
+      }
+
+      .sobre-col-right img {
+        max-width: 280px;
+        margin: 0 auto;
+      }
+
+      .sobre-col-left h2 {
+        text-align: center;
+      }
+
+      .sobre-stats {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================
+       HERO
+  ===================== -->
+  <section id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-dots"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+
+        <div class="badge-pill hero-badge">
+          <span class="badge-dot"></span>
+          Grupo premium mastermind para empresarios de 7 digitos
+        </div>
+
+        <span class="hero-label">GALAXS</span>
+
+        <h1 class="hero-title">
+          Um novo tempo <em>comeca.</em>
+        </h1>
+
+        <p class="hero-desc">
+          O GALAXS e um grupo premium para empresarios que alcancaram 7 digitos anuais ou mais, e desejam explorar todas as oportunidades do mundo on-line e offline, alem de construir um ecossistema solido.
+        </p>
+
+        <!-- Link do formulario: substituir "#aplicar" pelo link real quando Kenia fornecer -->
+        <div class="hero-cta">
+          <a href="#aplicar" class="btn-primary btn-hero">
+            <div class="btn-text">
+              <span>P</span><span>r</span><span>e</span><span>e</span><span>n</span><span>c</span><span>h</span><span>e</span><span>&nbsp;</span><span>s</span><span>u</span><span>a</span><span>&nbsp;</span><span>a</span><span>p</span><span>l</span><span>i</span><span>c</span><span>a</span><span>c</span><span>a</span><span>o</span>
+            </div>
+            <div class="btn-arrow">
+              <i class="fi fi-rr-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       TICKER
+  ===================== -->
+  <div id="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Galaxias sao formadas por estrelas<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Kenia Gama<span class="ticker-dot"></span></span>
+      <span class="ticker-item">7 digitos e o ponto de partida<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Ecossistema solido<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Mastermind de alto nivel<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Conexoes que transformam<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Aceleradora 6D<span class="ticker-dot"></span></span>
+      <span class="ticker-item">GALAXS<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Um novo tempo<span class="ticker-dot"></span></span>
+      <!-- duplicado para loop continuo -->
+      <span class="ticker-item">Galaxias sao formadas por estrelas<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Kenia Gama<span class="ticker-dot"></span></span>
+      <span class="ticker-item">7 digitos e o ponto de partida<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Ecossistema solido<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Mastermind de alto nivel<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Conexoes que transformam<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Aceleradora 6D<span class="ticker-dot"></span></span>
+      <span class="ticker-item">GALAXS<span class="ticker-dot"></span></span>
+      <span class="ticker-item">Um novo tempo<span class="ticker-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- Separador -->
+  <div class="section-divider-ornament"><span class="ornament-diamond"></span></div>
+
+  <!-- =====================
+       STATS
+  ===================== -->
+  <section id="stats" class="section-bg-marfim">
+    <div class="container">
+      <div class="stats-grid">
+
+        <div class="stat-item reveal">
+          <div class="stat-number"><em>682</em>+</div>
+          <div class="stat-label">colaboradoras no ecossistema Kenia Gama</div>
+        </div>
+
+        <div class="stat-item reveal reveal-delay-1">
+          <div class="stat-number"><em>R$1,2</em> bi</div>
+          <div class="stat-label">em negocios presentes gerados pela rede</div>
+        </div>
+
+        <div class="stat-item reveal reveal-delay-2">
+          <div class="stat-number"><em>6D</em></div>
+          <div class="stat-label">aceleradora criada por Kenia Gama, incluida no GALAXS</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       POR QUE O GALAXS E DIFERENTE
+  ===================== -->
+  <section id="diferenciais" class="section-bg-creme">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow eyebrow-light reveal">Por que o GALAXS e diferente</span>
+        <h2 class="section-title title-light reveal reveal-delay-1">
+          Um grupo construido para quem ja <em>chegou longe</em> e quer ir mais longe ainda.
+        </h2>
+      </div>
+
+      <div class="diferenciais-grid">
+
+        <div class="diferencial-item reveal">
+          <span class="diferencial-label">Nivel elevado de conexao</span>
+          <div class="diferencial-title">Um grupo cuidadosamente selecionado</div>
+          <p class="diferencial-desc">Mulheres influentes, todas em busca de crescimento, alinhadas em objetivos e valores. A selecao e o que garante o nivel da conversa.</p>
+        </div>
+
+        <div class="diferencial-item reveal reveal-delay-1">
+          <span class="diferencial-label">Trocas genuinas</span>
+          <div class="diferencial-title">Um espaco seguro e exclusivo</div>
+          <p class="diferencial-desc">Para compartilhar ideias, desafios e experiencias reais. Sem performance, sem vitrine. Conversa de quem joga no mesmo nivel.</p>
+        </div>
+
+        <div class="diferencial-item reveal reveal-delay-2">
+          <span class="diferencial-label">Crescimento coletivo</span>
+          <div class="diferencial-title">Uma irmandade focada em resultados</div>
+          <p class="diferencial-desc">Nao e apenas um grupo. E uma rede onde o sucesso de uma impulsiona todas. Cooperacao de alto nível, resultado concreto.</p>
+        </div>
+
+        <div class="diferencial-item reveal reveal-delay-3">
+          <span class="diferencial-label">Conselho e orientacao</span>
+          <div class="diferencial-title">Direcao estrategica, pratica e inspiradora</div>
+          <p class="diferencial-desc">Um mastermind que vai alem do networking. Aqui voce recebe orientacao real para os desafios reais do seu negocio.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       SOLUCAO / INTRO
+  ===================== -->
+  <section id="solucao" class="section-bg-cacau">
+    <div class="container">
+      <div class="solucao-content">
+
+        <h2 class="section-title title-dark reveal">
+          Voce chegou nos 7 digitos. Agora e hora de <em>construir o ecossistema.</em>
+        </h2>
+
+        <p class="solucao-body reveal reveal-delay-2">
+          Chegar aos 7 digitos exigiu muito. Manter, escalar e expandir exige algo diferente: estrutura, posicionamento, equipe certa e um ecossistema que funciona de forma integrada.
+        </p>
+
+        <p class="solucao-body reveal reveal-delay-3">
+          O GALAXS existe para empresarios que entendem que o proximo nivel nao e sobre trabalhar mais, e sobre construir melhor.
+        </p>
+
+        <div class="solucao-destaque reveal reveal-delay-4">
+          Galaxias sao formadas por uma quantidade grande de estrelas e seus sistemas.
+        </div>
+
+        <p class="solucao-tagline reveal reveal-delay-5">
+          GALAXS. Kenia Gama.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       SOLUCOES (6 pilares)
+  ===================== -->
+  <section id="solucoes" class="section-bg-marfim">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow eyebrow-light reveal">O que o GALAXS resolve</span>
+        <h2 class="section-title title-light reveal reveal-delay-1">
+          Seis areas que constroem um <em>negocio solido</em>
+        </h2>
+      </div>
+
+      <div class="solucoes-grid">
+
+        <div class="solucao-card reveal">
+          <span class="solucao-num">01</span>
+          <div class="solucao-card-title">Automacao e processos com IA</div>
+          <p class="solucao-card-desc">Construa uma empresa autogerenciavel com metodo, processos e gestao inteligente.</p>
+        </div>
+
+        <div class="solucao-card reveal reveal-delay-1">
+          <span class="solucao-num">02</span>
+          <div class="solucao-card-title">Posicionamento mercadologico magnetico</div>
+          <p class="solucao-card-desc">Ferramentas para criar uma marca magnetica, garantindo autenticidade e diferenciacao no mercado.</p>
+        </div>
+
+        <div class="solucao-card reveal reveal-delay-2">
+          <span class="solucao-num">03</span>
+          <div class="solucao-card-title">Construcao de equipe</div>
+          <p class="solucao-card-desc">Aprenda a formar e liderar um time alinhado ao seu proposito, criando uma cultura de alto desempenho.</p>
+        </div>
+
+        <div class="solucao-card reveal reveal-delay-3">
+          <span class="solucao-num">04</span>
+          <div class="solucao-card-title">Time comercial estrategico</div>
+          <p class="solucao-card-desc">Desenvolva um time de vendas que gera previsibilidade de receita e escala seus resultados.</p>
+        </div>
+
+        <div class="solucao-card reveal reveal-delay-4">
+          <span class="solucao-num">05</span>
+          <div class="solucao-card-title">Formacao de ecossistema</div>
+          <p class="solucao-card-desc">Estruture funis de produtos inteligentes, fidelizando clientes e criando um modelo de negocios sustentavel.</p>
+        </div>
+
+        <div class="solucao-card reveal reveal-delay-5">
+          <span class="solucao-num">06</span>
+          <div class="solucao-card-title">Visibilidade e autoridade</div>
+          <p class="solucao-card-desc">Construa uma narrativa impactante e desenvolva uma comunicacao que atrai e engaja uma audiencia qualificada.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       ENTREGAS
+  ===================== -->
+  <section id="entregas" class="section-bg-cacau">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow eyebrow-dark reveal">O que esta incluido</span>
+        <h2 class="section-title title-dark reveal reveal-delay-1">
+          Tudo o que voce recebe no <em>GALAXS</em>
+        </h2>
+      </div>
+
+      <div class="entregas-lista reveal reveal-delay-2">
+
+        <div class="entrega-item">
+          <span class="entrega-num">01</span>
+          <span class="entrega-texto">3 Encontros Presenciais de Alto Impacto</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">02</span>
+          <span class="entrega-texto">10 Encontros Online</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">03</span>
+          <span class="entrega-texto">4 Mentorias individuais com a Kenia ao ano</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">04</span>
+          <span class="entrega-texto">Acesso a Aceleradora 6D</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">05</span>
+          <span class="entrega-texto">1 Vaga no MAP + 1 Socio</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">06</span>
+          <span class="entrega-texto">Autoridade Maxima + 1 Socio</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">07</span>
+          <span class="entrega-texto">MPE</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">08</span>
+          <span class="entrega-texto">Grupo Estrategico no WhatsApp</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">09</span>
+          <span class="entrega-texto">Jantares e Eventos de Networking</span>
+        </div>
+
+        <div class="entrega-item">
+          <span class="entrega-num">10</span>
+          <span class="entrega-texto">Acesso a rede Kenia Gama</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       DEPOIMENTOS
+  ===================== -->
+  <section id="depoimentos" class="section-bg-creme">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow eyebrow-light reveal">Resultados reais</span>
+        <h2 class="section-title title-light reveal reveal-delay-1">
+          O que acontece quando voce <em>decide crescer</em>
+        </h2>
+      </div>
+
+      <div class="depoimentos-grid">
+
+        <div class="depoimento-card reveal">
+          <div class="depoimento-aspas">"</div>
+          <p class="depoimento-texto">A mentoria 6D foi um marco na minha trajetoria profissional e pessoal. O suporte da Kenia e das consultoras foram essenciais para mim. Me trouxeram clareza, metas a serem alcancadas. Realizei em 4 meses coisas que nao havia feito em 8 anos.</p>
+          <span class="depoimento-autor">Dih</span>
+        </div>
+
+        <div class="depoimento-card reveal reveal-delay-1">
+          <div class="depoimento-aspas">"</div>
+          <p class="depoimento-texto">Eu mais que dobrei o meu faturamento, sai de 150 para 350k de faturamento. Voce tem o dom da prosperidade. Voce e a mentora mais completa que conheco.</p>
+          <span class="depoimento-autor">Adriana Valente</span>
+        </div>
+
+        <div class="depoimento-card reveal reveal-delay-2">
+          <div class="depoimento-aspas">"</div>
+          <p class="depoimento-texto">Antes da mentoria da Kenia, o meu negocio existia so dentro da minha cabeca. Hoje, o Instituto Canova de Psicanalise nasceu com estrutura, clareza e identidade de marca real. 14 aplicacoes ativas, faturamos 200 mil profissionalmente, tudo ganhou forma.</p>
+          <span class="depoimento-autor">Bruna Canova</span>
+        </div>
+
+        <div class="depoimento-card reveal reveal-delay-3">
+          <div class="depoimento-aspas">"</div>
+          <p class="depoimento-texto">Dificil de acreditar que so tem 7 meses que iniciei a 6D. Agora fazendo os calculos, estou vendo que faturei 80k so de mentorias e ainda sem trafego. Ajustando meu posicionamento, comunicacao e visao.</p>
+          <span class="depoimento-autor">Duda</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       INVESTIMENTO
+  ===================== -->
+  <section id="investimento" class="section-bg-cacau">
+    <div class="container">
+      <div class="investimento-box">
+
+        <span class="eyebrow eyebrow-dark reveal">Investimento</span>
+
+        <h2 class="section-title title-dark reveal reveal-delay-1">
+          Uma condicao <em>especial</em> para quem foi selecionada.
+        </h2>
+
+        <span class="investimento-nota reveal reveal-delay-2">
+          Alguns masterminds ultrapassam R$250 mil ao ano. Voce foi selecionada para uma condicao especial.
+        </span>
+
+        <div class="reveal reveal-delay-3">
+          <p class="investimento-referencia">Valor de referencia: R$377.994,00</p>
+          <p class="investimento-valor">R$120.000</p>
+          <p class="investimento-parcelas">a vista</p>
+          <p class="investimento-ou">ou</p>
+          <p class="investimento-parcelas"><strong>R$20.000</strong> de entrada + <strong>12x R$10.000</strong></p>
+        </div>
+
+        <div class="reveal reveal-delay-4">
+          <!-- Link do formulario: substituir "#aplicar" pelo link real quando Kenia fornecer -->
+          <a href="#aplicar" class="btn-primary btn-dark">
+            <div class="btn-text">
+              <span>P</span><span>r</span><span>e</span><span>e</span><span>n</span><span>c</span><span>h</span><span>e</span><span>&nbsp;</span><span>s</span><span>u</span><span>a</span><span>&nbsp;</span><span>a</span><span>p</span><span>l</span><span>i</span><span>c</span><span>a</span><span>c</span><span>a</span><span>o</span>
+            </div>
+            <div class="btn-arrow">
+              <i class="fi fi-rr-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+        <p class="investimento-aviso reveal reveal-delay-5">Condicao valida enquanto houver vagas. O acesso ao GALAXS e feito por selecao.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       SOBRE KENIA
+  ===================== -->
+  <section id="sobre" class="section-bg-creme">
+    <div class="container">
+
+      <div class="sobre-grid">
+
+        <div class="sobre-col-left">
+
+          <h2 class="section-title title-light reveal">
+            Kenia <em>Gama</em>
+          </h2>
+
+          <p class="sobre-bio reveal reveal-delay-1">
+            Kenia Gama e criadora do GALAXS e da Aceleradora 6D. Ha mais de uma decada construindo resultados expressivos com empresarios e empreendedoras, Kenia consolidou uma rede de mais de 682 colaboradoras e R$1.231.450.000 em negocios presentes.
+          </p>
+
+          <p class="sobre-bio reveal reveal-delay-2">
+            Seu metodo une estrategia de negocios, formacao de equipe, posicionamento e visibilidade, construindo ecossistemas que crescem com solidez e proposito.
+          </p>
+
+          <blockquote class="sobre-citacao reveal reveal-delay-3">
+            Minha intencao ao criar o GALAXS e gerar lucro para o seu negocio, enquanto voce vive o seu proposito. Como tudo o que faco, me entrego de coracao e alma, esse nao seria diferente. Durante os proximos 12 meses, estaremos juntas fazendo o seu sonho crescer e ultrapassar barreiras.
+          </blockquote>
+
+          <div class="sobre-stats reveal reveal-delay-4">
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>682</em>+</span>
+              <span class="sobre-stat-label">colaboradoras</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>R$1,2</em>bi</span>
+              <span class="sobre-stat-label">em negocios</span>
+            </div>
+            <div class="sobre-stat">
+              <span class="sobre-stat-num"><em>6D</em></span>
+              <span class="sobre-stat-label">aceleradora</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="sobre-col-right reveal reveal-delay-2">
+          <img src="./assets/kenia-foto.png" alt="Kenia Gama" loading="lazy">
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================
+       CTA FINAL
+  ===================== -->
+  <section id="cta-final" class="section-bg-cacau">
+    <div class="container">
+      <div class="cta-final-content">
+
+        <h2 class="section-title title-dark reveal" style="text-align:center;">
+          Faca parte desse <em>novo tempo.</em>
+        </h2>
+
+        <p class="cta-final-body reveal reveal-delay-2">
+          O GALAXS nao e para qualquer um. E para quem ja chegou longe e entende que o proximo nivel se constroi com conexoes certas, estrutura solida e orientacao de quem realmente sabe o que esta fazendo.
+        </p>
+
+        <p class="cta-final-body reveal reveal-delay-3">
+          Se voce chegou ate aqui, ja sabe que esta no lugar certo.
+        </p>
+
+        <span class="cta-final-tagline reveal reveal-delay-4">O proximo passo e simples.</span>
+
+        <div class="reveal reveal-delay-5">
+          <!-- Link do formulario: substituir "#aplicar" pelo link real quando Kenia fornecer -->
+          <a href="#aplicar" class="btn-primary btn-dark">
+            <div class="btn-text">
+              <span>P</span><span>r</span><span>e</span><span>e</span><span>n</span><span>c</span><span>h</span><span>e</span><span>&nbsp;</span><span>s</span><span>u</span><span>a</span><span>&nbsp;</span><span>a</span><span>p</span><span>l</span><span>i</span><span>c</span><span>a</span><span>c</span><span>a</span><span>o</span><span>&nbsp;</span><span>e</span><span>&nbsp;</span><span>f</span><span>a</span><span>c</span><span>a</span><span>&nbsp;</span><span>p</span><span>a</span><span>r</span><span>t</span><span>e</span>
+            </div>
+            <div class="btn-arrow">
+              <i class="fi fi-rr-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================
+       FOOTER
+  ===================== -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-copy">© 2026 GALAXS. Kenia Gama. Todos os direitos reservados.</span>
+        <span class="footer-copy">GALAXS e um produto do ecossistema Kenia Gama.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================
+       JAVASCRIPT
+  ===================== -->
+  <script>
+    // Reveal on scroll
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
